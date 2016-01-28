@@ -8,6 +8,7 @@ sudo apt-get install \
     autopoint \
     cmake \
     dbus \
+    doxygen \
     g++ \
     gettext \
     gnome-icon-theme-symbolic \
@@ -67,9 +68,12 @@ make install
 cd "${TOP}/lrc"
 mkdir -p build
 cd build
+# If we don't use -DENABLE_STATIC here and on the client,
+# we'd have to point LD_LIBRARY_PATH to the directory containing libringclient.so
 cmake .. \
   -DCMAKE_BUILD_TYPE=Debug \
   -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
+  -DENABLE_STATIC=true \
   -DRING_BUILD_DIR="${RING}/src"
 make
 make install
@@ -78,8 +82,8 @@ cd "${TOP}/client-gnome"
 mkdir -p build
 cd build
 cmake .. \
-  -DCMAKE_BUILD_TYPE=Debug \
   -DCMAKE_INSTALL_PREFIX="${INSTALL}/client-gnome" \
+  -DENABLE_STATIC=true \
   -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient"
 make
 sudo make install
