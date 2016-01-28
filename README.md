@@ -10,7 +10,7 @@ I'd rather have a single Git repo, but without official support, maintaining a m
 
 Build, install locally under this repository, and run that local install:
 
-    ./ubuntu-15.10.sh
+    ./ubuntu-15.10-local-install.sh
     nohup ./install/daemon/libexec/dring >/dev/null &
     DRING_PID=$!
     LD_LIBRARY_PATH="$LD_LIBRARY_PATH:install/lrc/lib" ./install/client-gnome/bin/gnome-ring
