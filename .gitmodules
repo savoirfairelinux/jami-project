@@ -1,0 +1,15 @@
+[submodule "client-android"]
+	path = client-android
+	url = https://gerrit-ring.savoirfairelinux.com/ring-client-android
+[submodule "client-gnome"]
+	path = client-gnome
+	url = https://gerrit-ring.savoirfairelinux.com/ring-client-gnome
+[submodule "client-windows"]
+	path = client-windows
+	url = https://gerrit-ring.savoirfairelinux.com/ring-client-widows
+[submodule "daemon"]
+	path = daemon
+	url = https://gerrit-ring.savoirfairelinux.com/ring-daemon
+[submodule "lrc"]
+	path = lrc
+	url = https://gerrit-ring.savoirfairelinux.com/ring-lrc
