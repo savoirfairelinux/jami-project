@@ -2,4 +2,4 @@
 # Remove everything that is not git tracked on the submodules.
 # May cause data loss.
 git submodule foreach git clean -dfx
-rm -rf install/*
+rm -rf install
