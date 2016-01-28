@@ -13,7 +13,7 @@ Build, install locally under this repository, and run that local install:
     ./ubuntu-15.10-local-install.sh
     nohup ./install/daemon/libexec/dring >/dev/null &
     DRING_PID=$!
-    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:install/lrc/lib" ./install/client-gnome/bin/gnome-ring
+    ./install/client-gnome/bin/gnome-ring
 
 To stop, hit: `Ctrl + C` to kill the client and:
 
