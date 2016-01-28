@@ -78,6 +78,7 @@ cd "${TOP}/client-gnome"
 mkdir -p build
 cd build
 cmake .. \
+  -DCMAKE_BUILD_TYPE=Debug \
   -DCMAKE_INSTALL_PREFIX="${INSTALL}/client-gnome" \
   -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient"
 make

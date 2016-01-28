@@ -1,12 +1,14 @@
 # Ring
 
-Synchronization of all the repositories of <https://ring.cx/> through submodules, with scripts to build for each platform easily.
+Synchronization via submodules of the repositories of <https://ring.cx/> to states in which they work together + scripts to build for each platform easily.
 
 Fixes <https://tuleap.ring.cx/plugins/tracker/?aid=250>.
 
-I'd rather have a single Git repo, but without official support, maintaining a single git repo is useless, so I'll start with submodules which are easier to put together.
+I'd rather have a single Git repo, but without official support, maintaining a merged single git repo is useless, so I'll start with submodules which are easier to paste together.
 
 ## Ubuntu 15.10
+
+Build, install locally under this repository, and run that local install:
 
     ./ubuntu-15.10.sh
     nohup ./install/daemon/libexec/dring >/dev/null &
