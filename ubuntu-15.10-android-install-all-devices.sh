@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Build the Android app and install it on all connected devices.
+set -e
 cd client-android
 ./compile.sh
 # From: http://stackoverflow.com/questions/8610733/how-can-i-adb-install-an-apk-to-multiple-connected-devices
