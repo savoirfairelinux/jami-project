@@ -8,15 +8,14 @@ I'd rather have a single Git repo, but without official support, maintaining a m
 
 ## Ubuntu 15.10
 
-Build, install locally under this repository, and run that local install:
+Build and install locally under this repository:
 
     ./ubuntu-15.10-local-install.sh
-    nohup ./install/daemon/libexec/dring >/dev/null &
-    DRING_PID=$!
-    ./install/client-gnome/bin/gnome-ring
 
-To stop, hit: `Ctrl + C` to kill the client and:
+Run daemon and client on background:
 
-    kill $DRING_PID
+    ./ubuntu-15.10-run.sh
 
-for the server.
+Stop daemon and client:
+
+    ./ubuntu-15.10-stop.sh

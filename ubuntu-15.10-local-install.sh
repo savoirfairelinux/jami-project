@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Build and install to a local prefix under this repository.
+
 set -e
 
 sudo apt-get install \
@@ -73,7 +75,6 @@ cd build
 cmake .. \
   -DCMAKE_BUILD_TYPE=Debug \
   -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
-  -DENABLE_STATIC=true \
   -DRING_BUILD_DIR="${RING}/src"
 make
 make install
@@ -83,7 +84,6 @@ mkdir -p build
 cd build
 cmake .. \
   -DCMAKE_INSTALL_PREFIX="${INSTALL}/client-gnome" \
-  -DENABLE_STATIC=true \
   -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient"
 make
 sudo make install
