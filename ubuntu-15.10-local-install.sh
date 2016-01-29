@@ -86,4 +86,4 @@ cmake .. \
   -DCMAKE_INSTALL_PREFIX="${INSTALL}/client-gnome" \
   -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient"
 make
-sudo make install
+make install
