@@ -55,13 +55,13 @@ TOP="$(pwd)"
 INSTALL="${TOP}/install"
 
 cd daemon
-RING="$(pwd)"
+DAEMON="$(pwd)"
 cd contrib
 mkdir -p native
 cd native
 ../bootstrap
 make -j$(nproc)
-cd "${RING}"
+cd "${DAEMON}"
 ./autogen.sh
 ./configure --prefix="${INSTALL}/daemon"
 make -j$(nproc)
@@ -75,7 +75,7 @@ cd build
 cmake .. \
   -DCMAKE_BUILD_TYPE=Debug \
   -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
-  -DRING_BUILD_DIR="${RING}/src"
+  -DRING_BUILD_DIR="${DAEMON}/src"
 make
 make install
 
