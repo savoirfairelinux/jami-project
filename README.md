@@ -22,12 +22,14 @@ Stop daemon and client:
 
 ## Ubuntu 15.10 host Android device
 
+This script does not automate the installation of any Android development tools.
+
 First ensure that you can build and install a minimal Android App on your device, e.g. <https://github.com/cirosantilli/android-cheat/tree/214fab34bb0e1627ac73e43b72dee7d1f8db7bfb/min>
 
 This will at least require installing the SDK.
 
 All executables used must be in your `PATH`, e.g. `adb`.
 
-Then build and install on all devices with:
+Then build and install on all connected devices with:
 
     ./ubuntu-15.10-android-install-all-devices.sh
