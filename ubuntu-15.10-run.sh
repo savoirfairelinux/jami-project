@@ -2,7 +2,7 @@
 # Run local install daemon and client that have
 # been installed with the install script on the background.
 cd "$(dirname "${BASH_SOURCE[0]}")"
-./install/daemon/libexec/dring >>daemon.log 2>&1 &
+./install/daemon/libexec/dring -c -d >>daemon.log 2>&1 &
 echo $! >daemon.pid
-LD_LIBRARY_PATH="$LD_LIBRARY_PATH:install/lrc/lib" ./install/client-gnome/bin/gnome-ring >>client-gnome.log 2>&1 &
+LD_LIBRARY_PATH="$LD_LIBRARY_PATH:install/lrc/lib" ./install/client-gnome/bin/gnome-ring -d >>client-gnome.log 2>&1 &
 echo $! >client-gnome.pid
