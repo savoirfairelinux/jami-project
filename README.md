@@ -10,15 +10,27 @@ I'd rather have a single Git repo, but without official support, maintaining a m
 
 Build and install locally under this repository:
 
-    ./ubuntu-15.10-local-install.sh
+    ./ubuntu-15.10-install.sh
 
-Run daemon and client on background:
+Run daemon and client that were installed locally on the background:
 
     ./ubuntu-15.10-run.sh
+
+Stdout and stderr go to `daemon.log` and `client-gnome.log`.
 
 Stop daemon and client:
 
     ./ubuntu-15.10-stop.sh
+
+Install globally for all users instead:
+
+    ./ubuntu-15.10-install.sh -g
+
+Run global install:
+
+    gnome-ring
+
+This already starts the daemon for us.
 
 ## Ubuntu 15.10 host Android device
 
