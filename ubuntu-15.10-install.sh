@@ -28,6 +28,9 @@ done
 make_install() {
   if $1; then
     sudo make install
+    # Or else the next non-sudo install will fail, because this generates some
+    # root owned files like install_manifest.txt under the build directory.
+    sudo chown -R "$USER" .
   else
     make install
   fi
