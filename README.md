@@ -30,7 +30,11 @@ Run global install:
 
     gnome-ring
 
-This already starts the daemon for us.
+This already starts the daemon automatically for us.
+
+Uninstall the global install:
+
+    ./ubuntu-15.10-uninstall.sh
 
 ## Ubuntu 15.10 host Android device
 
