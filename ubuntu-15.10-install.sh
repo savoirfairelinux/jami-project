@@ -51,9 +51,9 @@ make -j$(nproc)
 cd "${DAEMON}"
 ./autogen.sh
 if $global; then
-  ./configure
+  ./configure --enable-debug
 else
-  ./configure --prefix="${INSTALL}/daemon"
+  ./configure --enable-debug --prefix="${INSTALL}/daemon"
 fi
 make -j$(nproc)
 make_install $global
