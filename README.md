@@ -18,9 +18,7 @@ Run daemon and client that were installed locally on the background:
 
 Stdout and stderr go to `daemon.log` and `client-gnome.log`.
 
-Stop daemon and client:
-
-    ./ubuntu-15.10-stop.sh
+To stop both the daemon and the client, simply close the client GUI window, and it will also kill the daemon.
 
 Install globally for all users instead:
 
