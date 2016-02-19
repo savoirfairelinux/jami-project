@@ -1,0 +1,6 @@
+[gerrit]
+host=gerrit-ring.savoirfairelinux.com
+port=29420
+project=ring-project
+defaultremote=origin
+defaultbranch=master
