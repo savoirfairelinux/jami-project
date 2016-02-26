@@ -36,12 +36,10 @@ make_install() {
   fi
 }
 
-./ubuntu-15.10-dependencies.sh
-
 TOP="$(pwd)"
 INSTALL="${TOP}/install"
 
-cd daemon
+cd "${TOP}/daemon"
 DAEMON="$(pwd)"
 cd contrib
 mkdir -p native
