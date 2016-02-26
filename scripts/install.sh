@@ -36,12 +36,16 @@ make_install() {
   fi
 }
 
-./ubuntu-15.10-dependencies.sh
-
 TOP="$(pwd)"
 INSTALL="${TOP}/install"
 
-cd daemon
+if $global; then
+    BUILDDIR="build-global"
+else
+    BUILDDIR="build-local"
+fi
+
+cd "${TOP}/daemon"
 DAEMON="$(pwd)"
 cd contrib
 mkdir -p native
@@ -59,8 +63,8 @@ make -j$(nproc)
 make_install $global
 
 cd "${TOP}/lrc"
-mkdir -p build
-cd build
+mkdir -p ${BUILDDIR}
+cd ${BUILDDIR}
 if $global; then
   cmake .. -DCMAKE_BUILD_TYPE=Debug $static
 else
@@ -70,8 +74,8 @@ make
 make_install $global
 
 cd "${TOP}/client-gnome"
-mkdir -p build
-cd build
+mkdir -p ${BUILDDIR}
+cd ${BUILDDIR}
 if $global; then
   cmake .. $static
 else
