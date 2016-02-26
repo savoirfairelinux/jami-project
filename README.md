@@ -6,25 +6,21 @@ Fixes <https://tuleap.ring.cx/plugins/tracker/?aid=250>.
 
 I'd rather have a single Git repo, but without official support, maintaining a merged single git repo is useless, so I'll start with submodules which are easier to paste together.
 
-## Ubuntu 15.10
+## Using ring-build
 
 Build and install locally under this repository:
 
-    ./ubuntu-15.10-install.sh
+    ./ring-build --install
 
-Run daemon and client that were installed locally on the background:
+Run daemon and client that were installed locally.
 
-    ./ubuntu-15.10-run.sh
+    ./ring-build --run
 
-Stdout and stderr go to `daemon.log` and `client-gnome.log`.
-
-Stop daemon and client:
-
-    ./ubuntu-15.10-stop.sh
+You can then stop the processes with CTRL-C. You can also run them in the background with the `--background` argument and then use the `--stop` command to stop them. Stdout and stderr go to `daemon.log` and `client-gnome.log`.
 
 Install globally for all users instead:
 
-    ./ubuntu-15.10-install.sh -g
+    ./ring-build --install --global-install
 
 Run global install:
 
@@ -34,7 +30,7 @@ This already starts the daemon automatically for us.
 
 Uninstall the global install:
 
-    ./ubuntu-15.10-uninstall.sh
+    ./ring-build --uninstall
 
 ## Ubuntu 15.10 host Android device
 
@@ -48,4 +44,4 @@ All executables used must be in your `PATH`, e.g. `adb`.
 
 Then build and install on all connected devices with:
 
-    ./ubuntu-15.10-android-install-all-devices.sh
+    ./scripts/ubuntu-15.10-android-install-all-devices.sh
