@@ -13,3 +13,6 @@
 [submodule "lrc"]
 	path = lrc
 	url = https://gerrit-ring.savoirfairelinux.com/ring-lrc
+[submodule "client-macosx"]
+	path = client-macosx
+	url = https://gerrit-ring.savoirfairelinux.com/ring-client-macosx
