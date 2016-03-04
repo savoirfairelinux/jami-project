@@ -11,13 +11,17 @@ set -ex
 
 global=false
 static=''
-while getopts gs OPT; do
+client=''
+while getopts gsc: OPT; do
   case "$OPT" in
     g)
       global='true'
     ;;
     s)
       static='-DENABLE_STATIC=true'
+    ;;
+    c)
+      client="${OPTARG}"
     ;;
     \?)
       exit 1
@@ -55,9 +59,9 @@ make -j$(nproc)
 cd "${DAEMON}"
 ./autogen.sh
 if $global; then
-  ./configure
+  ./configure $CONFIGURE_FLAGS
 else
-  ./configure --prefix="${INSTALL}/daemon"
+  ./configure $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
 fi
 make -j$(nproc)
 make_install $global
@@ -73,13 +77,13 @@ fi
 make
 make_install $global
 
-cd "${TOP}/client-gnome"
+cd "${TOP}/${client}"
 mkdir -p ${BUILDDIR}
 cd ${BUILDDIR}
 if $global; then
   cmake .. $static
 else
-  cmake .. -DCMAKE_INSTALL_PREFIX="${INSTALL}/client-gnome" -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
+  cmake .. -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
 fi
 make
 make_install $global
