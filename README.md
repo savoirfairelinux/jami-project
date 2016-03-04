@@ -6,17 +6,34 @@ Fixes <https://tuleap.ring.cx/plugins/tracker/?aid=250>.
 
 I'd rather have a single Git repo, but without official support, maintaining a merged single git repo is useless, so I'll start with submodules which are easier to paste together.
 
+## Install python3
+
+Ring installer uses python3. Please make sure it is installed before running it.
+
 ## Using make-ring.py
+
+Build and install all the dependencies:
+
+    ./ring-build --dependencies
+
+#### Linux
+    Your distro package manager will be used.
+
+#### OSX
+    You need to setup Homebrew (http://brew.sh/) since their is no built-in package manager on OSX.
 
 Build and install locally under this repository:
 
     ./make-ring.py --install
 
-Run daemon and client that were installed locally.
+Run daemon and client that were installed locally:
 
     ./make-ring.py --run
 
-You can then stop the processes with CTRL-C. You can also run them in the background with the `--background` argument and then use the `--stop` command to stop them. Stdout and stderr go to `daemon.log` and `client-gnome.log`.
+You can then stop the processes with CTRL-C.
+
+_On Linux_ You can also run them in the background with the `--background` argument and then use the `--stop` command to stop them.
+Stdout and stderr go to `daemon.log` and `client-gnome.log`.
 
 Install globally for all users instead:
 
@@ -31,6 +48,15 @@ This already starts the daemon automatically for us.
 Uninstall the global install:
 
     ./make-ring.py --uninstall
+
+## Outputs
+
+#### Linux
+
+#### OSX
+
+You can find the .app file in the ./install/client-macosx folder.
+
 
 ## Ubuntu 15.10 host Android device
 
