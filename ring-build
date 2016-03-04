@@ -22,6 +22,12 @@ APT_INSTALL_SCRIPT = [
     'apt-get install -y %(packages)s'
 ]
 
+BREW_INSTALL_SCRIPT = [
+    'brew update',
+    'brew install -y %(packages)s',
+    'brew link --force gettext'
+]
+
 UBUNTU_DEPENDENCIES = [
     'autoconf', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
     'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
@@ -50,6 +56,11 @@ DEBIAN_DEPENDENCIES = [
     'qtbase5-dev', 'sip-tester', 'swig',  'uuid-dev', 'yasm'
 ]
 
+OSX_DEPENDENCIES = [
+    'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt5',
+    'libtool', 'yasm'
+]
+
 UNINSTALL_SCRIPT = [
     'make -C daemon uninstall',
     'xargs rm < lrc/build-global/install_manifest.txt',
@@ -72,6 +83,12 @@ def run_dependencies(args):
         execute_script(
             APT_INSTALL_SCRIPT,
             {"packages": ' '.join(DEBIAN_DEPENDENCIES)}
+        )
+    
+    elif args.distribution == "OSX":
+        execute_script(
+            BREW_INSTALL_SCRIPT,
+            {"packages": ' '.join(OSX_DEPENDENCIES)}
         )
 
     else:
@@ -168,7 +185,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Ubuntu', 'Debian']
+    supported_distros = ['Ubuntu', 'Debian', 'OSX']
     if parsed_args.distribution not in supported_distros:
         print('Distribution not supported.\nChoose one of: %s' \
                   % ', '.join(supported_distros),
@@ -196,7 +213,7 @@ def parse_args():
         '--stop', action='store_true',
         help='Stop the Ring processes')
 
-    ap.add_argument('--distribution', default='Ubuntu')
+    ap.add_argument('--distribution', default='')
     ap.add_argument('--static', default=False, action='store_true')
     ap.add_argument('--global-install', default=False, action='store_true')
     ap.add_argument('--debug', default=False, action='store_true')
