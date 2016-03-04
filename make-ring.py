@@ -22,6 +22,12 @@ APT_INSTALL_SCRIPT = [
     'apt-get install -y %(packages)s'
 ]
 
+BREW_INSTALL_SCRIPT = [
+    'brew update',
+    'brew install -y %(packages)s',
+    'brew link --force gettext'
+]
+
 UBUNTU_DEPENDENCIES = [
     'autoconf', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
     'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
@@ -50,10 +56,20 @@ DEBIAN_DEPENDENCIES = [
     'qtbase5-dev', 'sip-tester', 'swig',  'uuid-dev', 'yasm'
 ]
 
+OSX_DEPENDENCIES = [
+    'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt5',
+    'libtool', 'yasm', 'automake'
+]
+
 UNINSTALL_SCRIPT = [
     'make -C daemon uninstall',
     'xargs rm < lrc/build-global/install_manifest.txt',
     'xargs rm < client-gnome/build-global/install_manifest.txt',
+]
+
+OSX_UNINSTALL_SCRIPT = [
+    'make -C daemon uninstall',
+    'rm -rf install/client-macosx',
 ]
 
 STOP_SCRIPT = [
@@ -74,6 +90,12 @@ def run_dependencies(args):
             {"packages": ' '.join(DEBIAN_DEPENDENCIES)}
         )
 
+    elif args.distribution == "OSX":
+        execute_script(
+            BREW_INSTALL_SCRIPT,
+            {"packages": ' '.join(OSX_DEPENDENCIES)}
+        )
+
     else:
         print("Not yet implemented for current distribution (%s)" % args.distribution)
         sys.exit(1)
@@ -85,14 +107,26 @@ def run_install(args):
         install_args += ' -s'
     if args.global_install:
         install_args += ' -g'
-    execute_script(["./scripts/install.sh " + install_args])
+    if args.distribution == "OSX":
+        install_args += " -c client-macosx"
+        execute_script(["CONFIGURE_FLAGS='--without-dbus' ./scripts/install.sh " + install_args])
+    else:
+        install_args += '-c client-gnome'
+        execute_script(["./scripts/install.sh " + install_args])
 
 
 def run_uninstall(args):
-    execute_script(UNINSTALL_SCRIPT)
+    if args.distribution == "OSX":
+        execute_script(OSX_UNINSTALL_SCRIPT)
+    else:
+        execute_script(UNINSTALL_SCRIPT)
 
 
 def run_run(args):
+    if args.distribution == "OSX":
+        subprocess.Popen(["install/client-macosx/Ring.app/Contents/MacOS/Ring"])
+        return True
+
     run_env = os.environ
     run_env['LD_LIBRARY_PATH'] = run_env.get('LD_LIBRARY_PATH', '') + ":install/lrc/lib"
 
@@ -149,6 +183,7 @@ def run_run(args):
                 # file. All that matters is that we close files and kill processes
                 # in the right order.
                 pass
+    return True
 
 
 def run_stop(args):
@@ -172,7 +207,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Ubuntu', 'Debian']
+    supported_distros = ['Ubuntu', 'Debian', 'OSX']
     if parsed_args.distribution not in supported_distros:
         print('Distribution not supported.\nChoose one of: %s' \
                   % ', '.join(supported_distros),
