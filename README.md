@@ -6,7 +6,14 @@ Fixes <https://tuleap.ring.cx/plugins/tracker/?aid=250>.
 
 I'd rather have a single Git repo, but without official support, maintaining a merged single git repo is useless, so I'll start with submodules which are easier to paste together.
 
+## Install python3
+
+Ring installer uses python3. Please make sure it is installed before running it. 
+
 ## Using ring-build
+
+Build and install all the dependencies
+    ./ring-build --dependencies 
 
 Build and install locally under this repository:
 
@@ -17,6 +24,8 @@ Run daemon and client that were installed locally.
     ./ring-build --run
 
 You can then stop the processes with CTRL-C. You can also run them in the background with the `--background` argument and then use the `--stop` command to stop them. Stdout and stderr go to `daemon.log` and `client-gnome.log`.
+
+You can find the .app file in the ./install/client-macosx folder.
 
 Install globally for all users instead:
 
