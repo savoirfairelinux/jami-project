@@ -97,6 +97,7 @@ def run_dependencies(args):
 
 
 def run_install(args):
+    init_modules()
     install_args = ''
     if args.static:
         install_args += ' -s'
@@ -234,6 +235,9 @@ def parse_args():
 
     return parsed_args
 
+def init_modules():
+    os.system("git submodule init")
+    os.system("git submodule update")
 
 def main():
     parsed_args = parse_args()
