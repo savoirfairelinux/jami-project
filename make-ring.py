@@ -17,6 +17,10 @@ DEBIAN_BASED_DISTROS = [
     'Ubuntu',
 ]
 
+RPM_BASED_DISTROS = [
+    'Fedora',
+]
+
 APT_INSTALL_SCRIPT = [
     'apt-get update',
     'apt-get install -y %(packages)s'
@@ -26,6 +30,21 @@ BREW_INSTALL_SCRIPT = [
     'brew update',
     'brew install -y %(packages)s',
     'brew link --force gettext'
+]
+RPM_INSTALL_SCRIPT = [
+    'sudo dnf update',
+    'sudo dnf install -y %(packages)s'
+]
+
+FEDORA_DEPENDENCIES = [
+    'autoconf', 'automake', 'cmake', 'speexdsp-devel', 'pulseaudio-libs-devel',
+    'libsamplerate-devel', 'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
+    'yaml-cpp-devel', 'boost-devel', 'dbus-c++-devel', 'dbus-devel',
+    'libsndfile-devel', 'libsrtp-devel', 'libXext-devel', 'libXfixes-devel', 'yasm',
+    'speex-devel', 'chrpath', 'check', 'astyle', 'uuid-c++-devel', 'gettext-devel',
+    'gcc-c++', 'which', 'alsa-lib-devel', 'systemd-devel', 'libuuid-devel',
+    'uuid-devel', 'gnutls-devel', 'nettle-devel', 'opus-devel', 'speexdsp-devel',
+    'yaml-cpp-devel', 'java-1.8.0-openjdk', 'qt5-qtbase-devel', 'swig',
 ]
 
 UBUNTU_DEPENDENCIES = [
@@ -83,6 +102,12 @@ def run_dependencies(args):
         execute_script(
             APT_INSTALL_SCRIPT,
             {"packages": ' '.join(DEBIAN_DEPENDENCIES)}
+        )
+
+    elif args.distribution == "Fedora":
+        execute_script(
+            RPM_INSTALL_SCRIPT,
+            {"packages": ' '.join(FEDORA_DEPENDENCIES)}
         )
 
     elif args.distribution == "OSX":
@@ -200,7 +225,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Ubuntu', 'Debian', 'OSX']
+    supported_distros = ['Ubuntu', 'Debian', 'OSX', 'Fedora']
     if parsed_args.distribution not in supported_distros:
         print('Distribution not supported.\nChoose one of: %s' \
                   % ', '.join(supported_distros),
