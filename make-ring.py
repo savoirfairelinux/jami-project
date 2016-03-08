@@ -11,6 +11,7 @@ import os
 import subprocess
 import sys
 import time
+import platform
 
 DEBIAN_BASED_DISTROS = [
     'Debian',
@@ -232,13 +233,12 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Ubuntu', 'Debian', 'OSX', 'Fedora']
+    supported_distros = ['Ubuntu', 'Debian', 'OSX', 'Fedora', 'Automatic']
     if parsed_args.distribution not in supported_distros:
         print('Distribution not supported.\nChoose one of: %s' \
                   % ', '.join(supported_distros),
             file=sys.stderr)
         sys.exit(1)
-
 
 def parse_args():
     ap = argparse.ArgumentParser(description="Ring build tool")
@@ -260,16 +260,33 @@ def parse_args():
         '--stop', action='store_true',
         help='Stop the Ring processes')
 
-    ap.add_argument('--distribution', default='Ubuntu')
+    ap.add_argument('--distribution', default='Automatic')
     ap.add_argument('--static', default=False, action='store_true')
     ap.add_argument('--global-install', default=False, action='store_true')
     ap.add_argument('--debug', default=False, action='store_true')
     ap.add_argument('--background', default=False, action='store_true')
 
     parsed_args = ap.parse_args()
+
+    if parsed_args.distribution == 'Automatic':
+        parsed_args.distribution = choose_distribution()
+
     validate_args(parsed_args)
 
     return parsed_args
+
+def choose_distribution():
+    system = platform.system().lower()
+    if system == "linux" or system == "linux2":
+        with open("/etc/os-release") as f:
+            for line in f:
+                k,v = line.split("=")
+                if k.strip() == 'NAME':
+                    return v.strip()
+    elif system == "darwin":
+        return 'OSX'
+
+    return 'Unknown'
 
 
 def main():
