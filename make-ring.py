@@ -129,6 +129,9 @@ def run_install(args):
     if args.global_install:
         install_args += ' -g'
     if args.distribution == "OSX":
+        proc= subprocess.Popen("brew --prefix qt5", shell=True, stdout=subprocess.PIPE)
+        qt5dir = proc.stdout.read()
+        os.environ['CMAKE_PREFIX_PATH'] = str(qt5dir.decode('ascii'))
         install_args += " -c client-macosx"
         execute_script(["CONFIGURE_FLAGS='--without-dbus' ./scripts/install.sh " + install_args])
     else:
