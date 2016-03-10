@@ -71,9 +71,9 @@ cd "${TOP}/lrc"
 mkdir -p ${BUILDDIR}
 cd ${BUILDDIR}
 if $global; then
-  cmake .. -DCMAKE_BUILD_TYPE=Debug $static
+  cmake .. -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH -DCMAKE_BUILD_TYPE=Debug $static
 else
-  cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" -DRING_BUILD_DIR="${DAEMON}/src" $static
+  cmake .. -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" -DRING_BUILD_DIR="${DAEMON}/src" $static
 fi
 make
 make_install $global
@@ -82,9 +82,9 @@ cd "${TOP}/${client}"
 mkdir -p ${BUILDDIR}
 cd ${BUILDDIR}
 if $global; then
-  cmake .. $static
+  cmake .. -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH $static
 else
-  cmake .. -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
+  cmake .. -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
 fi
 make
 make_install $global
