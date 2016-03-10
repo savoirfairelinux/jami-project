@@ -130,6 +130,7 @@ def run_install(args):
     if args.global_install:
         install_args += ' -g'
     if args.distribution == "OSX":
+        os.environ['CMAKE_PREFIX_PATH'] = "$(brew --prefix qt5)"
         install_args += " -c client-macosx"
         execute_script(["CONFIGURE_FLAGS='--without-dbus' ./scripts/install.sh " + install_args])
     else:
