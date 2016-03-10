@@ -12,6 +12,7 @@ import subprocess
 import sys
 import time
 import platform
+import multiprocessing
 
 DEBIAN_BASED_DISTROS = [
     'Debian',
@@ -124,6 +125,7 @@ def run_dependencies(args):
 
 def run_install(args):
     install_args = ''
+    install_args += ' -p ' + str(multiprocessing.cpu_count())
     if args.static:
         install_args += ' -s'
     if args.global_install:
