@@ -56,7 +56,12 @@ cd contrib
 mkdir -p native
 cd native
 ../bootstrap
-make -j$(nproc)
+
+if command -v nproc > /dev/null; then
+    make -j$(nproc)
+else
+    make -j2
+fi
 cd "${DAEMON}"
 ./autogen.sh
 if $global; then
@@ -64,7 +69,11 @@ if $global; then
 else
   ./configure $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
 fi
-make -j$(nproc)
+if command -v nproc > /dev/null; then
+    make -j$(nproc)
+else
+    make -j2
+fi
 make_install $global
 
 cd "${TOP}/lrc"
