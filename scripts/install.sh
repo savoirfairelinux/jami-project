@@ -7,13 +7,15 @@
   # -g: install globally instead for all users
   # -s: link everything statically, no D-Bus communication. More likely to work!
   # -c: client to build
+  # -p: number of processors to use
 
 set -ex
 
 global=false
 static=''
 client=''
-while getopts gsc: OPT; do
+proc=''
+while getopts gsc:p: OPT; do
   case "$OPT" in
     g)
       global='true'
@@ -23,6 +25,9 @@ while getopts gsc: OPT; do
     ;;
     c)
       client="${OPTARG}"
+    ;;
+    p)
+      proc="${OPTARG}"
     ;;
     \?)
       exit 1
@@ -56,7 +61,7 @@ cd contrib
 mkdir -p native
 cd native
 ../bootstrap
-make -j$(nproc)
+make -j2
 cd "${DAEMON}"
 ./autogen.sh
 if $global; then
@@ -64,7 +69,7 @@ if $global; then
 else
   ./configure $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
 fi
-make -j$(nproc)
+make -j${proc}
 make_install $global
 
 cd "${TOP}/lrc"
