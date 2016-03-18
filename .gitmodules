@@ -16,3 +16,6 @@
 [submodule "client-macosx"]
 	path = client-macosx
 	url = https://gerrit-ring.savoirfairelinux.com/ring-client-macosx
+[submodule "opendht"]
+	path = opendht
+	url = https://github.com/savoirfairelinux/opendht.git
