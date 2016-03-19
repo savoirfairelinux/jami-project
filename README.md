@@ -6,6 +6,11 @@ Fixes <https://tuleap.ring.cx/plugins/tracker/?aid=250>.
 
 I'd rather have a single Git repo, but without official support, maintaining a merged single git repo is useless, so I'll start with submodules which are easier to paste together.
 
+Initialize and fetch the submodules:
+
+    git submodule init
+    git submodule update
+
 ## Using make-ring.py
 
 Build and install locally under this repository:
