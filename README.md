@@ -14,7 +14,7 @@ Ring installer uses python3. Please make sure it is installed before running it.
 
 Build and install all the dependencies:
 
-    ./ring-build --dependencies
+    ./make-ring.py --dependencies
 
 #### Linux
     Your distro package manager will be used.

@@ -141,7 +141,7 @@ def run_install(args):
         install_args += " -c client-macosx"
         execute_script(["CONFIGURE_FLAGS='--without-dbus' ./scripts/install.sh " + install_args])
     else:
-        install_args += '-c client-gnome'
+        install_args += ' -c client-gnome'
         execute_script(["./scripts/install.sh " + install_args])
 
 
@@ -286,7 +286,7 @@ def choose_distribution():
             for line in f:
                 k,v = line.split("=")
                 if k.strip() == 'NAME':
-                    return v.strip()
+                    return v.strip().replace('"','')
     elif system == "darwin":
         return 'OSX'
 
