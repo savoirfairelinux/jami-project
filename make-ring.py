@@ -286,7 +286,7 @@ def choose_distribution():
             for line in f:
                 k,v = line.split("=")
                 if k.strip() == 'NAME':
-                    return v.strip()
+                    return v.strip().replace('"','')
     elif system == "darwin":
         return 'OSX'
 
