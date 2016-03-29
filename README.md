@@ -2,7 +2,7 @@
 
 Synchronization via submodules of the repositories of <https://ring.cx/> to states in which they work together + scripts to build for each platform easily.
 
-## First thing first
+## First thing
 
     git submodule update --init
 
@@ -10,64 +10,64 @@ Synchronization via submodules of the repositories of <https://ring.cx/> to stat
 
 Ring installer uses python3. Please make sure it is installed before running it.
 
-## Using make-ring.py
+## On Linux
 
-Build and install all the dependencies:
+#### Build and install all the dependencies:
 
     ./make-ring.py --dependencies
 
-#### Linux
-    Your distro package manager will be used.
+Your distro package manager will be used.
 
-#### OSX
-    You need to setup Homebrew (http://brew.sh/) since their is no built-in package manager on OSX.
-
-Build and install locally under this repository:
+#### Build and install locally under this repository:
 
     ./make-ring.py --install
 
-Run daemon and client that were installed locally:
+#### Run daemon and client that were installed locally:
 
-    ./make-ring.py --run
-
+	./make-ring.py --run
 You can then stop the processes with CTRL-C.
 
-_On Linux_ You can also run them in the background with the `--background` argument and then use the `--stop` command to stop them.
-Stdout and stderr go to `daemon.log` and `client-gnome.log`.
+You can also run them in the background with the --background argument and then use the --stop command to stop them. Stdout and stderr go to daemon.log and client-gnome.log.
 
-Install globally for all users instead:
+#### Install globally for all users instead:
 
     ./make-ring.py --install --global-install
 
-Run global install:
+#### Run global install:
 
     gnome-ring
 
 This already starts the daemon automatically for us.
 
-Uninstall the global install:
+#### Uninstall the global install:
 
     ./make-ring.py --uninstall
 
-## Outputs
+## On OSX
 
-#### Linux
+You need to setup Homebrew (<http://brew.sh/>) since their is no built-in package manager on OSX.
 
-#### OSX
+#### Build and install all the dependencies:
+
+    ./make-ring.py --dependencies
+
+
+#### Build and install locally under this repository:
+
+    ./make-ring.py --install
+
+#### Output
 
 You can find the .app file in the ./install/client-macosx folder.
 
+## For Android
 
-## Ubuntu 15.10 host Android device
+There is not dependency to install. Please make sure you have the Android SDK and NDK installed, and that their paths are properly set. For further information, please visit <https://github.com/savoirfairelinux/ring-client-android>
 
-This script does not automate the installation of any Android development tools.
+#### Build and install locally under this repository:
 
-First ensure that you can build and install a minimal Android App on your device, e.g. <https://github.com/cirosantilli/android-cheat/tree/214fab34bb0e1627ac73e43b72dee7d1f8db7bfb/min>
+    ./make-ring.py --install --distribution=Android
 
-This will at least require installing the SDK.
+#### Output
 
-All executables used must be in your `PATH`, e.g. `adb`.
-
-Then build and install on all connected devices with:
-
-    ./scripts/ubuntu-15.10-android-install-all-devices.sh
+You can find the .apk file in the ./client-android/ring-android/app/build/outputs
