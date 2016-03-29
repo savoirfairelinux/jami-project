@@ -123,6 +123,10 @@ def run_dependencies(args):
             {"packages": ' '.join(OSX_DEPENDENCIES)}
         )
 
+    elif args.distribution == "Android":
+        print("The Android version does not need more dependencies.\nPlease continue with the --install instruction.")
+        sys.exit(1)
+
     else:
         print("Not yet implemented for current distribution (%s)" % args.distribution)
         sys.exit(1)
@@ -140,6 +144,9 @@ def run_install(args):
         os.environ['CMAKE_PREFIX_PATH'] = str(qt5dir.decode('ascii'))
         install_args += " -c client-macosx"
         execute_script(["CONFIGURE_FLAGS='--without-dbus' ./scripts/install.sh " + install_args])
+    elif args.distribution == "Android":
+        os.chdir("./client-android")
+        execute_script(["./compile.sh"])
     else:
         install_args += ' -c client-gnome'
         execute_script(["./scripts/install.sh " + install_args])
@@ -237,7 +244,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Ubuntu', 'Debian', 'OSX', 'Fedora', 'Automatic']
+    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Automatic']
     if parsed_args.distribution not in supported_distros:
         print('Distribution not supported.\nChoose one of: %s' \
                   % ', '.join(supported_distros),
