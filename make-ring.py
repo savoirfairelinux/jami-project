@@ -13,6 +13,7 @@ import sys
 import time
 import platform
 import multiprocessing
+import shutil
 
 DEBIAN_BASED_DISTROS = [
     'Debian',
@@ -131,6 +132,21 @@ def run_dependencies(args):
         print("Not yet implemented for current distribution (%s)" % args.distribution)
         sys.exit(1)
 
+def run_init():
+    os.system("git submodule update --init")
+    for project in ["daemon", "lrc", "client-macosx", "client-gnome", "client-android"]:
+        copy_file("./scripts/commit-msg", ".git/modules/"+project+"/hooks")
+
+def copy_file(src, dest):
+    print("Copying:" + src + " to " + dest)
+    try:
+        shutil.copy2(src, dest)
+    # eg. src and dest are the same file
+    except shutil.Error as e:
+        print('Error: %s' % e)
+    # eg. source or destination doesn't exist
+    except IOError as e:
+        print('Error: %s' % e.strerror)
 
 def run_install(args):
     install_args = ' -p ' + str(multiprocessing.cpu_count())
@@ -256,6 +272,9 @@ def parse_args():
 
     ga = ap.add_mutually_exclusive_group(required=True)
     ga.add_argument(
+        '--init', action='store_true',
+        help='Init Ring repository')
+    ga.add_argument(
         '--dependencies', action='store_true',
         help='Install ring build dependencies')
     ga.add_argument(
@@ -305,6 +324,9 @@ def main():
 
     if parsed_args.dependencies:
         run_dependencies(parsed_args)
+
+    elif parsed_args.init:
+        run_init()
 
     elif parsed_args.install:
         run_install(parsed_args)
