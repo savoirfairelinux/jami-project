@@ -5,6 +5,16 @@ Instead we host a public gerrit server.
 
     https://gerrit-ring.savoirfairelinux.com
 
+Before submitting a contribution, you need to register on it, either
+with your Github or Google account.
+Head to the settings section to either set:
+
+Http password and username
+    https://gerrit-ring.savoirfairelinux.com/#/settings/http-password
+
+Ssh key
+    https://gerrit-ring.savoirfairelinux.com/#/settings/ssh-keys
+
 More documentation on Gerrit:
 
     https://www.gerritcodereview.com/

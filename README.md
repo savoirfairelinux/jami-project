@@ -2,13 +2,13 @@
 
 Synchronization via submodules of the repositories of <https://ring.cx/> to states in which they work together + scripts to build for each platform easily.
 
-## First thing first
-
-    git submodule update --init
-
 ## Install python3
 
 Ring installer uses python3. Please make sure it is installed before running it.
+
+## First things first
+
+    ./make-ring.py --init
 
 ## On Linux
 
