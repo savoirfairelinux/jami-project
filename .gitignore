@@ -2,3 +2,5 @@
 *.pid
 /install
 .DS_Store
+env
+docs/build
