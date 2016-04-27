@@ -10,3 +10,4 @@ Contents:
    contributing
    compiling_and_installing/index
    releasing
+   setting_up_turn_stun
