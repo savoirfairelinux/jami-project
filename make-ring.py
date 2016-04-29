@@ -188,7 +188,7 @@ def run_run(args):
         dring_log = open("daemon.log", 'a')
         dring_log.write('=== Starting daemon (%s) ===' % time.strftime("%d/%m/%Y %H:%M:%S"))
         dring_process = subprocess.Popen(
-            ["./install/daemon/libexec/dring", "-c", "-d"],
+            ["./install/daemon/sbin/dring", "-c", "-d"],
             stdout=dring_log,
             stderr=dring_log
         )
@@ -210,7 +210,7 @@ def run_run(args):
 
         if args.debug:
             subprocess.call(
-                ['gdb','-x', 'gdb.gdb', './install/daemon/libexec/dring'],
+                ['gdb','-x', 'gdb.gdb', './install/daemon/sbin/dring'],
             )
 
         if args.background == False:
