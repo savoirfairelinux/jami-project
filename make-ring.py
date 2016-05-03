@@ -47,7 +47,7 @@ FEDORA_DEPENDENCIES = [
     'speex-devel', 'chrpath', 'check', 'astyle', 'uuid-c++-devel', 'gettext-devel',
     'gcc-c++', 'which', 'alsa-lib-devel', 'systemd-devel', 'libuuid-devel',
     'uuid-devel', 'gnutls-devel', 'nettle-devel', 'opus-devel', 'speexdsp-devel',
-    'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig',
+    'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel'
 ]
 
 UBUNTU_DEPENDENCIES = [
@@ -61,7 +61,7 @@ UBUNTU_DEPENDENCIES = [
     'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libsrtp-dev',
     'libswscale-dev', 'libtool', 'libudev-dev', 'libupnp-dev',
     'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
-    'uuid-dev', 'yasm'
+    'uuid-dev', 'yasm', 'libqrencode-dev'
 ]
 
 
@@ -75,7 +75,7 @@ DEBIAN_DEPENDENCIES = [
     'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev', 'libsndfile1-dev',
     'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev',
-    'qtbase5-dev', 'sip-tester', 'swig',  'uuid-dev', 'yasm'
+    'qtbase5-dev', 'sip-tester', 'swig',  'uuid-dev', 'yasm', 'libqrencode-dev'
 ]
 
 OSX_DEPENDENCIES = [
