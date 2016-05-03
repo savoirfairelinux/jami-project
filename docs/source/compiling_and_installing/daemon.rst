@@ -9,7 +9,7 @@ Linux
 
 .. code-block:: bash
 
-    cd ../contrib/
+    cd contrib
     mkdir native
     cd native
     ../bootstrap
