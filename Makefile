@@ -1,6 +1,6 @@
 .PHONY: docs
 docs: env
-	make -C docs html
+	env/bin/sphinx-build -b html docs/source docs/build/html
 
 env:
 	virtualenv env
