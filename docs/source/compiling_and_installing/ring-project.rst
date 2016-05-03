@@ -1,5 +1,9 @@
-Using the make-ring script (recommended)
-========================================
+Building Using the make-ring script (recommended)
+================================================
+
+If you are reading this from the README.rst page, more documentation can be found on
+https://ring.readthedocs.io/. You may also build the documentation with ``make docs``.
+The documentation will be built in ``docs/build/html``.
 
 Dependencies
 ############
