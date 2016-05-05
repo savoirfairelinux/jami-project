@@ -11,3 +11,4 @@ Contents:
    compiling_and_installing/index
    releasing
    setting_up_turn_stun
+   connecting_to_ldap
