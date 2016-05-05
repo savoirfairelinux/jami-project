@@ -78,7 +78,10 @@ cd ${BUILDDIR}
 if $global; then
   cmake .. -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH -DCMAKE_BUILD_TYPE=Debug $static
 else
-  cmake .. -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" -DRING_BUILD_DIR="${DAEMON}/src" $static
+  cmake ..  -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
+            -DRING_BUILD_DIR="${DAEMON}/src" $static
 fi
 make
 make_install $global
@@ -89,7 +92,10 @@ cd ${BUILDDIR}
 if $global; then
   cmake .. -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH $static
 else
-  cmake .. -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
+  cmake ..  -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH \
+            -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
+            -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
+            -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
 fi
 make
 make_install $global
