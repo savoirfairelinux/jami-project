@@ -10,3 +10,4 @@ Contents:
    contributing
    compiling_and_installing/index
    releasing
+   connecting_to_ldap
