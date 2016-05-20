@@ -47,7 +47,7 @@ FEDORA_DEPENDENCIES = [
     'speex-devel', 'chrpath', 'check', 'astyle', 'uuid-c++-devel', 'gettext-devel',
     'gcc-c++', 'which', 'alsa-lib-devel', 'systemd-devel', 'libuuid-devel',
     'uuid-devel', 'gnutls-devel', 'nettle-devel', 'opus-devel', 'speexdsp-devel',
-    'yaml-cpp-devel', 'java-1.8.0-openjdk', 'qt5-qtbase-devel', 'swig',
+    'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel'
 ]
 
 UBUNTU_DEPENDENCIES = [
@@ -60,8 +60,8 @@ UBUNTU_DEPENDENCIES = [
     'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev',
     'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libsrtp-dev',
     'libswscale-dev', 'libtool', 'libudev-dev', 'libupnp-dev',
-    'libyaml-cpp-dev', 'openjdk-7-jdk', 'qtbase5-dev', 'sip-tester', 'swig',
-    'uuid-dev', 'yasm'
+    'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
+    'uuid-dev', 'yasm', 'libqrencode-dev'
 ]
 
 
@@ -74,8 +74,8 @@ DEBIAN_DEPENDENCIES = [
     'libgtk-3-dev', 'libjack-dev', 'libnotify-dev', 'libopus-dev',
     'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev', 'libsndfile1-dev',
     'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
-    'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'openjdk-7-jdk',
-    'qtbase5-dev', 'sip-tester', 'swig',  'uuid-dev', 'yasm'
+    'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev',
+    'qtbase5-dev', 'sip-tester', 'swig',  'uuid-dev', 'yasm', 'libqrencode-dev'
 ]
 
 OSX_DEPENDENCIES = [
@@ -188,7 +188,7 @@ def run_run(args):
         dring_log = open("daemon.log", 'a')
         dring_log.write('=== Starting daemon (%s) ===' % time.strftime("%d/%m/%Y %H:%M:%S"))
         dring_process = subprocess.Popen(
-            ["./install/daemon/libexec/dring", "-c", "-d"],
+            ["./install/daemon/sbin/dring", "-c", "-d"],
             stdout=dring_log,
             stderr=dring_log
         )
@@ -210,7 +210,7 @@ def run_run(args):
 
         if args.debug:
             subprocess.call(
-                ['gdb','-x', 'gdb.gdb', './install/daemon/libexec/dring'],
+                ['gdb','-x', 'gdb.gdb', './install/daemon/sbin/dring'],
             )
 
         if args.background == False:
