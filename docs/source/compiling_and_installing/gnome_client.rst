@@ -38,6 +38,14 @@ Run the following from the project root directory:
     cmake ..
     make
 
+The following options are often usefull to append to the cmake line:
+
+.. code-block:: none
+
+    -DCMAKE_INSTALL_PREFIX=<install location>
+    -DLibRingClient_DIR=<path the the installed cmake module of LibRingClient>
+    -DLibRingClient_PROJECT_DIR=<path to the project folder of LibRingClient>
+
 You can then simply run ``./gnome-ring`` from the build directory
 
 Installing
