@@ -8,4 +8,4 @@ env:
 
 clean:
 	rm -rf env
-	make -C docs clean
+	rm -rf docs/build
