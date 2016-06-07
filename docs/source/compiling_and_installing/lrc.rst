@@ -22,6 +22,7 @@ The following options are often usefull to append to the cmake line:
 
     -DRING_BUILD_DIR=<daemon install location>
     -DCMAKE_INSTALL_PREFIX=<install location>
+    -DRING_XML_INTERFACES_DIR=<daemon dbus interface definitions directory>
     -DCMAKE_BUILD_TYPE=<Debug to compile with debug symbols>
     -DENABLE_VIDEO=<False to disable video support>
 
