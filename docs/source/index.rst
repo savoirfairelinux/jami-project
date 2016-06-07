@@ -1,14 +1,53 @@
 Welcome to Ring's documentation!
 ================================
 
-Contents:
+As a new user, :ref:`getting started <getting_started>` is a good place to
+start.
+
+As a developer looking to get started with a contribution, see
+:ref:`contributing <contributing>` and :ref:`how to build <building>`.
 
 .. toctree::
-   :maxdepth: 2
+   :caption: Introduction
+   :maxdepth: 1
+   :glob:
 
-   getting_started
-   contributing
-   compiling_and_installing/index
-   releasing
-   setting_up_turn_stun
-   connecting_to_ldap
+   intro/getting_started
+
+.. toctree::
+   :caption: User Documentation
+   :maxdepth: 1
+   :glob:
+
+   users/connecting_to_ldap
+   users/setting_up_turn_stun
+
+.. toctree::
+   :caption: Developpers Documentation
+   :maxdepth: 1
+   :glob:
+
+   dev/contributing
+   dev/compiling_and_installing/index
+   dev/releasing
+
+.. toctree::
+   :caption: Ring Daemon
+   :maxdepth: 1
+   :glob:
+
+   dev/daemon/*
+
+.. toctree::
+   :caption: LibRingClient
+   :maxdepth: 1
+   :glob:
+
+   dev/lrc/*
+
+.. toctree::
+   :caption: Gnome Client
+   :maxdepth: 1
+   :glob:
+
+   dev/gnome-client/*
