@@ -51,7 +51,7 @@ Run global install:
 
 .. code-block:: bash
 
-    gnome-ring
+    ring-gnome
 
 This already starts the daemon automatically for us.
 

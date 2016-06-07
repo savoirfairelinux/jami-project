@@ -46,7 +46,7 @@ The following options are often usefull to append to the cmake line:
     -DLibRingClient_DIR=<path the the installed cmake module of LibRingClient>
     -DLibRingClient_PROJECT_DIR=<path to the project folder of LibRingClient>
 
-You can then simply run ``./gnome-ring`` from the build directory
+You can then simply run ``./ring-gnome`` from the build directory
 
 Installing
 ##########
