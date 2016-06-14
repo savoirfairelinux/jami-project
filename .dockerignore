@@ -1,0 +1,9 @@
+client-android
+client-gnome
+client-macosx
+client-windows
+daemon
+lrc
+ring_*
+.git
+*/.git
