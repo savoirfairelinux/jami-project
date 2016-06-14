@@ -38,6 +38,31 @@ $(RELEASE_TARBALL_FILENAME):
 
 	rm -rf $(RING_PROJECT_DIR)/daemon/contrib/tarballs/*
 
+#######################
+## Packaging targets ##
+#######################
+
+.PHONY: package-all
+package-all: package-debian9
+
+.PHONY: docker-image-debian9
+docker-image-debian9:
+	docker build \
+        -t ring-packaging-debian9 \
+        -f docker/Dockerfile_debian9 \
+        $(RING_PROJECT_DIR)
+
+.PHONY: package-debian9
+package-debian9: docker-image-debian9 release-tarball
+	mkdir -p packages/debian9
+	docker run \
+        --rm \
+        -e RELEASE_VERSION=$(RELEASE_VERSION) \
+        -e RELEASE_TARBALL_FILENAME=$(RELEASE_TARBALL_FILENAME) \
+        -v $(RING_PROJECT_DIR):/opt/ring-project-ro:ro \
+        -v $(RING_PROJECT_DIR)/packages/debian9:/opt/output \
+        -t ring-packaging-debian9
+
 ###################
 ## Other targets ##
 ###################
@@ -52,4 +77,5 @@ env:
 clean:
 	rm -rf env
 	rm ring_*.tar.gz
+	rm -rf packages
 	make -C docs clean
