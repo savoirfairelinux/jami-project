@@ -12,6 +12,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+.DEFAULT_GOAL := package-all
 
 ##############################
 ## Version number variables ##
@@ -31,10 +33,15 @@ COMMIT_ID:=$(shell git rev-parse --short HEAD)
 RELEASE_VERSION:=$(LAST_COMMIT_DATE_SHORT).$(NUMBER_OF_COMMITS).$(COMMIT_ID)
 RELEASE_TARBALL_FILENAME:=ring_$(RELEASE_VERSION).tar.gz
 
+# Debian versions
+DEBIAN_VERSION:=$(RELEASE_VERSION)~dfsg1-1
+DEBIAN_DSC_FILENAME:=ring_$(DEBIAN_VERSION).dsc
+
 #####################
 ## Other variables ##
 #####################
 TMPDIR := $(shell mktemp -d)
+CURRENT_UID:=$(shell id -u)
 
 #############################
 ## Release tarball targets ##
@@ -59,6 +66,29 @@ $(RELEASE_TARBALL_FILENAME):
 
 	rm -rf $(CURDIR)/daemon/contrib/tarballs/*
 
+#######################
+## Packaging targets ##
+#######################
+
+.PHONY: package-all
+package-all: package-debian8 \
+             package-debian8_i386 \
+             package-debian9 \
+             package-debian9_i386 \
+             package-ubuntu14.04 \
+             package-ubuntu14.04_i386 \
+             package-ubuntu15.04 \
+             package-ubuntu15.04_i386 \
+             package-ubuntu15.10 \
+             package-ubuntu15.10_i386 \
+             package-ubuntu16.04 \
+             package-ubuntu16.04_i386
+
+# Append the output of make-packaging-target to this Makefile
+# see Makefile.packaging.distro_targets
+$(shell scripts/make-packaging-target.py --generate-all > Makefile.packaging.distro_targets)
+include Makefile.packaging.distro_targets
+
 ###################
 ## Other targets ##
 ###################
@@ -76,3 +106,5 @@ clean:
 	rm -rf env
 	rm -rf docs/build
 	rm -f ring_*.tar.gz
+	rm -rf packages
+	rm -f Makefile.packaging.distro_targets
