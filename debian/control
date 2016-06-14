@@ -1,0 +1,71 @@
+Source: ring
+Section: comm
+Priority: extra
+Maintainer: Debian VoIP Team <pkg-voip-maintainers@lists.alioth.debian.org>
+Uploaders: Alexandre Viau <aviau@debian.org>
+Build-Depends: debhelper (>= 9),
+               autoconf,
+               automake,
+               cmake,
+               libtool,
+# gnome client
+               libdbus-1-dev,
+               libdbus-c++-dev,
+               libupnp-dev,
+               libgnutls28-dev,
+               libebook1.2-dev,
+               libclutter-gtk-1.0-dev,
+               libclutter-1.0-dev,
+               libglib2.0-dev,
+               libgtk-3-dev,
+               libnotify-dev,
+               qtbase5-dev,
+               qttools5-dev,
+               qttools5-dev-tools,
+               yasm,
+               unbound-anchor,
+               git-core,
+               autotools-dev,
+               gnome-icon-theme-symbolic,
+               gettext,
+# ring-daemon
+               libpulse-dev,
+               libsamplerate0-dev,
+               libasound2-dev,
+               libexpat1-dev,
+               libpcre3-dev,
+               libyaml-cpp-dev,
+               libboost-dev,
+               libsndfile1-dev,
+               libsrtp-dev,
+               libxext-dev,
+               libxfixes-dev,
+               autopoint,
+               libspeex-dev,
+               libspeexdsp-dev,
+               chrpath,
+               uuid-dev,
+               libavcodec-dev,
+               libavutil-dev,
+               libavformat-dev,
+               libswscale-dev,
+               libavdevice-dev,
+               libopus-dev,
+               libudev-dev,
+               libticonv-dev,
+               libgsm1-dev,
+               libjsoncpp-dev,
+               libqrencode-dev
+Standards-Version: 3.9.7
+Homepage: https://ring.cx
+Vcs-Git: https://anonscm.debian.org/git/pkg-voip/ring.git
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-voip/ring.git
+
+Package: ring
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: Secure and distributed voice, video and chat platform - desktop client
+ Ring (ring.cx) is a secure and distributed voice, video and chat communication
+ platform that requires no centralized server and leaves the power of privacy
+ in the hands of the user.
