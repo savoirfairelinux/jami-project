@@ -1,0 +1,17 @@
+Description: Assume gsm is installed to avoid internet access
+Origin: vendor
+Author: Alexandre Viau <aviau@debian.org>
+Reviewed-by: Alexandre Viau <aviau@debian.org>
+Last-Update: 2016-04-22
+
+--- a/daemon/contrib/src/gsm/rules.mak
++++ b/daemon/contrib/src/gsm/rules.mak
+@@ -4,6 +4,8 @@
+ 
+ PKGS += gsm
+ 
++PKGS_FOUND += gsm
++
+ $(TARBALLS)/libgsm_$(GSM_VERSION).tar.gz:
+ 	$(call download,$(GSM_URL))
+ 
