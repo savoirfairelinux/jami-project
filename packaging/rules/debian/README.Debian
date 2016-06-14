@@ -1,0 +1,19 @@
+# Notes
+
+## Importing a new version
+
+1- Prepare the new changelog entry mentioning the new version.
+   (the version on the changelog will be used to determine what to download).
+   Releases are available here: https://dl.ring.cx/ring-release/tarballs/
+
+2- Run debian/rules get-orig-source
+
+3- Import the tarball with gbp import-orig <tarball>
+
+## tarballs-unpacked
+
+We need those tarballs in tarballs-unpacked.
+The rest should be excluded.
+ - msgpack-c-cpp-1.2.0.tar.gz
+ - opendht-281b62dfd529a226e94d0da19e01acf07871a797.tar.gz
+ - pjproject-2.4.5.tar.bz2
