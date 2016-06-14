@@ -1,0 +1,3 @@
+version=3
+opts=dversionmangle=s/\~dfsg\d*$// \
+https://gpl.savoirfairelinux.net/ring-download/ring-release/tarballs/ ring_(\d\S*)\.tar\.gz
