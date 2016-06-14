@@ -4,3 +4,6 @@
 .DS_Store
 env
 docs/build
+packages
+ring_*.tar.gz
+Makefile.packaging.distro_targets
