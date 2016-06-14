@@ -1,0 +1,542 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: ring
+Upstream-Contact: Alexandre Viau <alexandre.viau@savoirfairelinux.net>
+Source: https://gpl.savoirfairelinux.net/ring-download/ring-release/tarballs/
+Files-Excluded: client-windows/*
+                client-android/*
+                client-macosx/*
+                client-gnome/libqrencode/*
+                daemon/contrib/tarballs/ffmpeg*
+                daemon/contrib/tarballs/flac*
+                daemon/contrib/tarballs/gmp*
+                daemon/contrib/tarballs/gnutls*
+                daemon/contrib/tarballs/jack*
+                daemon/contrib/tarballs/libav*
+                daemon/contrib/tarballs/libgcrypt*
+                daemon/contrib/tarballs/libgpg*
+                daemon/contrib/tarballs/libiconv*
+                daemon/contrib/tarballs/libogg*
+                daemon/contrib/tarballs/libsamplerate*
+                daemon/contrib/tarballs/libsndfile*
+                daemon/contrib/tarballs/libuuid*
+                daemon/contrib/tarballs/libvorbis*
+                daemon/contrib/tarballs/libvpx*
+                daemon/contrib/tarballs/nettle*
+                daemon/contrib/tarballs/opus*
+                daemon/contrib/tarballs/pcre*
+                daemon/contrib/tarballs/portaudio*
+                daemon/contrib/tarballs/pupnp*
+                daemon/contrib/tarballs/speex*
+                daemon/contrib/tarballs/yaml-cpp*
+                daemon/contrib/tarballs/zlib*
+                daemon/contrib/tarballs/x264*
+                daemon/contrib/tarballs/libgsm*
+                daemon/contrib/tarballs/jsoncpp*
+
+
+Files: *
+Copyright: 2004-2015 Savoir-faire Linux Inc.
+           1999 Tom Tromey
+           1994-2009 Red Hat, Inc.
+           2010 Michael Kerrisk
+           2007-2009 Rémi Denis-Courmont
+           2002 Fabrice Bellard
+           2012 VLC authors and VideoLAN
+           2012-2013 LOTES TM LLC
+           2011-2014 lolilolicon <lolilolicon@gmail.com>
+License: GPL-3+
+Comment: Upstream embeds everything that is needed to build ring inside the release tarball.
+ Everything that is already in Debian has been removed.
+ .
+ OpenDHT was kept and not packaged independently. OpenDHT was written for Ring and is a moving
+ target. It is best to wait until it is more mature before packaging it separately.
+ .
+ Msgpack was kept because the version available in Debian is currently too old for Ring to build.
+ The Debian version of Msgpack cannot be updated at the moment because of reverse dependencies which
+ are not ready.
+ .
+ Pjproject was kept because it is heavily patched by Ring developers. None of the patches were merged
+ upstream and Ring developers are still waiting for a reaction from Pjproject developers.
+ See the relevant threads:
+  - http://lists.pjsip.org/pipermail/pjsip_lists.pjsip.org/2014-October/017905.html
+  - http://lists.pjsip.org/pipermail/pjsip_lists.pjsip.org/2015-January/018072.html
+  - http://lists.pjsip.org/pipermail/pjsip_lists.pjsip.org/2016-April/019196.html
+ .
+ libiax2 was kept because it is a version of the library hosted and maintained by Savoir-Faire Linux
+ for the Ring project.
+
+#####################
+## Start of daemon ##
+#####################
+
+Files: daemon/doc/dbus-api/tools/devhelp.xsl
+       daemon/doc/dbus-api/tools/doc-generator.py
+       daemon/doc/dbus-api/tools/doc-generator.xsl
+       daemon/doc/dbus-api/tools/specparser.py
+Copyright: 2009 Collabora Ltd.
+License: LGPL-2.1+
+
+Files: daemon/src/dlfcn.h
+       daemon/src/dlfcn.c
+Copyright: 2007 Ramiro Polla
+License: LGPL-2.1+
+
+Files: daemon/src/media/srtp.h
+       daemon/src/media/srtp.c
+Copyright: 2012 Martin Storsjo
+License: LGPL-2.1+
+
+Files: daemon/src/media/audio/opensl/audio_common.h
+       daemon/src/media/audio/opensl/audio_player.cpp
+       daemon/src/media/audio/opensl/audio_player.h
+       daemon/src/media/audio/opensl/audio_recorder.cpp
+       daemon/src/media/audio/opensl/audio_recorder.h
+       daemon/src/media/audio/opensl/buf_manager.h
+Copyright: 2015 The Android Open Source Project
+           2015-2016 Savoir-faire Linux Inc.
+License: Apache-2.0
+
+Files: daemon/extras/tools/bootstrap
+Copyright: 2011 Rafaël Carré
+License: GPL-2+
+
+Files: daemon/extras/tools/tools.mak
+       daemon/contrib/src/main.mak
+Copyright: 2003-2011 the VideoLAN team
+License: GPL-2+
+
+Files: daemon/m4/ax_cxx_compile_stdcxx.m4
+       daemon/m4/dolt.m4
+Copyright: 2008 Benjamin Kosnik <bkoz@redhat.com>
+           2012 Zack Weinberg <zackw@panix.com>
+           2013 Roy Stogner <roystgnr@ices.utexas.edu>
+           2014-2015 Google Inc.
+           2015 Paul Norman <penorman@mac.com>
+           2015 Moritz Klammler <moritz@klammler.eu>
+           2007-2010 Josh Triplett <josh@joshtriplett.org>
+License: GNUAllPermissive
+
+Files: daemon/tools/dringctrl/sippwrap.py
+       daemon/tools/dringctrl/test_dring_dbus_interface.py
+Copyright: 2012 Free Software Foundation, Inc.
+License: GPL-2+
+
+Files: daemon/tools/cpplint.py3
+Copyright: 2009 Google Inc.
+License: BSD-3-Clause
+
+###################
+## End of daemon ##
+###################
+
+##################
+## Start of lrc ##
+##################
+
+Files: lrc/*
+Copyright: 2009-2016 by Savoir-faire Linux
+License: LGPL-2.1+
+
+################
+## End of lrc ##
+################
+
+######################
+## Start of libaix2 ##
+######################
+
+Files: daemon/contrib/tarballs-unpacked/iax-git.tar.gz/*
+Copyright: 1999 Mark Spencer
+           1999 Linux Support Services
+License: GPL-2
+
+Files: daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/src/frame.h
+       daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/src/iax-client.h
+       daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/src/iax.c
+       daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/src/iax.h
+       daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/src/iax2-parser.c
+       daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/src/iax2-parser.h
+       daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/src/iax2.h
+       daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/src/jitterbuf.c
+       daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/src/jitterbuf.h
+Copyright: 1999 Mark Spencer
+           2001 Linux Support Services
+           2003-2004 Digium
+           2004-2005 Horizon Wimba Inc
+License: LGPL-2.0
+
+Files: daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/src/md5.c
+Copyright: 1993 Colin Plumb
+License: public-domain
+ This code implements the MD5 message-digest algorithm.
+ The algorithm is due to Ron Rivest.  This code was
+ written by Colin Plumb in 1993, no copyright is claimed.
+ This code is in the public domain; do with it what you wish.
+
+Files: daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/depcomp
+       daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/missing
+Copyright: 1999-2005 Free Software Foundation, Inc.
+License: GPL-2+
+
+Files: daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/install-sh
+Copyright: 1994 X Consortium
+License: Expat
+
+Files: daemon/contrib/tarballs-unpacked/iax-git.tar.gz/libiax2.git/mkinstalldirs
+Copyright: Noah Friedman <friedman@prep.ai.mit.edu>
+License: public-domain
+ No license nor text accompanied the mention 'Public Domain'.
+
+####################
+## End of libaix2 ##
+####################
+
+######################
+## Start of msgpack ##
+######################
+
+Files: daemon/contrib/tarballs-unpacked/msgpack-c-cpp*
+Copyright: 2008-2015 FURUHASHI Sadayuki
+           2008-2015 KONDO Takatoshi
+           2013 Vladimir Volodko
+           2015 MIZUKI Hirata
+License: Apache-2.0
+
+Files: daemon/contrib/tarballs-unpacked/msgpack-c-cpp-*/msgpack-c-cpp-*/include/msgpack/predef/*
+       daemon/contrib/tarballs-unpacked/msgpack-c-cpp-*/msgpack-c-cpp-*/include/msgpack/predef.h
+       daemon/contrib/tarballs-unpacked/msgpack-c-cpp-*/msgpack-c-cpp-*/include/msgpack/preprocessor/*
+       daemon/contrib/tarballs-unpacked/msgpack-c-cpp-*/msgpack-c-cpp-*/include/msgpack/predef.h
+       daemon/contrib/tarballs-unpacked/msgpack-c-cpp-*/msgpack-c-cpp-*/include/msgpack/preprocessor.hpp
+Copyright: 2005-2014 Rene Rivera
+           2014 Franz Detro
+           2014 Microsoft Corporation
+           2014 Jessica Hamilton
+           2001 Housemarque Oy
+           2011-2014 Edward Diener
+           2001-2011 Paul Mensonides
+License: Boost-1.0
+
+Files: daemon/contrib/tarballs-unpacked/msgpack-c-cpp-*/msgpack-c-cpp-*/bootstrap
+Copyright: 2002 Anthony Ventimiglia
+License: GPL-2+
+
+License: Boost-1.0
+ Permission is hereby granted, free of charge, to any person or organization
+ obtaining a copy of the software and accompanying documentation covered by
+ this license (the "Software") to use, reproduce, display, distribute,
+ execute, and transmit the Software, and to prepare derivative works of the
+ Software, and to permit third-parties to whom the Software is furnished to
+ do so, all subject to the following:
+ .
+ The copyright notices in the Software and this entire statement, including
+ the above license grant, this restriction and the following disclaimer,
+ must be included in all copies of the Software, in whole or in part, and
+ all derivative works of the Software, unless such copies or derivative
+ works are solely in the form of machine-executable object code generated by
+ a source language processor.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+ SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ DEALINGS IN THE SOFTWARE.
+
+####################
+## End of msgpack ##
+####################
+
+######################
+## Start of opendht ##
+######################
+
+Files: daemon/contrib/tarballs-unpacked/opendht*/opendht*/include/opendht/securedht.h
+Copyright: 2014-2016 Savoir-faire Linux Inc.
+License: GPL-3-with-openssl-exception
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 3 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA.
+ .
+ Additional permission under GNU GPL version 3 section 7:
+ .
+ If you modify this program, or any covered work, by linking or
+ combining it with the OpenSSL project's OpenSSL library (or a
+ modified version of that library), containing parts covered by the
+ terms of the OpenSSL or SSLeay licenses, Savoir-faire Linux Inc.
+ grants you additional permission to convey the resulting work.
+ Corresponding Source for a non-source form of such a combination
+ shall include the source code for the parts of OpenSSL used as well
+ as that of the covered work.
+
+Files: daemon/contrib/tarballs-unpacked/opendht-*/opendht-*/include/opendht/dht.h
+       daemon/contrib/tarballs-unpacked/opendht-*/opendht-*/src/dht.cpp
+Copyright: 2009-2014 Juliusz Chroboczek
+           2014-2016 Savoir-faire Linux Inc
+License: Expat
+
+Files: daemon/contrib/tarballs-unpacked/opendht-*/opendht-*/m4/ax_cxx_compile_stdcxx_11.m4
+Copyright: 2008 Benjamin Kosnik <bkoz@redhat.com>
+           2012 Zack Weinberg <zackw@panix.com>
+           2013 Roy Stogner <roystgnr@ices.utexas.edu>
+           2014 Alexey Sokolov <sokolov@google.com>
+License: GNUAllPermissive
+
+####################
+## End of opendht ##
+####################
+
+########################
+## Start of pjproject ##
+########################
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*
+Copyright: 2008-2011 Teluu Inc.
+           2003-2008 Benny Prijono <benny@prijono.org>
+           1987-1998 Free Software Foundation Inc
+           1993-2006 Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
+           2011 Dan Arrhenius <dan@keystream.se>
+           2010-2012 Regis Montoya
+           2015 bdSound s.r.l.
+           2007-2009 Keystream AB and Konftel AB
+           1992-2001 Microsoft Corporation
+           1991 Massachusetts Institute of Technology
+License: GPL-2+
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/pjlib/src/pj/compat/longjmp_i386.S
+       daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/pjlib-util/include/pjlib-util/getopt.h
+       daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/pjlib-util/src/pjlib-util/getopt.c
+Copyright: 1989-1998 Free Software Foundation, Inc.
+License: LGPL-2+
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/pjlib/src/pj/compat/setjmp_i386.S
+Copyright: 1995-2001 Free Software Foundation, Inc.
+License: LGPL-2.1+
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/pjlib-util/src/pjlib-util/crc32.c
+Copyright: -
+License: public-domain
+ This file is partly taken from Crypto++ library (http://www.cryptopp.com)
+ and http://www.di-mgt.com.au/crypto.html#CRC.
+ .
+ Since the original version of the code is put in public domain,
+ this file is put on public domain as well.
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/pjlib-util/src/pjlib-util/md5.c
+Copyright: -
+License: public-domain
+ This is the implementation of MD5 algorithm, based on the code
+ written by Colin Plumb. This file is put in public domain.
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/pjlib-util/src/pjlib-util/sha1.c
+Copyright: Steve Reid <sreid@sea-to-sky.net>
+License: public-domain
+ No license nor text except for the following mention: "100% Public Domain"
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/pjmedia/src/pjmedia/alaw_ulaw.c
+Copyright: Sun Microsystems, Inc.
+License: sun-license
+ This source code is a product of Sun Microsystems, Inc. and is provided
+ for unrestricted use.  Users may copy or modify this source code without
+ charge.
+ .
+ SUN SOURCE CODE IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND INCLUDING
+ THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
+ PURPOSE, OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE.
+ .
+ Sun source code is provided with no support and without any obligation on
+ the part of Sun Microsystems, Inc. to assist in its use, correction,
+ modification or enhancement.
+ .
+ SUN MICROSYSTEMS, INC. SHALL HAVE NO LIABILITY WITH RESPECT TO THE
+ INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY THIS SOFTWARE
+ OR ANY PART THEREOF.
+ .
+ In no event will Sun Microsystems, Inc. be liable for any lost revenue
+ or profits or other special, indirect and consequential damages, even if
+ Sun has been advised of the possibility of such damages.
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/pjsip-apps/src/pjsua/bb10/bar-descriptor.xml
+Copyright: 2011-2013 Research In Motion Limited.
+License: Apache-2.0
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/aconfigure
+       daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/srtp/configure
+Copyright: 1992-2012 Free Software Foundation, Inc.
+License: configure-fsf-permissive
+ This configure script is free software; the Free Software Foundation
+ gives unlimited permission to copy, distribute and modify it.
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/install-sh
+       daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/srtp/install-sh
+Copyright: 1991 Massachusetts Institute of Technology
+License: mit-permissive
+ Permission to use, copy, modify, distribute, and sell this software and its
+ documentation for any purpose is hereby granted without fee, provided that
+ the above copyright notice appear in all copies and that both that
+ copyright notice and this permission notice appear in supporting
+ documentation, and that the name of M.I.T. not be used in advertising or
+ publicity pertaining to distribution of the software without specific,
+ written prior permission.  M.I.T. makes no representations about the
+ suitability of this software for any purpose.  It is provided "as is"
+ without express or implied warranty.
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/resample/*
+Copyright: 1994-2006 Julius O. Smith III <jos@ccrma.stanford.edu>
+License: LGPL-2.1+
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/srtp/*
+Copyright: 2001-2006 Cisco Systems, Inc.
+           2005 Ingate Systems AB
+License: BSD-3-Clause
+
+Files: daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/srtp/pjlib/*
+Copyright: 2003-2007 Benny Prijono <benny@prijono.org>
+License: GPL-2+
+
+######################
+## End of pjproject ##
+######################
+
+License: GPL-3+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ ․
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ ․
+ The complete text of the GNU General Public License version 3
+ can be found in `/usr/share/common-licenses/GPL-3`.
+
+License: GPL-2+
+ This package is free software; you can redistribute it and/or modify it under
+ the terms of the GNU General Public License as published by the Free Software
+ Foundation; either version 2 of the License, or (at your option) any later
+ version.
+ .
+ This package is distributed in the hope that it will be useful, but WITHOUT
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ details.
+ .
+ You should have received a copy of the GNU General Public License along with
+ this program. If not, see http://www.gnu.org/licenses/
+ .
+ On Debian systems, the complete text of the GNU General Public License version
+ 2 can be found in "/usr/share/common-licenses/GPL-2".
+
+License: Expat
+ Permission is hereby granted, free of charge, to any person obtaining a copy of
+ this software and associated documentation files (the "Software"), to deal in
+ the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ the Software, and to permit persons to whom the Software is furnished to do so,
+ subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+License: LGPL-2.1+
+ This library is free software; you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; either version 2.1 of the
+ License, or (at your option) any later version.
+ .
+ See /usr/share/common-licenses/LGPL-2.1 for the full license text.
+
+License: LGPL-2.0
+ This package is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU Lesser General
+ Public License can be found in "/usr/share/common-licenses/LGPL-2".
+
+License: GPL-2
+ On Debian systems the full text of the GNU General Public License can be found
+ in the `/usr/share/common-licenses/GPL-2' file.
+
+License: BSD-3-Clause
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ .
+     * Redistributions of source code must retain the above copyright notice,
+       this list of conditions and the following disclaimer.
+     * Redistributions in binary form must reproduce the above copyright notice,
+       this list of conditions and the following disclaimer in the documentation
+       and/or other materials provided with the distribution.
+     * Neither the name of the copyright holder nor the names of its
+       contributors may be used to endorse or promote products derived from
+       this software without specific prior written permission.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: Apache-2.0
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ .
+ http://www.apache.org/licenses/LICENSE-2.0
+ .
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ .
+ The complete text of the Apache version 2.0 license
+ can be found in "/usr/share/common-licenses/Apache-2.0".
+
+License: GNUAllPermissive
+ Copying and distribution of this file, with or without modification, are
+ permitted in any medium without royalty provided the copyright notice
+ and this notice are preserved. This file is offered as-is, without any
+ warranty.
+
+License: LGPL-2+
+ This library is free software; you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; either version 2 of the
+ License, or (at your option) any later version.
+ .
+ See /usr/share/common-licenses/LGPL-2 for the full license text.
