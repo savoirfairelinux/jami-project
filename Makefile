@@ -1,6 +1,7 @@
 .PHONY: docs
 docs: env
 	env/bin/sphinx-build -b html docs/source docs/build/html
+	env/bin/sphinx-build -b texinfo docs/source docs/build/texinfo
 
 env:
 	virtualenv env
@@ -8,4 +9,4 @@ env:
 
 clean:
 	rm -rf env
-	make -C docs clean
+	rm -rf docs/build
