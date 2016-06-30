@@ -24,6 +24,10 @@ RPM_BASED_DISTROS = [
     'Fedora',
 ]
 
+PACMAN_BASED_DISTROS = [
+    'Arch Linux',
+]
+
 APT_INSTALL_SCRIPT = [
     'apt-get update',
     'apt-get install -y %(packages)s'
@@ -34,9 +38,15 @@ BREW_INSTALL_SCRIPT = [
     'brew install -y %(packages)s',
     'brew link --force gettext'
 ]
+
 RPM_INSTALL_SCRIPT = [
     'sudo dnf update',
     'sudo dnf install -y %(packages)s'
+]
+
+PACMAN_INSTALL_SCRIPT = [
+    'sudo pacman -Sy',
+    'sudo pacman -S %(packages)s'
 ]
 
 FEDORA_DEPENDENCIES = [
@@ -78,6 +88,15 @@ DEBIAN_DEPENDENCIES = [
     'qtbase5-dev', 'sip-tester', 'swig',  'uuid-dev', 'yasm', 'libqrencode-dev'
 ]
 
+ARCH_LINUX_DEPENDENCIES = [
+    'autoconf', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc', 'gnome-icon-theme-symbolic',
+    'ffmpeg', 'boost', 'clutter-gtk', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book',
+    'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse', 'libsamplerate',
+    'libsndfile', 'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
+    'swig', 'yasm', 'qrencode', 'evolution-data-server', 'make', 'patch', 'pkg-config',
+    'automake'
+]
+
 OSX_DEPENDENCIES = [
     'autoconf', 'cmake', 'gettext', 'pkg-config', 'homebrew/versions/qt55',
     'libtool', 'yasm', 'automake'
@@ -116,6 +135,12 @@ def run_dependencies(args):
         execute_script(
             RPM_INSTALL_SCRIPT,
             {"packages": ' '.join(FEDORA_DEPENDENCIES)}
+        )
+
+    elif args.distribution == "Arch Linux":
+        execute_script(
+            PACMAN_INSTALL_SCRIPT,
+            {"packages": ' '.join(ARCH_LINUX_DEPENDENCIES)}
         )
 
     elif args.distribution == "OSX":
@@ -261,7 +286,8 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Automatic']
+    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Arch Linux', 'Automatic']
+
     if parsed_args.distribution not in supported_distros:
         print('Distribution not supported.\nChoose one of: %s' \
                   % ', '.join(supported_distros),
