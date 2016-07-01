@@ -8,7 +8,7 @@ Release tarball
 
 Ring is released in the form of a tarball. They are hosted here:
 
- - https://gpl.savoirfairelinux.net/ring-download/ring-release/tarballs/
+ - https://dl.ring.cx/ring-release/tarballs/
 
 Tarballs are generated from the integration branch of the `ring-project <https://github.com/savoirfairelinux/ring-project>`_ repository with a job on our `Jenkins server <https://test.savoirfairelinux.com/>`_. They include a copy of all contrib libraries configured in ``daemon/contrib/src``. If you are a Savoir-faire Linux employee, you may trigger the job from `this page <https://test.savoirfairelinux.com/job/ring-release/>`_.
 
