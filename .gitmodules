@@ -16,3 +16,6 @@
 [submodule "client-macosx"]
 	path = client-macosx
 	url = https://gerrit-ring.savoirfairelinux.com/ring-client-macosx
+[submodule "client-ios"]
+	path = client-ios
+	url = https://gerrit-ring.savoirfairelinux.com/ring-client-ios
