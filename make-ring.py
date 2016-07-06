@@ -53,11 +53,13 @@ FEDORA_DEPENDENCIES = [
     'autoconf', 'automake', 'cmake', 'speexdsp-devel', 'pulseaudio-libs-devel',
     'libsamplerate-devel', 'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
     'yaml-cpp-devel', 'boost-devel', 'dbus-c++-devel', 'dbus-devel',
-    'libsndfile-devel', 'libsrtp-devel', 'libXext-devel', 'libXfixes-devel', 'yasm',
-    'speex-devel', 'chrpath', 'check', 'astyle', 'uuid-c++-devel', 'gettext-devel',
+    'libsndfile-devel', 'libXext-devel', 'libXfixes-devel', 'yasm',
+    'speex-devel', 'chrpath', 'check', 'astyle', 'uuid-c++-devel', 'gettext',
     'gcc-c++', 'which', 'alsa-lib-devel', 'systemd-devel', 'libuuid-devel',
     'uuid-devel', 'gnutls-devel', 'nettle-devel', 'opus-devel', 'speexdsp-devel',
-    'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel'
+    'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
+    'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel', 'evolution-data-server-devel',
+    'libnotify-devel', 'libappindicator-gtk3-devel', 'patch'
 ]
 
 UBUNTU_DEPENDENCIES = [
@@ -68,24 +70,22 @@ UBUNTU_DEPENDENCIES = [
     'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls-dev',
     'libgsm1-dev', 'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
     'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev',
-    'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libsrtp-dev',
-    'libswscale-dev', 'libtool', 'libudev-dev', 'libupnp-dev',
-    'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
-    'uuid-dev', 'yasm', 'libqrencode-dev'
+    'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
+    'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
+    'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev'
 ]
-
 
 DEBIAN_DEPENDENCIES = [
     'autoconf', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
     'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
     'libavcodec-extra', 'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
-    'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgsm1-dev',
-    'libgtk-3-dev', 'libjack-dev', 'libnotify-dev', 'libopus-dev',
-    'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev', 'libsndfile1-dev',
-    'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
-    'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev',
-    'qtbase5-dev', 'sip-tester', 'swig',  'uuid-dev', 'yasm', 'libqrencode-dev'
+    'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls-dev',
+    'libgsm1-dev', 'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
+    'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev',
+    'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
+    'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
+    'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev'
 ]
 
 ARCH_LINUX_DEPENDENCIES = [
