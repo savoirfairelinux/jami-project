@@ -185,13 +185,13 @@ def run_install(args):
         qt5dir = proc.stdout.read()
         os.environ['CMAKE_PREFIX_PATH'] = str(qt5dir.decode('ascii'))
         install_args += " -c client-macosx"
-        execute_script(["CONFIGURE_FLAGS='--without-dbus' ./scripts/install.sh " + install_args])
+        execute_script(["CONFIGURE_FLAGS='--without-dbus " + os.environ.get("RING_DAEMON_CONF", "") + "' ./scripts/install.sh " + install_args])
     elif args.distribution == "Android":
         os.chdir("./client-android")
         execute_script(["./compile.sh"])
     else:
         install_args += ' -c client-gnome'
-        execute_script(["./scripts/install.sh " + install_args])
+        execute_script(["CONFIGURE_FLAGS='" + os.environ.get("RING_DAEMON_CONF", "") + "' ./scripts/install.sh " + install_args])
 
 
 def run_uninstall(args):
