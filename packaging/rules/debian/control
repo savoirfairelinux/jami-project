@@ -55,6 +55,7 @@ Build-Depends: debhelper (>= 9),
                libticonv-dev,
                libgsm1-dev,
                libjsoncpp-dev,
+               libsamplerate0-dev,
                libnatpmp-dev
 Standards-Version: 3.9.8
 Homepage: https://ring.cx
