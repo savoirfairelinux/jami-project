@@ -46,14 +46,14 @@ override_dh_auto_configure:
 				--disable-vorbisenc \
 				--disable-speex \
 				--disable-sndfile \
+				--disable-gsm \
 				--disable-speexdsp && \
 		make list && \
-		make -j1
+		make -j1 V=1
 	cd daemon && \
 		./autogen.sh && \
 		./configure \
-				--prefix=/usr \
-				--without-iax
+				--prefix=/usr
 
 	#############################
 	## libringclient configure ##
@@ -64,7 +64,7 @@ override_dh_auto_configure:
 		cmake  \
 			-DRING_BUILD_DIR=$(CURDIR)/daemon/src \
 			-DCMAKE_INSTALL_PREFIX=/usr \
-			-DENABLE_VIDEO=true \
+			-DCMAKE_BUILD_TYPE=Debug \
 			..
 
 	############################
@@ -84,18 +84,18 @@ override_dh_auto_build:
 	#######################
 	## Ring Daemon build ##
 	#######################
-	cd daemon && make -j$(NO_CPUS)
+	make -C daemon -j$(NO_CPUS) V=1
 	pod2man daemon/man/dring.pod > daemon/dring.1
 
 	#########################
 	## libringclient build ##
 	#########################
-	cd lrc/build && make -j$(NO_CPUS)
+	make -C lrc/build -j$(NO_CPUS) V=1
 
 	########################
 	## gnome client build ##
 	########################
-	cd client-gnome/build && make LDFLAGS="-lpthread" -j$(NO_CPUS)
+	make -C client-gnome/build LDFLAGS="-lpthread" -j$(NO_CPUS) V=1
 
 override_dh_auto_clean:
 	################################

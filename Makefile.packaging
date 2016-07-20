@@ -54,7 +54,7 @@ $(RELEASE_TARBALL_FILENAME):
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
 	    ../bootstrap && \
-	    make fetch-all
+	    make fetch-all || make fetch-all || make fetch-all
 	rm -rf daemon/contrib/native
 
 	cd $(TMPDIR) && \
