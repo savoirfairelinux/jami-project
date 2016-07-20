@@ -37,7 +37,6 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND:= docker run \\
     -e CURRENT_UID=$(CURRENT_UID) \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
-    -i \\
     -t ring-packaging-%(distribution)s
 
 .docker-image-%(distribution)s: docker/Dockerfile_%(distribution)s
@@ -101,14 +100,6 @@ def run_generate_all(parsed_args):
         },
         {
             "distribution": "ubuntu14.04_i386",
-            "debian_packaging_override": "",
-        },
-        {
-            "distribution": "ubuntu15.04",
-            "debian_packaging_override": "",
-        },
-        {
-            "distribution": "ubuntu15.04_i386",
             "debian_packaging_override": "",
         },
         {
