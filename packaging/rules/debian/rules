@@ -65,6 +65,7 @@ override_dh_auto_configure:
 			-DRING_BUILD_DIR=$(CURDIR)/daemon/src \
 			-DCMAKE_INSTALL_PREFIX=/usr \
 			-DENABLE_VIDEO=true \
+			-DCMAKE_BUILD_TYPE=Debug \
 			..
 
 	############################
