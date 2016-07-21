@@ -52,7 +52,8 @@ RUN apt-get update && \
         libjsoncpp-dev \
         libnatpmp-dev \
         libappindicator3-dev \
-        libqrencode-dev
+        libqrencode-dev \
+        libnm-dev
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 
