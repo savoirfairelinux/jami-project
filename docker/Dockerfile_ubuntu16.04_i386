@@ -20,7 +20,7 @@ RUN apt-get update && \
                        libavutil-dev libavformat-dev libswscale-dev \
                        libavdevice-dev libopus-dev libudev-dev libticonv-dev \
                        libgsm1-dev libjsoncpp-dev libqrencode-dev libappindicator3-dev \
-                       libnatpmp-dev
+                       libnatpmp-dev libnm-dev
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 
