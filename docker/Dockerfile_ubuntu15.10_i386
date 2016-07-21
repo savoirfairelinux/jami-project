@@ -19,7 +19,8 @@ RUN apt-get update && \
                        libspeexdsp-dev chrpath uuid-dev libavcodec-dev \
                        libavutil-dev libavformat-dev libswscale-dev \
                        libavdevice-dev libopus-dev libudev-dev libticonv-dev \
-                       libgsm1-dev libjsoncpp-dev libqrencode-dev libappindicator3-dev
+                       libgsm1-dev libjsoncpp-dev libqrencode-dev libappindicator3-dev \
+                       libnatpmp-dev
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 
