@@ -28,6 +28,10 @@ PACMAN_BASED_DISTROS = [
     'Arch Linux',
 ]
 
+SUSE_BASED_DISTROS = [
+    'openSUSE',
+]
+
 APT_INSTALL_SCRIPT = [
     'apt-get update',
     'apt-get install -y %(packages)s'
@@ -47,6 +51,27 @@ RPM_INSTALL_SCRIPT = [
 PACMAN_INSTALL_SCRIPT = [
     'sudo pacman -Sy',
     'sudo pacman -S %(packages)s'
+]
+
+ZYPPER_INSTALL_SCRIPT = [
+    'sudo zypper update',
+    'sudo zypper install -y %(packages)s'
+]
+
+OPENSUSE_DEPENDENCIES = [
+# build system
+    'autoconf', 'automake', 'cmake', 'patch', 'gcc-c++', 'libtool',
+# daemon
+    'speexdsp-devel', 'speex-devel', 'libdbus-c++-devel', 'jsoncpp-devel', 'yaml-cpp-devel',
+    'libupnp-devel', 'boost-devel', 'yasm', 'libuuid-devel', 'libsamplerate-devel',
+    'libnettle-devel', 'libopus-devel', 'libgnutls-devel', 'msgpack-devel', 'libavcodec-devel',
+    'libavdevice-devel', 'pcre-devel', 'libogg-devel', 'libsndfile-devel', 'libvorbis-devel',
+    'flac-devel', 'libgsm-devel', 'alsa-devel', 'libpulse-devel', 'libudev-devel',
+# lrc
+    'libQt5Core-devel', 'libQt5DBus-devel', 'libqt5-linguist-devel',
+# gnome client
+    'gtk3-devel', 'clutter-gtk-devel', 'qrencode-devel', 'evolution-data-server-devel',
+    'gettext-tools', 'libnotify-devel', 'libappindicator3-devel',
 ]
 
 FEDORA_DEPENDENCIES = [
@@ -141,6 +166,12 @@ def run_dependencies(args):
         execute_script(
             PACMAN_INSTALL_SCRIPT,
             {"packages": ' '.join(ARCH_LINUX_DEPENDENCIES)}
+        )
+
+    elif args.distribution == "openSUSE":
+        execute_script(
+            ZYPPER_INSTALL_SCRIPT,
+            {"packages": ' '.join(OPENSUSE_DEPENDENCIES)}
         )
 
     elif args.distribution == "OSX":
@@ -286,7 +317,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Arch Linux', 'Automatic']
+    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic']
 
     if parsed_args.distribution not in supported_distros:
         print('Distribution not supported.\nChoose one of: %s' \
