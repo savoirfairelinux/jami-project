@@ -21,6 +21,7 @@ Build-Depends: debhelper (>= 9),
                gettext,
                libqrencode-dev,
                libappindicator3-dev,
+               libnm-glib-dev,
 # ring-daemon
                libdbus-1-dev,
                libdbus-c++-dev,

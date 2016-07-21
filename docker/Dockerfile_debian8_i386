@@ -44,7 +44,7 @@ RUN apt-get update && \
         uuid-dev \
         libavcodec-dev \
         libavutil-dev \
-        libavformat-dev
+        libavformat-dev \
         libswscale-dev \
         libavdevice-dev \
         libopus-dev \
@@ -53,7 +53,8 @@ RUN apt-get update && \
         libjsoncpp-dev \
         libnatpmp-dev \
         libappindicator3-dev \
-        libqrencode-dev
+        libqrencode-dev \
+        libnm-glib-dev
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 
