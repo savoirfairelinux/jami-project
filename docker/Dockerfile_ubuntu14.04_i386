@@ -14,11 +14,11 @@ RUN apt-get update && \
                        autotools-dev gnome-icon-theme-symbolic gettext \
                        libpulse-dev libsamplerate0-dev libasound2-dev \
                        libexpat1-dev libpcre3-dev libyaml-cpp-dev \
-                       libboost-dev libsndfile1-dev libsrtp-dev \
-                       libxext-dev libxfixes-dev autopoint libspeex-dev \
-                       libspeexdsp-dev chrpath uuid-dev libavcodec-dev \
+                       libboost-dev libsndfile1-dev \
+                       libxext-dev libxfixes-dev libspeex-dev \
+                       libspeexdsp-dev uuid-dev libavcodec-dev \
                        libavutil-dev libavformat-dev libswscale-dev \
-                       libavdevice-dev libopus-dev libudev-dev libticonv-dev \
+                       libavdevice-dev libopus-dev libudev-dev \
                        libgsm1-dev libjsoncpp-dev libqrencode-dev libappindicator3-dev \
                        libnatpmp-dev
 
