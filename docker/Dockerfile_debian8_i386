@@ -1,9 +1,11 @@
 FROM savoirfairelinux/ring-debian32:8
 
+RUN apt-get clean
 RUN apt-get update && \
     apt-get install -y vim devscripts equivs
 
 # Speed up mk-build-deps
+RUN apt-get clean
 RUN apt-get update && \
     apt-get install -y -o Acquire::Retires=10 \
         autoconf \
