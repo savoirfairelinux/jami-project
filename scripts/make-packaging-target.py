@@ -28,6 +28,16 @@ target_template = """\
 ## Distro: %(distribution)s
 ##
 
+# We don't simply use ring-packaging-distro as the docker image name because
+# we want to be able to build multiple versions of the same distro at the
+# same time and it could result in race conditions on the machine as we would
+# overwrite the docker image of other builds.
+#
+# This does not impact caching as the docker daemon does not care about the image
+# names, just about the contents of the Dockerfile.
+PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME:=ring-packaging-%(distribution)s$(RING_PACKAGING_IMAGE_SUFFIX)
+PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE:=.docker-image-$(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
+
 PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND:= docker run \\
     --rm \\
     -e RELEASE_VERSION=$(RELEASE_VERSION) \\
@@ -37,19 +47,19 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND:= docker run \\
     -e CURRENT_UID=$(CURRENT_UID) \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
-    -t ring-packaging-%(distribution)s
+    -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
-.docker-image-%(distribution)s: docker/Dockerfile_%(distribution)s
+$(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(distribution)s
 	docker build \\
-        -t ring-packaging-%(distribution)s \\
+        -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME) \\
         -f docker/Dockerfile_%(distribution)s \\
         $(CURDIR)
-	touch .docker-image-%(distribution)s
+	touch $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 
 packages/%(distribution)s:
 	mkdir -p packages/%(distribution)s
 
-packages/%(distribution)s/$(DEBIAN_DSC_FILENAME): $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s .docker-image-%(distribution)s
+packages/%(distribution)s/$(DEBIAN_DSC_FILENAME): $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 	$(PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND)
 	touch packages/%(distribution)s/*
 
@@ -57,7 +67,7 @@ packages/%(distribution)s/$(DEBIAN_DSC_FILENAME): $(RELEASE_TARBALL_FILENAME) pa
 package-%(distribution)s: packages/%(distribution)s/$(DEBIAN_DSC_FILENAME)
 
 .PHONY: package-%(distribution)s-interactive
-package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s .docker-image-%(distribution)s
+package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 	$(PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND) bash
 """
 
