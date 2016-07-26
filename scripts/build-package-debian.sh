@@ -35,8 +35,9 @@ else
 fi
 
 # install build deps
+apt-get clean
 apt-get update
-apt-get upgrade -y
+apt-get upgrade -o Acquire::Retires=10 -y
 mk-build-deps --remove --install debian/control -t "apt-get -y --no-install-recommends"
 
 # create changelog file
