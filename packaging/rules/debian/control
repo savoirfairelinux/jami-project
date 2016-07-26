@@ -50,7 +50,6 @@ Build-Depends: debhelper (>= 9),
                libjsoncpp-dev,
                libnatpmp-dev,
 # other
-               libsrtp-dev,
                yasm,
                libsamplerate0-dev
 Standards-Version: 3.9.8

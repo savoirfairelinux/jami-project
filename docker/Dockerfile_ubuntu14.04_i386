@@ -37,7 +37,6 @@ RUN apt-get update && \
         libyaml-cpp-dev \
         libboost-dev \
         libsndfile1-dev \
-        libsrtp-dev \
         libxext-dev \
         libxfixes-dev \
         libspeex-dev \
