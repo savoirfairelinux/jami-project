@@ -45,6 +45,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND:= docker run \\
     -e DEBIAN_VERSION=$(DEBIAN_VERSION) \\
     -e DEBIAN_PACKAGING_OVERRIDE=%(debian_packaging_override)s \\
     -e CURRENT_UID=$(CURRENT_UID) \\
+    -e DISTRIBUTION=%(distribution)s \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
     -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
