@@ -28,18 +28,13 @@ override_dh_auto_configure:
 		echo "Repacked $$projectname"; \
 	done
 
-	# Prevent bootstrap script from verifying checksums
-	mkdir -p daemon/contrib/native
-	touch daemon/contrib/native/.sum-msgpack
-	touch daemon/contrib/native/.sum-opendht
-	touch daemon/contrib/native/.sum-pjproject
-
 	###########################
 	## Ring Daemon configure ##
 	###########################
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
         ../bootstrap \
+				--no-checksums \
 				--disable-ogg \
 				--disable-flac \
 				--disable-vorbis \
