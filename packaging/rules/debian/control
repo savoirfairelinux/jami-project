@@ -63,6 +63,8 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          ring-daemon (=${binary:Version})
+Replaces: ring-gnome
+Conflicts: ring-gnome
 Description: Secure and distributed voice, video and chat platform - desktop client
  Ring (ring.cx) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy
@@ -80,3 +82,11 @@ Description: Secure and distributed voice, video and chat platform - daemon
  in the hands of the user.
  .
  This package contains the Ring daemon: dring.
+
+Package: ring-gnome
+Depends: ring, ${misc:Depends}
+Architecture: all
+Priority: extra
+Section: oldlibs
+Description: transitional dummy package
+ This is a transitional dummy package. It can safely be removed.
