@@ -28,18 +28,13 @@ override_dh_auto_configure:
 		echo "Repacked $$projectname"; \
 	done
 
-	# Prevent bootstrap script from verifying checksums
-	mkdir -p daemon/contrib/native
-	touch daemon/contrib/native/.sum-msgpack
-	touch daemon/contrib/native/.sum-opendht
-	touch daemon/contrib/native/.sum-pjproject
-
 	###########################
 	## Ring Daemon configure ##
 	###########################
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
         ../bootstrap \
+				--no-checksums \
 				--disable-ogg \
 				--disable-flac \
 				--disable-vorbis \
@@ -128,7 +123,8 @@ override_dh_auto_install:
 	#########################
 	cd daemon && make DESTDIR=$(CURDIR)/debian/ring-daemon install
 	rm -rfv $(CURDIR)/debian/ring-daemon/usr/include
-	rm -rfv $(CURDIR)/debian/ring-daemon/usr/lib
+	rm -rfv $(CURDIR)/debian/ring-daemon/usr/lib/*.a
+	rm -rfv $(CURDIR)/debian/ring-daemon/usr/lib/*.la
 
 	###########################
 	## libringclient install ##

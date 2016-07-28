@@ -54,7 +54,7 @@ $(RELEASE_TARBALL_FILENAME):
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
 	    ../bootstrap && \
-	    make fetch-all || make fetch-all || make fetch-all
+	    make fetch-all -j || make fetch-all || make fetch-all
 	rm -rf daemon/contrib/native
 
 	cd $(TMPDIR) && \
@@ -75,6 +75,8 @@ package-all: package-debian8 \
              package-debian8_i386 \
              package-debian9 \
              package-debian9_i386 \
+             package-ubuntu14.04 \
+             package-ubuntu14.04_i386 \
              package-ubuntu15.10 \
              package-ubuntu15.10_i386 \
              package-ubuntu16.04 \
