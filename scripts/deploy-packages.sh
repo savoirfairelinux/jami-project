@@ -110,8 +110,8 @@ DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
 mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
 for package in packages/${DISTRIBUTION}*/*.deb; do
     cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-    package_name=$(dpkg -I ${package} | grep Package: | awk '{print $2}')
-    package_arch=$(dpkg -I ${package} | grep Architecture: | awk '{print $2}')
+    package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
+    package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
     cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.deb
 done
 
