@@ -83,25 +83,27 @@ EOF
 ## Add packages to the repository ##
 ####################################
 
-# Sign the debs
-echo "##################"
-echo "## signing debs ##"
-echo "##################"
-
 for package in packages/${DISTRIBUTION}*/*.deb; do
+
+    # Sign the deb
+    echo "## signing: ${package} ##"
     dpkg-sig -k ${KEYID} --sign builder ${package}
-done
 
-# Include the debs
-echo "####################"
-echo "## including debs ##"
-echo "####################"
-for package in packages/${DISTRIBUTION}*/*.deb; do
+    # Include the deb
+    echo "## including ${package} ##"
+    # Removing to avoid the error of adding the same deb twice.
+    # This happens with arch all packages, which are generated in amd64 and i386.
+    package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
+    package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} --architecture ${package_arch} remove ring ${package_name}
     reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} includedeb ring ${package}
 done
 
 # Rebuild the index
 reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} export ring
+
+# Show the contents
+reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list ring
 
 #######################################
 ## create the manual download folder ##
