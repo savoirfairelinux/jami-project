@@ -60,12 +60,12 @@ $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(distribution)
 packages/%(distribution)s:
 	mkdir -p packages/%(distribution)s
 
-packages/%(distribution)s/$(DEBIAN_DSC_FILENAME): $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
+packages/%(distribution)s/%(output_file)s: $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 	$(PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND)
 	touch packages/%(distribution)s/*
 
 .PHONY: package-%(distribution)s
-package-%(distribution)s: packages/%(distribution)s/$(DEBIAN_DSC_FILENAME)
+package-%(distribution)s: packages/%(distribution)s/%(output_file)s
 
 .PHONY: package-%(distribution)s-interactive
 package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
@@ -73,10 +73,11 @@ package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(dis
 """
 
 
-def generate_target(distribution, debian_packaging_override):
+def generate_target(distribution, debian_packaging_override, output_file):
     return target_template % {
         "distribution": distribution,
         "debian_packaging_override": debian_packaging_override,
+        "output_file": output_file,
     }
 
 
@@ -91,43 +92,84 @@ def run_generate_all(parsed_args):
         {
             "distribution": "debian_8",
             "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
             "distribution": "debian_8_i386",
             "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
             "distribution": "debian_9",
             "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
             "distribution": "debian_9_i386",
             "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         # Ubuntu
         {
             "distribution": "ubuntu_14.04",
             "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
             "distribution": "ubuntu_14.04_i386",
             "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
             "distribution": "ubuntu_15.10",
             "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
             "distribution": "ubuntu_15.10_i386",
             "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
             "distribution": "ubuntu_16.04",
             "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
             "distribution": "ubuntu_16.04_i386",
             "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+        },
+        # Fedora
+        {
+            "distribution": "fedora_22",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+        },
+        {
+            "distribution": "fedora_22_i386",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+        },
+        {
+            "distribution": "fedora_23",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+        },
+        {
+            "distribution": "fedora_23_i386",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+        },
+        {
+            "distribution": "fedora_24",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+        },
+        {
+            "distribution": "fedora_24_i386",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
         },
 
     ]
@@ -155,6 +197,7 @@ def parse_args():
     ap.add_argument('--distribution')
     ap.add_argument('--architecture')
     ap.add_argument('--debian_packaging_override', default='')
+    ap.add_argument('--output_file')
 
     parsed_args = ap.parse_args()
 
