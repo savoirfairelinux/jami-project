@@ -48,6 +48,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND:= docker run \\
     -e DISTRIBUTION=%(distribution)s \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
+    -i \\
     -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(distribution)s
@@ -127,6 +128,31 @@ def run_generate_all(parsed_args):
         },
         {
             "distribution": "ubuntu16.04_i386",
+            "debian_packaging_override": "",
+        },
+        # Fedora
+        {
+            "distribution": "fedora22",
+            "debian_packaging_override": "",
+        },
+        {
+            "distribution": "fedora22_i386",
+            "debian_packaging_override": "",
+        },
+        {
+            "distribution": "fedora23",
+            "debian_packaging_override": "",
+        },
+        {
+            "distribution": "fedora23_i386",
+            "debian_packaging_override": "",
+        },
+        {
+            "distribution": "fedora24",
+            "debian_packaging_override": "",
+        },
+        {
+            "distribution": "fedora24_i386",
             "debian_packaging_override": "",
         },
 
