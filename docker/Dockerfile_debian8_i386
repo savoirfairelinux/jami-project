@@ -1,5 +1,7 @@
 FROM savoirfairelinux/ring-debian32:8
 
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN apt-get clean
 RUN apt-get update && \
     apt-get install -y vim devscripts equivs
