@@ -89,44 +89,44 @@ def run_generate_all(parsed_args):
     targets = [
         # Debian
         {
-            "distribution": "debian8",
+            "distribution": "debian_8",
             "debian_packaging_override": "",
         },
         {
-            "distribution": "debian8_i386",
+            "distribution": "debian_8_i386",
             "debian_packaging_override": "",
         },
         {
-            "distribution": "debian9",
+            "distribution": "debian_9",
             "debian_packaging_override": "",
         },
         {
-            "distribution": "debian9_i386",
+            "distribution": "debian_9_i386",
             "debian_packaging_override": "",
         },
         # Ubuntu
         {
-            "distribution": "ubuntu14.04",
+            "distribution": "ubuntu_14.04",
             "debian_packaging_override": "",
         },
         {
-            "distribution": "ubuntu14.04_i386",
+            "distribution": "ubuntu_14.04_i386",
             "debian_packaging_override": "",
         },
         {
-            "distribution": "ubuntu15.10",
+            "distribution": "ubuntu_15.10",
             "debian_packaging_override": "",
         },
         {
-            "distribution": "ubuntu15.10_i386",
+            "distribution": "ubuntu_15.10_i386",
             "debian_packaging_override": "",
         },
         {
-            "distribution": "ubuntu16.04",
+            "distribution": "ubuntu_16.04",
             "debian_packaging_override": "",
         },
         {
-            "distribution": "ubuntu16.04_i386",
+            "distribution": "ubuntu_16.04_i386",
             "debian_packaging_override": "",
         },
 
