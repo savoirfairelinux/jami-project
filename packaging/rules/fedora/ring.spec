@@ -97,7 +97,8 @@ cd %{_builddir}/ring-project/daemon/contrib/native && \
         --disable-speex \
         --disable-sndfile \
         --disable-gsm \
-        --disable-speexdsp && \
+        --disable-speexdsp \
+        --disable-natpmp && \
     make list && \
     make fetch && \
     make -j1 V=1
