@@ -107,7 +107,8 @@ cd %{_builddir}/ring-project/daemon && \
     ./autogen.sh && \
     ./configure \
         --prefix=%{_prefix} \
-        --libdir=%{_libdir}
+        --libdir=%{_libdir} \
+        --disable-shared
 
 #############################
 ## libringclient configure ##
