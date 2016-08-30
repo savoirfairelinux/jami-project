@@ -73,6 +73,7 @@ override_dh_auto_configure:
 		cmake \
 			-DCMAKE_INSTALL_PREFIX=/usr \
 			-DLibRingClient_PROJECT_DIR=/$(CURDIR)/lrc \
+			-DGSETTINGS_LOCALCOMPILE=OFF \
 			..
 
 	dh_auto_configure
