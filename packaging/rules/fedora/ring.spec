@@ -133,6 +133,7 @@ cd %{_builddir}/ring-project/client-gnome && \
         -DCMAKE_INSTALL_PREFIX=%{_prefix} \
         -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
         -DLibRingClient_PROJECT_DIR=%{_builddir}/ring-project/lrc \
+        -DGSETTINGS_LOCALCOMPILE=OFF \
         ..
 
 #######################
@@ -202,6 +203,21 @@ DESTDIR=%{buildroot} make -C client-gnome/build install
 
 %post -p /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
+%postun
+-p /sbin/ldconfig
+
+#for < f24 we have to update the schema explicitly
+%if 0%{?fedora} < 24
+    if [ $1 -eq 0 ] ; then
+        /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+    fi
+%endif
+
+%posttrans
+#for < f24 we have to update the schema explicitly
+%if 0%{?fedora} < 24
+    /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+%endif
+
 
 %changelog
