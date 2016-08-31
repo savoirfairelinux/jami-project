@@ -53,7 +53,7 @@ $(RELEASE_TARBALL_FILENAME):
 	# Fetch tarballs
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
-	    ../bootstrap && \
+	    ../bootstrap && make list \
 	    make fetch-all -j || make fetch-all || make fetch-all
 	rm -rf daemon/contrib/native
 
