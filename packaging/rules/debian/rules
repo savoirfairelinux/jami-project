@@ -104,20 +104,20 @@ override_dh_auto_clean:
 	#######################
 	## Ring Daemon clean ##
 	#######################
-	if [ -d daemon/contrib/native ]; then cd daemon/contrib/native && make distclean; fi
+	if [ -f daemon/contrib/native/Makefile ]; then make -C daemon/contrib/native distclean; fi
 	rm -rfv daemon/contrib/native
 	rm -rfv daemon/dring.1
 
 	#########################
 	## libringclient clean ##
 	#########################
-	if [ -d lrc/build ]; then cd lrc/build && make distclean; fi
+	if [ -f lrc/build/Makefile ]; then make -C lrc/build distclean; fi
 	rm -rfv lrc/build
 
 	########################
 	## gnome client clean ##
 	########################
-	if [ -d client-gnome/build ]; then cd client-gnome/build && make distclean; fi
+	if [ -f client-gnome/build/Makefile ]; then make -C client-gnome/build distclean; fi
 	rm -rfv client-gnome/build
 
 override_dh_auto_install:
