@@ -61,7 +61,7 @@ cd contrib
 mkdir -p native
 cd native
 ../bootstrap
-make -j2
+make
 cd "${DAEMON}"
 ./autogen.sh
 if $global; then
