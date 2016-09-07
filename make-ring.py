@@ -268,7 +268,7 @@ def run_run(args):
 
         if args.debug:
             subprocess.call(
-                ['gdb','-x', 'gdb.gdb', './install/daemon/sbin/dring'],
+                ['gdb','-x', 'gdb.gdb', './install/daemon/lib/ring/dring'],
             )
 
         if args.background == False:
