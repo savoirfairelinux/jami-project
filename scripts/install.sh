@@ -83,7 +83,7 @@ else
             -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
             -DRING_BUILD_DIR="${DAEMON}/src" $static
 fi
-make
+make -j${proc}
 make_install $global
 
 cd "${TOP}/${client}"
@@ -97,5 +97,5 @@ else
             -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
             -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
 fi
-make
+make -j${proc}
 make_install $global
