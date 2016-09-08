@@ -65,9 +65,9 @@ make
 cd "${DAEMON}"
 ./autogen.sh
 if $global; then
-  ./configure $CONFIGURE_FLAGS
+  ./configure --disable-shared $CONFIGURE_FLAGS
 else
-  ./configure $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
+  ./configure --disable-shared $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
 fi
 make -j${proc}
 make_install $global
