@@ -74,6 +74,20 @@ OPENSUSE_DEPENDENCIES = [
     'gettext-tools', 'libnotify-devel', 'libappindicator3-devel',
 ]
 
+MINGW64_FEDORA_DEPENDENCIES = [
+    'mingw64-binutils', 'mingw64-gcc', 'mingw64-headers', 'mingw64-crt', 'mingw64-gcc-c++',
+    'mingw64-pkg-config', 'yasm', 'gettext-devel', 'cmake', 'patch', 'libtool', 'automake',
+    'make', 'xz', 'bzip2', 'which', 'mingw64-qt5-qtbase', 'mingw64-qt5-qttools',
+    'mingw64-qt5-qtsvg', 'mingw64-qt5-qtwinextras'
+]
+
+MINGW32_FEDORA_DEPENDENCIES = [
+    'mingw32-binutils', 'mingw32-gcc', 'mingw32-headers', 'mingw32-crt', 'mingw32-gcc-c++',
+    'mingw32-pkg-config', 'yasm', 'gettext-devel', 'cmake', 'patch', 'libtool', 'automake',
+    'make', 'xz', 'bzip2', 'which', 'mingw32-qt5-qtbase', 'mingw32-qt5-qttools',
+    'mingw32-qt5-qtsvg', 'mingw32-qt5-qtwinextras'
+]
+
 FEDORA_DEPENDENCIES = [
     'autoconf', 'automake', 'cmake', 'speexdsp-devel', 'pulseaudio-libs-devel',
     'libsamplerate-devel', 'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
@@ -161,7 +175,16 @@ def run_dependencies(args):
             RPM_INSTALL_SCRIPT,
             {"packages": ' '.join(FEDORA_DEPENDENCIES)}
         )
-
+    elif args.distribution == "mingw32":
+        execute_script(
+            RPM_INSTALL_SCRIPT,
+            {"packages": ' '.join(MINGW32_FEDORA_DEPENDENCIES)}
+        )
+    elif args.distribution == "mingw64":
+        execute_script(
+            RPM_INSTALL_SCRIPT,
+            {"packages": ' '.join(MINGW64_FEDORA_DEPENDENCIES)}
+        )
     elif args.distribution == "Arch Linux":
         execute_script(
             PACMAN_INSTALL_SCRIPT,
@@ -220,6 +243,16 @@ def run_install(args):
     elif args.distribution == "Android":
         os.chdir("./client-android")
         execute_script(["./compile.sh"])
+    elif args.distribution == 'mingw32':
+        os.environ['CMAKE_PREFIX_PATH'] = '/usr/i686-w64-mingw32/sys-root/mingw/lib/cmake'
+        os.environ['QTDIR'] = '/usr/i686-w64-mingw32/sys-root/mingw/lib/qt5/'
+        os.environ['PATH'] = '/usr/i686-w64-mingw32/bin/qt5/:' + os.environ['PATH']
+        execute_script(["./scripts/win_compile.sh"])
+    elif args.distribution == 'mingw64':
+        os.environ['CMAKE_PREFIX_PATH'] = '/usr/x86_64-w64-mingw32/sys-root/mingw/lib/cmake'
+        os.environ['QTDIR'] = '/usr/x86_64-w64-mingw32/sys-root/mingw/lib/qt5/'
+        os.environ['PATH'] = '/usr/x86_64-w64-mingw32/bin/qt5/:' + os.environ['PATH']
+        execute_script(["./scripts/win_compile.sh --arch=64"])
     else:
         if args.distribution == "openSUSE":
             os.environ['JSONCPP_LIBS'] = "-ljsoncpp" #fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
@@ -319,7 +352,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic']
+    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic', 'mingw32', 'mingw64']
 
     if parsed_args.distribution not in supported_distros:
         print('Distribution not supported.\nChoose one of: %s' \
@@ -360,6 +393,11 @@ def parse_args():
 
     if parsed_args.distribution == 'Automatic':
         parsed_args.distribution = choose_distribution()
+
+    if parsed_args.distribution in ['mingw32', 'mingw64']:
+        if choose_distribution() != "Fedora":
+            print('Windows version must be built on a Fedora distribution (>=23)')
+            sys.exit(1)
 
     validate_args(parsed_args)
 
