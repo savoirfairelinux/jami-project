@@ -65,9 +65,9 @@ make
 cd "${DAEMON}"
 ./autogen.sh
 if $global; then
-  ./configure $CONFIGURE_FLAGS
+  ./configure --disable-shared $CONFIGURE_FLAGS
 else
-  ./configure $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
+  ./configure --disable-shared $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
 fi
 make -j${proc}
 make_install $global
@@ -83,7 +83,7 @@ else
             -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
             -DRING_BUILD_DIR="${DAEMON}/src" $static
 fi
-make
+make -j${proc}
 make_install $global
 
 cd "${TOP}/${client}"
@@ -97,5 +97,5 @@ else
             -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
             -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
 fi
-make
+make -j${proc}
 make_install $global
