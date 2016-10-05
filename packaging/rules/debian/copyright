@@ -7,35 +7,6 @@ Files-Excluded: client-windows/*
                 client-macosx/*
                 client-ios/*
                 client-gnome/libqrencode/*
-                daemon/contrib/tarballs/ffmpeg*
-                daemon/contrib/tarballs/flac*
-                daemon/contrib/tarballs/gmp*
-                daemon/contrib/tarballs/gnutls*
-                daemon/contrib/tarballs/jack*
-                daemon/contrib/tarballs/libav*
-                daemon/contrib/tarballs/libgcrypt*
-                daemon/contrib/tarballs/libgpg*
-                daemon/contrib/tarballs/libiconv*
-                daemon/contrib/tarballs/libogg*
-                daemon/contrib/tarballs/libsamplerate*
-                daemon/contrib/tarballs/libsndfile*
-                daemon/contrib/tarballs/libuuid*
-                daemon/contrib/tarballs/libvorbis*
-                daemon/contrib/tarballs/libvpx*
-                daemon/contrib/tarballs/nettle*
-                daemon/contrib/tarballs/opus*
-                daemon/contrib/tarballs/pcre*
-                daemon/contrib/tarballs/portaudio*
-                daemon/contrib/tarballs/pupnp*
-                daemon/contrib/tarballs/speex*
-                daemon/contrib/tarballs/yaml-cpp*
-                daemon/contrib/tarballs/zlib*
-                daemon/contrib/tarballs/x264*
-                daemon/contrib/tarballs/libgsm*
-                daemon/contrib/tarballs/libnatpmp*
-                daemon/contrib/tarballs/jsoncpp*
-                daemon/contrib/tarballs/iax*
-
 
 Files: *
 Copyright: 2004-2015 Savoir-faire Linux Inc.
