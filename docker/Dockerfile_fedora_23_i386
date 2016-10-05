@@ -46,7 +46,8 @@ RUN dnf upgrade -y && \
         opus-devel \
         patch \
         jsoncpp-devel \
-        libnatpmp-devel
+        libnatpmp-devel \
+        libva-devel
 
 ADD scripts/build-package-fedora.sh /opt/build-package-fedora.sh
 
