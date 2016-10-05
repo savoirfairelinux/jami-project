@@ -34,6 +34,7 @@ override_dh_auto_configure:
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
         ../bootstrap \
+				--disable-downloads \
 				--no-checksums \
 				--disable-ogg \
 				--disable-flac \
