@@ -64,10 +64,21 @@ cd native
 make
 cd "${DAEMON}"
 ./autogen.sh
-if $global; then
-  ./configure --disable-shared $CONFIGURE_FLAGS
+
+#Enable Shared Lib on MAC OSX
+export OSTYPE
+echo $OSTYPE
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    sharedLib="" 
 else
-  ./configure --disable-shared $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
+    sharedLib="--disable-shared"
+fi
+
+if $global; then
+  ./configure $sharedLib $CONFIGURE_FLAGS
+else
+  ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
 fi
 make -j${proc}
 make_install $global
