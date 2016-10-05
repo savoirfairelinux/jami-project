@@ -56,7 +56,8 @@ RUN apt-get update && \
         libnatpmp-dev \
         libappindicator3-dev \
         libqrencode-dev \
-        libnm-glib-dev
+        libnm-glib-dev \
+        libva-dev
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 

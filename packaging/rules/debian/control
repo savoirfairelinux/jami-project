@@ -49,6 +49,7 @@ Build-Depends: debhelper (>= 9),
                libgsm1-dev,
                libjsoncpp-dev,
                libnatpmp-dev,
+               libva-dev,
 # other
                yasm,
                libsamplerate0-dev
