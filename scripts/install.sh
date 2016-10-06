@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Build and install to a local prefix under this repository.
+export OSTYPE
 
 # Flags:
 
@@ -64,10 +65,16 @@ cd native
 make
 cd "${DAEMON}"
 ./autogen.sh
+
+#keep shared Lib on MAC OSX
+if [[ "$OSTYPE" != "darwin"* ]]; then
+    sharedLib="--disable-shared"
+fi
+
 if $global; then
-  ./configure --disable-shared $CONFIGURE_FLAGS
+  ./configure $sharedLib $CONFIGURE_FLAGS
 else
-  ./configure --disable-shared $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
+  ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
 fi
 make -j${proc}
 make_install $global
