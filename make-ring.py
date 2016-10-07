@@ -172,8 +172,10 @@ IOS_DEPENDENCIES_UNLINK = [
 
 UNINSTALL_SCRIPT = [
     'make -C daemon uninstall',
-    'xargs rm < lrc/build-global/install_manifest.txt',
-    'xargs rm < client-gnome/build-global/install_manifest.txt',
+    'rm -rf ./lrc/build-global/',
+    'rm -rf ./lrc/build-local/',
+    'rm -rf ./client-gnome/build-global',
+    'rm -rf ./client-gnome/build-local',
 ]
 
 OSX_UNINSTALL_SCRIPT = [
