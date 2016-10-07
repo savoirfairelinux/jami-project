@@ -143,8 +143,10 @@ OSX_DEPENDENCIES = [
 
 UNINSTALL_SCRIPT = [
     'make -C daemon uninstall',
-    'xargs rm < lrc/build-global/install_manifest.txt',
-    'xargs rm < client-gnome/build-global/install_manifest.txt',
+    'rm -rf ./lrc/build-global/ || exit 0',
+    'rm -rf ./lrc/build-local/ || exit 0',
+    'rm -rf ./client-gnome/build-global || exit 0',
+    'rm -rf ./client-gnome/build-local || exit 0',
 ]
 
 OSX_UNINSTALL_SCRIPT = [
