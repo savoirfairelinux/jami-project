@@ -132,16 +132,6 @@ def run_generate_all(parsed_args):
         },
         # Fedora
         {
-            "distribution": "fedora_22",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
-            "distribution": "fedora_22_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
             "distribution": "fedora_23",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
