@@ -77,8 +77,6 @@ package-all: package-debian_8 \
              package-debian_9_i386 \
              package-ubuntu_14.04 \
              package-ubuntu_14.04_i386 \
-             package-ubuntu_15.10 \
-             package-ubuntu_15.10_i386 \
              package-ubuntu_16.04 \
              package-ubuntu_16.04_i386 \
              package-fedora_22 \
