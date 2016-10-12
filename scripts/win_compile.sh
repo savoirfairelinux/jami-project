@@ -71,8 +71,8 @@ make -j4 || exit 1
 make install
 cd ../..
 fi
-mkdir -p build
-cd build
+mkdir -p build${ARCH}
+cd build${ARCH}
 ${HOST}-qmake-qt5 ../RingWinClient.pro -r -spec win32-g++ RING=$INSTALL_PREFIX
 make -j4 || exit 1
 make install
