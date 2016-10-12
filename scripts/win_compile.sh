@@ -51,7 +51,7 @@ cd $rootdir
 
 cd client-windows
 git submodule update --init
-if [ ! -f "../daemon/_win32/bin/WinSparkle.dll" ]
+if [ ! -f "../daemon/_win${ARCH}/bin/WinSparkle.dll" ]
 then
 cd winsparkle
 git submodule init && git submodule update
@@ -61,7 +61,7 @@ make -j4 || exit 1
 make install
 cd ../../
 fi
-if [ ! -f "../daemon/_win32/bin/libqrencode.dll" ]
+if [ ! -f "../daemon/_win${ARCH}/bin/libqrencode.dll" ]
 then
 cd libqrencode
 ./autogen.sh || exit 1
