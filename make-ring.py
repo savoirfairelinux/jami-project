@@ -408,6 +408,8 @@ def parse_args():
 def choose_distribution():
     system = platform.system().lower()
     if system == "linux" or system == "linux2":
+        if os.path.isfile("/etc/arch-release"):
+            return "Arch Linux"
         with open("/etc/os-release") as f:
             for line in f:
                 k,v = line.split("=")
