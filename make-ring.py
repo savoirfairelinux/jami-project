@@ -216,7 +216,7 @@ def run_dependencies(args):
 def run_init():
     os.system("git submodule update --init")
     os.system("git submodule foreach 'git checkout master && git pull'")
-    for project in ["daemon", "lrc", "client-macosx", "client-gnome", "client-android"]:
+    for project in ["daemon", "lrc", "client-macosx", "client-gnome", "client-android", "client-ios"]:
         copy_file("./scripts/commit-msg", ".git/modules/"+project+"/hooks")
 
 def copy_file(src, dest):
