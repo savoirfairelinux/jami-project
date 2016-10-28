@@ -64,6 +64,7 @@ BuildRequires: qrencode-devel
 BuildRequires: libappindicator-gtk3-devel
 BuildRequires: NetworkManager-glib-devel
 BuildRequires: libva-devel
+BuildRequires: webkitgtk-devel
 
 %description
 Ring is free software for universal communication which respects freedoms
