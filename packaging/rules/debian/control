@@ -22,6 +22,7 @@ Build-Depends: debhelper (>= 9),
                libqrencode-dev,
                libappindicator3-dev,
                libnm-glib-dev,
+               libwebkit2gtk-4.0-dev | libwebkit2gtk-3.0-dev,
 # ring-daemon
                libdbus-1-dev,
                libdbus-c++-dev,
