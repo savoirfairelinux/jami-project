@@ -47,6 +47,7 @@ RUN dnf upgrade -y && \
         patch \
         jsoncpp-devel \
         libnatpmp-devel \
+        webkitgtk-devel \
         libva-devel
 
 ADD scripts/build-package-fedora.sh /opt/build-package-fedora.sh
