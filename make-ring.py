@@ -34,7 +34,7 @@ SUSE_BASED_DISTROS = [
 
 APT_INSTALL_SCRIPT = [
     'apt-get update',
-    'apt-get install -y %(packages)s'
+    'apt-get install -y %(packages)s --ignore-missing'
 ]
 
 BREW_INSTALL_SCRIPT = [
@@ -71,7 +71,8 @@ OPENSUSE_DEPENDENCIES = [
     'libQt5Core-devel', 'libQt5DBus-devel', 'libqt5-linguist-devel',
 # gnome client
     'gtk3-devel', 'clutter-gtk-devel', 'qrencode-devel', 'evolution-data-server-devel',
-    'gettext-tools', 'libnotify-devel', 'libappindicator3-devel',
+    'gettext-tools', 'libnotify-devel', 'libappindicator3-devel', 'webkit2gtk3-devel',
+    'NetworkManager-devel'
 ]
 
 MINGW64_FEDORA_DEPENDENCIES = [
@@ -98,7 +99,8 @@ FEDORA_DEPENDENCIES = [
     'uuid-devel', 'gnutls-devel', 'nettle-devel', 'opus-devel', 'speexdsp-devel',
     'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
     'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel', 'evolution-data-server-devel',
-    'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel'
+    'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel',
+    'webkitgtk4-devel', 'NetworkManager-glib-devel'
 ]
 
 UBUNTU_DEPENDENCIES = [
@@ -106,13 +108,14 @@ UBUNTU_DEPENDENCIES = [
     'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
     'libavcodec-extra', 'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
-    'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls-dev',
+    'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
     'libgsm1-dev', 'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
     'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev',
     'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
-    'libva-dev'
+    'libva-dev', 'libnm-glib-dev'
+    'libwebkit2gtk-4.0-dev', 'libwebkit2gtk-3.0-dev' # we prefer 4.0, but 3.0 will work, we use --ignore-missing so apt-get doesn't fail
 ]
 
 DEBIAN_DEPENDENCIES = [
@@ -120,13 +123,13 @@ DEBIAN_DEPENDENCIES = [
     'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
     'libavcodec-extra', 'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
-    'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls-dev',
+    'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
     'libgsm1-dev', 'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
     'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev',
     'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
-    'libva-dev'
+    'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-glib-dev'
 ]
 
 ARCH_LINUX_DEPENDENCIES = [
@@ -135,7 +138,7 @@ ARCH_LINUX_DEPENDENCIES = [
     'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse', 'libsamplerate',
     'libsndfile', 'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
     'swig', 'yasm', 'qrencode', 'evolution-data-server', 'make', 'patch', 'pkg-config',
-    'automake', 'libva'
+    'automake', 'libva', 'webkitgtk', 'libnm-glib'
 ]
 
 OSX_DEPENDENCIES = [
