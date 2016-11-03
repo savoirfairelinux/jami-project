@@ -114,7 +114,7 @@ UBUNTU_DEPENDENCIES = [
     'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
-    'libva-dev', 'libnm-glib-dev'
+    'libva-dev', 'libnm-glib-dev',
     'libwebkit2gtk-4.0-dev', 'libwebkit2gtk-3.0-dev' # we prefer 4.0, but 3.0 will work, we use --ignore-missing so apt-get doesn't fail
 ]
 
