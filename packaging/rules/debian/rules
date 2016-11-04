@@ -46,7 +46,7 @@ override_dh_auto_configure:
 				--disable-speexdsp \
 				--disable-natpmp && \
 		make list && \
-		make -j1 V=1
+		make -j$(NO_CPUS) V=1
 	cd daemon && \
 		./autogen.sh && \
 		./configure \
