@@ -65,6 +65,7 @@ BuildRequires: libappindicator-gtk3-devel
 BuildRequires: NetworkManager-glib-devel
 BuildRequires: libva-devel
 BuildRequires: webkitgtk4-devel
+BuildRequires: cryptopp-devel
 
 %description
 Ring is free software for universal communication which respects freedoms
@@ -103,7 +104,7 @@ cd %{_builddir}/ring-project/daemon/contrib/native && \
         --disable-natpmp && \
     make list && \
     make fetch && \
-    make -j1 V=1
+    make -j4 V=1
 
 cd %{_builddir}/ring-project/daemon && \
     ./autogen.sh && \

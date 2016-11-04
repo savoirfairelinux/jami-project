@@ -51,6 +51,7 @@ Build-Depends: debhelper (>= 9),
                libjsoncpp-dev,
                libnatpmp-dev,
                libva-dev,
+               libcrypto++-dev,
 # other
                yasm,
                libsamplerate0-dev
