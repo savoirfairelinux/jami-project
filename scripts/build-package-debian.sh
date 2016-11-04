@@ -46,7 +46,7 @@ dch --release --distribution "unstable" debian/changelog
 
 # create orig tarball
 # mk-origtargz isn't in ubuntu_14.04
-if [ "${DISTRIBUTION}" = "ubuntu_14.04" ] || [ "${DISTRIBUTION}" = "ubuntu_14.04_i386" ]; then
+if [ "${DISTRIBUTION}" = "ubuntu_14.04" ] || [ "${DISTRIBUTION}" = "ubuntu_14.04_i386" ];
     mv ${RELEASE_TARBALL_FILENAME} ../ring_${DEBIAN_VERSION}.orig.tar.gz
 else
     mk-origtargz ${RELEASE_TARBALL_FILENAME}
