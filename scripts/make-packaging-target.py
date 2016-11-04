@@ -140,6 +140,16 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
+        {
+            "distribution": "ubuntu_16.10",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+        },
+        {
+            "distribution": "ubuntu_16.10_i386",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+        },
         # Fedora
         {
             "distribution": "fedora_22",
