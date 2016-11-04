@@ -58,6 +58,7 @@ RUN apt-get update && \
         libqrencode-dev \
         libnm-glib-dev \
         libwebkit2gtk-4.0-dev \
+        libcrypto++-dev \
         libva-dev
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
