@@ -1,0 +1,27 @@
+Partagez votre RingID par courriel
+=========================================================================
+
+Après avoir accédé à l’écran d’accueil, suivre les étapes suivantes afin de partager votre RingID par courriel.
+
+.. image:: EcranAccueil.png
+
+**1.**  À la page d’accueil, cliquer sur le bouton *Partager*.
+
+.. image:: BoutonPartager3.png
+
+La fenêtre suivante souvrira.
+
+.. image:: FenetreCourrielOuvre.png
+
+
+**2.**  Entrer le nom du destinataire. Vous pouvez également ajouter un message personnalisé.
+
+**3.**  Cliquer sur *Envoyer*. Votre destinataire recevra le courriel suivant.
+
+.. image:: recu.png
+
+
+
+
+
+

@@ -98,8 +98,8 @@ include Makefile.packaging.distro_targets
 ###################
 .PHONY: docs
 docs: env
-	env/bin/sphinx-build -b html docs/source docs/build/html
-	env/bin/sphinx-build -b texinfo docs/source docs/build/texinfo
+	/usr/share/sphinx/scripts/python2/sphinx-build -b html docs/source docs/build/html
+	/usr/share/sphinx/scripts/python2/sphinx-build -b texinfo docs/source docs/build/texinfo
 
 env:
 	virtualenv env
