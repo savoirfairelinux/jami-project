@@ -104,8 +104,8 @@ include Makefile.packaging.distro_targets
 # Note that newly added RST files will likely not display on all documents'
 # navigation bar unless the docs/build folder is manually deleted.
 docs: env
-	env/bin/sphinx-build -b html docs/source docs/build/html
-	env/bin/sphinx-build -b texinfo docs/source docs/build/texinfo
+	/usr/share/sphinx/scripts/python2/sphinx-build -b html docs/source docs/build/html
+	/usr/share/sphinx/scripts/python2/sphinx-build -b texinfo docs/source docs/build/texinfo
 
 env:
 	virtualenv env
