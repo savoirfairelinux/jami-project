@@ -1,0 +1,21 @@
+Comment envoyer un message texte avec ring
+============================================================
+
+**Suivez les étapes suivantes pour envoyer un message texte avec Ring.**
+
+1. Ouvrir Ring à partir du menu d'applications.
+
+	.. image:: Images/Image1.jpg
+
+2. Entrer le nom du contact ou le RingID de la personne à contacter dans la barre de recherche en haut à gauche, puis appuyer sur la touche Enter.
+
+	.. image:: Images/Image2.jpg
+
+3. Pour envoyer un message, il suffit d'écrire celui-ci dans la barre du bas et d'appuyer sur la flèche à droite.
+
+	.. image:: Images/Image3.jpg
+
+**Et voilà! Vous pouvez maintenant entreprendre une conversation avec le contact.**
+
+	.. image:: Images/Image4.jpg
+
