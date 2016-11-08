@@ -1,0 +1,33 @@
+Partage de RingId par facebook (version Android)
+========================================================
+Une fois que vous avez pris l'application en main, vous souhaiterez peut être envoyer votre RingId à vos amis.
+Pour ce faire, l'un des moyens les plus aisé et d'utiliser le reseau social facebook
+
+Comment faire ?
+
+Tout d'abord, connectez vous à l'application, puis ouvrez le menu, comme montrez dans l'image ci-dessous.
+
+
+.. image:: menu.png
+    :width: 200px
+    :align: center
+    :height: 100px
+    :alt: le menu
+
+Par la suite, appuyez sur le bouton "partager mon contact". Vous devriez alors obtenir l'écran ci-dessous.
+
+.. image:: qrCode.png
+    :width: 200px
+    :align: center
+    :height: 100px
+    :alt: cliquer sur partager mes coordonnées
+
+Enfin, il ne vous reste plus qu'à utiliser le bouton "partager mes coordonnées" et de choisir l'application facebook ou messenger. Vous pourrez alors choisir les contacts qui recevront votre RingId, sous la forme d'un message, comme présenté dans l'image ci-dessous.
+
+.. image:: envoyerMessage.png
+    :width: 200px
+    :align: center
+    :height: 100px
+    :alt: vous avez bien envoyé votre message
+
+

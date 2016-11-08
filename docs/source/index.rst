@@ -36,18 +36,25 @@ As a developer looking to get started with a contribution, see
    :maxdepth: 1
    :glob:
 
-   dev/daemon/*
+   dev/compiling_and_installing/daemon
 
 .. toctree::
    :caption: LibRingClient
    :maxdepth: 1
    :glob:
 
-   dev/lrc/*
+   dev/compiling_and_installing/lrc
 
 .. toctree::
    :caption: Gnome Client
    :maxdepth: 1
    :glob:
 
-   dev/gnome-client/*
+   dev/compiling_and_installing/gnome-client
+
+.. toctree::
+   :caption: LOG1000 documentation
+   :maxdepth: 1
+   :glob:
+
+   dev/log1000Doc/*
