@@ -19,6 +19,7 @@ As a developer looking to get started with a contribution, see
    :maxdepth: 1
    :glob:
 
+   users/downloading_and_installing
    users/connecting_to_ldap
    users/setting_up_turn_stun
 
