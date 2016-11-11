@@ -79,14 +79,14 @@ MINGW64_FEDORA_DEPENDENCIES = [
     'mingw64-binutils', 'mingw64-gcc', 'mingw64-headers', 'mingw64-crt', 'mingw64-gcc-c++',
     'mingw64-pkg-config', 'yasm', 'gettext-devel', 'cmake', 'patch', 'libtool', 'automake',
     'make', 'xz', 'bzip2', 'which', 'mingw64-qt5-qtbase', 'mingw64-qt5-qttools',
-    'mingw64-qt5-qtsvg', 'mingw64-qt5-qtwinextras'
+    'mingw64-qt5-qtsvg', 'mingw64-qt5-qtwinextras', 'mingw64-libidn', 'mingw64-xz-libs'
 ]
 
 MINGW32_FEDORA_DEPENDENCIES = [
     'mingw32-binutils', 'mingw32-gcc', 'mingw32-headers', 'mingw32-crt', 'mingw32-gcc-c++',
     'mingw32-pkg-config', 'yasm', 'gettext-devel', 'cmake', 'patch', 'libtool', 'automake',
     'make', 'xz', 'bzip2', 'which', 'mingw32-qt5-qtbase', 'mingw32-qt5-qttools',
-    'mingw32-qt5-qtsvg', 'mingw32-qt5-qtwinextras'
+    'mingw32-qt5-qtsvg', 'mingw32-qt5-qtwinextras', 'mingw32-libidn', 'mingw32-xz-libs'
 ]
 
 FEDORA_DEPENDENCIES = [

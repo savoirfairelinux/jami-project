@@ -16,12 +16,25 @@ if [ ! -f ${PACKAGE} ]; then
 fi
 
 if [ ! -s ${SPARKLE_FILE} ]; then
+
     wget --no-check-certificate --retry-connrefused --tries=20 --wait=2 \
          --random-wait --waitretry=10 ${SPARKLE_SOURCE} -O ${SPARKLE_FILE}
-    if [ $? -ne 0 ]; then
-        echo 'the winsparkle file have been badly overwriten; deleting it.'
-        rm -f winsparkle.xml
-        exit 1
+
+    if [ $? -eq 127 ]; then
+        rm -f ${SPARKLE_FILE}
+        COUNTER=0
+        curl --retry 2 --retry-delay 2 ${SPARKLE_SOURCE} -o ${SPARKLE_FILE}
+        until [ $? -eq 0 -o $COUNTER -gt 10 ]; do
+            sleep 1
+            let COUNTER=COUNTER+1
+            curl --retry 2 --retry-delay 2 ${SPARKLE_SOURCE} -o ${SPARKLE_FILE}
+        done
+
+        if [ $? -ne 0 ]; then
+            echo 'the winsparkle file have been badly overwriten; deleting it.'
+            rm -f winsparkle.xml
+            exit 1
+        fi
     fi
 fi
 
