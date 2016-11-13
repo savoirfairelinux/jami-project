@@ -22,7 +22,7 @@ Par la suite, appuyez sur le bouton "partager mon contact". Vous devriez alors o
     :height: 100px
     :alt: cliquer sur partager mes coordonnées
 
-Enfin, il ne vous reste plus qu'à utiliser le bouton "partager mes coordonnées" et de choisir l'application facebook ou messenger. Vous pourrez alors choisir les contacts qui recevront votre RingId, sous la forme d'un message, comme présenté dans l'image ci-dessous.
+Enfin, il ne vous reste plus qu'à utiliser le bouton "partager mes coordonnées" et à choisir l'application facebook ou messenger. Vous pourrez alors choisir les contacts qui recevront votre RingId, sous la forme d'un message, comme présenté dans l'image ci-dessous.
 
 .. image:: envoyerMessage.png
     :width: 200px
