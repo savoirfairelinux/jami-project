@@ -37,11 +37,14 @@ APT_INSTALL_SCRIPT = [
     'apt-get install -y %(packages)s --ignore-missing'
 ]
 
+BREW_UNLINK_SCRIPT = [
+    'brew unlink %(packages)s'
+]
+
 BREW_INSTALL_SCRIPT = [
     'brew update',
-    'brew unlink %(packages)s',
     'brew install -y %(packages)s',
-    'brew link --force %(packages)s',
+    'brew link --force --overwrite %(packages)s'
 ]
 
 RPM_INSTALL_SCRIPT = [
@@ -143,8 +146,13 @@ ARCH_LINUX_DEPENDENCIES = [
 ]
 
 OSX_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'cmake', 'gettext', 'pkg-config', 'homebrew/versions/qt55',
+    'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt5',
     'libtool', 'yasm', 'automake'
+]
+
+OSX_DEPENDENCIES_UNLINK = [
+    'autoconf*', 'cmake*', 'gettext*', 'pkg-config*', 'qt*', 'qt@5.*',
+    'libtool*', 'yasm*', 'automake*'
 ]
 
 UNINSTALL_SCRIPT = [
@@ -213,6 +221,11 @@ def run_dependencies(args):
 
     elif args.distribution == "OSX":
         execute_script(
+            BREW_UNLINK_SCRIPT,
+            False,
+            {"packages": ' '.join(OSX_DEPENDENCIES_UNLINK)}
+        )
+        execute_script(
             BREW_INSTALL_SCRIPT,
             False,
             {"packages": ' '.join(OSX_DEPENDENCIES)}
@@ -250,7 +263,7 @@ def run_install(args):
     if args.global_install:
         install_args += ' -g'
     if args.distribution == "OSX":
-        proc= subprocess.Popen("brew --prefix homebrew/versions/qt55", shell=True, stdout=subprocess.PIPE)
+        proc= subprocess.Popen("brew --prefix qt5", shell=True, stdout=subprocess.PIPE)
         qt5dir = proc.stdout.read()
         os.environ['CMAKE_PREFIX_PATH'] = str(qt5dir.decode('ascii'))
         install_args += " -c client-macosx"
