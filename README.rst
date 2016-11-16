@@ -22,6 +22,15 @@ Initialize the repositories
 
     ./make-ring.py --init
 
+It initializes and updates the submodules to set them at the top of their master branch. This
+is ideal to have the latest development version.
+
+However, in order to build a specific version of Ring, such as the Production one, please use
+
+.. code-block:: bash
+
+    git submodule update --init
+
 On Linux
 --------
 
