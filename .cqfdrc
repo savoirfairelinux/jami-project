@@ -1,0 +1,16 @@
+[project]
+org='savoirfairelinux'
+name='ring'
+
+[build]
+distro='android'
+flavors='android'
+command='./make-ring.py --install'
+
+[android]
+distro='android'
+command='./make-ring.py --init && ANDROID_ABI=\"x86 armeabi-v7a\" ./make-ring.py --install --distribution=Android'
+
+[release]
+files=''
+
