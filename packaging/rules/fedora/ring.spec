@@ -204,7 +204,9 @@ DESTDIR=%{buildroot} make -C client-gnome/build install
 %{_datadir}/dbus-1/services/*
 %{_datadir}/dbus-1/interfaces/*
 
-%post -p /sbin/ldconfig
+%post
+-p /sbin/ldconfig
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
 %postun
 -p /sbin/ldconfig
@@ -216,11 +218,17 @@ DESTDIR=%{buildroot} make -C client-gnome/build install
     fi
 %endif
 
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
 %posttrans
 #for < f24 we have to update the schema explicitly
 %if 0%{?fedora} < 24
     /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %endif
 
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
