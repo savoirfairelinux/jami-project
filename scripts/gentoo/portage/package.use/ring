@@ -1,0 +1,13 @@
+dev-libs/libpcre pcre16
+
+sys-libs/zlib minizip
+dev-libs/libdbusmenu-qt qt5
+media-libs/phonon-gstreamer qt5
+dev-qt/qtcore icu
+media-libs/phonon-vlc qt5
+sys-auth/polkit-qt qt5
+media-libs/phonon qt5
+
+# avoiding a cirrcular dep
+media-libs/harfbuzz -graphite
+dev-util/cmake -qt5
