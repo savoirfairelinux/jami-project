@@ -88,7 +88,8 @@ package-all: package-debian_8 \
              package-fedora_23 \
              package-fedora_23_i386 \
              package-fedora_24 \
-             package-fedora_24_i386
+             package-fedora_24_i386 \
+             package-gentoo
 
 # Append the output of make-packaging-target to this Makefile
 # see Makefile.packaging.distro_targets
