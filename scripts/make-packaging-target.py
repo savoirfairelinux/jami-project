@@ -181,6 +181,12 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": ".packages-built",
         },
+        # Gentoo
+        {
+            "distribution": "gentoo",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+        },
 
     ]
 
