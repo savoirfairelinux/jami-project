@@ -1,0 +1,16 @@
+# overlay
+net-voip/gnome-ring ~amd64
+=net-voip/kde-ring-99999999 **
+net-libs/libringclient ~amd64
+net-voip/ring-daemon ~amd64
+dev-libs/msgpack ~amd64
+net-libs/opendht ~amd64
+
+# deps
+dev-libs/crypto++ ~amd64
+dev-libs/jsoncpp ~amd64
+net-libs/libupnp ~amd64
+media-libs/opus ~amd64
+media-libs/libvpx ~amd64
+dev-libs/dbus-c++ ~amd64
+
