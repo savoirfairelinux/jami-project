@@ -45,25 +45,13 @@ else
     OS="windows-x86";
 fi
 
-#update URI in <link> field
+# update URI in <link> field
 gawk -i inplace -v source="${SPARKLE_SOURCE}" '/<link>/{printf "        <link>";
                                                         printf source; print "</link>"; next}1' ${SPARKLE_FILE}
 
 
-#update list with new image item
-cat << EOS > ${TMP_FILE}
-        <item>
-            <title>Ring nightly $(date "+%Y/%m/%d %H:%M")</title>
-            <pubDate>$(date -R)</pubDate>
-            <enclosure url="${REPO_URL}/$(basename ${PACKAGE})" sparkle:version="$(date +%Y%m%d)" sparkle:shortVersionString="nightly-$(date "+%Y%m%d")" sparkle:os="${OS}" length="$(stat -c %s ${PACKAGE})" type="application/octet-stream" />
-        </item>
-EOS
+# update xml list with new image item
 
-if [ -s ${SPARKLE_FILE} ];then
-    gawk -i inplace -v tmp="${TMP_FILE}" '/language/{print; while(getline line < tmp){print line};close(tmp);next}1' ${SPARKLE_FILE}
-    rm -f ${TMP_FILE}
-else
-    echo 'empty SPARKLE_FILE'
-    rm -f ${TMP_FILE}
-    exit 1
-fi
+URL="${REPO_URL}/$(basename ${PACKAGE})"
+LENGTH="$(stat -c %s ${PACKAGE})"
+python3 ./scripts/winsparkle.py winsparkle-ring.xml "Ring nightly" ${URL} ${OS} ${LENGTH}
