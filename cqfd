@@ -22,8 +22,8 @@ set -e
 EERROR=1
 ESUCCESS=0
 PROGNAME=`basename $0`
-dockerfile=".cqfd/docker/Dockerfile"
-cqfdrc=".cqfdrc"
+cqfdrc_dir=".cqfd"
+dockerfile="${cqfdrc_dir}/docker/Dockerfile"
 
 ## usage() - print usage on stdout
 usage() {
@@ -196,11 +196,11 @@ config_load() {
 	local p_flavor="$1"
 
 	# Load project, build and release settings
-	if [ ! -f "$cqfdrc" ]; then
-		die "No $cqfdrc file found, cannot continue."
+	if [ ! -f "$cqfdrc_dir/.cqfdrc" ]; then
+		die "No $cqfdrc_dir/.cqfdrc found, cannot continue."
 	fi
 
-	IFS="$IFS" cfg_parser "$cqfdrc"
+	IFS="$IFS" cfg_parser "$cqfdrc_dir/.cqfdrc"
 
 	cfg.section.project # load the [project] section
 	project_org="$org"
@@ -227,7 +227,7 @@ config_load() {
 
 	build_cmd="$command"
 	if [ -n "$distro" ]; then
-		dockerfile=".cqfd/$distro/Dockerfile"
+		dockerfile="${cqfdrc_dir}/$distro/Dockerfile"
 	fi
 
 	release_files="$files"
@@ -257,8 +257,8 @@ while [ $# -gt 0 ]; do
 		;;
 	-f)
 		shift
-		[ -f "$1" ] || die 'No file named "'$1'"'
-		cqfdrc="$1"
+		[ -f "$1/.cqfdrc" ] || die 'No file named "'$1'"'
+		cqfdrc_dir="$1"
 		;;
 	run|release)
 		[ "$1" = "release" ] && make_archive=1
@@ -283,7 +283,7 @@ config_load $flavor
 if [ -n "$build_cmd_alt" ]; then
 	build_cmd=$build_cmd_alt
 elif [ -z "$build_cmd" ]; then
-	die "No build.command defined in $cqfdrc !"
+	die "No build.command defined in $cqfdrc_dir/.cqfdrc !"
 fi
 
 docker_run "$build_cmd"
