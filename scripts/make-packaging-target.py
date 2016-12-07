@@ -181,6 +181,16 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": ".packages-built",
         },
+        {
+            "distribution": "fedora_25",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+        },
+        {
+            "distribution": "fedora_25_i386",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+        },
         # Gentoo
         {
             "distribution": "gentoo",
