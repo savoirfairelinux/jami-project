@@ -360,7 +360,7 @@ def validate_args(parsed_args):
     supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic', 'mingw32', 'mingw64']
 
     if parsed_args.distribution not in supported_distros:
-        print('Distribution not supported.\nChoose one of: %s' \
+        print('Distribution \''+parsed_args.distribution+'\' not supported.\nChoose one of: %s' \
                   % ', '.join(supported_distros),
             file=sys.stderr)
         sys.exit(1)
@@ -417,7 +417,7 @@ def choose_distribution():
             for line in f:
                 k,v = line.split("=")
                 if k.strip() == 'NAME':
-                    return v.strip().replace('"','')
+                    return v.strip().replace('"','').split(' ')[0]
     elif system == "darwin":
         return 'OSX'
 

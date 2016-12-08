@@ -1,0 +1,5 @@
+updatePkgs() {
+	chown -R ${CURRENT_UID}:${CURRENT_UID} /opt/output
+}
+
+[[ $EBUILD_PHASE == "postinst" || $EBUILD_PHASE == "clean" ]] && updatePkgs
