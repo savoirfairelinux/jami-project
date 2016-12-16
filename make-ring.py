@@ -60,7 +60,7 @@ ZYPPER_INSTALL_SCRIPT = [
 
 OPENSUSE_DEPENDENCIES = [
 # build system
-    'autoconf', 'automake', 'cmake', 'patch', 'gcc-c++', 'libtool',
+    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++', 'libtool',
 # daemon
     'speexdsp-devel', 'speex-devel', 'libdbus-c++-devel', 'jsoncpp-devel', 'yaml-cpp-devel',
     'libupnp-devel', 'boost-devel', 'yasm', 'libuuid-devel', 'libsamplerate-devel',
@@ -78,19 +78,19 @@ OPENSUSE_DEPENDENCIES = [
 MINGW64_FEDORA_DEPENDENCIES = [
     'mingw64-binutils', 'mingw64-gcc', 'mingw64-headers', 'mingw64-crt', 'mingw64-gcc-c++',
     'mingw64-pkg-config', 'yasm', 'gettext-devel', 'cmake', 'patch', 'libtool', 'automake',
-    'make', 'xz', 'bzip2', 'which', 'mingw64-qt5-qtbase', 'mingw64-qt5-qttools',
-    'mingw64-qt5-qtsvg', 'mingw64-qt5-qtwinextras', 'mingw64-libidn', 'mingw64-xz-libs'
+    'autoconf', 'autoconf-archive', 'make', 'xz', 'bzip2', 'which', 'mingw64-qt5-qtbase',
+    'mingw64-qt5-qttools', 'mingw64-qt5-qtsvg', 'mingw64-qt5-qtwinextras', 'mingw64-libidn', 'mingw64-xz-libs'
 ]
 
 MINGW32_FEDORA_DEPENDENCIES = [
     'mingw32-binutils', 'mingw32-gcc', 'mingw32-headers', 'mingw32-crt', 'mingw32-gcc-c++',
     'mingw32-pkg-config', 'yasm', 'gettext-devel', 'cmake', 'patch', 'libtool', 'automake',
-    'make', 'xz', 'bzip2', 'which', 'mingw32-qt5-qtbase', 'mingw32-qt5-qttools',
-    'mingw32-qt5-qtsvg', 'mingw32-qt5-qtwinextras', 'mingw32-libidn', 'mingw32-xz-libs'
+    'autoconf', 'autoconf-archive', 'make', 'xz', 'bzip2', 'which', 'mingw32-qt5-qtbase',
+    'mingw32-qt5-qttools', 'mingw32-qt5-qtsvg', 'mingw32-qt5-qtwinextras', 'mingw32-libidn', 'mingw32-xz-libs'
 ]
 
 FEDORA_DEPENDENCIES = [
-    'autoconf', 'automake', 'cmake', 'speexdsp-devel', 'pulseaudio-libs-devel',
+    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'speexdsp-devel', 'pulseaudio-libs-devel',
     'libsamplerate-devel', 'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
     'yaml-cpp-devel', 'boost-devel', 'dbus-c++-devel', 'dbus-devel',
     'libsndfile-devel', 'libXext-devel', 'libXfixes-devel', 'yasm',
@@ -104,7 +104,7 @@ FEDORA_DEPENDENCIES = [
 ]
 
 UBUNTU_DEPENDENCIES = [
-    'autoconf', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
+    'autoconf', 'autoconf-archive', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
     'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
     'libavcodec-extra', 'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
@@ -119,7 +119,7 @@ UBUNTU_DEPENDENCIES = [
 ]
 
 DEBIAN_DEPENDENCIES = [
-    'autoconf', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
+    'autoconf', 'autoconf-archive', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
     'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
     'libavcodec-extra', 'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
@@ -133,7 +133,7 @@ DEBIAN_DEPENDENCIES = [
 ]
 
 ARCH_LINUX_DEPENDENCIES = [
-    'autoconf', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc', 'gnome-icon-theme-symbolic',
+    'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc', 'gnome-icon-theme-symbolic',
     'ffmpeg', 'boost', 'clutter-gtk', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book',
     'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse', 'libsamplerate',
     'libsndfile', 'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
@@ -142,7 +142,7 @@ ARCH_LINUX_DEPENDENCIES = [
 ]
 
 OSX_DEPENDENCIES = [
-    'autoconf', 'cmake', 'gettext', 'pkg-config', 'homebrew/versions/qt55',
+    'autoconf', 'autoconf-archive', 'cmake', 'gettext', 'pkg-config', 'homebrew/versions/qt55',
     'libtool', 'yasm', 'automake'
 ]
 
