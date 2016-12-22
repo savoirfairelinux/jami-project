@@ -59,15 +59,16 @@ if __name__ == "__main__":
     tree = ET.parse(sparkle_file)
     channel = tree.find("channel")
     attrib = {'url' : url,
-              'sparkle:version' : now.strftime("%Y/%m/%d"),
-              'sparkle:shortVersionString' : "nightly-" + now.strftime("%Y/%m/%d"),
+              'sparkle:version' : now.strftime("%Y%m%d"),
+              'sparkle:shortVersionString' : "nightly-" + now.strftime("%Y%m%d"),
               'sparkle:os' : os,
               'length' : length,
               'type' : "application/octet-stream"
     }
 
+    # remove all publications of the same day (but not same os)
     for item in tree.findall(".//item"):
-        if sameDate(now_timestamp,item.find("pubDate")) and not\
+        if sameDate(now_timestamp, item.find("pubDate")) and not\
         item.find("./enclosure[@sparkle:os='%s']" % os, namespace) is None:
             channel.remove(item)
 
@@ -79,5 +80,3 @@ if __name__ == "__main__":
     xml_out = open(sparkle_file,"wb")
     xml_out.write(reparsed_doc.toprettyxml(indent='  ', newl='\n',encoding="utf-8"))
     xml_out.close()
-
-
