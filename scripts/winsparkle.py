@@ -1,23 +1,3 @@
-"""
- *  Copyright (C) 2016 Savoir-faire Linux Inc.
- *
- *  Author: Olivier Soldano <olivier.soldano@savoirfairelinux.com>
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA.
-"""
-
 import sys
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
@@ -34,7 +14,7 @@ def insertNewPackage(parent_element, title, attrib):
     now = datetime.datetime.now()
 
     new_item = ET.Element("item")
-
+    
     titre = ET.SubElement(new_item,"titre")
     titre.text = title + now.strftime("%Y/%m/%d %H:%M")
 
@@ -42,7 +22,7 @@ def insertNewPackage(parent_element, title, attrib):
     pubDate.text = formatdate()
 
     enclosure = ET.SubElement(new_item, "enclosure", attrib=attrib)
-
+    
     parent_element.insert(4,new_item)
 
 
@@ -59,15 +39,16 @@ if __name__ == "__main__":
     tree = ET.parse(sparkle_file)
     channel = tree.find("channel")
     attrib = {'url' : url,
-              'sparkle:version' : now.strftime("%Y/%m/%d"),
-              'sparkle:shortVersionString' : "nightly-" + now.strftime("%Y/%m/%d"),
+              'sparkle:version' : now.strftime("%Y%m%d"),
+              'sparkle:shortVersionString' : "nightly-" + now.strftime("%Y%m%d"),
               'sparkle:os' : os,
               'length' : length,
               'type' : "application/octet-stream"
     }
 
+    # remove all publications of the same day (but not same os)
     for item in tree.findall(".//item"):
-        if sameDate(now_timestamp,item.find("pubDate")) and not\
+        if sameDate(now_timestamp, item.find("pubDate")) and not\
         item.find("./enclosure[@sparkle:os='%s']" % os, namespace) is None:
             channel.remove(item)
 
@@ -79,5 +60,3 @@ if __name__ == "__main__":
     xml_out = open(sparkle_file,"wb")
     xml_out.write(reparsed_doc.toprettyxml(indent='  ', newl='\n',encoding="utf-8"))
     xml_out.close()
-
-
