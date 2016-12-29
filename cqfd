@@ -20,7 +20,8 @@
 set -e
 
 PROGNAME=`basename $0`
-dockerfile=".cqfd/docker/Dockerfile"
+cqfd_dir=".cqfd"
+dockerfile="${cqfd_dir}/docker/Dockerfile"
 cqfdrc=".cqfdrc"
 
 ## usage() - print usage on stdout
@@ -30,6 +31,7 @@ Usage: $PROGNAME [OPTION ARGUMENT] [COMMAND] [ARGUMENTS]
 
 Options:
     -f <file>           Use file as config file (default .cqfdrc)
+    -d <dir>            Use directory as cqfd directory (default .cqfd)
     -b <flavor_name>    Target a specific build flavor.
 
 Commands:
@@ -231,7 +233,7 @@ config_load() {
 
     build_cmd="$command"
     if [ -n "$distro" ]; then
-        dockerfile=".cqfd/$distro/Dockerfile"
+        dockerfile="${cqfd_dir}/$distro/Dockerfile"
     fi
 
     release_files="`eval echo $files`"
@@ -262,6 +264,11 @@ while [ $# -gt 0 ]; do
     -f)
         shift
         cqfdrc="$1"
+        ;;
+    -d)
+        shift
+        cqfd_dir="$1"
+        dockerfile="${cqfd_dir}/docker/Dockerfile"
         ;;
     run|release)
         [ "$1" = "release" ] && make_archive=1
