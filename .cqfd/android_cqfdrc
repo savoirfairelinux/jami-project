@@ -1,0 +1,20 @@
+[project]
+org='savoirfairelinux'
+name='ring'
+
+[build]
+command='cd client-android && ./compile.sh'
+flavors='ci release daemon'
+
+[ci]
+command='cd client-android && ./compile.sh'
+
+[release]
+command='cd client-android && ./compile.sh --release'
+
+[daemon]
+command='cd client-android && ./compile.sh --daemon'
+
+[release]
+files=''
+
