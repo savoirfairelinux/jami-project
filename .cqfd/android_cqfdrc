@@ -1,0 +1,18 @@
+[project]
+org='savoirfairelinux'
+name='ring'
+
+[build]
+; default behaviour
+command='cd client-android && ./compile.sh'
+flavors='ci release daemon'
+
+[ci]
+command='cd client-android && ./compile.sh'
+
+[daemon]
+command='cd client-android && ./compile.sh --daemon'
+
+[release]
+command='cd client-android && ./compile.sh --release'
+
