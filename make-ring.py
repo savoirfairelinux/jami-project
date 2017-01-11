@@ -37,10 +37,14 @@ APT_INSTALL_SCRIPT = [
     'apt-get install -y %(packages)s --ignore-missing'
 ]
 
+BREW_UNLINK_SCRIPT = [
+    'brew unlink %(packages)s'
+]
+
 BREW_INSTALL_SCRIPT = [
     'brew update',
     'brew install -y %(packages)s',
-    'brew link --force gettext'
+    'brew link --force --overwrite %(packages)s'
 ]
 
 RPM_INSTALL_SCRIPT = [
@@ -142,8 +146,13 @@ ARCH_LINUX_DEPENDENCIES = [
 ]
 
 OSX_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'cmake', 'gettext', 'pkg-config', 'homebrew/versions/qt55',
+    'autoconf', 'autoconf-archive', 'cmake', 'gettext', 'pkg-config', 'qt5',
     'libtool', 'yasm', 'automake'
+]
+
+OSX_DEPENDENCIES_UNLINK = [
+    'autoconf*', 'cmake*', 'gettext*', 'pkg-config*', 'qt*', 'qt@5.*',
+    'libtool*', 'yasm*', 'automake*'
 ]
 
 UNINSTALL_SCRIPT = [
@@ -165,46 +174,60 @@ STOP_SCRIPT = [
 
 def run_dependencies(args):
     if args.distribution == "Ubuntu":
-        execute_script(APT_INSTALL_SCRIPT,
+        execute_script(
+            APT_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(UBUNTU_DEPENDENCIES)}
         )
 
     elif args.distribution == "Debian":
         execute_script(
             APT_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(DEBIAN_DEPENDENCIES)}
         )
 
     elif args.distribution == "Fedora":
         execute_script(
             RPM_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(FEDORA_DEPENDENCIES)}
         )
     elif args.distribution == "mingw32":
         execute_script(
             RPM_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(MINGW32_FEDORA_DEPENDENCIES)}
         )
     elif args.distribution == "mingw64":
         execute_script(
             RPM_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(MINGW64_FEDORA_DEPENDENCIES)}
         )
     elif args.distribution == "Arch Linux":
         execute_script(
             PACMAN_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(ARCH_LINUX_DEPENDENCIES)}
         )
 
     elif args.distribution == "openSUSE":
         execute_script(
             ZYPPER_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(OPENSUSE_DEPENDENCIES)}
         )
 
     elif args.distribution == "OSX":
         execute_script(
+            BREW_UNLINK_SCRIPT,
+            False,
+            {"packages": ' '.join(OSX_DEPENDENCIES_UNLINK)}
+        )
+        execute_script(
             BREW_INSTALL_SCRIPT,
+            False,
             {"packages": ' '.join(OSX_DEPENDENCIES)}
         )
 
@@ -240,7 +263,7 @@ def run_install(args):
     if args.global_install:
         install_args += ' -g'
     if args.distribution == "OSX":
-        proc= subprocess.Popen("brew --prefix homebrew/versions/qt55", shell=True, stdout=subprocess.PIPE)
+        proc= subprocess.Popen("brew --prefix qt5", shell=True, stdout=subprocess.PIPE)
         qt5dir = proc.stdout.read()
         os.environ['CMAKE_PREFIX_PATH'] = str(qt5dir.decode('ascii'))
         install_args += " -c client-macosx"
@@ -340,17 +363,16 @@ def run_stop(args):
     execute_script(STOP_SCRIPT)
 
 
-def execute_script(script, settings=None):
+def execute_script(script, exitOnError=True, settings=None):
     if settings == None:
         settings = {}
     for line in script:
         line = line % settings
         rv = os.system(line)
         if rv != 0:
-            print('Error executing script! Exit code: %s' % rv,
-                  file=sys.stderr)
-            return False
-    return True
+            print('Error executing script! Exit code: %s' % rv, file=sys.stderr)
+            if exitOnError:
+                sys.exit(1)
 
 
 def validate_args(parsed_args):
