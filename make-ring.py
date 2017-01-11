@@ -349,8 +349,7 @@ def execute_script(script, settings=None):
         if rv != 0:
             print('Error executing script! Exit code: %s' % rv,
                   file=sys.stderr)
-            return False
-    return True
+            sys.exit(rv)
 
 
 def validate_args(parsed_args):
