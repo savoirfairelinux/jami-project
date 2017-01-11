@@ -39,8 +39,9 @@ APT_INSTALL_SCRIPT = [
 
 BREW_INSTALL_SCRIPT = [
     'brew update',
+    'brew unlink %(packages)s',
     'brew install -y %(packages)s',
-    'brew link --force gettext'
+    'brew link --force %(packages)s',
 ]
 
 RPM_INSTALL_SCRIPT = [
@@ -165,46 +166,55 @@ STOP_SCRIPT = [
 
 def run_dependencies(args):
     if args.distribution == "Ubuntu":
-        execute_script(APT_INSTALL_SCRIPT,
+        execute_script(
+            APT_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(UBUNTU_DEPENDENCIES)}
         )
 
     elif args.distribution == "Debian":
         execute_script(
             APT_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(DEBIAN_DEPENDENCIES)}
         )
 
     elif args.distribution == "Fedora":
         execute_script(
             RPM_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(FEDORA_DEPENDENCIES)}
         )
     elif args.distribution == "mingw32":
         execute_script(
             RPM_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(MINGW32_FEDORA_DEPENDENCIES)}
         )
     elif args.distribution == "mingw64":
         execute_script(
             RPM_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(MINGW64_FEDORA_DEPENDENCIES)}
         )
     elif args.distribution == "Arch Linux":
         execute_script(
             PACMAN_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(ARCH_LINUX_DEPENDENCIES)}
         )
 
     elif args.distribution == "openSUSE":
         execute_script(
             ZYPPER_INSTALL_SCRIPT,
+            True,
             {"packages": ' '.join(OPENSUSE_DEPENDENCIES)}
         )
 
     elif args.distribution == "OSX":
         execute_script(
             BREW_INSTALL_SCRIPT,
+            False,
             {"packages": ' '.join(OSX_DEPENDENCIES)}
         )
 
@@ -340,17 +350,16 @@ def run_stop(args):
     execute_script(STOP_SCRIPT)
 
 
-def execute_script(script, settings=None):
+def execute_script(script, exitOnError=True, settings=None):
     if settings == None:
         settings = {}
     for line in script:
         line = line % settings
         rv = os.system(line)
         if rv != 0:
-            print('Error executing script! Exit code: %s' % rv,
-                  file=sys.stderr)
-            return False
-    return True
+            print('Error executing script! Exit code: %s' % rv, file=sys.stderr)
+            if exitOnError:
+                sys.exit(1)
 
 
 def validate_args(parsed_args):
