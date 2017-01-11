@@ -360,10 +360,8 @@ def execute_script(script, settings=None):
         line = line % settings
         rv = os.system(line)
         if rv != 0:
-            print('Error executing script! Exit code: %s' % rv,
-                  file=sys.stderr)
-            return False
-    return True
+            print('Error executing script! Exit code: %s' % rv, file=sys.stderr)
+            sys.exit(1)
 
 
 def validate_args(parsed_args):
