@@ -19,3 +19,6 @@
 [submodule "client-ios"]
 	path = client-ios
 	url = https://gerrit-ring.savoirfairelinux.com/ring-client-ios
+[submodule "client-uwp"]
+	path = client-uwp
+	url = https://gerrit-ring.savoirfairelinux.com/ring-client-uwp
