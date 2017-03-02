@@ -205,11 +205,10 @@ DESTDIR=%{buildroot} make -C client-gnome/build install
 %{_datadir}/dbus-1/interfaces/*
 
 %post
--p /sbin/ldconfig
+/sbin/ldconfig
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
-%postun
--p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 #for < f24 we have to update the schema explicitly
 %if 0%{?fedora} < 24
