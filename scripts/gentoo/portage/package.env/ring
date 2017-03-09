@@ -7,6 +7,7 @@ dev-libs/libical docker-build
 dev-libs/appstream-glib docker-build
 net-libs/webkit-gtk docker-build
 net-libs/gnome-online-accounts docker-build
+sys-libs/glibc docker-build
 sys-libs/ncurses docker-build
 
 # build pkg

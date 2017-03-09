@@ -13,4 +13,11 @@ net-libs/libupnp ~amd64
 media-libs/opus ~amd64
 media-libs/libvpx ~amd64
 dev-libs/dbus-c++ ~amd64
+dev-cpp/catch ~amd64
+dev-libs/libpcre ~amd64
+net-libs/restbed ~amd64
+app-crypt/argon2 ~amd64
+media-libs/speexdsp ~amd64
+media-libs/speex ~amd64
+
 

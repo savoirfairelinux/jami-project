@@ -23,6 +23,8 @@
 
 set -e
 
+emerge --sync
+
 layman -f -a ring-overlay
 
 cp /opt/ring-project-ro/${RELEASE_TARBALL_FILENAME} /usr/portage/distfiles
