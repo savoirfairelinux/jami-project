@@ -32,6 +32,10 @@ SUSE_BASED_DISTROS = [
     'openSUSE',
 ]
 
+PORTAGE_BASED_DISTROS = [
+    'Gentoo',
+]
+
 APT_INSTALL_SCRIPT = [
     'apt-get update',
     'apt-get install -y %(packages)s --ignore-missing'
@@ -208,6 +212,10 @@ def run_dependencies(args):
             {"packages": ' '.join(OSX_DEPENDENCIES)}
         )
 
+    elif args.distribution == "Gentoo":
+        print("install the ring-overlay and run 'emerge --onlydeps net-voip/ring-daemon'")
+        sys.exit(1)
+
     elif args.distribution == "Android":
         print("The Android version does not need more dependencies.\nPlease continue with the --install instruction.")
         sys.exit(1)
@@ -357,7 +365,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic', 'mingw32', 'mingw64']
+    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic', 'mingw32', 'mingw64', 'Gentoo']
 
     if parsed_args.distribution not in supported_distros:
         print('Distribution \''+parsed_args.distribution+'\' not supported.\nChoose one of: %s' \
