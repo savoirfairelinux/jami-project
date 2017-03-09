@@ -52,3 +52,10 @@ As a developer looking to get started with a contribution, see
    :glob:
 
    dev/gnome-client/*
+
+.. toctree::
+   :caption: LOG1000 Documentation Quitter_GNOME
+   :maxdepth: 1
+   :glob:
+
+   dev/log1000Doc/quitter_gnome/1684089_1784158
