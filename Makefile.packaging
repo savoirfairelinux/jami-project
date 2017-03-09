@@ -19,16 +19,16 @@
 ## Version number variables ##
 ##############################
 # YYYY-MM-DD
-LAST_COMMIT_DATE:=$(shell git log -1 --format=%cd --date=short)
+LAST_COMMIT_DATE:=$(shell cd daemon/ && git log -1 --format=%cd --date=short)
 
 # number of commits that day
-NUMBER_OF_COMMITS:=$(shell git log --format=%cd --date=short | grep -c $(LAST_COMMIT_DATE))
+NUMBER_OF_COMMITS:=$(shell cd daemon/ && git log --format=%cd --date=short | grep -c $(LAST_COMMIT_DATE))
 
 # YYMMDD
-LAST_COMMIT_DATE_SHORT:=$(shell echo $(LAST_COMMIT_DATE) | sed -s 's/-//g')
+LAST_COMMIT_DATE_SHORT:=$(shell cd daemon/ &&  echo $(LAST_COMMIT_DATE) | sed -s 's/-//g')
 
 # last commit id
-COMMIT_ID:=$(shell git rev-parse --short HEAD)
+COMMIT_ID:=$(shell cd daemon/ &&  git rev-parse --short HEAD)
 
 RELEASE_VERSION:=$(LAST_COMMIT_DATE_SHORT).$(NUMBER_OF_COMMITS).$(COMMIT_ID)
 RELEASE_TARBALL_FILENAME:=ring_$(RELEASE_VERSION).tar.gz
