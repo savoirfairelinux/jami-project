@@ -1,3 +1,10 @@
+sys-libs/tdb python
+sys-libs/tevent python
+sys-libs/ntdb python
+media-sound/pulseaudio libsamplerate
+media-video/ffmpeg vpx vaapi opus libilbc v4l speex gsm
+net-fs/samba client
+
 dev-libs/libpcre pcre16
 
 sys-libs/zlib minizip
