@@ -52,3 +52,10 @@ As a developer looking to get started with a contribution, see
    :glob:
 
    dev/gnome-client/*
+
+.. toctree::
+   :caption: Configurate account on another device
+   :maxdepth: 1
+   :glob:
+
+   dev/log1000Doc/configurer_compte_devices_GNOME
