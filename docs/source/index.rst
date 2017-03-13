@@ -52,3 +52,10 @@ As a developer looking to get started with a contribution, see
    :glob:
 
    dev/gnome-client/*
+   
+.. toctree::
+   :caption: Lancer l'application sous Windows
+   :maxdepth: 1
+   :glob:
+
+   dev/log1000Doc/lancer_Client_Windows/lancer_Client_Windows
