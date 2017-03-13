@@ -12,3 +12,4 @@ This section covers compiling the different components of Ring.
    daemon
    lrc
    gnome_client
+   log1000Doc
