@@ -32,13 +32,6 @@ As a developer looking to get started with a contribution, see
    dev/compiling_and_installing/index
    dev/releasing
 
-.. toctree::
-   :caption: LOG1000 Documentation
-   :maxdepth: 1
-   :glob:
-	
-   dev/log1000Doc/configurer_media_video_android/configurer_media_video_android
-
 
 .. toctree::
    :caption: Ring Daemon
