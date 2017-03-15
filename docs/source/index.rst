@@ -52,3 +52,4 @@ As a developer looking to get started with a contribution, see
    :glob:
 
    dev/gnome-client/*
+	
