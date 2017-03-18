@@ -52,3 +52,10 @@ As a developer looking to get started with a contribution, see
    :glob:
 
    dev/gnome-client/*
+   
+.. toctree::
+   :caption: Creating a Ring Account
+   :maxdepth: 1
+   :glob:
+
+   dev/log1000Doc/creer_compte_linux/*
