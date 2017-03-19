@@ -31,6 +31,7 @@ As a developer looking to get started with a contribution, see
    dev/contributing
    dev/compiling_and_installing/index
    dev/releasing
+   dev/log1000Doc/configurer_media_audio_GNOME.rst
 
 .. toctree::
    :caption: Ring Daemon
@@ -52,3 +53,5 @@ As a developer looking to get started with a contribution, see
    :glob:
 
    dev/gnome-client/*
+
+
