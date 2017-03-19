@@ -52,3 +52,10 @@ As a developer looking to get started with a contribution, see
    :glob:
 
    dev/gnome-client/*
+
+.. toctree::
+   :caption: Documentation Log1000
+   :maxdepth: 1
+   :glob:
+
+   dev/log1000Doc/*
