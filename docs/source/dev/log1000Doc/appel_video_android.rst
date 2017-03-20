@@ -1,7 +1,7 @@
 .. _appel_video_android:
 
 Video calls
-==========================
+=========================
 
 Once you have successfully :ref:`Downloaded and installed <downloading_and_installing>` Ring on your device,
 you may connect your existing account or create a new one.
