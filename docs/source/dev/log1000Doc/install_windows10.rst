@@ -12,6 +12,7 @@ It will bring you to the microsoft store.
 Now clik on "Obtenir l'application".
 Then a  window is going to appear asking you if you want to open it in the store.
 Click on "open the store".
+
 .. image:: install_windows10/3.jpg
 
 Now the windows store will open on the downloadinf page of ring.
