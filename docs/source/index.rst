@@ -51,4 +51,9 @@ As a developer looking to get started with a contribution, see
    :maxdepth: 1
    :glob:
 
-   dev/gnome-client/*
+.. toctree::
+   :caption: Installing documentation
+   :maxdepth: 1
+   :glob:
+
+   dev/log1000Doc/install_windows10.rst
