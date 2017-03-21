@@ -7,6 +7,7 @@ start.
 As a developer looking to get started with a contribution, see
 :ref:`contributing <contributing>` and :ref:`how to build <building>`.
 
+
 .. toctree::
    :caption: Introduction
    :maxdepth: 1
@@ -52,3 +53,10 @@ As a developer looking to get started with a contribution, see
    :glob:
 
    dev/gnome-client/*
+
+.. toctree::
+   :caption: Exit Ring
+   :maxdepth: 1
+   :glob:
+
+   dev/log1000Doc/quitter_uwp.rst
