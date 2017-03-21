@@ -8,6 +8,13 @@ As a developer looking to get started with a contribution, see
 :ref:`contributing <contributing>` and :ref:`how to build <building>`.
 
 .. toctree::
+    :caption: Make a video call
+    :maxdepth: 1
+    :glob:
+
+    dev/log1000Doc/appel_video_uwp
+
+.. toctree::
    :caption: Introduction
    :maxdepth: 1
    :glob:
