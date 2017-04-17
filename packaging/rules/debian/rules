@@ -44,7 +44,8 @@ override_dh_auto_configure:
 				--disable-sndfile \
 				--disable-gsm \
 				--disable-speexdsp \
-				--disable-natpmp && \
+				--disable-natpmp \
+				--enable-gnutls && \
 		make list && \
 		make -j$(NO_CPUS) V=1
 	cd daemon && \
