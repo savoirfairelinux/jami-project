@@ -83,6 +83,8 @@ package-all: package-debian_8 \
              package-ubuntu_16.04_i386 \
              package-ubuntu_16.10 \
              package-ubuntu_16.10_i386 \
+             package-ubuntu_17.04 \
+             package-ubuntu_17.04_i386 \
              package-fedora_22 \
              package-fedora_22_i386 \
              package-fedora_23 \
