@@ -1,4 +1,4 @@
-ring-project
+test ring-project
 ============
 
 This repository is the master repository for Ring. It contains a build script, make-ring.py,
