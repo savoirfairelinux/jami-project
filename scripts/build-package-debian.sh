@@ -72,7 +72,7 @@ cd ring-project
 cp --verbose -r /opt/ring-project/debian .
 
 # create the package
-dpkg-buildpackage -uc -us
+dpkg-buildpackage -uc -us --source-option=--include-removal
 
 # move the artifacts to output
 cd ..
