@@ -24,7 +24,7 @@ override_dh_auto_configure:
 	# Create tarballs
 	for i in $(CURDIR)/daemon/contrib/tarballs-unpacked/*; do \
 		projectname=`basename $$i` && \
-		cd $$i && tar -caf ../../tarballs/$$projectname * && \
+		cd $$i && tar --exclude=*.bak -caf ../../tarballs/$$projectname * && \
 		echo "Repacked $$projectname"; \
 	done
 
