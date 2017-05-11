@@ -52,6 +52,7 @@ Build-Depends: debhelper (>= 9),
                libnatpmp-dev,
                libva-dev,
                libcrypto++-dev,
+               libvdpau-dev,
 # other
                yasm,
                libsamplerate0-dev
