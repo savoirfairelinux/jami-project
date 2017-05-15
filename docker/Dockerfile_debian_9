@@ -18,6 +18,7 @@ RUN apt-get update && \
         libdbus-1-dev \
         libdbus-c++-dev \
         libupnp-dev \
+        libargon2-0-dev \
         libebook1.2-dev \
         libclutter-gtk-1.0-dev \
         libclutter-1.0-dev \
@@ -52,6 +53,7 @@ RUN apt-get update && \
         libudev-dev \
         libgsm1-dev \
         libjsoncpp-dev \
+        libmsgpack-dev \
         libnatpmp-dev \
         libappindicator3-dev \
         libqrencode-dev \
