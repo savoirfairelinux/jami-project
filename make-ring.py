@@ -71,6 +71,7 @@ OPENSUSE_DEPENDENCIES = [
     'libnettle-devel', 'libopus-devel', 'libgnutls-devel', 'msgpack-devel', 'libavcodec-devel',
     'libavdevice-devel', 'pcre-devel', 'libogg-devel', 'libsndfile-devel', 'libvorbis-devel',
     'flac-devel', 'libgsm-devel', 'alsa-devel', 'libpulse-devel', 'libudev-devel', 'libva-devel',
+    'libvdpau-devel'
 # lrc
     'libQt5Core-devel', 'libQt5DBus-devel', 'libqt5-linguist-devel',
 # gnome client
@@ -104,7 +105,7 @@ FEDORA_DEPENDENCIES = [
     'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
     'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel', 'evolution-data-server-devel',
     'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel',
-    'webkitgtk4-devel', 'NetworkManager-glib-devel'
+    'webkitgtk4-devel', 'NetworkManager-glib-devel', 'libvdpau-devel'
 ]
 
 UBUNTU_DEPENDENCIES = [
@@ -119,7 +120,7 @@ UBUNTU_DEPENDENCIES = [
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
     'libva-dev', 'libnm-glib-dev',
-    'libwebkit2gtk-4.0-dev'
+    'libwebkit2gtk-4.0-dev', 'libvdpau-dev'
 ]
 
 DEBIAN_DEPENDENCIES = [
@@ -133,7 +134,7 @@ DEBIAN_DEPENDENCIES = [
     'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
-    'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-glib-dev'
+    'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-glib-dev', 'libvdpau-dev'
 ]
 
 ARCH_LINUX_DEPENDENCIES = [
@@ -142,7 +143,7 @@ ARCH_LINUX_DEPENDENCIES = [
     'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse', 'libsamplerate',
     'libsndfile', 'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
     'swig', 'yasm', 'qrencode', 'evolution-data-server', 'make', 'patch', 'pkg-config',
-    'automake', 'libva', 'webkitgtk', 'libnm-glib'
+    'automake', 'libva', 'webkitgtk', 'libnm-glib', 'libvdpau'
 ]
 
 OSX_DEPENDENCIES = [

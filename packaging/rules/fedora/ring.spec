@@ -66,6 +66,7 @@ BuildRequires: NetworkManager-glib-devel
 BuildRequires: libva-devel
 BuildRequires: webkitgtk4-devel
 BuildRequires: cryptopp-devel
+BuildRequires: libvdpau-devel
 
 %description
 Ring is free software for universal communication which respects freedoms
@@ -205,11 +206,10 @@ DESTDIR=%{buildroot} make -C client-gnome/build install
 %{_datadir}/dbus-1/interfaces/*
 
 %post
--p /sbin/ldconfig
+/sbin/ldconfig
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
-%postun
--p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 #for < f24 we have to update the schema explicitly
 %if 0%{?fedora} < 24

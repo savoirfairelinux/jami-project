@@ -44,7 +44,8 @@ override_dh_auto_configure:
 				--disable-sndfile \
 				--disable-gsm \
 				--disable-speexdsp \
-				--disable-natpmp && \
+				--disable-natpmp \
+				--enable-gnutls && \
 		make list && \
 		make -j$(NO_CPUS) V=1
 	cd daemon && \
@@ -120,6 +121,12 @@ override_dh_auto_clean:
 	########################
 	if [ -f client-gnome/build/Makefile ]; then make -C client-gnome/build distclean; fi
 	rm -rfv client-gnome/build
+
+override_dh_clean:
+	# GNUTLS contains:
+	# ring-project/daemon/contrib/tarballs-unpacked/gnutls-3.5.10.tar.xz/gnutls-3.5.10/src/certtool-args.c.bak
+	# ring-project/daemon/contrib/tarballs-unpacked/gnutls-3.5.10.tar.xz/gnutls-3.5.10/doc/doxygen/Doxyfile.orig
+	dh_clean -X.bak -X.orig
 
 override_dh_auto_install:
 	#########################

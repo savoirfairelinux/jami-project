@@ -58,14 +58,8 @@ RUN apt-get update && \
         libnm-glib-dev \
         libwebkit2gtk-4.0-dev \
         libcrypto++-dev \
-        libva-dev
-
-# Temporary fix! As soon as 5.6.4-3 is available, drop these lines.
-RUN apt-get update && apt-get install -y wget
-RUN wget http://ftp.us.debian.org/debian/pool/main/libc/libcrypto++/libcrypto++-dev_5.6.4-3_amd64.deb
-RUN wget http://ftp.us.debian.org/debian/pool/main/libc/libcrypto++/libcrypto++6_5.6.4-3_amd64.deb
-RUN dpkg -i libcrypto++6_5.6.4-3_amd64.deb
-RUN dpkg -i libcrypto++-dev_5.6.4-3_amd64.deb
+        libva-dev \
+        libvdpau-dev
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 

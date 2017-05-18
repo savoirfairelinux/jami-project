@@ -1,10 +1,20 @@
-FROM savoirfairelinux/ring-debian32:8
+FROM savoirfairelinux/ring-ubuntu32:17.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get clean
 RUN apt-get update && \
-    apt-get install -y vim devscripts equivs
+    apt-get install -y vim \
+                       devscripts \
+                       software-properties-common
+
+# software-properties-common is needed for
+# add-apt-repository
+RUN add-apt-repository universe
+
+RUN apt-get clean
+RUN apt-get update && \
+    apt-get install -y equivs
 
 # Speed up mk-build-deps
 RUN apt-get clean
@@ -18,6 +28,7 @@ RUN apt-get update && \
         libdbus-1-dev \
         libdbus-c++-dev \
         libupnp-dev \
+        libgnutls28-dev \
         libebook1.2-dev \
         libclutter-gtk-1.0-dev \
         libclutter-1.0-dev \
