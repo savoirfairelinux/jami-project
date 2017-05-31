@@ -99,7 +99,7 @@ FEDORA_DEPENDENCIES = [
     'libsamplerate-devel', 'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
     'yaml-cpp-devel', 'boost-devel', 'dbus-c++-devel', 'dbus-devel',
     'libsndfile-devel', 'libXext-devel', 'libXfixes-devel', 'yasm',
-    'speex-devel', 'chrpath', 'check', 'astyle', 'uuid-c++-devel', 'gettext',
+    'speex-devel', 'chrpath', 'check', 'astyle', 'uuid-c++-devel', 'gettext-devel',
     'gcc-c++', 'which', 'alsa-lib-devel', 'systemd-devel', 'libuuid-devel',
     'uuid-devel', 'gnutls-devel', 'nettle-devel', 'opus-devel', 'speexdsp-devel',
     'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
