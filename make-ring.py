@@ -18,6 +18,7 @@ import shutil
 DEBIAN_BASED_DISTROS = [
     'Debian',
     'Ubuntu',
+    'Mint',
 ]
 
 RPM_BASED_DISTROS = [
@@ -137,6 +138,21 @@ DEBIAN_DEPENDENCIES = [
     'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-glib-dev', 'libvdpau-dev'
 ]
 
+MINT_DEPENDENCIES = [
+    'autoconf', 'autoconf-archive', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
+    'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
+    'libavcodec-extra', 'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
+    'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
+    'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
+    'libgsm1-dev', 'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
+    'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev',
+    'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
+    'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
+    'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
+    'libva-dev', 'libnm-glib-dev',
+    'libwebkit2gtk-4.0-dev', 'libvdpau-dev'
+]
+
 ARCH_LINUX_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc', 'gnome-icon-theme-symbolic',
     'ffmpeg', 'boost', 'clutter-gtk', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book',
@@ -225,6 +241,12 @@ def run_dependencies(args):
     elif args.distribution == "Android":
         print("The Android version does not need more dependencies.\nPlease continue with the --install instruction.")
         sys.exit(1)
+
+    elif args.distribution == "Mint":
+        execute_script(
+            APT_INSTALL_SCRIPT,
+            {"packages": ' '.join(MINT_DEPENDENCIES)}
+        )
 
     else:
         print("Not yet implemented for current distribution (%s)" % args.distribution)
@@ -376,7 +398,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic', 'mingw32', 'mingw64']
+    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Arch Linux', 'openSUSE', 'Mint', 'Automatic', 'mingw32', 'mingw64']
 
     if parsed_args.distribution not in supported_distros:
         print('Distribution \''+parsed_args.distribution+'\' not supported.\nChoose one of: %s' \
@@ -436,6 +458,8 @@ def choose_distribution():
             for line in f:
                 k,v = line.split("=")
                 if k.strip() == 'NAME':
+                    if v.strip().replace('"','').endswith("Mint"):
+                        return "Mint"
                     return v.strip().replace('"','').split(' ')[0]
     elif system == "darwin":
         return 'OSX'
