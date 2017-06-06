@@ -10,6 +10,7 @@ RUN apt-get update && \
 RUN apt-get clean
 RUN apt-get update && \
     apt-get install -y -o Acquire::Retires=10 \
+        git \
         autoconf \
         automake \
         autopoint \

@@ -6,6 +6,7 @@ RUN dnf install -y yum-utils rpmdevtools
 RUN dnf clean all
 RUN dnf upgrade -y && \
     dnf install -y \
+        git \
         rpm-build \
         tar \
         make \
