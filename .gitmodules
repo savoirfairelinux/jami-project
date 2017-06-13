@@ -22,3 +22,6 @@
 [submodule "client-uwp"]
 	path = client-uwp
 	url = https://gerrit-ring.savoirfairelinux.com/ring-client-uwp
+[submodule "client-electron"]
+	path = client-electron
+	url = https://gerrit-ring.savoirfairelinux.com/ring-client-electron

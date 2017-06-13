@@ -231,10 +231,17 @@ def run_dependencies(args):
         sys.exit(1)
 
 def run_init():
+    # Extract modules path from '.gitmodules' file
+    module_names = []
+    with open('.gitmodules') as fd:
+        for line in fd.readlines():
+            if line.startswith('[submodule "'):
+                module_names.append(line[line.find('"')+1:line.rfind('"')])
+
     os.system("git submodule update --init")
     os.system("git submodule foreach 'git checkout master && git pull'")
-    for project in ["daemon", "lrc", "client-macosx", "client-gnome", "client-android", "client-ios"]:
-        copy_file("./scripts/commit-msg", ".git/modules/"+project+"/hooks")
+    for name in module_names:
+        copy_file("./scripts/commit-msg", ".git/modules/"+name+"/hooks")
 
 def copy_file(src, dest):
     print("Copying:" + src + " to " + dest)
