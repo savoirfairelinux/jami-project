@@ -31,21 +31,21 @@ set -e
 ## Debian / Ubuntu packaging ##
 ###############################
 
-function process_deb()
+function package_deb()
 {
-	##################################################
-	## Create local repository for the given distro ##
-	##################################################
-	echo "#########################"
-	echo "## Creating repository ##"
-	echo "#########################"
+    ##################################################
+    ## Create local repository for the given distro ##
+    ##################################################
+    echo "#########################"
+    echo "## Creating repository ##"
+    echo "#########################"
 
-	DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
-	rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
-	mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf
+    DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
+    rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+    mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf
 
-	# Distributions file
-	cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf/distributions
+    # Distributions file
+    cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf/distributions
 Origin: ring
 Label: Ring ${DISTRIBUTION} Repository
 Codename: ring
@@ -55,50 +55,50 @@ Description: This repository contains Ring ${DISTRIBUTION} packages
 SignWith: ${KEYID}
 EOF
 
-	# Options file
-	cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf/options
+    # Options file
+    cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf/options
 basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER}
 EOF
 
-	####################################
-	## Add packages to the repository ##
-	####################################
+    ####################################
+    ## Add packages to the repository ##
+    ####################################
 
-	for package in packages/${DISTRIBUTION}*/*.deb; do
+    for package in packages/${DISTRIBUTION}*/*.deb; do
 
-		# Sign the deb
-		echo "## signing: ${package} ##"
-		dpkg-sig -k ${KEYID} --sign builder ${package}
+        # Sign the deb
+        echo "## signing: ${package} ##"
+        dpkg-sig -k ${KEYID} --sign builder ${package}
 
-		# Include the deb
-		echo "## including ${package} ##"
-		package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
-		package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
-		if [ ${package_arch} = "all" ]; then
-			# Removing to avoid the error of adding the same deb twice.
-			# This happens with arch all packages, which are generated in amd64 and i386.
-			reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} remove ring ${package_name}
-		fi
-		reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} includedeb ring ${package}
-	done
+        # Include the deb
+        echo "## including ${package} ##"
+        package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
+        package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
+        if [ ${package_arch} = "all" ]; then
+            # Removing to avoid the error of adding the same deb twice.
+            # This happens with arch all packages, which are generated in amd64 and i386.
+            reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} remove ring ${package_name}
+        fi
+        reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} includedeb ring ${package}
+    done
 
-	# Rebuild the index
-	reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} export ring
+    # Rebuild the index
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} export ring
 
-	# Show the contents
-	reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list ring
+    # Show the contents
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list ring
 
-	#######################################
-	## create the manual download folder ##
-	#######################################
-	DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
-	mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-	for package in packages/${DISTRIBUTION}*/*.deb; do
-		cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-		package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
-		package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
-		cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.deb
-	done
+    #######################################
+    ## create the manual download folder ##
+    #######################################
+    DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
+    mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+    for package in packages/${DISTRIBUTION}*/*.deb; do
+        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+        package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
+        package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
+        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.deb
+    done
 }
 
 
@@ -106,21 +106,21 @@ EOF
 ## Fedora packaging ##
 ######################
 
-function process_rpm()
+function package_rpm()
 {
-	##################################################
-	## Create local repository for the given distro ##
-	##################################################
-	echo "#########################"
-	echo "## Creating repository ##"
-	echo "#########################"
+    ##################################################
+    ## Create local repository for the given distro ##
+    ##################################################
+    echo "#########################"
+    echo "## Creating repository ##"
+    echo "#########################"
 
-	DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
-	rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
-	mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+    DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
+    rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+    mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
 
-	# .repo file
-	cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/ring-nightly-man.repo
+    # .repo file
+    cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/ring-nightly-man.repo
 [ring]
 name=Ring \$releasever - \$basearch - ring
 baseurl=https://dl.ring.cx/ring-nightly/fedora_\$releasever
@@ -129,41 +129,41 @@ gpgkey=https://dl.ring.cx/ring.pub.key
 enabled=1
 EOF
 
-	####################################
-	## Add packages to the repository ##
-	####################################
+    ####################################
+    ## Add packages to the repository ##
+    ####################################
 
-	# Sign the rpms
-	echo "##################"
-	echo "## signing rpms ##"
-	echo "##################"
+    # Sign the rpms
+    echo "##################"
+    echo "## signing rpms ##"
+    echo "##################"
 
-	# RPM macros
-	if [ ! -f ~/.rpmmacros ];
-	then
-		echo "%_signature gpg" > ~/.rpmmacros
-		echo "%_gpg_name ${KEYID}" >> ~/.rpmmacros
-	fi
+    # RPM macros
+    if [ ! -f ~/.rpmmacros ];
+    then
+        echo "%_signature gpg" > ~/.rpmmacros
+        echo "%_gpg_name ${KEYID}" >> ~/.rpmmacros
+    fi
 
-	for package in packages/${DISTRIBUTION}*/*.rpm; do
-		rpmsign --resign --key-id=${KEYID} ${package}
-		cp ${package} ${DISTRIBUTION_REPOSITOIRY_FOLDER}
-	done
+    for package in packages/${DISTRIBUTION}*/*.rpm; do
+        rpmsign --resign --key-id=${KEYID} ${package}
+        cp ${package} ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+    done
 
-	# Create the repo
-	createrepo --update ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+    # Create the repo
+    createrepo --update ${DISTRIBUTION_REPOSITOIRY_FOLDER}
 
-	#######################################
-	## create the manual download folder ##
-	#######################################
-	DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
-	mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-	for package in packages/${DISTRIBUTION}*/*.rpm; do
-		cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-		package_name=$(rpm -qp --queryformat '%{NAME}' ${package})
-		package_arch=$(rpm -qp --queryformat '%{ARCH}' ${package})
-		cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.rpm
-	done
+    #######################################
+    ## create the manual download folder ##
+    #######################################
+    DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
+    mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+    for package in packages/${DISTRIBUTION}*/*.rpm; do
+        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+        package_name=$(rpm -qp --queryformat '%{NAME}' ${package})
+        package_arch=$(rpm -qp --queryformat '%{ARCH}' ${package})
+        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.rpm
+    done
 }
 
 
@@ -173,26 +173,26 @@ EOF
 
 function deploy()
 {
-	if [ -f ${SSH_IDENTIY_FILE} ];
-	then
-		RSYNC_RSH="ssh -i ${SSH_IDENTIY_FILE}"
-	fi
+    if [ -f ${SSH_IDENTIY_FILE} ];
+    then
+        RSYNC_RSH="ssh -i ${SSH_IDENTIY_FILE}"
+    fi
 
-	# Deploy the repository
-	echo "##########################"
-	echo "## deploying repository ##"
-	echo "##########################"
-	rsync --archive --recursive --verbose --delete ${DISTRIBUTION_REPOSITOIRY_FOLDER} ${REMOTE_REPOSITORY_LOCATION}
+    # Deploy the repository
+    echo "##########################"
+    echo "## deploying repository ##"
+    echo "##########################"
+    rsync --archive --recursive --verbose --delete ${DISTRIBUTION_REPOSITOIRY_FOLDER} ${REMOTE_REPOSITORY_LOCATION}
 
-	# deploy the manual download files
-	echo "#####################################"
-	echo "## deploying manual download files ##"
-	echo "#####################################"
-	rsync --archive --recursive --verbose --delete ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER} ${REMOTE_MANUAL_DOWNLOAD_LOCATION}
+    # deploy the manual download files
+    echo "#####################################"
+    echo "## deploying manual download files ##"
+    echo "#####################################"
+    rsync --archive --recursive --verbose --delete ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER} ${REMOTE_MANUAL_DOWNLOAD_LOCATION}
 
-	# remove deployed files
-	rm -rf manual-download
-	rm -rf repositories
+    # remove deployed files
+    rm -rf manual-download
+    rm -rf repositories
 }
 
 
@@ -200,17 +200,17 @@ function deploy()
 ## Detect suitable packaging based on distribution name ##
 ##########################################################
 
-function process()
+function package()
 {
-	if [ ${DISTRIBUTION:0:6} == 'debian' || ${DISTRIBUTION:0:6} == 'ubuntu' ];
-	then
-		process_deb();
-	elif [ ${DISTRIBUTION:0:6} == 'fedora' ];
-	then
-		process_rpm();
-	else
-		echo "ERROR: Distribution '${DISTRIBUTION' is unsupported"
-	fi
+    if [ ${DISTRIBUTION:0:6} == 'debian' || ${DISTRIBUTION:0:6} == 'ubuntu' ];
+    then
+        package_deb
+    elif [ ${DISTRIBUTION:0:6} == 'fedora' ];
+    then
+        package_rpm
+    else
+        echo "ERROR: Distribution '${DISTRIBUTION' is unsupported"
+    fi
 }
 
 
@@ -233,7 +233,7 @@ case $i in
     REMOTE_MANUAL_DOWNLOAD_LOCATION="${i#*=}"
     shift
     ;;
-	--remote-ssh-identity-file=*)
+    --remote-ssh-identity-file=*)
     SSH_IDENTIY_FILE="${i#*=}"
     shift
     ;;
@@ -244,5 +244,5 @@ case $i in
 esac
 done
 
-process()
-deploy()
+package
+deploy
