@@ -31,7 +31,7 @@ set -e
 ## Debian / Ubuntu packaging ##
 ###############################
 
-function process_deb()
+function package_deb()
 {
 	##################################################
 	## Create local repository for the given distro ##
@@ -106,7 +106,7 @@ EOF
 ## Fedora packaging ##
 ######################
 
-function process_rpm()
+function package_rpm()
 {
 	##################################################
 	## Create local repository for the given distro ##
@@ -200,14 +200,14 @@ function deploy()
 ## Detect suitable packaging based on distribution name ##
 ##########################################################
 
-function process()
+function package()
 {
 	if [ ${DISTRIBUTION:0:6} == 'debian' || ${DISTRIBUTION:0:6} == 'ubuntu' ];
 	then
-		process_deb();
+		package_deb
 	elif [ ${DISTRIBUTION:0:6} == 'fedora' ];
 	then
-		process_rpm();
+		package_rpm
 	else
 		echo "ERROR: Distribution '${DISTRIBUTION' is unsupported"
 	fi
@@ -244,5 +244,5 @@ case $i in
 esac
 done
 
-process()
-deploy()
+package
+deploy
