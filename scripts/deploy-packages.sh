@@ -173,7 +173,7 @@ EOF
 
 function deploy()
 {
-    if [ -f ${SSH_IDENTIY_FILE} ];
+    if [ -f "${SSH_IDENTIY_FILE}" ];
     then
         RSYNC_RSH="ssh -i ${SSH_IDENTIY_FILE}"
     fi
@@ -182,6 +182,8 @@ function deploy()
     echo "##########################"
     echo "## deploying repository ##"
     echo "##########################"
+	echo ${RSYNC_RSH}
+	echo rsync --archive --recursive --verbose --delete ${DISTRIBUTION_REPOSITOIRY_FOLDER} ${REMOTE_REPOSITORY_LOCATION}
     rsync --archive --recursive --verbose --delete ${DISTRIBUTION_REPOSITOIRY_FOLDER} ${REMOTE_REPOSITORY_LOCATION}
 
     # deploy the manual download files
