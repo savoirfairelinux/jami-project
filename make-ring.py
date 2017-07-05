@@ -156,6 +156,11 @@ OSX_DEPENDENCIES_UNLINK = [
     'libtool*', 'yasm*', 'automake*'
 ]
 
+IOS_DEPENDENCIES = [
+    'autoconf', 'automake', 'cmake', 'yasm', 'libtool', 'opus',
+    'pkg-config', 'gettext', 'swiftlint', 'swiftgen'
+]
+
 UNINSTALL_SCRIPT = [
     'make -C daemon uninstall',
     'xargs rm < lrc/build-global/install_manifest.txt',
@@ -220,6 +225,12 @@ def run_dependencies(args):
         execute_script(
             BREW_INSTALL_SCRIPT,
             {"packages": ' '.join(OSX_DEPENDENCIES)}
+        )
+
+    elif args.distribution == "iOS":
+        execute_script(
+            BREW_INSTALL_SCRIPT,
+            {"packages": ' '.join(IOS_DEPENDENCIES)}
         )
 
     elif args.distribution == "Android":
@@ -376,7 +387,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic', 'mingw32', 'mingw64']
+    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'iOS', 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic', 'mingw32', 'mingw64']
 
     if parsed_args.distribution not in supported_distros:
         print('Distribution \''+parsed_args.distribution+'\' not supported.\nChoose one of: %s' \
