@@ -1,4 +1,4 @@
-FROM savoirfairelinux/ring-debian32:9
+FROM i386/debian:9
 
 ENV DEBIAN_FRONTEND noninteractive
 
