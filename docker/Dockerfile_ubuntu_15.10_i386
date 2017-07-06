@@ -1,4 +1,4 @@
-FROM savoirfairelinux/ring-ubuntu32:15.10
+FROM i386/ubuntu:15.10
 
 ENV DEBIAN_FRONTEND noninteractive
 
