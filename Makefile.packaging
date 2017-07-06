@@ -1,4 +1,4 @@
-# Copyright (C) 2016 Savoir-faire Linux Inc.
+# Copyright (C) 2016-2017 Savoir-faire Linux Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -85,6 +85,8 @@ package-all: package-debian_8 \
              package-ubuntu_16.10_i386 \
              package-ubuntu_17.04 \
              package-ubuntu_17.04_i386 \
+             package-ubuntu_17.10 \
+             package-ubuntu_17.10_i386 \
              package-fedora_22 \
              package-fedora_22_i386 \
              package-fedora_23 \
@@ -93,6 +95,8 @@ package-all: package-debian_8 \
              package-fedora_24_i386 \
              package-fedora_25 \
              package-fedora_25_i386 \
+             package-fedora_26 \
+             package-fedora_26_i386 \
              package-gentoo
 
 # Append the output of make-packaging-target to this Makefile
