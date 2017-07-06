@@ -1,4 +1,4 @@
-FROM i386/ubuntu:17.10
+FROM ubuntu:artful
 
 ENV DEBIAN_FRONTEND noninteractive
 
