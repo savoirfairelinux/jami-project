@@ -84,14 +84,16 @@ MINGW64_FEDORA_DEPENDENCIES = [
     'mingw64-binutils', 'mingw64-gcc', 'mingw64-headers', 'mingw64-crt', 'mingw64-gcc-c++',
     'mingw64-pkg-config', 'yasm', 'gettext-devel', 'cmake', 'patch', 'libtool', 'automake',
     'autoconf', 'autoconf-archive', 'make', 'xz', 'bzip2', 'which', 'mingw64-qt5-qtbase',
-    'mingw64-qt5-qttools', 'mingw64-qt5-qtsvg', 'mingw64-qt5-qtwinextras', 'mingw64-libidn', 'mingw64-xz-libs'
+    'mingw64-qt5-qttools', 'mingw64-qt5-qtsvg', 'mingw64-qt5-qtwinextras', 'mingw64-libidn',
+    'mingw64-xz-libs','msgpack-devel'
 ]
 
 MINGW32_FEDORA_DEPENDENCIES = [
     'mingw32-binutils', 'mingw32-gcc', 'mingw32-headers', 'mingw32-crt', 'mingw32-gcc-c++',
     'mingw32-pkg-config', 'yasm', 'gettext-devel', 'cmake', 'patch', 'libtool', 'automake',
     'autoconf', 'autoconf-archive', 'make', 'xz', 'bzip2', 'which', 'mingw32-qt5-qtbase',
-    'mingw32-qt5-qttools', 'mingw32-qt5-qtsvg', 'mingw32-qt5-qtwinextras', 'mingw32-libidn', 'mingw32-xz-libs'
+    'mingw32-qt5-qttools', 'mingw32-qt5-qtsvg', 'mingw32-qt5-qtwinextras', 'mingw32-libidn',
+    'mingw32-xz-libs', 'msgpack-devel'
 ]
 
 FEDORA_DEPENDENCIES = [
@@ -105,7 +107,7 @@ FEDORA_DEPENDENCIES = [
     'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
     'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel', 'evolution-data-server-devel',
     'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel',
-    'webkitgtk4-devel', 'NetworkManager-glib-devel', 'libvdpau-devel'
+    'webkitgtk4-devel', 'NetworkManager-glib-devel', 'libvdpau-devel', 'msgpack-devel'
 ]
 
 UBUNTU_DEPENDENCIES = [
@@ -120,7 +122,7 @@ UBUNTU_DEPENDENCIES = [
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
     'libva-dev', 'libnm-glib-dev',
-    'libwebkit2gtk-4.0-dev', 'libvdpau-dev'
+    'libwebkit2gtk-4.0-dev', 'libvdpau-dev', 'libmsgpack-dev'
 ]
 
 DEBIAN_DEPENDENCIES = [
@@ -134,7 +136,7 @@ DEBIAN_DEPENDENCIES = [
     'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
-    'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-glib-dev', 'libvdpau-dev'
+    'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-glib-dev', 'libvdpau-dev', 'libmsgpack-dev'
 ]
 
 ARCH_LINUX_DEPENDENCIES = [
