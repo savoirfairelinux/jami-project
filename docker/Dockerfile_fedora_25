@@ -1,9 +1,6 @@
 FROM fedora:25
 
 RUN dnf clean all
-RUN dnf install -y yum-utils rpmdevtools
-
-RUN dnf clean all
 RUN dnf upgrade -y && \
     dnf install -y \
         git \
@@ -51,7 +48,14 @@ RUN dnf upgrade -y && \
         webkitgtk4-devel \
         cryptopp-devel \
         libva-devel \
-        libvdpau-devel
+        libvdpau-devel \
+        msgpack-devel
+
+# Packaging tools
+RUN dnf install -y yum-utils rpmdevtools
+
+# Reduce image size
+RUN dnf clean all
 
 ADD scripts/build-package-fedora.sh /opt/build-package-fedora.sh
 

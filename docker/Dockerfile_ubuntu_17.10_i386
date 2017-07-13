@@ -1,10 +1,20 @@
-FROM i386/ubuntu:16.04
+FROM i386/ubuntu:17.10
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get clean
 RUN apt-get update && \
-    apt-get install -y vim devscripts equivs
+    apt-get install -y vim \
+                       devscripts \
+                       software-properties-common
+
+# software-properties-common is needed for
+# add-apt-repository
+RUN add-apt-repository universe
+
+RUN apt-get clean
+RUN apt-get update && \
+    apt-get install -y equivs
 
 # Speed up mk-build-deps
 RUN apt-get clean
@@ -20,6 +30,7 @@ RUN apt-get update && \
         libdbus-c++-dev \
         libupnp-dev \
         libgnutls28-dev \
+        libargon2-0-dev \
         libebook1.2-dev \
         libclutter-gtk-1.0-dev \
         libclutter-1.0-dev \
@@ -54,6 +65,7 @@ RUN apt-get update && \
         libudev-dev \
         libgsm1-dev \
         libjsoncpp-dev \
+        libmsgpack-dev \
         libnatpmp-dev \
         libappindicator3-dev \
         libqrencode-dev \

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (C) 2016 Savoir-faire Linux Inc.
+# Copyright (C) 2016-2017 Savoir-faire Linux Inc.
 #
 # Author: Alexandre Viau <alexandre.viau@savoirfairelinux.com>
 #
@@ -160,6 +160,16 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
+        {
+            "distribution": "ubuntu_17.10",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+        },
+        {
+            "distribution": "ubuntu_17.10_i386",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+        },
         # Fedora
         {
             "distribution": "fedora_22",
@@ -198,6 +208,16 @@ def run_generate_all(parsed_args):
         },
         {
             "distribution": "fedora_25_i386",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+        },
+        {
+            "distribution": "fedora_26",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+        },
+        {
+            "distribution": "fedora_26_i386",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
         },
