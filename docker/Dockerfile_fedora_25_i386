@@ -51,7 +51,8 @@ RUN dnf upgrade -y && \
         webkitgtk4-devel \
         cryptopp-devel \
         libva-devel \
-        libvdpau-devel
+        libvdpau-devel \
+        msgpack-devel
 
 ADD scripts/build-package-fedora.sh /opt/build-package-fedora.sh
 
