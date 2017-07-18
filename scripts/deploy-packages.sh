@@ -120,7 +120,7 @@ function package_rpm()
     mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
 
     # .repo file
-    cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/ring-nightly-man.repo
+    cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/ring-nightly.repo
 [ring]
 name=Ring \$releasever - \$basearch - ring
 baseurl=https://dl.ring.cx/ring-nightly/fedora_\$releasever
