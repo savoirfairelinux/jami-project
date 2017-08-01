@@ -25,27 +25,11 @@ fi
 
 INSTALL_PREFIX=$rootdir/install_win${ARCH}
 
-
-cd daemon/contrib
-mkdir -p native${ARCH}
-cd native${ARCH}
-../bootstrap --host=${HOST}
-make fetch || exit 1
-make -j4 || exit 1
-cd ../..
-./autogen.sh || exit 1
-mkdir -p "build${ARCH}"
-cd build${ARCH}
-$rootdir/daemon/configure --host=${HOST} --without-dbus --prefix=$INSTALL_PREFIX --enable-debug
-rsync -a $rootdir/daemon/src/buildinfo.cpp ./src/buildinfo.cpp
-make -j4 install || exit 1
-cd $rootdir
-
 cd lrc
 mkdir -p build${ARCH}
 cd build${ARCH}
 export CMAKE_PREFIX_PATH=/usr/${HOST}/sys-root/mingw/lib/cmake
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DRING_BUILD_DIR=$INSTALL_PREFIX CMAKE_INSTALL_COMPONENT="Devel" -DENABLE_LIBWRAP=true ..
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DRING_BUILD_DIR=$rootdir/daemon/src CMAKE_INSTALL_COMPONENT="Release" -DENABLE_LIBWRAP=true ..
 make -j4 install || exit 1
 cd $rootdir
 
@@ -73,6 +57,6 @@ cd ../..
 fi
 mkdir -p build${ARCH}
 cd build${ARCH}
-${HOST}-qmake-qt5 ../RingWinClient.pro -r -spec win32-g++ RING=$INSTALL_PREFIX
+${HOST}-qmake-qt5 ../RingWinClient.pro -r -spec win32-g++ RING=$INSTALL_PREFIX INCLUDEPATH=$rootdir/client-windows/winsparkle
 make -j4 || exit 1
 make install
