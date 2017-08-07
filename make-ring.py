@@ -145,7 +145,7 @@ ARCH_LINUX_DEPENDENCIES = [
     'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse', 'libsamplerate',
     'libsndfile', 'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
     'swig', 'yasm', 'qrencode', 'evolution-data-server', 'make', 'patch', 'pkg-config',
-    'automake', 'libva', 'webkitgtk', 'libnm-glib', 'libvdpau'
+    'automake', 'libva', 'webkit2gtk', 'libnm-glib', 'libvdpau'
 ]
 
 OSX_DEPENDENCIES = [
