@@ -163,6 +163,11 @@ IOS_DEPENDENCIES = [
     'pkg-config', 'gettext', 'swiftlint', 'swiftgen'
 ]
 
+IOS_DEPENDENCIES_UNLINK = [
+    'autoconf*', 'automake*', 'cmake*', 'yasm*', 'libtool*', 'opus*',
+    'pkg-config*', 'gettext*', 'swiftlint*', 'swiftgen*'
+]
+
 UNINSTALL_SCRIPT = [
     'make -C daemon uninstall',
     'xargs rm < lrc/build-global/install_manifest.txt',
@@ -230,6 +235,10 @@ def run_dependencies(args):
         )
 
     elif args.distribution == "iOS":
+        execute_script(
+            BREW_UNLINK_SCRIPT,
+            {"packages": ' '.join(IOS_DEPENDENCIES_UNLINK)}
+        )
         execute_script(
             BREW_INSTALL_SCRIPT,
             {"packages": ' '.join(IOS_DEPENDENCIES)}
