@@ -231,6 +231,10 @@ def run_dependencies(args):
 
     elif args.distribution == "iOS":
         execute_script(
+            BREW_UNLINK_SCRIPT,
+            {"packages": ' '.join(OSX_DEPENDENCIES_UNLINK)}
+        )
+        execute_script(
             BREW_INSTALL_SCRIPT,
             {"packages": ' '.join(IOS_DEPENDENCIES)}
         )
