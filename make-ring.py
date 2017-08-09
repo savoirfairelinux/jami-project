@@ -159,7 +159,7 @@ OSX_DEPENDENCIES_UNLINK = [
 ]
 
 IOS_DEPENDENCIES = [
-    'autoconf', 'automake', 'cmake', 'yasm', 'libtool', 'opus',
+    'autoconf', 'automake', 'cmake', 'yasm', 'libtool',
     'pkg-config', 'gettext', 'swiftlint', 'swiftgen'
 ]
 
