@@ -145,7 +145,7 @@ ARCH_LINUX_DEPENDENCIES = [
     'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse', 'libsamplerate',
     'libsndfile', 'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
     'swig', 'yasm', 'qrencode', 'evolution-data-server', 'make', 'patch', 'pkg-config',
-    'automake', 'libva', 'webkitgtk', 'libnm-glib', 'libvdpau'
+    'automake', 'libva', 'webkit2gtk', 'libnm-glib', 'libvdpau'
 ]
 
 OSX_DEPENDENCIES = [
@@ -159,8 +159,13 @@ OSX_DEPENDENCIES_UNLINK = [
 ]
 
 IOS_DEPENDENCIES = [
-    'autoconf', 'automake', 'cmake', 'yasm', 'libtool', 'opus',
+    'autoconf', 'automake', 'cmake', 'yasm', 'libtool',
     'pkg-config', 'gettext', 'swiftlint', 'swiftgen'
+]
+
+IOS_DEPENDENCIES_UNLINK = [
+    'autoconf*', 'automake*', 'cmake*', 'yasm*', 'libtool*',
+    'pkg-config*', 'gettext*', 'swiftlint*', 'swiftgen*'
 ]
 
 UNINSTALL_SCRIPT = [
@@ -230,6 +235,10 @@ def run_dependencies(args):
         )
 
     elif args.distribution == "iOS":
+        execute_script(
+            BREW_UNLINK_SCRIPT,
+            {"packages": ' '.join(IOS_DEPENDENCIES_UNLINK)}
+        )
         execute_script(
             BREW_INSTALL_SCRIPT,
             {"packages": ' '.join(IOS_DEPENDENCIES)}
