@@ -4,7 +4,7 @@ rootdir=$(pwd)
 HOST=i686-w64-mingw32
 ARCH=32
 CMAKE_TOOLCHAIN_FILE=$rootdir/lrc/cmake/winBuild.cmake
-$CORES=${CORES:=`nproc --all`}
+CORES=${CORES:=`nproc --all`}
 echo "running compilation on $CORES threads"
 
 while test -n "$1"
