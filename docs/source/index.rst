@@ -31,6 +31,7 @@ As a developer looking to get started with a contribution, see
    dev/contributing
    dev/compiling_and_installing/index
    dev/releasing
+   dev/test/index
 
 .. toctree::
    :caption: Ring Daemon
