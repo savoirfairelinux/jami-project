@@ -46,7 +46,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Ring'
-copyright = u'2016, Savoir-faire Linux'
+copyright = u'2017, Savoir-faire Linux'
 author = u'Savoir-faire Linux'
 
 # The version info for the project you're documenting, acts as replacement for
