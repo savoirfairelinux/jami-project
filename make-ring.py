@@ -15,6 +15,8 @@ import platform
 import multiprocessing
 import shutil
 
+IOS_DISTRIBUTION_NAME="iOS"
+
 DEBIAN_BASED_DISTROS = [
     'Debian',
     'Ubuntu',
@@ -234,7 +236,7 @@ def run_dependencies(args):
             {"packages": ' '.join(OSX_DEPENDENCIES)}
         )
 
-    elif args.distribution == "iOS":
+    elif args.distribution == IOS_DISTRIBUTION_NAME:
         execute_script(
             BREW_UNLINK_SCRIPT,
             {"packages": ' '.join(IOS_DEPENDENCIES_UNLINK)}
@@ -288,6 +290,9 @@ def run_install(args):
         os.environ['CMAKE_PREFIX_PATH'] = str(qt5dir.decode('ascii'))
         install_args += " -c client-macosx"
         execute_script(["CONFIGURE_FLAGS='--without-dbus' ./scripts/install.sh " + install_args])
+    elif args.distribution == IOS_DISTRIBUTION_NAME:
+        os.chdir("./client-ios")
+        execute_script(["./compile-ios.sh"])
     elif args.distribution == "Android":
         os.chdir("./client-android")
         execute_script(["./compile.sh"])
@@ -398,7 +403,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', 'iOS', 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic', 'mingw32', 'mingw64']
+    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', IOS_DISTRIBUTION_NAME, 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic', 'mingw32', 'mingw64']
 
     if parsed_args.distribution not in supported_distros:
         print('Distribution \''+parsed_args.distribution+'\' not supported.\nChoose one of: %s' \
