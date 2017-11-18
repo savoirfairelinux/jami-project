@@ -16,6 +16,8 @@ import multiprocessing
 import shutil
 
 IOS_DISTRIBUTION_NAME="iOS"
+OSX_DISTRIBUTION_NAME="OSX"
+ANDROID_DISTRIBUTION_NAME="Android"
 
 DEBIAN_BASED_DISTROS = [
     'Debian',
@@ -188,18 +190,18 @@ STOP_SCRIPT = [
 
 
 def run_dependencies(args):
-    if args.distribution == "Ubuntu":
+    if args.distribution in DEBIAN_BASED_DISTROS:
         execute_script(APT_INSTALL_SCRIPT,
             {"packages": ' '.join(UBUNTU_DEPENDENCIES)}
         )
 
-    elif args.distribution == "Debian":
+    elif args.distribution in DEBIAN_BASED_DISTROS:
         execute_script(
             APT_INSTALL_SCRIPT,
             {"packages": ' '.join(DEBIAN_DEPENDENCIES)}
         )
 
-    elif args.distribution == "Fedora":
+    elif args.distribution in RPM_BASED_DISTROS:
         execute_script(
             RPM_INSTALL_SCRIPT,
             {"packages": ' '.join(FEDORA_DEPENDENCIES)}
@@ -214,19 +216,19 @@ def run_dependencies(args):
             RPM_INSTALL_SCRIPT,
             {"packages": ' '.join(MINGW64_FEDORA_DEPENDENCIES)}
         )
-    elif args.distribution == "Arch Linux":
+    elif args.distribution in PACMAN_BASED_DISTROS:
         execute_script(
             PACMAN_INSTALL_SCRIPT,
             {"packages": ' '.join(ARCH_LINUX_DEPENDENCIES)}
         )
 
-    elif args.distribution == "openSUSE":
+    elif args.distribution in SUSE_BASED_DISTROS:
         execute_script(
             ZYPPER_INSTALL_SCRIPT,
             {"packages": ' '.join(OPENSUSE_DEPENDENCIES)}
         )
 
-    elif args.distribution == "OSX":
+    elif args.distribution == OSX_DISTRIBUTION_NAME:
         execute_script(
             BREW_UNLINK_SCRIPT,
             {"packages": ' '.join(OSX_DEPENDENCIES_UNLINK)}
@@ -246,7 +248,7 @@ def run_dependencies(args):
             {"packages": ' '.join(IOS_DEPENDENCIES)}
         )
 
-    elif args.distribution == "Android":
+    elif args.distribution == ANDROID_DISTRIBUTION_NAME:
         print("The Android version does not need more dependencies.\nPlease continue with the --install instruction.")
         sys.exit(1)
 
@@ -284,7 +286,7 @@ def run_install(args):
         install_args += ' -s'
     if args.global_install:
         install_args += ' -g'
-    if args.distribution == "OSX":
+    if args.distribution == OSX_DISTRIBUTION_NAME:
         proc= subprocess.Popen("brew --prefix qt5", shell=True, stdout=subprocess.PIPE)
         qt5dir = proc.stdout.read()
         os.environ['CMAKE_PREFIX_PATH'] = str(qt5dir.decode('ascii'))
@@ -293,7 +295,7 @@ def run_install(args):
     elif args.distribution == IOS_DISTRIBUTION_NAME:
         os.chdir("./client-ios")
         execute_script(["./compile-ios.sh"])
-    elif args.distribution == "Android":
+    elif args.distribution == ANDROID_DISTRIBUTION_NAME:
         os.chdir("./client-android")
         execute_script(["./compile.sh"])
     elif args.distribution == 'mingw32':
@@ -307,21 +309,21 @@ def run_install(args):
         os.environ['PATH'] = '/usr/x86_64-w64-mingw32/bin/qt5/:' + os.environ['PATH']
         execute_script(["./scripts/win_compile.sh --arch=64"])
     else:
-        if args.distribution == "openSUSE":
+        if args.distribution in SUSE_BASED_DISTROS:
             os.environ['JSONCPP_LIBS'] = "-ljsoncpp" #fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
         install_args += ' -c client-gnome'
         execute_script(["./scripts/install.sh " + install_args])
 
 
 def run_uninstall(args):
-    if args.distribution == "OSX":
+    if args.distribution == OSX_DISTRIBUTION_NAME:
         execute_script(OSX_UNINSTALL_SCRIPT)
     else:
         execute_script(UNINSTALL_SCRIPT)
 
 
 def run_run(args):
-    if args.distribution == "OSX":
+    if args.distribution == OSX_DISTRIBUTION_NAME:
         subprocess.Popen(["install/client-macosx/Ring.app/Contents/MacOS/Ring"])
         return True
 
@@ -403,7 +405,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', IOS_DISTRIBUTION_NAME, 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic', 'mingw32', 'mingw64']
+    supported_distros = [ANDROID_DISTRIBUTION_NAME, OSX_DISTRIBUTION_NAME, IOS_DISTRIBUTION_NAME] + DEBIAN_BASED_DISTROS + RPM_BASED_DISTROS + PACMAN_BASED_DISTROS + SUSE_BASED_DISTROS + ['mingw32','mingw64']
 
     if parsed_args.distribution not in supported_distros:
         print('Distribution \''+parsed_args.distribution+'\' not supported.\nChoose one of: %s' \
@@ -465,7 +467,7 @@ def choose_distribution():
                 if k.strip() == 'NAME':
                     return v.strip().replace('"','').split(' ')[0]
     elif system == "darwin":
-        return 'OSX'
+        return OSX_DISTRIBUTION_NAME
 
     return 'Unknown'
 
