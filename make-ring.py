@@ -17,12 +17,12 @@ import shutil
 
 IOS_DISTRIBUTION_NAME="iOS"
 
-DEBIAN_BASED_DISTROS = [
+APT_BASED_DISTROS = [
     'Debian',
     'Ubuntu',
 ]
 
-RPM_BASED_DISTROS = [
+DNF_BASED_DISTROS = [
     'Fedora',
 ]
 
@@ -30,7 +30,7 @@ PACMAN_BASED_DISTROS = [
     'Arch Linux',
 ]
 
-SUSE_BASED_DISTROS = [
+ZYPPER_BASED_DISTROS = [
     'openSUSE',
 ]
 
@@ -64,7 +64,7 @@ ZYPPER_INSTALL_SCRIPT = [
     'sudo zypper install -y %(packages)s'
 ]
 
-OPENSUSE_DEPENDENCIES = [
+ZYPPER_DEPENDENCIES = [
 # build system
     'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++', 'libtool',
 # daemon
@@ -98,7 +98,7 @@ MINGW32_FEDORA_DEPENDENCIES = [
     'mingw32-xz-libs', 'msgpack-devel'
 ]
 
-FEDORA_DEPENDENCIES = [
+DNF_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'automake', 'cmake', 'speexdsp-devel', 'pulseaudio-libs-devel',
     'libsamplerate-devel', 'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
     'yaml-cpp-devel', 'boost-devel', 'dbus-c++-devel', 'dbus-devel',
@@ -112,7 +112,7 @@ FEDORA_DEPENDENCIES = [
     'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel'
 ]
 
-UBUNTU_DEPENDENCIES = [
+APT_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
     'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
     'libavcodec-extra', 'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
@@ -127,21 +127,7 @@ UBUNTU_DEPENDENCIES = [
     'libwebkit2gtk-4.0-dev', 'libvdpau-dev', 'libmsgpack-dev'
 ]
 
-DEBIAN_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
-    'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
-    'libavcodec-extra', 'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
-    'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
-    'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
-    'libgsm1-dev', 'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
-    'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev',
-    'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
-    'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
-    'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
-    'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-dev', 'libvdpau-dev', 'libmsgpack-dev'
-]
-
-ARCH_LINUX_DEPENDENCIES = [
+PACMAN_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc', 'gnome-icon-theme-symbolic',
     'ffmpeg', 'boost', 'clutter-gtk', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book',
     'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse', 'libsamplerate',
@@ -192,19 +178,17 @@ STOP_SCRIPT = [
 def run_dependencies(args):
     if args.distribution == "Ubuntu":
         execute_script(APT_INSTALL_SCRIPT,
-            {"packages": ' '.join(UBUNTU_DEPENDENCIES)}
+            {"packages": ' '.join(APT_DEPENDENCIES)}
         )
-
     elif args.distribution == "Debian":
         execute_script(
             APT_INSTALL_SCRIPT,
-            {"packages": ' '.join(DEBIAN_DEPENDENCIES)}
+            {"packages": ' '.join(APT_DEPENDENCIES)}
         )
-
     elif args.distribution == "Fedora":
         execute_script(
             RPM_INSTALL_SCRIPT,
-            {"packages": ' '.join(FEDORA_DEPENDENCIES)}
+            {"packages": ' '.join(DNF_DEPENDENCIES)}
         )
     elif args.distribution == "mingw32":
         execute_script(
@@ -219,13 +203,13 @@ def run_dependencies(args):
     elif args.distribution == "Arch Linux":
         execute_script(
             PACMAN_INSTALL_SCRIPT,
-            {"packages": ' '.join(ARCH_LINUX_DEPENDENCIES)}
+            {"packages": ' '.join(PACMAN_DEPENDENCIES)}
         )
 
     elif args.distribution == "openSUSE":
         execute_script(
             ZYPPER_INSTALL_SCRIPT,
-            {"packages": ' '.join(OPENSUSE_DEPENDENCIES)}
+            {"packages": ' '.join(ZYPPER_DEPENDENCIES)}
         )
 
     elif args.distribution == "OSX":
