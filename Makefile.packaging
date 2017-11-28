@@ -97,6 +97,8 @@ package-all: package-debian_8 \
              package-fedora_25_i386 \
              package-fedora_26 \
              package-fedora_26_i386 \
+             package-fedora_27 \
+             package-fedora_27_i386 \
              package-gentoo
 
 # Append the output of make-packaging-target to this Makefile
