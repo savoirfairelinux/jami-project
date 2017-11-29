@@ -74,6 +74,6 @@ cd ../..
 fi
 mkdir -p build${ARCH}
 cd build${ARCH}
-${HOST}-qmake-qt5 ../RingWinClient.pro -r -spec win32-g++ RING=$INSTALL_PREFIX
+${HOST}-qmake-qt5 ../RingWinClient.pro -r -spec mingw-w64-g++ RING=$INSTALL_PREFIX
 make -j$CORES || exit 1
 make install
