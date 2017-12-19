@@ -62,7 +62,7 @@ BuildRequires: libnotify-devel
 BuildRequires: qt5-qttools-devel
 BuildRequires: qrencode-devel
 BuildRequires: libappindicator-gtk3-devel
-BuildRequires: NetworkManager-glib-devel
+BuildRequires: NetworkManager-libnm-devel
 BuildRequires: libva-devel
 BuildRequires: webkitgtk4-devel
 BuildRequires: cryptopp-devel

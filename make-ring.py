@@ -109,7 +109,7 @@ FEDORA_DEPENDENCIES = [
     'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
     'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel', 'evolution-data-server-devel',
     'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel',
-    'webkitgtk4-devel', 'NetworkManager-glib-devel', 'libvdpau-devel', 'msgpack-devel'
+    'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel'
 ]
 
 UBUNTU_DEPENDENCIES = [
