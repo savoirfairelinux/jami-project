@@ -58,7 +58,7 @@ RUN apt-get update && \
         libnatpmp-dev \
         libappindicator3-dev \
         libqrencode-dev \
-        libnm-glib-dev \
+        libnm-dev \
         libwebkit2gtk-4.0-dev \
         libcrypto++-dev \
         libva-dev \

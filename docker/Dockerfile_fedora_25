@@ -49,7 +49,8 @@ RUN dnf upgrade -y && \
         cryptopp-devel \
         libva-devel \
         libvdpau-devel \
-        msgpack-devel
+        msgpack-devel \
+        NetworkManager-libnm-devel
 
 # Packaging tools
 RUN dnf install -y yum-utils rpmdevtools
