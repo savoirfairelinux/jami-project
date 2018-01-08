@@ -40,13 +40,13 @@ APT_INSTALL_SCRIPT = [
 ]
 
 BREW_UNLINK_SCRIPT = [
-    'brew unlink %(packages)s'
+    #'brew unlink %(packages)s'
 ]
 
 BREW_INSTALL_SCRIPT = [
-    'brew update',
+    'brew upgrade',
     'brew install -y %(packages)s',
-    'brew link --force --overwrite %(packages)s'
+    'brew link  --overwrite %(packages)s'
 ]
 
 RPM_INSTALL_SCRIPT = [
@@ -151,13 +151,13 @@ ARCH_LINUX_DEPENDENCIES = [
 ]
 
 OSX_DEPENDENCIES = [
-    'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt5',
-    'libtool', 'yasm', 'automake'
+    'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt',
+    'libtool', 'yasm', 'automake', 'gmp', 'nettle', 'msgpack'
 ]
 
 OSX_DEPENDENCIES_UNLINK = [
-    'autoconf*', 'cmake*', 'gettext*', 'pkg-config*', 'qt*', 'qt@5.*',
-    'libtool*', 'yasm*', 'automake*'
+    'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt', 
+    'libtool', 'yasm', 'automake'
 ]
 
 IOS_DEPENDENCIES = [
@@ -229,10 +229,10 @@ def run_dependencies(args):
         )
 
     elif args.distribution == "OSX":
-        execute_script(
-            BREW_UNLINK_SCRIPT,
-            {"packages": ' '.join(OSX_DEPENDENCIES_UNLINK)}
-        )
+        #execute_script(
+        #    BREW_UNLINK_SCRIPT,
+        #    {"packages": ' '.join(OSX_DEPENDENCIES_UNLINK)}
+        #)
         execute_script(
             BREW_INSTALL_SCRIPT,
             {"packages": ' '.join(OSX_DEPENDENCIES)}
