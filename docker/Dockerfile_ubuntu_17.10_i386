@@ -32,6 +32,7 @@ RUN apt-get update && \
         libgnutls28-dev \
         libargon2-0-dev \
         libebook1.2-dev \
+	libcanberra-gtk3-dev \
         libclutter-gtk-1.0-dev \
         libclutter-1.0-dev \
         libglib2.0-dev \
