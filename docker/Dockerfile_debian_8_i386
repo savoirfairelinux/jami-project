@@ -20,6 +20,7 @@ RUN apt-get update && \
         libdbus-c++-dev \
         libupnp-dev \
         libebook1.2-dev \
+	libcanberra-gtk3-dev \
         libclutter-gtk-1.0-dev \
         libclutter-1.0-dev \
         libglib2.0-dev \
