@@ -15,6 +15,7 @@ RUN dnf upgrade -y && \
         cmake \
         speexdsp-devel \
         pulseaudio-libs-devel \
+	libcanberra-devel \
         libsamplerate-devel \
         libtool \
         dbus-devel \

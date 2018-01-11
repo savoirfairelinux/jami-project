@@ -7,7 +7,7 @@ Version:       %{version}
 Release:       %{release}%{?dist}
 Summary:       Free software for distributed and secured communication.
 Group:         Applications/Internet
-License:       GPLv3
+License:       GPLv3+
 URL:           https://ring.cx/
 Source:        ring_%{version}.tar.gz
 Requires:      ring-daemon = %{version}
@@ -18,6 +18,7 @@ BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: cmake
 BuildRequires: pulseaudio-libs-devel
+BuildRequires: libcanberra-devel
 BuildRequires: libsamplerate-devel
 BuildRequires: libtool
 BuildRequires: dbus-devel
@@ -196,6 +197,7 @@ DESTDIR=%{buildroot} make -C client-gnome/build install
 %{_datadir}/appdata/gnome-ring.appdata.xml
 %{_datadir}/libringclient/*
 %{_datadir}/locale/*
+%{_datadir}/sounds/gnome-ring/*
 %doc %{_mandir}/man1/dring*
 
 %files daemon
