@@ -15,6 +15,7 @@ RUN dnf upgrade -y && \
         cmake \
         speexdsp-devel \
         pulseaudio-libs-devel \
+	libcanberra-devel \
         libsamplerate-devel \
         libtool \
         dbus-devel \
@@ -51,7 +52,8 @@ RUN dnf upgrade -y && \
         webkitgtk4-devel \
         cryptopp-devel \
         libva-devel \
-        libvdpau-devel
+        libvdpau-devel \
+        NetworkManager-libnm-devel
 
 ADD scripts/build-package-fedora.sh /opt/build-package-fedora.sh
 

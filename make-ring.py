@@ -79,7 +79,7 @@ OPENSUSE_DEPENDENCIES = [
 # gnome client
     'gtk3-devel', 'clutter-gtk-devel', 'qrencode-devel', 'evolution-data-server-devel',
     'gettext-tools', 'libnotify-devel', 'libappindicator3-devel', 'webkit2gtk3-devel',
-    'NetworkManager-devel'
+    'NetworkManager-devel', 'libcanberra-gtk3-devel'
 ]
 
 MINGW64_FEDORA_DEPENDENCIES = [
@@ -109,7 +109,7 @@ FEDORA_DEPENDENCIES = [
     'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
     'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel', 'evolution-data-server-devel',
     'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel',
-    'webkitgtk4-devel', 'NetworkManager-glib-devel', 'libvdpau-devel', 'msgpack-devel'
+    'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel', 'libcanberra-devel'
 ]
 
 UBUNTU_DEPENDENCIES = [
@@ -123,8 +123,8 @@ UBUNTU_DEPENDENCIES = [
     'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
-    'libva-dev', 'libnm-glib-dev',
-    'libwebkit2gtk-4.0-dev', 'libvdpau-dev', 'libmsgpack-dev'
+    'libva-dev', 'libnm-dev',
+    'libwebkit2gtk-4.0-dev', 'libvdpau-dev', 'libmsgpack-dev', 'libcanberra-gtk3-dev'
 ]
 
 DEBIAN_DEPENDENCIES = [
@@ -138,7 +138,7 @@ DEBIAN_DEPENDENCIES = [
     'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
-    'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-glib-dev', 'libvdpau-dev', 'libmsgpack-dev'
+    'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-dev', 'libvdpau-dev', 'libmsgpack-dev', 'libcanberra-gtk3-dev'
 ]
 
 ARCH_LINUX_DEPENDENCIES = [
@@ -147,7 +147,7 @@ ARCH_LINUX_DEPENDENCIES = [
     'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse', 'libsamplerate',
     'libsndfile', 'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
     'swig', 'yasm', 'qrencode', 'evolution-data-server', 'make', 'patch', 'pkg-config',
-    'automake', 'libva', 'webkit2gtk', 'libnm-glib', 'libvdpau'
+    'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanbera'
 ]
 
 OSX_DEPENDENCIES = [
