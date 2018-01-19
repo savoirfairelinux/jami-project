@@ -16,13 +16,15 @@ import multiprocessing
 import shutil
 
 IOS_DISTRIBUTION_NAME="iOS"
+OSX_DISTRIBUTION_NAME="OSX"
+ANDROID_DISTRIBUTION_NAME="Android"
 
-DEBIAN_BASED_DISTROS = [
+APT_BASED_DISTROS = [
     'Debian',
     'Ubuntu',
 ]
 
-RPM_BASED_DISTROS = [
+DNF_BASED_DISTROS = [
     'Fedora',
 ]
 
@@ -30,7 +32,7 @@ PACMAN_BASED_DISTROS = [
     'Arch Linux',
 ]
 
-SUSE_BASED_DISTROS = [
+ZYPPER_BASED_DISTROS = [
     'openSUSE',
 ]
 
@@ -64,7 +66,7 @@ ZYPPER_INSTALL_SCRIPT = [
     'sudo zypper install -y %(packages)s'
 ]
 
-OPENSUSE_DEPENDENCIES = [
+ZYPPER_DEPENDENCIES = [
 # build system
     'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++', 'libtool',
 # daemon
@@ -98,7 +100,7 @@ MINGW32_FEDORA_DEPENDENCIES = [
     'mingw32-xz-libs', 'msgpack-devel'
 ]
 
-FEDORA_DEPENDENCIES = [
+DNF_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'automake', 'cmake', 'speexdsp-devel', 'pulseaudio-libs-devel',
     'libsamplerate-devel', 'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
     'yaml-cpp-devel', 'boost-devel', 'dbus-c++-devel', 'dbus-devel',
@@ -112,22 +114,7 @@ FEDORA_DEPENDENCIES = [
     'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel', 'libcanberra-devel'
 ]
 
-UBUNTU_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
-    'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
-    'libavcodec-extra', 'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
-    'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
-    'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
-    'libgsm1-dev', 'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
-    'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev',
-    'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
-    'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
-    'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
-    'libva-dev', 'libnm-dev',
-    'libwebkit2gtk-4.0-dev', 'libvdpau-dev', 'libmsgpack-dev', 'libcanberra-gtk3-dev'
-]
-
-DEBIAN_DEPENDENCIES = [
+APT_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
     'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
     'libavcodec-extra', 'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
@@ -141,7 +128,7 @@ DEBIAN_DEPENDENCIES = [
     'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-dev', 'libvdpau-dev', 'libmsgpack-dev', 'libcanberra-gtk3-dev'
 ]
 
-ARCH_LINUX_DEPENDENCIES = [
+PACMAN_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc', 'gnome-icon-theme-symbolic',
     'ffmpeg', 'boost', 'clutter-gtk', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book',
     'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse', 'libsamplerate',
@@ -190,21 +177,14 @@ STOP_SCRIPT = [
 
 
 def run_dependencies(args):
-    if args.distribution == "Ubuntu":
+    if args.distribution in APT_BASED_DISTROS:
         execute_script(APT_INSTALL_SCRIPT,
-            {"packages": ' '.join(UBUNTU_DEPENDENCIES)}
+            {"packages": ' '.join(APT_DEPENDENCIES)}
         )
-
-    elif args.distribution == "Debian":
-        execute_script(
-            APT_INSTALL_SCRIPT,
-            {"packages": ' '.join(DEBIAN_DEPENDENCIES)}
-        )
-
-    elif args.distribution == "Fedora":
+    elif args.distribution in DNF_BASED_DISTROS:
         execute_script(
             RPM_INSTALL_SCRIPT,
-            {"packages": ' '.join(FEDORA_DEPENDENCIES)}
+            {"packages": ' '.join(DNF_DEPENDENCIES)}
         )
     elif args.distribution == "mingw32":
         execute_script(
@@ -216,19 +196,19 @@ def run_dependencies(args):
             RPM_INSTALL_SCRIPT,
             {"packages": ' '.join(MINGW64_FEDORA_DEPENDENCIES)}
         )
-    elif args.distribution == "Arch Linux":
+    elif args.distribution in PACMAN_BASED_DISTROS:
         execute_script(
             PACMAN_INSTALL_SCRIPT,
-            {"packages": ' '.join(ARCH_LINUX_DEPENDENCIES)}
+            {"packages": ' '.join(PACMAN_DEPENDENCIES)}
         )
 
-    elif args.distribution == "openSUSE":
+    elif args.distribution in ZYPPER_BASED_DISTROS:
         execute_script(
             ZYPPER_INSTALL_SCRIPT,
-            {"packages": ' '.join(OPENSUSE_DEPENDENCIES)}
+            {"packages": ' '.join(ZYPPER_DEPENDENCIES)}
         )
 
-    elif args.distribution == "OSX":
+    elif args.distribution == OSX_DISTRIBUTION_NAME:
         execute_script(
             BREW_UNLINK_SCRIPT,
             {"packages": ' '.join(OSX_DEPENDENCIES_UNLINK)}
@@ -248,7 +228,7 @@ def run_dependencies(args):
             {"packages": ' '.join(IOS_DEPENDENCIES)}
         )
 
-    elif args.distribution == "Android":
+    elif args.distribution == ANDROID_DISTRIBUTION_NAME:
         print("The Android version does not need more dependencies.\nPlease continue with the --install instruction.")
         sys.exit(1)
 
@@ -286,7 +266,7 @@ def run_install(args):
         install_args += ' -s'
     if args.global_install:
         install_args += ' -g'
-    if args.distribution == "OSX":
+    if args.distribution == OSX_DISTRIBUTION_NAME:
         proc= subprocess.Popen("brew --prefix qt5", shell=True, stdout=subprocess.PIPE)
         qt5dir = proc.stdout.read()
         os.environ['CMAKE_PREFIX_PATH'] = str(qt5dir.decode('ascii'))
@@ -295,7 +275,7 @@ def run_install(args):
     elif args.distribution == IOS_DISTRIBUTION_NAME:
         os.chdir("./client-ios")
         execute_script(["./compile-ios.sh"])
-    elif args.distribution == "Android":
+    elif args.distribution == ANDROID_DISTRIBUTION_NAME:
         os.chdir("./client-android")
         execute_script(["./compile.sh"])
     elif args.distribution == 'mingw32':
@@ -309,21 +289,21 @@ def run_install(args):
         os.environ['PATH'] = '/usr/x86_64-w64-mingw32/bin/qt5/:' + os.environ['PATH']
         execute_script(["./scripts/win_compile.sh --arch=64"])
     else:
-        if args.distribution == "openSUSE":
+        if args.distribution in ZYPPER_BASED_DISTROS:
             os.environ['JSONCPP_LIBS'] = "-ljsoncpp" #fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
         install_args += ' -c client-gnome'
         execute_script(["./scripts/install.sh " + install_args])
 
 
 def run_uninstall(args):
-    if args.distribution == "OSX":
+    if args.distribution == OSX_DISTRIBUTION_NAME:
         execute_script(OSX_UNINSTALL_SCRIPT)
     else:
         execute_script(UNINSTALL_SCRIPT)
 
 
 def run_run(args):
-    if args.distribution == "OSX":
+    if args.distribution == OSX_DISTRIBUTION_NAME:
         subprocess.Popen(["install/client-macosx/Ring.app/Contents/MacOS/Ring"])
         return True
 
@@ -405,7 +385,7 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = ['Android', 'Ubuntu', 'Debian', 'OSX', IOS_DISTRIBUTION_NAME, 'Fedora', 'Arch Linux', 'openSUSE', 'Automatic', 'mingw32', 'mingw64']
+    supported_distros = [ANDROID_DISTRIBUTION_NAME, OSX_DISTRIBUTION_NAME, IOS_DISTRIBUTION_NAME] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS + ZYPPER_BASED_DISTROS + ['mingw32','mingw64']
 
     if parsed_args.distribution not in supported_distros:
         print('Distribution \''+parsed_args.distribution+'\' not supported.\nChoose one of: %s' \
@@ -467,7 +447,7 @@ def choose_distribution():
                 if k.strip() == 'NAME':
                     return v.strip().replace('"','').split(' ')[0]
     elif system == "darwin":
-        return 'OSX'
+        return OSX_DISTRIBUTION_NAME
 
     return 'Unknown'
 
