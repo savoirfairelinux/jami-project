@@ -37,8 +37,9 @@ target_template = """\
 # names, just about the contents of the Dockerfile.
 PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME:=ring-packaging-%(distribution)s$(RING_PACKAGING_IMAGE_SUFFIX)
 PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE:=.docker-image-$(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
+DOCKER_EXTRA_ARGS =
 
-PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND:= docker run \\
+PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     --rm \\
     -e RELEASE_VERSION=$(RELEASE_VERSION) \\
     -e RELEASE_TARBALL_FILENAME=$(RELEASE_TARBALL_FILENAME) \\
@@ -48,7 +49,8 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND:= docker run \\
     -e DISTRIBUTION=%(distribution)s \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
-    -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
+    -t $(DOCKER_EXTRA_ARGS) \\
+    $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(distribution)s
 	docker build \\
@@ -68,6 +70,7 @@ packages/%(distribution)s/%(output_file)s: $(RELEASE_TARBALL_FILENAME) packages/
 package-%(distribution)s: packages/%(distribution)s/%(output_file)s
 
 .PHONY: package-%(distribution)s-interactive
+package-%(distribution)s-interactive: DOCKER_EXTRA_ARGS = -i
 package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 	$(PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND) bash
 """
