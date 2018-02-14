@@ -113,13 +113,15 @@ override_dh_auto_clean:
 	#########################
 	## libringclient clean ##
 	#########################
-	if [ -f lrc/build/Makefile ]; then make -C lrc/build distclean; fi
+	# CMake build system has no distclean target, so use clean.
+	if [ -f lrc/build/Makefile ]; then make -C lrc/build clean; fi
 	rm -rfv lrc/build
 
 	########################
 	## gnome client clean ##
 	########################
-	if [ -f client-gnome/build/Makefile ]; then make -C client-gnome/build distclean; fi
+	# CMake build system has no distclean target, so use clean.
+	if [ -f client-gnome/build/Makefile ]; then make -C client-gnome/build clean; fi
 	rm -rfv client-gnome/build
 
 override_dh_clean:
