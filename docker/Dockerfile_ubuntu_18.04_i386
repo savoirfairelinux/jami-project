@@ -1,10 +1,10 @@
-FROM i386/ubuntu:15.10
+FROM i386/ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get clean
 RUN apt-get update && \
-    apt-get install -y vim devscripts equivs
+    apt-get install -y devscripts equivs
 
 # Speed up mk-build-deps
 RUN apt-get clean
@@ -20,6 +20,7 @@ RUN apt-get update && \
         libdbus-c++-dev \
         libupnp-dev \
         libgnutls28-dev \
+        libargon2-0-dev \
         libebook1.2-dev \
 	libcanberra-gtk3-dev \
         libclutter-gtk-1.0-dev \
@@ -55,15 +56,16 @@ RUN apt-get update && \
         libudev-dev \
         libgsm1-dev \
         libjsoncpp-dev \
+        libmsgpack-dev \
         libnatpmp-dev \
-        libappindicator3-dev \
+        libayatana-appindicator3-dev \
         libqrencode-dev \
         libnm-dev \
         libwebkit2gtk-4.0-dev \
         libcrypto++-dev \
         libva-dev \
         libvdpau-dev \
-        libssl-dev
+	libssl-dev
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 
