@@ -72,30 +72,14 @@ $(RELEASE_TARBALL_FILENAME):
 #######################
 
 .PHONY: package-all
-package-all: package-debian_8 \
-             package-debian_8_i386 \
-             package-debian_9 \
+package-all: package-debian_9 \
              package-debian_9_i386 \
-             package-ubuntu_14.04 \
-             package-ubuntu_14.04_i386 \
-             package-ubuntu_15.10 \
-             package-ubuntu_15.10_i386 \
              package-ubuntu_16.04 \
              package-ubuntu_16.04_i386 \
-             package-ubuntu_16.10 \
-             package-ubuntu_16.10_i386 \
-             package-ubuntu_17.04 \
-             package-ubuntu_17.04_i386 \
              package-ubuntu_17.10 \
              package-ubuntu_17.10_i386 \
-             package-fedora_22 \
-             package-fedora_22_i386 \
-             package-fedora_23 \
-             package-fedora_23_i386 \
-             package-fedora_24 \
-             package-fedora_24_i386 \
-             package-fedora_25 \
-             package-fedora_25_i386 \
+	     package-ubuntu_18.04 \
+	     package-ubuntu_18.04_i386 \
              package-fedora_26 \
              package-fedora_26_i386 \
              package-fedora_27 \
