@@ -75,7 +75,7 @@ ZYPPER_DEPENDENCIES = [
     'libnettle-devel', 'libopus-devel', 'libgnutls-devel', 'msgpack-devel', 'libavcodec-devel',
     'libavdevice-devel', 'pcre-devel', 'libogg-devel', 'libsndfile-devel', 'libvorbis-devel',
     'flac-devel', 'libgsm-devel', 'alsa-devel', 'libpulse-devel', 'libudev-devel', 'libva-devel',
-    'libvdpau-devel'
+    'libvdpau-devel', 'libopenssl-devel',
 # lrc
     'libQt5Core-devel', 'libQt5DBus-devel', 'libqt5-linguist-devel',
 # gnome client
@@ -110,7 +110,7 @@ DNF_DEPENDENCIES = [
     'uuid-devel', 'gnutls-devel', 'nettle-devel', 'opus-devel', 'speexdsp-devel',
     'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
     'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel', 'evolution-data-server-devel',
-    'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel',
+    'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel', 'openssl-devel',
     'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel', 'libcanberra-devel'
 ]
 
@@ -121,7 +121,7 @@ APT_DEPENDENCIES = [
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
     'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
     'libgsm1-dev', 'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
-    'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev',
+    'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev', 'libssl',
     'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
@@ -134,7 +134,7 @@ PACMAN_DEPENDENCIES = [
     'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse', 'libsamplerate',
     'libsndfile', 'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
     'swig', 'yasm', 'qrencode', 'evolution-data-server', 'make', 'patch', 'pkg-config',
-    'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanbera'
+    'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanbera', 'openssl'
 ]
 
 OSX_DEPENDENCIES = [

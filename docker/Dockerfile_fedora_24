@@ -53,7 +53,8 @@ RUN dnf upgrade -y && \
         cryptopp-devel \
         libva-devel \
         libvdpau-devel \
-        NetworkManager-libnm-devel
+        NetworkManager-libnm-devel \
+        openssl-devel
 
 ADD scripts/build-package-fedora.sh /opt/build-package-fedora.sh
 

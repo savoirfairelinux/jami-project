@@ -51,7 +51,8 @@ RUN dnf upgrade -y && \
         libva-devel \
         libvdpau-devel \
         msgpack-devel \
-        NetworkManager-libnm-devel
+        NetworkManager-libnm-devel \
+        openssl-devel
 
 # Packaging tools
 RUN dnf install -y yum-utils rpmdevtools

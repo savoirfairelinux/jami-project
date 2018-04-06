@@ -72,7 +72,8 @@ RUN apt-get update && \
         libwebkit2gtk-4.0-dev \
         libcrypto++-dev \
         libva-dev \
-        libvdpau-dev
+        libvdpau-dev \
+        libssl-dev
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 
