@@ -121,7 +121,7 @@ APT_DEPENDENCIES = [
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
     'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
     'libgsm1-dev', 'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
-    'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev', 'libssl',
+    'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev', 'libssl-dev',
     'libsndfile1-dev', 'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
