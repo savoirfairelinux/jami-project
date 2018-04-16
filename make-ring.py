@@ -144,7 +144,7 @@ OSX_DEPENDENCIES = [
 
 OSX_DEPENDENCIES_UNLINK = [
     'autoconf*', 'cmake*', 'gettext*', 'pkg-config*', 'qt*', 'qt@5.*',
-    'libtool*', 'yasm*', 'automake*'
+    'libtool*', 'yasm*', 'automake*', 'gnutls*', 'nettle*', 'msgpack*'
 ]
 
 IOS_DEPENDENCIES = [
@@ -211,7 +211,8 @@ def run_dependencies(args):
     elif args.distribution == OSX_DISTRIBUTION_NAME:
         execute_script(
             BREW_UNLINK_SCRIPT,
-            {"packages": ' '.join(OSX_DEPENDENCIES_UNLINK)}
+            {"packages": ' '.join(OSX_DEPENDENCIES_UNLINK)},
+            True
         )
         execute_script(
             BREW_INSTALL_SCRIPT,
@@ -221,7 +222,8 @@ def run_dependencies(args):
     elif args.distribution == IOS_DISTRIBUTION_NAME:
         execute_script(
             BREW_UNLINK_SCRIPT,
-            {"packages": ' '.join(IOS_DEPENDENCIES_UNLINK)}
+            {"packages": ' '.join(IOS_DEPENDENCIES_UNLINK)},
+            True
         )
         execute_script(
             BREW_INSTALL_SCRIPT,
@@ -369,17 +371,15 @@ def run_run(args):
 def run_stop(args):
     execute_script(STOP_SCRIPT)
 
-
-def execute_script(script, settings=None):
+def execute_script(script, settings=None, fail=True):
     if settings == None:
         settings = {}
     for line in script:
         line = line % settings
         rv = os.system(line)
-        if rv != 0:
+        if rv != 0 and fail == True:
             print('Error executing script! Exit code: %s' % rv, file=sys.stderr)
             sys.exit(1)
-
 
 def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
