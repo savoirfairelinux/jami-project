@@ -61,7 +61,10 @@ DAEMON="$(pwd)"
 cd contrib
 mkdir -p native
 cd native
-../bootstrap
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    enableRestbed="--enable-restbed"
+fi
+../bootstrap $enableRestbed
 make
 cd "${DAEMON}"
 ./autogen.sh
@@ -96,6 +99,9 @@ make_install $global
 cd "${TOP}/${client}"
 mkdir -p ${BUILDDIR}
 cd ${BUILDDIR}
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  CMAKE_PREFIX_PATH=`brew --prefix qt5`
+fi
 if $global; then
   cmake .. -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH $static
 else
@@ -104,5 +110,6 @@ else
             -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
             -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
 fi
+
 make -j${proc}
 make_install $global
