@@ -61,7 +61,10 @@ DAEMON="$(pwd)"
 cd contrib
 mkdir -p native
 cd native
-../bootstrap
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    enableRestbed="--enable-restbed"
+fi
+../bootstrap $enableRestbed
 make
 cd "${DAEMON}"
 ./autogen.sh
@@ -103,6 +106,15 @@ else
             -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
             -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
             -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
+  # generates Xcode project also on macOS
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    rm -f CMakeCache.txt
+    cmake ..  -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH \
+              -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
+              -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
+              -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" -G Xcode $static
+  fi
 fi
+
 make -j${proc}
 make_install $global
