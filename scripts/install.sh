@@ -61,7 +61,10 @@ DAEMON="$(pwd)"
 cd contrib
 mkdir -p native
 cd native
-../bootstrap
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    enableRestbed="--enable-restbed"
+fi
+../bootstrap $enableRestbed
 make
 cd "${DAEMON}"
 ./autogen.sh
