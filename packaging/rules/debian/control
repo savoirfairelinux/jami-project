@@ -20,7 +20,7 @@ Build-Depends: debhelper (>= 9),
                qttools5-dev-tools,
                gettext,
                libqrencode-dev,
-               libappindicator3-dev,
+               libayatana-appindicator3-dev | libappindicator3-dev,
                libnm-dev,
                libwebkit2gtk-4.0-dev | libwebkit2gtk-3.0-dev,
 # ring-daemon
