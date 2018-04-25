@@ -37,8 +37,9 @@ target_template = """\
 # names, just about the contents of the Dockerfile.
 PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME:=ring-packaging-%(distribution)s$(RING_PACKAGING_IMAGE_SUFFIX)
 PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE:=.docker-image-$(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
+DOCKER_EXTRA_ARGS =
 
-PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND:= docker run \\
+PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     --rm \\
     -e RELEASE_VERSION=$(RELEASE_VERSION) \\
     -e RELEASE_TARBALL_FILENAME=$(RELEASE_TARBALL_FILENAME) \\
@@ -48,7 +49,8 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND:= docker run \\
     -e DISTRIBUTION=%(distribution)s \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
-    -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
+    -t $(DOCKER_EXTRA_ARGS) \\
+    $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(distribution)s
 	docker build \\
@@ -68,6 +70,7 @@ packages/%(distribution)s/%(output_file)s: $(RELEASE_TARBALL_FILENAME) packages/
 package-%(distribution)s: packages/%(distribution)s/%(output_file)s
 
 .PHONY: package-%(distribution)s-interactive
+package-%(distribution)s-interactive: DOCKER_EXTRA_ARGS = -i
 package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 	$(PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND) bash
 """
@@ -90,16 +93,6 @@ def run_generate_all(parsed_args):
     targets = [
         # Debian
         {
-            "distribution": "debian_8",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "debian_8_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
             "distribution": "debian_9",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
@@ -111,52 +104,12 @@ def run_generate_all(parsed_args):
         },
         # Ubuntu
         {
-            "distribution": "ubuntu_14.04",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "ubuntu_14.04_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "ubuntu_15.10",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "ubuntu_15.10_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
             "distribution": "ubuntu_16.04",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
             "distribution": "ubuntu_16.04_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "ubuntu_16.10",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "ubuntu_16.10_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "ubuntu_17.04",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "ubuntu_17.04_i386",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
@@ -170,47 +123,17 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
+        {
+            "distribution": "ubuntu_18.04",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+        },
+        {
+            "distribution": "ubuntu_18.04_i386",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+        },
         # Fedora
-        {
-            "distribution": "fedora_22",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
-            "distribution": "fedora_22_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
-            "distribution": "fedora_23",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
-            "distribution": "fedora_23_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
-            "distribution": "fedora_24",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
-            "distribution": "fedora_24_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
-            "distribution": "fedora_25",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
-            "distribution": "fedora_25_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
         {
             "distribution": "fedora_26",
             "debian_packaging_override": "",
