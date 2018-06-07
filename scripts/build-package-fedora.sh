@@ -33,7 +33,7 @@ sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" ring.spec
 rpmdev-bumpspec --comment="Automatic nightly release" --userstring="Jenkins <ring@lists.savoirfairelinux.net>" ring.spec
 
 # install build deps
-yum-builddep -y ring.spec || echo "ignoring yum-builddep failure"
+dnf builddep -y ring.spec || echo "ignoring dnf builddep failure"
 
 # place the source
 mkdir -p /root/rpmbuild/SOURCES
