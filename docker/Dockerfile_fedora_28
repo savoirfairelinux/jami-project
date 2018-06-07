@@ -1,7 +1,7 @@
 FROM fedora:28
 
 RUN dnf clean all
-RUN dnf install -y yum-utils rpmdevtools
+RUN dnf install -y dnf-command(builddep) rpmdevtools
 
 RUN dnf clean all
 RUN dnf upgrade -y && \

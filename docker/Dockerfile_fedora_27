@@ -1,7 +1,7 @@
 FROM fedora:27
 
 RUN dnf clean all
-RUN dnf install -y yum-utils rpmdevtools
+RUN dnf install -y dnf-command(builddep) rpmdevtools
 
 RUN dnf clean all
 RUN dnf upgrade -y && \
@@ -15,7 +15,7 @@ RUN dnf upgrade -y && \
         cmake \
         speexdsp-devel \
         pulseaudio-libs-devel \
-	libcanberra-devel \
+        libcanberra-devel \
         libsamplerate-devel \
         libtool \
         dbus-devel \
