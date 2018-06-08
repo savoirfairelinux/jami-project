@@ -49,7 +49,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -e DISTRIBUTION=%(distribution)s \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
-    -t $(DOCKER_EXTRA_ARGS) \\
+    -t $(DOCKER_EXTRA_ARGS) %(options)s \\
     $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(distribution)s
@@ -76,11 +76,12 @@ package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(dis
 """
 
 
-def generate_target(distribution, debian_packaging_override, output_file):
+def generate_target(distribution, debian_packaging_override, output_file, options=''):
     return target_template % {
         "distribution": distribution,
         "debian_packaging_override": debian_packaging_override,
         "output_file": output_file,
+        "options": options,
     }
 
 
@@ -158,11 +159,13 @@ def run_generate_all(parsed_args):
             "distribution": "fedora_28",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
+            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
         },
         {
             "distribution": "fedora_28_i386",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
+            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
         },
         # Gentoo
         {
