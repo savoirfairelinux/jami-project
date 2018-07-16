@@ -15,25 +15,27 @@ import platform
 import multiprocessing
 import shutil
 
-IOS_DISTRIBUTION_NAME="iOS"
-OSX_DISTRIBUTION_NAME="OSX"
-ANDROID_DISTRIBUTION_NAME="Android"
+IOS_DISTRIBUTION_NAME="ios"
+OSX_DISTRIBUTION_NAME="osx"
+ANDROID_DISTRIBUTION_NAME="android"
 
 APT_BASED_DISTROS = [
-    'Debian',
-    'Ubuntu',
+    'debian',
+    'ubuntu',
+    'linuxmint',
+    'raspbian',
 ]
 
 DNF_BASED_DISTROS = [
-    'Fedora',
+    'fedora',
 ]
 
 PACMAN_BASED_DISTROS = [
-    'Arch Linux',
+    'arch',
 ]
 
 ZYPPER_BASED_DISTROS = [
-    'openSUSE',
+    'opensuse',
 ]
 
 APT_INSTALL_SCRIPT = [
@@ -416,7 +418,7 @@ def parse_args():
         '--stop', action='store_true',
         help='Stop the Ring processes')
 
-    ap.add_argument('--distribution', default='Automatic')
+    ap.add_argument('--distribution')
     ap.add_argument('--static', default=False, action='store_true')
     ap.add_argument('--global-install', default=False, action='store_true')
     ap.add_argument('--debug', default=False, action='store_true')
@@ -424,11 +426,13 @@ def parse_args():
 
     parsed_args = ap.parse_args()
 
-    if parsed_args.distribution == 'Automatic':
+    if (parsed_args.distribution is not None):
+        parsed_args.distribution = parsed_args.distribution.lower()
+    else:
         parsed_args.distribution = choose_distribution()
 
     if parsed_args.distribution in ['mingw32', 'mingw64']:
-        if choose_distribution() != "Fedora":
+        if choose_distribution() != "fedora":
             print('Windows version must be built on a Fedora distribution (>=23)')
             sys.exit(1)
 
@@ -440,11 +444,11 @@ def choose_distribution():
     system = platform.system().lower()
     if system == "linux" or system == "linux2":
         if os.path.isfile("/etc/arch-release"):
-            return "Arch Linux"
+            return "arch"
         with open("/etc/os-release") as f:
             for line in f:
                 k,v = line.split("=")
-                if k.strip() == 'NAME':
+                if k.strip() == 'ID':
                     return v.strip().replace('"','').split(' ')[0]
     elif system == "darwin":
         return OSX_DISTRIBUTION_NAME
