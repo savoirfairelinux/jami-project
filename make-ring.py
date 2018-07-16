@@ -117,8 +117,8 @@ DNF_DEPENDENCIES = [
 ]
 
 APT_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'autopoint', 'cmake', 'dbus', 'doxygen', 'g++', 'gettext',
-    'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
+    'autoconf', 'autoconf-archive', 'autopoint', 'automake', 'cmake', 'dbus', 'doxygen', 'g++',
+    'gettext', 'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
     'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
     'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
