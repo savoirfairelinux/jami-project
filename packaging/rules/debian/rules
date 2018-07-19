@@ -12,6 +12,10 @@ ifeq ($(NO_CPUS),0)
 NO_CPUS=1
 endif
 
+# Binary package names
+RING_ALL_IN_ONE_PKG_NAME="ring-all"
+RING_DAEMON_PKG_NAME="ring-daemon"
+
 %:
 	dh $@
 
@@ -132,29 +136,36 @@ override_dh_clean:
 
 override_dh_auto_install:
 	#########################
-	## Ring Daemon install ##
+	## Ring daemon install ##
 	#########################
-	cd daemon && make DESTDIR=$(CURDIR)/debian/ring-daemon install
-	rm -rfv $(CURDIR)/debian/ring-daemon/usr/include
-	rm -rfv $(CURDIR)/debian/ring-daemon/usr/lib/*.a
-	rm -rfv $(CURDIR)/debian/ring-daemon/usr/lib/*.la
 
-	###########################
-	## libringclient install ##
-	###########################
-	cd lrc/build && make DESTDIR=$(CURDIR)/debian/ring install
-	rm -rfv $(CURDIR)/debian/ring/usr/include
+	cd daemon && make DESTDIR=$(CURDIR)/debian/$(RING_DAEMON_PKG_NAME) install
+	rm -rfv $(CURDIR)/debian/$(RING_DAEMON_PKG_NAME)/usr/include
+	rm -rfv $(CURDIR)/debian/$(RING_DAEMON_PKG_NAME)/usr/lib/*.a
+	rm -rfv $(CURDIR)/debian/$(RING_DAEMON_PKG_NAME)/usr/lib/*.la
+
+	######################
+	## Ring AiO install ##
+	######################
+
+        ## daemon
+	cd daemon && make DESTDIR=$(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME) install
+	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/include
+	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/*.a
+	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/*.la
+
+        ## LibRingClient
+	cd lrc/build && make DESTDIR=$(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME) install
+	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/include
 
 	# This is a symlink, should be in -dev package
-	rm -v $(CURDIR)/debian/ring/usr/lib/libringclient.so
+	rm -v $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/libringclient.so
 
 	# cmake files
-	rm -rfv $(CURDIR)/debian/ring/usr/lib/cmake
+	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/cmake
 
-	##########################
-	## gnome client install ##
-	##########################
-	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/ring install
+        ## GNOME client
+	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME) install
 
 tmpdir:= $(shell mktemp -d)
 workdir:= $(shell pwd)
