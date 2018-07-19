@@ -1,0 +1,10 @@
+Template: ring/add-deb-source
+Type: boolean
+Default: true
+Description: Do you want to update Ring together with the rest of the system?
+ Ring can configure your system to include new versions of the Ring
+ package together with the regular system upgrades.
+ .
+ If you agree, Ring will install a file into /etc/apt/sources.list.d,
+ so that the Ring package is upgraded to any available newer release
+ as part of your regular system upgrade.
