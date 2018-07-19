@@ -1,0 +1,171 @@
+#!/bin/sh
+set -e
+
+###############################################################################
+# RING PACKAGE POSTINST                                                       #
+#                                                                             #
+# Install Ring's package repository to the trusted sources and add Ring's     #
+# release key to trusted keyring.                                             #
+#                                                                             #
+# NOTE: We follow https://wiki.debian.org/DebianRepository/UseThirdParty      #
+###############################################################################
+
+
+###############################################################################
+# [1] Configuration                                                           #
+###############################################################################
+
+# All PPA/package repo urls are expected to start with this string, regardless
+# of the distribution or version. The end tag is automatically appended,
+# depending on the system the postinst script is run on. Examples:
+#
+# Ubuntu 18.04:
+# $RING_PPA = $RING_PPA_BASE/ubuntu_18.04/
+#
+# Debian 9:
+# $RING_PPA = $RING_PPA_BASE/debian_9
+#
+# To update the appended end tags, modify the switch in [2].
+RING_PPA_BASE="https://dl.ring.cx/ring-nightly"
+
+# Ring release key.
+RING_KEY_FINGERPRINT="A295D773307D25A33AE72F2F64CD5FA175348F84"
+RING_KEY="\
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1
+
+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
+=vaci
+-----END PGP PUBLIC KEY BLOCK-----"
+
+# System paths and generated variables
+# In general: you will not need to modify these variables.
+# WARNING: When modifying the paths, keep in mind that the corresponding
+# postrm paths should be modified as well
+APT_FILE="/etc/apt/sources.list.d/ring-main.sources"
+APT_PREFS_FILE="/etc/apt/preferences.d/ring-main.pref"
+RING_KEY_FILE="/etc/apt/trusted.gpg.d/ring-main.gpg"
+UPDATE_MANAGER_PATH="/etc/update-manager/release-upgrades.d/"
+RING_UPDATE_MANAGER_ID="ring-main"
+
+RING_UPDATE_MANAGER_CFG="${RING_UPDATE_MANAGER_ID}.cfg"
+UPDATE_MANAGER_CFG_PATH="${UPDATE_MANAGER_PATH}/${RING_UPDATE_MANAGER_CFG}"
+
+
+###############################################################################
+# [2] Set package repo url depending on distribution and version              #
+###############################################################################
+
+CAN_ADD_DEB_SOURCE=true
+
+# Detect currently running system using /etc/os-release
+# Debian-based systems are supposed to provide /etc/os-release so if it's not
+# the case then we simply don't want to provide automatic updates
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    # Set-up Ring PPA end tag
+    ENDTAG="${ID}_${VERSION_ID}"
+else
+    # Distribution is not supported. Don't provide automatic updates.
+    CAN_ADD_DEB_SOURCE=false
+fi
+
+
+###############################################################################
+# [3] Maintainer script main switch                                           #
+###############################################################################
+
+case "$1" in
+    configure)
+        if [ "$CAN_ADD_DEB_SOURCE" = "true" ]; then
+            RING_PPA="${RING_PPA_BASE}/${ENDTAG}"
+
+            # We first add the key to the trusted keyring.
+            cat > $RING_KEY_FILE <<EOF
+$RING_KEY
+EOF
+
+            # Add an entry for the package repository to the trusted package
+            # sources (DEB822 format)
+            cat > $APT_FILE <<EOF
+# This file makes sure that Ring is kept up-to-date
+# as part of regular system upgrades
+
+Types: deb
+URIs: $RING_PPA
+Suites: ring
+Architectures: i386 amd64
+Components: main
+Signed-By: $RING_KEY_FINGERPRINT
+EOF
+
+            # It is recommended to also restrict the range of the newly added
+            # source.
+            cat > $APT_PREFS_FILE <<EOF
+# forbid upgrading already installed packages from official repositories but
+# allow upgrades to be performed for the ring repository
+Package: *
+Pin: origin dl.ring.cx
+Pin-Priority: 100
+EOF
+
+            # Additionally, if update manager is installed we inform it about
+            # the repository so it doesn't get scrapped after system updates
+            if [ -d /etc/update-manager -a ! -f $UPDATE_MANAGER_CFG_PATH ]
+            then
+                mkdir -p $UPDATE_MANAGER_PATH
+                cat > $UPDATE_MANAGER_CFG_PATH <<EOF
+# Added by Ring to prevent disabling of Ring repository sources on
+# distribution release upgrade.
+[ThirdPartyMirrors]
+ring/${RING_UPDATE_MANAGER_ID}=${RING_PPA}
+EOF
+            fi
+        fi
+        ;;
+esac
+
+# exit with a zero status as everything went well, important for maintscripts
+exit 0
