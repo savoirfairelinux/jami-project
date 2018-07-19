@@ -1,0 +1,51 @@
+#!/bin/sh
+set -e
+
+###############################################################################
+# RING PACKAGE POSTRM                                                         #
+#                                                                             #
+# If we installed our key and source to trusted stores, remove them.          #
+#                                                                             #
+# NOTE: We follow https://wiki.debian.org/DebianRepository/UseThirdParty      #
+###############################################################################
+
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
+
+###############################################################################
+# [1] Configuration                                                           #
+###############################################################################
+
+# System paths and generated variables
+APT_FILE="/etc/apt/sources.list.d/ring-main.sources"
+RING_KEY_FILE="/usr/share/keyrings/ring-official-keyring.gpg"
+UPDATE_MANAGER_PATH="/etc/update-manager/release-upgrades.d/"
+RING_UPDATE_MANAGER_ID="ring-main"
+
+RING_UPDATE_MANAGER_CFG="$RING_UPDATE_MANAGER_ID.cfg"
+UPDATE_MANAGER_CFG_PATH="$UPDATE_MANAGER_PATH/$RING_UPDATE_MANAGER_CFG"
+
+
+###############################################################################
+# [2] Maintainer script main switch                                           #
+###############################################################################
+
+case "$1" in
+    purge)
+        rm -f "$APT_FILE"
+        rm -f "$UPDATE_MANAGER_CFG_PATH"
+        ;;
+esac
+
+
+###############################################################################
+# [3] Automatically added by debconf                                          #
+###############################################################################
+
+if [ "$1" = purge ] && [ -e /usr/share/debconf/confmodule ]; then
+	. /usr/share/debconf/confmodule
+	db_purge
+fi
+
+exit 0
