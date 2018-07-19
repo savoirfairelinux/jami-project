@@ -134,10 +134,10 @@ override_dh_auto_install:
 	#########################
 	## Ring Daemon install ##
 	#########################
-	cd daemon && make DESTDIR=$(CURDIR)/debian/ring-daemon install
-	rm -rfv $(CURDIR)/debian/ring-daemon/usr/include
-	rm -rfv $(CURDIR)/debian/ring-daemon/usr/lib/*.a
-	rm -rfv $(CURDIR)/debian/ring-daemon/usr/lib/*.la
+	cd daemon && make DESTDIR=$(CURDIR)/debian/ring install
+	rm -rfv $(CURDIR)/debian/ring/usr/include
+	rm -rfv $(CURDIR)/debian/ring/usr/lib/*.a
+	rm -rfv $(CURDIR)/debian/ring/usr/lib/*.la
 
 	###########################
 	## libringclient install ##

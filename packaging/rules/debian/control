@@ -64,8 +64,7 @@ Vcs-Browser: https://anonscm.debian.org/cgit/pkg-voip/ring.git
 Package: ring
 Architecture: any
 Depends: ${shlibs:Depends},
-         ${misc:Depends},
-         ring-daemon (=${binary:Version})
+         ${misc:Depends}
 Replaces: ring-gnome
 Conflicts: ring-gnome
 Description: Secure and distributed voice, video and chat platform - desktop client
@@ -73,23 +72,4 @@ Description: Secure and distributed voice, video and chat platform - desktop cli
  platform that requires no centralized server and leaves the power of privacy
  in the hands of the user.
  .
- This package contains the desktop client: gnome-ring.
-
-Package: ring-daemon
-Architecture: any
-Depends: ${shlibs:Depends},
-         ${misc:Depends}
-Description: Secure and distributed voice, video and chat platform - daemon
- Ring (ring.cx) is a secure and distributed voice, video and chat communication
- platform that requires no centralized server and leaves the power of privacy
- in the hands of the user.
- .
- This package contains the Ring daemon: dring.
-
-Package: ring-gnome
-Depends: ring, ${misc:Depends}
-Architecture: all
-Priority: extra
-Section: oldlibs
-Description: transitional dummy package
- This is a transitional dummy package. It can safely be removed.
+ This package contains the GNOME desktop client and dring, the Ring daemon.
