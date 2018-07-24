@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # Creates packaging targets for a distribution and architecture.
-# This helps reduce the lenght of the top Makefile.
+# This helps reduce the length of the top Makefile.
 #
 
 import argparse

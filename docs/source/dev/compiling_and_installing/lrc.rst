@@ -16,7 +16,7 @@ To install the appplication, type the following commands in a console, while in 
     make -j3
     make install
 
-The following options are often usefull to append to the cmake line:
+The following options are often useful to append to the cmake line:
 
 .. code-block:: none
 
