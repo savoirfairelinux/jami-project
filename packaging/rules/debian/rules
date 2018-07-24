@@ -220,7 +220,7 @@ get-orig-source:
 	rm -rf ${tmpdir}/ring-project/daemon/contrib/tarballs
 
 	# Create the new tarball
-	cd  ${tmpdir} && tar -czf ${workdir}/ring_${version_to_download}~dfsg1.orig.tar.gz ring-project
+	cd ${tmpdir} && tar -czf ${workdir}/ring_${version_to_download}~dfsg1.orig.tar.gz ring-project
 
 	# Clear the temp dir
 	rm -rf ${tmpdir}
