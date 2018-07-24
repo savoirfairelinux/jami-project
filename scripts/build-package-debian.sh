@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (C) 2016 Savoir-faire Linux Inc.
+# Copyright (C) 2016-2018 Savoir-faire Linux Inc.
 #
 # Author: Alexandre Viau <alexandre.viau@savoirfairelinux.com>
 #
@@ -41,17 +41,12 @@ apt-get upgrade -o Acquire::Retires=10 -y
 mk-build-deps --remove --install debian/control -t "apt-get -y --no-install-recommends"
 
 # create changelog file
-dch --create --package ring --newversion ${DEBIAN_VERSION} "Automatic nightly release"
+DEBEMAIL="ring@gnu.org" DEBFULLNAME="The Ring project" dch --create --package ring --newversion ${DEBIAN_VERSION} "Automatic nightly release"
 dch --release --distribution "unstable" debian/changelog
 
 # create orig tarball
-# mk-origtargz isn't in ubuntu_14.04
-if [ "${DISTRIBUTION}" = "ubuntu_14.04" ] || [ "${DISTRIBUTION}" = "ubuntu_14.04_i386" ]; then
-    mv ${RELEASE_TARBALL_FILENAME} ../ring_${DEBIAN_VERSION}.orig.tar.gz
-else
-    mk-origtargz ${RELEASE_TARBALL_FILENAME}
-    rm --verbose ${RELEASE_TARBALL_FILENAME}
-fi
+mk-origtargz ${RELEASE_TARBALL_FILENAME}
+rm --verbose ${RELEASE_TARBALL_FILENAME}
 
 GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL=$(readlink -f ../ring_*.orig.tar.gz) debian/rules get-orig-source
 
