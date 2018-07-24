@@ -38,7 +38,7 @@ Run the following from the project root directory:
     cmake ..
     make
 
-The following options are often usefull to append to the cmake line:
+The following options are often useful to append to the cmake line:
 
 .. code-block:: none
 
