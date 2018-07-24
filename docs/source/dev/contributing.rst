@@ -17,7 +17,7 @@ Head to the settings section to set one of the following:
 In each Ring submodule there is a ``.gitreview`` file. It contains all the
 necessary info to send a patchset to our gerrit server.
 
-After you commited your changes (one or multiple commits) you can submit them
+After you committed your changes (one or multiple commits) you can submit them
 with:
 
 .. code-block:: bash

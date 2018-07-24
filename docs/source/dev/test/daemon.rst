@@ -3,7 +3,7 @@ Test the daemon
 
 The unit testing framework
 ##########################
-We use CppUnit on GNU ring project. You can find a simple tutorial with code exemple on the  `official website <http://cppunit.sourceforge.net/doc/cvs/cppunit_cookbook.html>`_.
+We use CppUnit on GNU ring project. You can find a simple tutorial with code example on the  `official website <http://cppunit.sourceforge.net/doc/cvs/cppunit_cookbook.html>`_.
 
 Tests
 #####
