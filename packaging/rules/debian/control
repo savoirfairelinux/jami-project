@@ -1,6 +1,6 @@
 Source: ring
 Section: comm
-Priority: extra
+Priority: optional
 Maintainer: Alexandre Viau <aviau@debian.org>
 Build-Depends: debhelper (>= 9),
                autoconf,
@@ -56,14 +56,15 @@ Build-Depends: debhelper (>= 9),
 # other
                yasm,
                libsamplerate0-dev
-Standards-Version: 3.9.8
+Standards-Version: 4.1.5
 Homepage: https://ring.cx
-Vcs-Git: https://anonscm.debian.org/git/pkg-voip/ring.git
-Vcs-Browser: https://anonscm.debian.org/cgit/pkg-voip/ring.git
+Vcs-Git: https://git.ring.cx/savoirfairelinux/ring-project.git
+Vcs-Browser: https://git.ring.cx/savoirfairelinux/ring-project
 
 Package: ring-all
 Architecture: any
 Depends: ${shlibs:Depends},
+         libqt5sql5-sqlite,
          ${misc:Depends}
 Replaces: ring,
           ring-gnome,
