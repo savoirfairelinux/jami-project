@@ -28,7 +28,6 @@ BuildRequires: yaml-cpp-devel
 BuildRequires: boost-devel
 BuildRequires: dbus-c++-devel
 BuildRequires: dbus-devel
-BuildRequires: libsndfile-devel
 BuildRequires: libXext-devel
 BuildRequires: yasm
 BuildRequires: speex-devel

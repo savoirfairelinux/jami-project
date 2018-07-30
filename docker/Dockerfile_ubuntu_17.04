@@ -51,7 +51,6 @@ RUN apt-get update && \
         libpcre3-dev \
         libyaml-cpp-dev \
         libboost-dev \
-        libsndfile1-dev \
         libxext-dev \
         libxfixes-dev \
         libspeex-dev \
