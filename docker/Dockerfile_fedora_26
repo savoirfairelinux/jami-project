@@ -25,7 +25,6 @@ RUN dnf upgrade -y && \
         boost-devel \
         dbus-c++-devel \
         dbus-devel \
-        libsndfile-devel \
         libXext-devel \
         libXfixes-devel \
         yasm \
