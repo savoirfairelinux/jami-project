@@ -45,7 +45,6 @@ RUN apt-get update && \
         autotools-dev \
         gettext \
         libpulse-dev \
-        libsamplerate0-dev \
         libasound2-dev \
         libexpat1-dev \
         libpcre3-dev \
