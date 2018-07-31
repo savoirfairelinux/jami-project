@@ -19,7 +19,6 @@ BuildRequires: automake
 BuildRequires: cmake
 BuildRequires: pulseaudio-libs-devel
 BuildRequires: libcanberra-devel
-BuildRequires: libsamplerate-devel
 BuildRequires: libtool
 BuildRequires: dbus-devel
 BuildRequires: expat-devel

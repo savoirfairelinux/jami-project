@@ -73,8 +73,8 @@ ZYPPER_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++', 'libtool',
 # daemon
     'speexdsp-devel', 'speex-devel', 'libdbus-c++-devel', 'jsoncpp-devel', 'yaml-cpp-devel',
-    'libupnp-devel', 'boost-devel', 'yasm', 'libuuid-devel', 'libsamplerate-devel',
-    'libnettle-devel', 'libopus-devel', 'libgnutls-devel', 'msgpack-devel', 'libavcodec-devel',
+    'libupnp-devel', 'boost-devel', 'yasm', 'libuuid-devel', 'libnettle-devel',
+    'libopus-devel', 'libgnutls-devel', 'msgpack-devel', 'libavcodec-devel',
     'libavdevice-devel', 'pcre-devel', 'libogg-devel', 'libvorbis-devel', 'flac-devel',
     'libgsm-devel', 'alsa-devel', 'libpulse-devel', 'libudev-devel', 'libva-devel',
     'libvdpau-devel', 'libopenssl-devel',
@@ -104,7 +104,7 @@ MINGW32_FEDORA_DEPENDENCIES = [
 
 DNF_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'automake', 'cmake', 'speexdsp-devel', 'pulseaudio-libs-devel',
-    'libsamplerate-devel', 'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
+    'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
     'yaml-cpp-devel', 'boost-devel', 'dbus-c++-devel', 'dbus-devel',
     'libXext-devel', 'libXfixes-devel', 'yasm',
     'speex-devel', 'chrpath', 'check', 'astyle', 'uuid-c++-devel', 'gettext-devel',
@@ -123,7 +123,7 @@ APT_DEPENDENCIES = [
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
     'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
     'libgsm1-dev', 'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
-    'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libsamplerate0-dev', 'libssl-dev',
+    'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libssl-dev',
     'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'libqt5sql5-sqlite', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
@@ -133,7 +133,7 @@ APT_DEPENDENCIES = [
 PACMAN_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc', 'gnome-icon-theme-symbolic',
     'ffmpeg', 'boost', 'clutter-gtk', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book',
-    'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse', 'libsamplerate',
+    'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse',
     'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
     'swig', 'yasm', 'qrencode', 'evolution-data-server', 'make', 'patch', 'pkg-config',
     'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanbera', 'openssl'
