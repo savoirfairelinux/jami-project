@@ -1,0 +1,43 @@
+#!/bin/sh
+set -e
+
+###############################################################################
+# RING PACKAGE POSTRM                                                         #
+#                                                                             #
+# If we installed our key and source to trusted stores, remove them.          #
+#                                                                             #
+# NOTE: We follow https://wiki.debian.org/DebianRepository/UseThirdParty      #
+###############################################################################
+
+
+###############################################################################
+# [1] Configuration                                                           #
+###############################################################################
+
+RING_KEY_FINGERPRINT="A295D773307D25A33AE72F2F64CD5FA175348F84"
+
+# System paths and generated variables
+APT_FILE="/etc/apt/sources.list.d/ring-main.sources"
+APT_PREFS_FILE="/etc/apt/preferences.d/ring-main.pref"
+UPDATE_MANAGER_PATH="/etc/update-manager/release-upgrades.d/"
+RING_UPDATE_MANAGER_ID="ring-main"
+
+RING_UPDATE_MANAGER_CFG="${RING_UPDATE_MANAGER_ID}.cfg"
+UPDATE_MANAGER_CFG_PATH="${UPDATE_MANAGER_PATH}/${RING_UPDATE_MANAGER_CFG}"
+
+
+###############################################################################
+# [2] Maintainer script main switch                                           #
+###############################################################################
+
+case "$1" in
+    purge)
+        # Remove key from trusted keyring
+        command -v apt-key > /dev/null && apt-key del "$RING_KEY_FINGERPRINT"
+        rm -f "$APT_FILE"
+        rm -f "$APT_PREFS_FILE"
+        rm -f "$UPDATE_MANAGER_CFG_PATH"
+        ;;
+esac
+
+exit 0
