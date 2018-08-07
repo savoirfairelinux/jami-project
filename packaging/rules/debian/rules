@@ -14,6 +14,7 @@ endif
 
 # Binary package names
 RING_ALL_IN_ONE_PKG_NAME="ring-all"
+RING_CLIENT_PKG_NAME="ring"
 RING_DAEMON_PKG_NAME="ring-daemon"
 
 %:
@@ -143,6 +144,23 @@ override_dh_auto_install:
 	rm -rfv $(CURDIR)/debian/$(RING_DAEMON_PKG_NAME)/usr/include
 	rm -rfv $(CURDIR)/debian/$(RING_DAEMON_PKG_NAME)/usr/lib/*.a
 	rm -rfv $(CURDIR)/debian/$(RING_DAEMON_PKG_NAME)/usr/lib/*.la
+
+	#########################
+	## Ring client install ##
+	#########################
+
+        ## LibRingClient
+	cd lrc/build && make DESTDIR=$(CURDIR)/debian/$(RING_CLIENT_PKG_NAME) install
+	rm -rfv $(CURDIR)/debian/$(RING_CLIENT_PKG_NAME)/usr/include
+
+	# This is a symlink, should be in -dev package
+	rm -v $(CURDIR)/debian/$(RING_CLIENT_PKG_NAME)/usr/lib/libringclient.so
+
+	# cmake files
+	rm -rfv $(CURDIR)/debian/$(RING_CLIENT_PKG_NAME)/usr/lib/cmake
+
+        ## GNOME client
+	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/$(RING_CLIENT_PKG_NAME) install
 
 	######################
 	## Ring AiO install ##

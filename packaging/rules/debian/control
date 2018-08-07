@@ -61,10 +61,10 @@ Vcs-Browser: https://git.ring.cx/savoirfairelinux/ring-project
 
 Package: ring-all
 Architecture: any
-Depends: ${shlibs:Depends},
-         libqt5sql5-sqlite,
-         ${misc:Depends},
-         gnupg
+Depends: libqt5sql5-sqlite,
+         gnupg,
+         ${shlibs:Depends},
+         ${misc:Depends}
 Replaces: ring,
           ring-gnome,
           ring-daemon
@@ -77,6 +77,20 @@ Description: Secure and distributed voice, video and chat platform - all in one 
  in the hands of the user.
  .
  This package contains the GNOME desktop client and dring, the Ring daemon.
+
+Package: ring
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         ring-daemon (=${binary:Version})
+Replaces: ring-gnome
+Conflicts: ring-gnome
+Description: Secure and distributed voice, video and chat platform - desktop client
+ Ring (ring.cx) is a secure and distributed voice, video and chat communication
+ platform that requires no centralized server and leaves the power of privacy
+ in the hands of the user.
+ .
+ This package contains the desktop client: gnome-ring.
 
 Package: ring-daemon
 Architecture: any
