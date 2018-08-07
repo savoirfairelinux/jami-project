@@ -1,11 +1,11 @@
 # Differences and compatibility with official debian.org package
 
-This source package provides two binary packages ring-all and ring-daemon.
+This source package provides binary packages ring, ring-all and ring-daemon.
 It differs slightly from the official Debian package (the one from debian.org).
 
-ring-daemon: structurally identical to the Debian package, the only difference
- potentially being the shipped version of Ring (the debian.org package is
- usually older).
+ring & ring-daemon: structurally identical to the Debian package, the only
+ difference potentially being the shipped version of Ring (the debian.org
+ package from stable is usually older).
 
 ring-all: all-in-one package, ships both the Ring Daemon and the GNOME client.
  This package is not available in the debian.org repositories (not needed in the
@@ -16,11 +16,12 @@ ring-all: all-in-one package, ships both the Ring Daemon and the GNOME client.
  - installation of release keys and ring.cx package repository as trusted peers
    so Ring can be updated from ring.cx along with system updates
 
- Why not two packages ring and ring-daemon instead of a single all package ?
+ two packages ring and ring-daemon vs. single all package ?
  -> One cannot register a repository in source.list.d and directly use it to
     fetch the dependencies. That would require something like an apt update in
     the maintscripts and we don't want that. So, it is not possible to have a
-    one-click-install with two packages.
+    one-click-install with two packages. That's why we build ring-all for
+    one-click install.
 
  ring-all conflicts with ring and ring-daemon since they are distributing the
  same files.
