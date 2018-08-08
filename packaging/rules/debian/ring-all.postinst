@@ -15,18 +15,18 @@ set -e
 # [1] Configuration                                                           #
 ###############################################################################
 
-# All PPA/package repo urls are expected to start with this string, regardless
+# All package repo urls are expected to start with this string, regardless
 # of the distribution or version. The end tag is automatically appended,
 # depending on the system the postinst script is run on. Examples:
 #
 # Ubuntu 18.04:
-# $RING_PPA = $RING_PPA_BASE/ubuntu_18.04/
+# $RING_REPO = $RING_REPO_BASE/ubuntu_18.04/
 #
 # Debian 9:
-# $RING_PPA = $RING_PPA_BASE/debian_9
+# $RING_REPO = $RING_REPO_BASE/debian_9
 #
 # To update the appended end tags, modify the switch in [2].
-RING_PPA_BASE="https://dl.ring.cx/ring-nightly"
+RING_REPO_BASE="https://dl.ring.cx/ring-nightly"
 
 # Ring release key.
 RING_KEY_FINGERPRINT="A295D773307D25A33AE72F2F64CD5FA175348F84"
@@ -94,7 +94,7 @@ CAN_ADD_DEB_SOURCE=true
 if [ -f /etc/os-release ]; then
     . /etc/os-release
 
-    # Set-up Ring PPA end tag
+    # Set-up Ring repository end tag
     if [ "$ID" = "debian" ] && [ "$VER" = "9" ]; then
         ENDTAG="${ID}_${VERSION_ID}"
     elif [ "$ID" = "ubuntu" ] && [ "$VER" = "16.04" ]; then
@@ -130,7 +130,7 @@ case "$1" in
         fi
 
         if [ "$CAN_ADD_DEB_SOURCE" = "true" ]; then
-            RING_PPA="${RING_PPA_BASE}/${ENDTAG}"
+            RING_REPO="${RING_REPO_BASE}/${ENDTAG}"
 
             # We first add the key to the trusted keyring.
             apt-key add - > /dev/null 2>&1 << EOF
@@ -144,7 +144,7 @@ EOF
 # as part of regular system upgrades
 
 Types: deb
-URIs: $RING_PPA
+URIs: $RING_REPO
 Suites: ring
 Architectures: i386 amd64
 Components: main
@@ -170,7 +170,7 @@ EOF
 # Added by Ring to prevent disabling of Ring repository sources on
 # distribution release upgrade.
 [ThirdPartyMirrors]
-ring/${RING_UPDATE_MANAGER_ID}=${RING_PPA}
+ring/${RING_UPDATE_MANAGER_ID}=${RING_REPO}
 EOF
             fi
         fi
