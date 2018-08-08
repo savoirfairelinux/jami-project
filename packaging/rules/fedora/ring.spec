@@ -19,7 +19,6 @@ BuildRequires: automake
 BuildRequires: cmake
 BuildRequires: pulseaudio-libs-devel
 BuildRequires: libcanberra-devel
-BuildRequires: libsamplerate-devel
 BuildRequires: libtool
 BuildRequires: dbus-devel
 BuildRequires: expat-devel
@@ -28,7 +27,6 @@ BuildRequires: yaml-cpp-devel
 BuildRequires: boost-devel
 BuildRequires: dbus-c++-devel
 BuildRequires: dbus-devel
-BuildRequires: libsndfile-devel
 BuildRequires: libXext-devel
 BuildRequires: yasm
 BuildRequires: speex-devel
