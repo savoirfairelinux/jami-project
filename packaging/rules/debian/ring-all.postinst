@@ -95,19 +95,19 @@ if [ -f /etc/os-release ]; then
     . /etc/os-release
 
     # Set-up Ring PPA end tag
-    if [ "$OS" = "debian" ] && [ "$VER" = "9" ]; then
+    if [ "$ID" = "debian" ] && [ "$VER" = "9" ]; then
         ENDTAG="${ID}_${VERSION_ID}"
-    elif [ "$OS" = "ubuntu" ] && [ "$VER" = "16.04" ]; then
+    elif [ "$ID" = "ubuntu" ] && [ "$VER" = "16.04" ]; then
         ENDTAG="${ID}_${VERSION_ID}"
-    elif [ "$OS" = "ubuntu" ] && [ "$VER" = "17.04" ]; then
+    elif [ "$ID" = "ubuntu" ] && [ "$VER" = "17.04" ]; then
         ENDTAG="${ID}_${VERSION_ID}"
-    elif [ "$OS" = "ubuntu" ] && [ "$VER" = "17.10" ]; then
+    elif [ "$ID" = "ubuntu" ] && [ "$VER" = "17.10" ]; then
         ENDTAG="${ID}_${VERSION_ID}"
-    elif [ "$OS" = "ubuntu" ] && [ "$VER" = "18.04" ]; then
+    elif [ "$ID" = "ubuntu" ] && [ "$VER" = "18.04" ]; then
         ENDTAG="${ID}_${VERSION_ID}"
-    elif [ "$OS" = "linuxmint" ] && [ "$UBUNTU_CODENAME" = "xenial" ]; then
+    elif [ "$ID" = "linuxmint" ] && [ "$UBUNTU_CODENAME" = "xenial" ]; then
         ENDTAG="ubuntu_16.04"
-    elif [ "$OS" = "linuxmint" ] && [ "$UBUNTU_CODENAME" = "bionic" ]; then
+    elif [ "$ID" = "linuxmint" ] && [ "$UBUNTU_CODENAME" = "bionic" ]; then
         ENDTAG="ubuntu_18.04"
     else
         # Distribution is not supported. Don't provide automatic updates.
