@@ -109,6 +109,9 @@ if [ -f /etc/os-release ]; then
         ENDTAG="ubuntu_16.04"
     elif [ "$ID" = "linuxmint" ] && [ "$UBUNTU_CODENAME" = "bionic" ]; then
         ENDTAG="ubuntu_18.04"
+    elif [ "$ID" = "linuxmint" ] && [ "$DEBIAN_CODENAME" = "stretch" ]; then
+        # LMDE3
+        ENDTAG="debian_9"
     else
         # Distribution is not supported. Don't provide automatic updates.
         CAN_ADD_DEB_SOURCE=false
