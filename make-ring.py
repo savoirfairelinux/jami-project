@@ -218,7 +218,8 @@ def run_dependencies(args):
         )
         execute_script(
             BREW_INSTALL_SCRIPT,
-            {"packages": ' '.join(OSX_DEPENDENCIES)}
+            {"packages": ' '.join(OSX_DEPENDENCIES)},
+            False
         )
 
     elif args.distribution == IOS_DISTRIBUTION_NAME:
@@ -229,7 +230,8 @@ def run_dependencies(args):
         )
         execute_script(
             BREW_INSTALL_SCRIPT,
-            {"packages": ' '.join(IOS_DEPENDENCIES)}
+            {"packages": ' '.join(IOS_DEPENDENCIES)},
+            False
         )
 
     elif args.distribution == ANDROID_DISTRIBUTION_NAME:
