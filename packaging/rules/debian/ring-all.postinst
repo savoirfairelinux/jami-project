@@ -95,23 +95,14 @@ if [ -f /etc/os-release ]; then
     . /etc/os-release
 
     # Set-up Ring repository end tag
-    if [ "$ID" = "debian" ] && [ "$VER" = "9" ]; then
-        ENDTAG="${ID}_${VERSION_ID}"
-    elif [ "$ID" = "ubuntu" ] && [ "$VER" = "16.04" ]; then
-        ENDTAG="${ID}_${VERSION_ID}"
-    elif [ "$ID" = "ubuntu" ] && [ "$VER" = "17.04" ]; then
-        ENDTAG="${ID}_${VERSION_ID}"
-    elif [ "$ID" = "ubuntu" ] && [ "$VER" = "17.10" ]; then
-        ENDTAG="${ID}_${VERSION_ID}"
-    elif [ "$ID" = "ubuntu" ] && [ "$VER" = "18.04" ]; then
-        ENDTAG="${ID}_${VERSION_ID}"
-    elif [ "$ID" = "linuxmint" ] && [ "$UBUNTU_CODENAME" = "xenial" ]; then
-        ENDTAG="ubuntu_16.04"
-    elif [ "$ID" = "linuxmint" ] && [ "$UBUNTU_CODENAME" = "bionic" ]; then
-        ENDTAG="ubuntu_18.04"
-    elif [ "$ID" = "linuxmint" ] && [ "$DEBIAN_CODENAME" = "stretch" ]; then
-        # LMDE3
+    if [ "$DEBIAN_CODENAME" = "stretch" ] || [ "$ID_$VERSION_ID" = "debian_9" ]; then
         ENDTAG="debian_9"
+    elif [ "$UBUNTU_CODENAME" = "xenial" ] || [ "$ID_$VERSION_ID" = "ubuntu_16.04" ]; then
+        ENDTAG="ubuntu_16.04"
+    elif [ "$ID_$VERSION_ID" = "ubuntu_17.04" ]; then
+        ENDTAG="ubuntu_17.04"
+    elif [ "$UBUNTU_CODENAME" = "bionic" ] || [ "$ID_$VERSION_ID" = "ubuntu_18.04" ]; then
+        ENDTAG="ubuntu_18.04"
     else
         # Distribution is not supported. Don't provide automatic updates.
         CAN_ADD_DEB_SOURCE=false
