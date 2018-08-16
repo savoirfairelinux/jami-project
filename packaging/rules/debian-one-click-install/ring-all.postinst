@@ -74,7 +74,6 @@ HUFCGSHO3/kzxSlkE1PBUX3IZ8PSFijyopBnWUhlSXuyRjte8OR7Fl/Rlf0IaOD1
 # WARNING: When modifying the paths, keep in mind that the corresponding
 # postrm paths should be modified as well
 APT_FILE="/etc/apt/sources.list.d/ring-main.sources"
-APT_PREFS_FILE="/etc/apt/preferences.d/ring-main.pref"
 UPDATE_MANAGER_PATH="/etc/update-manager/release-upgrades.d/"
 RING_UPDATE_MANAGER_ID="ring-main"
 
@@ -141,16 +140,6 @@ Suites: ring
 Architectures: i386 amd64
 Components: main
 Signed-By: $RING_KEY_FINGERPRINT
-EOF
-
-            # It is recommended to also restrict the range of the newly added
-            # source.
-            cat > $APT_PREFS_FILE <<EOF
-# forbid upgrading already installed packages from official repositories but
-# allow upgrades to be performed for the ring repository
-Package: *
-Pin: origin dl.ring.cx
-Pin-Priority: 100
 EOF
 
             # Additionally, if update manager is installed we inform it about
