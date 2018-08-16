@@ -1,0 +1,216 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Hardening
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
+# Number of CPUS
+NO_CPUS=$(shell nproc)
+ifeq ($(NO_CPUS),0)
+NO_CPUS=1
+endif
+
+# Binary package names
+RING_ALL_IN_ONE_PKG_NAME="ring-all"
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	###############################################
+	## Re-create tarballs from tarballs-unpacked ##
+	###############################################
+	mkdir -p daemon/contrib/tarballs
+
+	# Create tarballs
+	for i in $(CURDIR)/daemon/contrib/tarballs-unpacked/*; do \
+		projectname=`basename $$i` && \
+		cd $$i && tar -caf ../../tarballs/$$projectname * && \
+		echo "Repacked $$projectname"; \
+	done
+
+	###########################
+	## Ring Daemon configure ##
+	###########################
+	mkdir -p daemon/contrib/native
+	cd daemon/contrib/native && \
+        ../bootstrap \
+				--disable-downloads \
+				--no-checksums \
+				--disable-ogg \
+				--disable-flac \
+				--disable-vorbis \
+				--disable-vorbisenc \
+				--disable-speex \
+				--disable-sndfile \
+				--disable-gsm \
+				--disable-speexdsp \
+				--disable-natpmp \
+				--enable-gnutls && \
+		make list && \
+		make -j$(NO_CPUS) V=1
+	cd daemon && \
+		./autogen.sh && \
+		./configure \
+				--prefix=/usr \
+				--disable-shared
+
+	#############################
+	## libringclient configure ##
+	#############################
+	cd lrc && \
+		mkdir build && \
+		cd build && \
+		cmake  \
+			-DRING_BUILD_DIR=$(CURDIR)/daemon/src \
+			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DCMAKE_BUILD_TYPE=Debug \
+			..
+
+	############################
+	## gnome client configure ##
+	############################
+	cd client-gnome && \
+		mkdir build && \
+		cd build && \
+		cmake \
+			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DLibRingClient_PROJECT_DIR=/$(CURDIR)/lrc \
+			-DGSETTINGS_LOCALCOMPILE=OFF \
+			..
+
+	dh_auto_configure
+
+override_dh_auto_build:
+	#######################
+	## Ring Daemon build ##
+	#######################
+	make -C daemon -j$(NO_CPUS) V=1
+	pod2man daemon/man/dring.pod > daemon/dring.1
+
+	#########################
+	## libringclient build ##
+	#########################
+	make -C lrc/build -j$(NO_CPUS) V=1
+
+	########################
+	## gnome client build ##
+	########################
+	make -C client-gnome/build LDFLAGS="-lpthread" -j$(NO_CPUS) V=1
+
+override_dh_auto_clean:
+	################################
+	## Generated contrib tarballs ##
+	################################
+	rm -rfv daemon/contrib/tarballs
+
+	#######################
+	## Ring Daemon clean ##
+	#######################
+	if [ -f daemon/contrib/native/Makefile ]; then make -C daemon/contrib/native distclean; fi
+	rm -rfv daemon/contrib/native
+	rm -rfv daemon/dring.1
+
+	#########################
+	## libringclient clean ##
+	#########################
+	# CMake build system has no distclean target, so use clean.
+	if [ -f lrc/build/Makefile ]; then make -C lrc/build clean; fi
+	rm -rfv lrc/build
+
+	########################
+	## gnome client clean ##
+	########################
+	# CMake build system has no distclean target, so use clean.
+	if [ -f client-gnome/build/Makefile ]; then make -C client-gnome/build clean; fi
+	rm -rfv client-gnome/build
+
+override_dh_clean:
+	# GNUTLS contains:
+	# ring-project/daemon/contrib/tarballs-unpacked/gnutls-3.5.10.tar.xz/gnutls-3.5.10/src/certtool-args.c.bak
+	# ring-project/daemon/contrib/tarballs-unpacked/gnutls-3.5.10.tar.xz/gnutls-3.5.10/doc/doxygen/Doxyfile.orig
+	dh_clean -X.bak -X.orig
+
+override_dh_auto_install:
+	######################
+	## Ring AiO install ##
+	######################
+
+        ## daemon
+	cd daemon && make DESTDIR=$(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME) install
+	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/include
+	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/*.a
+	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/*.la
+
+        ## LibRingClient
+	cd lrc/build && make DESTDIR=$(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME) install
+	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/include
+
+	# This is a symlink, should be in -dev package
+	rm -v $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/libringclient.so
+
+	# cmake files
+	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/cmake
+
+        ## GNOME client
+	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME) install
+
+tmpdir:= $(shell mktemp -d)
+workdir:= $(shell pwd)
+PKD := $(abspath $(dir $(MAKEFILE_LIST)))
+version_to_download := $(shell dpkg-parsechangelog -ldebian/changelog | perl -ne 'print $$1 if m{^Version:\s+(?:\d+:)?(\d.*)(?:\~dfsg.+)(?:\-\d+.*)};')
+
+# Repacks the tarball with contrib tarballs unpacked.
+get-orig-source:
+	# Download ring tarball
+	if [ -n "$$GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL" ]; then \
+	    mv $$GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL ${tmpdir}; \
+	else \
+	    uscan --rename --destdir=${tmpdir} --download-version ${version_to_download} ;\
+	fi
+
+	# Unpack ring tarball
+	tar -C ${tmpdir} -xf ${tmpdir}/*.tar.gz
+
+	# Remove original tarball
+	rm ${tmpdir}/*.tar.gz
+
+	# Unpack all of the orig tarballs into tarballs-unpacked
+	mkdir ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked
+	for i in `find ${tmpdir}/ring-project/daemon/contrib/tarballs/ -name "*.tar.*"`; do \
+		projectname=`basename $$i` && \
+		mkdir ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/$$projectname && \
+		tar -C ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/$$projectname -xf $$i && \
+		echo "Unpacked $$projectname"; \
+    done
+
+	###################
+	## Exclude files ##
+	###################
+	# This does not exclude everything that we need to exclude.
+	# debian/copyright's File-Excluded section also excludes files.
+
+    ## pjproject
+	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/g7221 # non-distributable (requires a license from Polycom)
+	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/ilbc # non distributable (the version included with pjproject)
+	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/milenage # non distributable
+	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/BaseClasses # non distributable (?)
+	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/portaudio # not needed
+	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/speex # not needed
+	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/mp3 # not needed
+	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/gsm # not needed
+	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/bdsound # not needed
+	#rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/srtp # not needed
+	rm -f ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/pjmedia/src/pjmedia-audiodev/s60_g729_bitstream.h # non distributable
+	rm -rf ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/build/vs # not needed, VisualStudio files.
+
+	# Remove all contrib tarballs
+	rm -rf ${tmpdir}/ring-project/daemon/contrib/tarballs
+
+	# Create the new tarball
+	cd ${tmpdir} && tar -czf ${workdir}/ring_${version_to_download}~dfsg1.orig.tar.gz ring-project
+
+	# Clear the temp dir
+	rm -rf ${tmpdir}

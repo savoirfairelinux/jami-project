@@ -37,6 +37,9 @@ RELEASE_TARBALL_FILENAME:=ring_$(RELEASE_VERSION).tar.gz
 # Debian versions
 DEBIAN_VERSION:=$(RELEASE_VERSION)~dfsg1-1
 DEBIAN_DSC_FILENAME:=ring_$(DEBIAN_VERSION).dsc
+DEBIAN_OCI_VERSION:=$(RELEASE_VERSION)~dfsg1-0
+DEBIAN_OCI_DSC_FILENAME:=ring_$(DEBIAN_OCI_VERSION).dsc
+DEBIAN_OCI_PKG_DIR:="packaging/rules/debian-one-click-install"
 
 #####################
 ## Other variables ##
@@ -74,12 +77,16 @@ $(RELEASE_TARBALL_FILENAME):
 .PHONY: package-all
 package-all: package-debian_9 \
              package-debian_9_i386 \
+             package-debian_9_oci \
+             package-debian_9_i386_oci \
              package-ubuntu_16.04 \
              package-ubuntu_16.04_i386 \
-             package-ubuntu_17.10 \
-             package-ubuntu_17.10_i386 \
+             package-ubuntu_16.04_oci \
+             package-ubuntu_16.04_i386_oci \
 	     package-ubuntu_18.04 \
 	     package-ubuntu_18.04_i386 \
+	     package-ubuntu_18.04_oci \
+	     package-ubuntu_18.04_i386_oci \
              package-fedora_26 \
              package-fedora_26_i386 \
              package-fedora_27 \
