@@ -103,6 +103,18 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
+        {
+            "distribution": "debian_9",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e ${DEBIAN_OCI_PKG_DIR}",
+        },
+        {
+            "distribution": "debian_9_i386_oci",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e ${DEBIAN_OCI_PKG_DIR}",
+        },
         # Ubuntu
         {
             "distribution": "ubuntu_16.04",
@@ -115,14 +127,16 @@ def run_generate_all(parsed_args):
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
-            "distribution": "ubuntu_17.10",
+            "distribution": "ubuntu_16.04_oci",
             "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e ${DEBIAN_OCI_PKG_DIR}",
         },
         {
-            "distribution": "ubuntu_17.10_i386",
+            "distribution": "ubuntu_16.04_i386_oci",
             "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e ${DEBIAN_OCI_PKG_DIR}",
         },
         {
             "distribution": "ubuntu_18.04",
@@ -133,6 +147,18 @@ def run_generate_all(parsed_args):
             "distribution": "ubuntu_18.04_i386",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
+        },
+        {
+            "distribution": "ubuntu_18.04_oci",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e ${DEBIAN_OCI_PKG_DIR}",
+        },
+        {
+            "distribution": "ubuntu_18.04_i386_oci",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e ${DEBIAN_OCI_PKG_DIR}",
         },
         # Fedora
         {
