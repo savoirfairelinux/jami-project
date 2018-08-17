@@ -43,7 +43,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     --rm \\
     -e RELEASE_VERSION=$(RELEASE_VERSION) \\
     -e RELEASE_TARBALL_FILENAME=$(RELEASE_TARBALL_FILENAME) \\
-    -e DEBIAN_VERSION=$(DEBIAN_VERSION) \\
+    -e DEBIAN_VERSION=%(version)s \\
     -e DEBIAN_PACKAGING_OVERRIDE=%(debian_packaging_override)s \\
     -e CURRENT_UID=$(CURRENT_UID) \\
     -e DISTRIBUTION=%(distribution)s \\
@@ -52,10 +52,10 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -t $(DOCKER_EXTRA_ARGS) %(options)s \\
     $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
-$(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(distribution)s
+$(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(docker_image)s
 	docker build \\
         -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME) \\
-        -f docker/Dockerfile_%(distribution)s \\
+        -f docker/Dockerfile_%(docker_image)s \\
         $(CURDIR)
 	touch $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 
@@ -76,12 +76,18 @@ package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(dis
 """
 
 
-def generate_target(distribution, debian_packaging_override, output_file, options=''):
+def generate_target(distribution, debian_packaging_override, output_file, options='', docker_image='', version=''):
+    if (docker_image == ''):
+        docker_image = distribution
+    if (version == ''):
+        version = "$(DEBIAN_VERSION)"
     return target_template % {
         "distribution": distribution,
+        "docker_image": docker_image,
         "debian_packaging_override": debian_packaging_override,
         "output_file": output_file,
         "options": options,
+        "version": version,
     }
 
 
@@ -103,6 +109,22 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
+        {
+            "distribution": "debian_9_oci",
+            "docker_image": "debian_9",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
+            "version": "$(DEBIAN_OCI_VERSION)",
+        },
+        {
+            "distribution": "debian_9_i386_oci",
+            "docker_image": "debian_9_i386",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
+            "version": "$(DEBIAN_OCI_VERSION)",
+        },
         # Ubuntu
         {
             "distribution": "ubuntu_16.04",
@@ -115,6 +137,22 @@ def run_generate_all(parsed_args):
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
+            "distribution": "ubuntu_16.04_oci",
+            "docker_image": "ubuntu_16.04",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
+            "version": "$(DEBIAN_OCI_VERSION)",
+        },
+        {
+            "distribution": "ubuntu_16.04_i386_oci",
+            "docker_image": "ubuntu_16.04_i386",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
+            "version": "$(DEBIAN_OCI_VERSION)",
+        },
+        {
             "distribution": "ubuntu_18.04",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
@@ -123,6 +161,22 @@ def run_generate_all(parsed_args):
             "distribution": "ubuntu_18.04_i386",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
+        },
+        {
+            "distribution": "ubuntu_18.04_oci",
+            "docker_image": "ubuntu_18.04",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
+            "version": "$(DEBIAN_OCI_VERSION)",
+        },
+        {
+            "distribution": "ubuntu_18.04_i386_oci",
+            "docker_image": "ubuntu_18.04_i386",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
+            "version": "$(DEBIAN_OCI_VERSION)",
         },
         # Fedora
         {
