@@ -115,16 +115,6 @@ def run_generate_all(parsed_args):
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
-            "distribution": "ubuntu_17.10",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "ubuntu_17.10_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
             "distribution": "ubuntu_18.04",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
