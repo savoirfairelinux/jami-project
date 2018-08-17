@@ -76,8 +76,6 @@ package-all: package-debian_9 \
              package-debian_9_i386 \
              package-ubuntu_16.04 \
              package-ubuntu_16.04_i386 \
-             package-ubuntu_17.10 \
-             package-ubuntu_17.10_i386 \
 	     package-ubuntu_18.04 \
 	     package-ubuntu_18.04_i386 \
              package-fedora_26 \
