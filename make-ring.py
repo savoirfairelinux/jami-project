@@ -54,18 +54,18 @@ BREW_INSTALL_SCRIPT = [
 ]
 
 RPM_INSTALL_SCRIPT = [
-    'sudo dnf update',
-    'sudo dnf install -y %(packages)s'
+    'dnf update',
+    'dnf install -y %(packages)s'
 ]
 
 PACMAN_INSTALL_SCRIPT = [
-    'sudo pacman -Sy',
-    'sudo pacman -S %(packages)s'
+    'pacman -Sy',
+    'pacman -S %(packages)s'
 ]
 
 ZYPPER_INSTALL_SCRIPT = [
-    'sudo zypper update',
-    'sudo zypper install -y %(packages)s'
+    'zypper update',
+    'zypper install -y %(packages)s'
 ]
 
 ZYPPER_DEPENDENCIES = [
