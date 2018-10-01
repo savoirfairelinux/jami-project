@@ -54,30 +54,31 @@ BREW_INSTALL_SCRIPT = [
 ]
 
 RPM_INSTALL_SCRIPT = [
-    'sudo dnf update',
-    'sudo dnf install -y %(packages)s'
+    'dnf update',
+    'dnf install -y %(packages)s'
 ]
 
 PACMAN_INSTALL_SCRIPT = [
-    'sudo pacman -Sy',
-    'sudo pacman -S %(packages)s'
+    'pacman -Sy',
+    'pacman -S %(packages)s'
 ]
 
 ZYPPER_INSTALL_SCRIPT = [
-    'sudo zypper update',
-    'sudo zypper install -y %(packages)s'
+    'zypper update',
+    'zypper install -y %(packages)s'
 ]
 
 ZYPPER_DEPENDENCIES = [
 # build system
-    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++', 'libtool',
+    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++', 'libtool', 'which',
+# contrib dependencies
+    'curl', 'gzip', 'bzip2',
 # daemon
     'speexdsp-devel', 'speex-devel', 'libdbus-c++-devel', 'jsoncpp-devel', 'yaml-cpp-devel',
-    'libupnp-devel', 'boost-devel', 'yasm', 'libuuid-devel', 'libnettle-devel',
-    'libopus-devel', 'libgnutls-devel', 'msgpack-devel', 'libavcodec-devel',
-    'libavdevice-devel', 'pcre-devel', 'libogg-devel', 'libvorbis-devel', 'flac-devel',
-    'libgsm-devel', 'alsa-devel', 'libpulse-devel', 'libudev-devel', 'libva-devel',
-    'libvdpau-devel', 'libopenssl-devel',
+    'libupnp-devel', 'yasm', 'libuuid-devel', 'libnettle-devel', 'libopus-devel',
+    'libgnutls-devel', 'msgpack-devel', 'libavcodec-devel', 'libavdevice-devel', 'pcre-devel',
+    'alsa-devel', 'libpulse-devel', 'libudev-devel', 'libva-devel', 'libvdpau-devel',
+    'libopenssl-devel',
 # lrc
     'libQt5Core-devel', 'libQt5DBus-devel', 'libqt5-linguist-devel',
 # gnome client
@@ -122,7 +123,7 @@ APT_DEPENDENCIES = [
     'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
     'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
-    'libgsm1-dev', 'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
+    'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
     'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libssl-dev',
     'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'libqt5sql5-sqlite', 'sip-tester', 'swig',
@@ -133,7 +134,7 @@ APT_DEPENDENCIES = [
 PACMAN_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc', 'gnome-icon-theme-symbolic',
     'ffmpeg', 'boost', 'clutter-gtk', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book',
-    'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse',
+    'expat', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse',
     'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
     'swig', 'yasm', 'qrencode', 'evolution-data-server', 'make', 'patch', 'pkg-config',
     'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanbera', 'openssl'
