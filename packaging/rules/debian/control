@@ -82,6 +82,7 @@ Package: ring
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libqt5sql5-sqlite,
          ring-daemon (=${binary:Version})
 Replaces: ring-gnome
 Conflicts: ring-gnome
