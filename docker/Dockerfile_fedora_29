@@ -1,4 +1,4 @@
-FROM fedora:26
+FROM fedora:29
 
 RUN dnf clean all
 RUN dnf install -y dnf-command\(builddep\) rpmdevtools
@@ -53,7 +53,9 @@ RUN dnf upgrade -y && \
         libvdpau-devel \
         msgpack-devel \
         NetworkManager-libnm-devel \
-        openssl-devel
+        openssl-devel \
+        openssl-static \
+        sqlite-devel
 
 ADD scripts/build-package-fedora.sh /opt/build-package-fedora.sh
 

@@ -87,12 +87,12 @@ package-all: package-debian_9 \
 	     package-ubuntu_18.04_i386 \
 	     package-ubuntu_18.04_oci \
 	     package-ubuntu_18.04_i386_oci \
-             package-fedora_26 \
-             package-fedora_26_i386 \
              package-fedora_27 \
              package-fedora_27_i386 \
              package-fedora_28 \
              package-fedora_28_i386 \
+             package-fedora_29 \
+             package-fedora_29_i386 \
              package-gentoo
 
 # Append the output of make-packaging-target to this Makefile
