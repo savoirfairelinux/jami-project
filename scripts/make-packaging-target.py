@@ -180,16 +180,6 @@ def run_generate_all(parsed_args):
         },
         # Fedora
         {
-            "distribution": "fedora_26",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
-            "distribution": "fedora_26_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
             "distribution": "fedora_27",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
@@ -207,6 +197,18 @@ def run_generate_all(parsed_args):
         },
         {
             "distribution": "fedora_28_i386",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
+        },
+        {
+            "distribution": "fedora_29",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
+        },
+        {
+            "distribution": "fedora_29_i386",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
             "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
