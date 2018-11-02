@@ -114,7 +114,8 @@ DNF_DEPENDENCIES = [
     'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
     'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel', 'evolution-data-server-devel',
     'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel', 'openssl-devel',
-    'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel', 'libcanberra-devel'
+    'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel', 'libcanberra-devel',
+    'sqlite-devel', 'openssl-static'
 ]
 
 APT_DEPENDENCIES = [
