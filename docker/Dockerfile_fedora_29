@@ -16,6 +16,7 @@ RUN dnf upgrade -y && \
         speexdsp-devel \
         pulseaudio-libs-devel \
         libcanberra-devel \
+        libcurl-devel \
         libtool \
         dbus-devel \
         expat-devel \
