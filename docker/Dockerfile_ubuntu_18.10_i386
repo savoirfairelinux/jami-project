@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM i386/ubuntu:18.10
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -22,7 +22,7 @@ RUN apt-get update && \
         libgnutls28-dev \
         libargon2-0-dev \
         libebook1.2-dev \
-	libcanberra-gtk3-dev \
+        libcanberra-gtk3-dev \
         libclutter-gtk-1.0-dev \
         libclutter-1.0-dev \
         libglib2.0-dev \
@@ -63,7 +63,7 @@ RUN apt-get update && \
         libcrypto++-dev \
         libva-dev \
         libvdpau-dev \
-	libssl-dev
+        libssl-dev
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 
