@@ -83,10 +83,14 @@ package-all: package-debian_9 \
              package-ubuntu_16.04_i386 \
              package-ubuntu_16.04_oci \
              package-ubuntu_16.04_i386_oci \
-	     package-ubuntu_18.04 \
-	     package-ubuntu_18.04_i386 \
-	     package-ubuntu_18.04_oci \
-	     package-ubuntu_18.04_i386_oci \
+             package-ubuntu_18.04 \
+             package-ubuntu_18.04_i386 \
+             package-ubuntu_18.04_oci \
+             package-ubuntu_18.04_i386_oci \
+             package-ubuntu_18.10 \
+             package-ubuntu_18.10_i386 \
+             package-ubuntu_18.10_oci \
+             package-ubuntu_18.10_i386_oci \
              package-fedora_27 \
              package-fedora_27_i386 \
              package-fedora_28 \
