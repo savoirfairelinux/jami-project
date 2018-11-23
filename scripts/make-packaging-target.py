@@ -193,7 +193,7 @@ def run_generate_all(parsed_args):
             "docker_image": "ubuntu_18.10",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged",
             "version": "$(DEBIAN_OCI_VERSION)",
         },
         {
@@ -201,7 +201,7 @@ def run_generate_all(parsed_args):
             "docker_image": "ubuntu_18.10_i386",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged",
             "version": "$(DEBIAN_OCI_VERSION)",
         },
         # Fedora
