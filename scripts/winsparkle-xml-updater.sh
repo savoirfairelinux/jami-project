@@ -46,8 +46,8 @@ else
 fi
 
 # update URI in <link> field
-gawk -i inplace -v source="${SPARKLE_SOURCE}" '/<link>/{printf "        <link>";
-                                                        printf source; print "</link>"; next}1' ${SPARKLE_FILE}
+gawk -v source="${SPARKLE_SOURCE}" '/<link>/{printf "        <link>";
+                                             printf source; print "</link>"; next}1' ${SPARKLE_FILE}
 
 
 # update xml list with new image item
