@@ -8,7 +8,7 @@ Release:       %{release}%{?dist}
 Summary:       Free software for distributed and secured communication.
 Group:         Applications/Internet
 License:       GPLv3+
-URL:           https://ring.cx/
+URL:           https://jami.net/
 Source:        ring_%{version}.tar.gz
 Requires:      ring-daemon = %{version}
 Obsoletes:     ring-gnome
@@ -191,7 +191,7 @@ DESTDIR=%{buildroot} make -C client-gnome/build install
 %{_datadir}/glib-2.0/schemas/cx.ring.RingGnome.gschema.xml
 %{_datadir}/applications/gnome-ring.desktop
 %{_datadir}/gnome-ring/gnome-ring.desktop
-%{_datadir}/icons/hicolor/scalable/apps/ring.svg
+%{_datadir}/icons/hicolor/scalable/apps/jami.svg
 %{_datadir}/appdata/gnome-ring.appdata.xml
 %{_datadir}/libringclient/*
 %{_datadir}/locale/*
