@@ -56,7 +56,6 @@ BuildRequires: clutter-gtk-devel
 BuildRequires: clutter-devel
 BuildRequires: glib2-devel
 BuildRequires: gtk3-devel
-BuildRequires: evolution-data-server-devel
 BuildRequires: libnotify-devel
 BuildRequires: qt5-qttools-devel
 BuildRequires: qrencode-devel

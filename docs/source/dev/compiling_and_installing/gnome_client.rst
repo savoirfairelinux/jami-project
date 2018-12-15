@@ -10,7 +10,6 @@ Requirements
 - Qt5 Core
 - X11
 - gnome-icon-theme-symbolic (certain icons are used which other themes might be missing)
-- libebook1.2 / evolution-data-server (3.10 or higher)
 - libnotify (optional, if you wish to receive desktop notifications of incoming calls, etc)
 - gettext (optional to compile translations)
 
@@ -24,7 +23,7 @@ On Fedora:
 
 .. code-block:: bash
 
-    sudo yum install gcc-c++ cmake gtk3-devel qt5-qtbase-devel clutter-gtk-devel gnome-icon-theme-symbolic evolution-data-server-devel libnotify-devel gettext
+    sudo yum install gcc-c++ cmake gtk3-devel qt5-qtbase-devel clutter-gtk-devel gnome-icon-theme-symbolic libnotify-devel gettext
 
 Compiling
 #########

@@ -82,7 +82,7 @@ ZYPPER_DEPENDENCIES = [
 # lrc
     'libQt5Core-devel', 'libQt5DBus-devel', 'libqt5-linguist-devel',
 # gnome client
-    'gtk3-devel', 'clutter-gtk-devel', 'qrencode-devel', 'evolution-data-server-devel',
+    'gtk3-devel', 'clutter-gtk-devel', 'qrencode-devel',
     'gettext-tools', 'libnotify-devel', 'libappindicator3-devel', 'webkit2gtk3-devel',
     'NetworkManager-devel', 'libcanberra-gtk3-devel'
 ]
@@ -112,7 +112,7 @@ DNF_DEPENDENCIES = [
     'gcc-c++', 'which', 'alsa-lib-devel', 'systemd-devel', 'libuuid-devel',
     'uuid-devel', 'gnutls-devel', 'nettle-devel', 'opus-devel', 'speexdsp-devel',
     'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
-    'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel', 'evolution-data-server-devel',
+    'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel',
     'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel', 'openssl-devel',
     'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel', 'libcanberra-devel',
     'sqlite-devel', 'openssl-static'
@@ -137,7 +137,7 @@ PACMAN_DEPENDENCIES = [
     'ffmpeg', 'boost', 'clutter-gtk', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book',
     'expat', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse',
     'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
-    'swig', 'yasm', 'qrencode', 'evolution-data-server', 'make', 'patch', 'pkg-config',
+    'swig', 'yasm', 'qrencode', 'make', 'patch', 'pkg-config',
     'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanbera', 'openssl'
 ]
 
