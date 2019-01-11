@@ -58,7 +58,11 @@ RUN dnf upgrade -y && \
         NetworkManager-libnm-devel \
         openssl-devel \
         openssl-static \
-        sqlite-devel
+        sqlite-devel \
+        qt5-devel
+
+RUN ls -la /lib64/libQt5Core*
+RUN echo xxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ADD scripts/build-package-fedora.sh /opt/build-package-fedora.sh
 
