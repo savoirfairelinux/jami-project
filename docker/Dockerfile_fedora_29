@@ -7,6 +7,7 @@ RUN dnf clean all
 RUN dnf upgrade -y && \
     dnf install -y mesa-libgbm-devel mesa-dri-drivers && \
     dnf install -y libinput-devel && \
+    dnf install -y qt5-qtbase-5.11.1-7.fc29 qt5-linguist-5.11.1-2.fc29 && \
     dnf install -y \
         git \
         rpm-build \
@@ -59,6 +60,8 @@ RUN dnf upgrade -y && \
         openssl-devel \
         openssl-static \
         sqlite-devel
+
+RUN echo "exclude=qt5-qtbase* qt5-linguist*" >> /etc/dnf/dnf.conf
 
 ADD scripts/build-package-fedora.sh /opt/build-package-fedora.sh
 

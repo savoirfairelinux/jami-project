@@ -208,7 +208,8 @@ DESTDIR=%{buildroot} make -C client-gnome/build install
 /sbin/ldconfig
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
-%postun -p /sbin/ldconfig
+%postun
+/sbin/ldconfig
 
 #for < f24 we have to update the schema explicitly
 %if 0%{?fedora} < 24
