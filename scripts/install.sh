@@ -107,5 +107,6 @@ else
             -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
             -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
 fi
+LIBRARY_PATH="$HOME/ring/ring-project/install/lrc/lib/"
 make -j${proc}
 make_install $global
