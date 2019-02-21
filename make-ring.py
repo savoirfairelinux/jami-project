@@ -49,7 +49,7 @@ BREW_UNLINK_SCRIPT = [
 
 BREW_INSTALL_SCRIPT = [
     'brew update',
-    'brew install -y %(packages)s',
+    'brew install %(packages)s',
     'brew link --force --overwrite %(packages)s'
 ]
 
