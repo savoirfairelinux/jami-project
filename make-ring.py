@@ -143,12 +143,12 @@ PACMAN_DEPENDENCIES = [
 
 OSX_DEPENDENCIES = [
     'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt5',
-    'libtool', 'yasm', 'automake'
+    'libtool', 'yasm', 'nasm', 'automake'
 ]
 
 OSX_DEPENDENCIES_UNLINK = [
     'autoconf*', 'cmake*', 'gettext*', 'pkg-config*', 'qt*', 'qt@5.*',
-    'libtool*', 'yasm*', 'automake*', 'gnutls*', 'nettle*', 'msgpack*'
+    'libtool*', 'yasm*', 'nasm*', 'automake*', 'gnutls*', 'nettle*', 'msgpack*'
 ]
 
 IOS_DEPENDENCIES = [
