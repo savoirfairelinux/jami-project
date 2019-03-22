@@ -32,7 +32,7 @@ cd /var/lib/layman/ring-overlay && bash scripts/bump-ring-ebuilds.sh /usr/portag
 # problem with cirrcular deps
 USE="-qt5" emerge -1 dev-util/cmake
 
-emerge gnome-ring kde-ring
+emerge jami-gnome kde-ring
 
 touch /opt/output/.packages-built
 chown -R ${CURRENT_UID}:${CURRENT_UID} /opt/output
