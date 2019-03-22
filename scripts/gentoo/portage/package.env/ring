@@ -13,7 +13,7 @@ sys-libs/ncurses docker-build
 dev-libs/msgpack build-pkg
 net-libs/libringclient build-pkg
 net-libs/opendht build-pkg
-net-voip/gnome-ring build-pkg
+net-voip/jami-gnome build-pkg
 net-voip/kde-ring build-pkg
 net-voip/ring-daemon build-pkg
 
