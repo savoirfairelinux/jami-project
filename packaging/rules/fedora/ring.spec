@@ -70,7 +70,7 @@ BuildRequires: libvdpau-devel
 Ring is free software for universal communication which respects freedoms
 and privacy of its users.
 .
-This package contains the desktop client: gnome-ring.
+This package contains the desktop client: jami-gnome.
 
 %package daemon
 Summary: Free software for distributed and secured communication - daemon
@@ -184,17 +184,17 @@ DESTDIR=%{buildroot} make -C client-gnome/build install
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}/ring.cx
-%{_bindir}/gnome-ring
+%{_bindir}/jami
+%{_bindir}/jami-gnome
 %{_libdir}/libringclient*.so*
 %{_datadir}/glib-2.0/schemas/cx.ring.RingGnome.gschema.xml
-%{_datadir}/applications/gnome-ring.desktop
-%{_datadir}/gnome-ring/gnome-ring.desktop
+%{_datadir}/applications/jami-gnome.desktop
+%{_datadir}/jami-gnome/jami-gnome.desktop
 %{_datadir}/icons/hicolor/scalable/apps/jami.svg
-%{_datadir}/appdata/gnome-ring.appdata.xml
+%{_datadir}/appdata/jami-gnome.appdata.xml
 %{_datadir}/libringclient/*
 %{_datadir}/locale/*
-%{_datadir}/sounds/gnome-ring/*
+%{_datadir}/sounds/jami-gnome/*
 %doc %{_mandir}/man1/dring*
 
 %files daemon
