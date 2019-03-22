@@ -91,7 +91,7 @@ Description: Secure and distributed voice, video and chat platform - desktop cli
  platform that requires no centralized server and leaves the power of privacy
  in the hands of the user.
  .
- This package contains the desktop client: gnome-ring.
+ This package contains the desktop client: jami-gnome.
 
 Package: ring-daemon
 Architecture: any

@@ -1,5 +1,5 @@
 # overlay
-net-voip/gnome-ring ~amd64
+net-voip/jami-gnome ~amd64
 =net-voip/kde-ring-99999999 **
 net-libs/libringclient ~amd64
 net-voip/ring-daemon ~amd64
