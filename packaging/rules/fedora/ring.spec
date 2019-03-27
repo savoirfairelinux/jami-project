@@ -185,6 +185,7 @@ DESTDIR=%{buildroot} make -C client-gnome/build install
 %files
 %defattr(-,root,root,-)
 %{_bindir}/jami
+%{_bindir}/ring.cx
 %{_bindir}/jami-gnome
 %{_libdir}/libringclient*.so*
 %{_datadir}/glib-2.0/schemas/net.jami.client.gnome.gschema.xml
