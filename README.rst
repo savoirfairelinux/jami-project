@@ -69,7 +69,7 @@ Run global install:
 
 .. code-block:: bash
 
-    gnome-ring
+    jami-gnome
 
 This already starts the daemon automatically for us.
 
