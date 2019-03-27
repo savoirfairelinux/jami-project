@@ -27,6 +27,7 @@ RUN dnf upgrade -y && \
         libXext-devel \
         libXfixes-devel \
         yasm \
+        nasm \
         speex-devel \
         gsm-devel \
         chrpath \

@@ -176,7 +176,7 @@ OSX_UNINSTALL_SCRIPT = [
 
 STOP_SCRIPT = [
     'xargs kill < daemon.pid',
-    'xargs kill < gnome-ring.pid',
+    'xargs kill < jami-gnome.pid',
 ]
 
 
@@ -330,16 +330,16 @@ def run_run(args):
         with open('daemon.pid', 'w') as f:
             f.write(str(dring_process.pid)+'\n')
 
-        client_log = open("gnome-ring.log", 'a')
+        client_log = open("jami-gnome.log", 'a')
         client_log.write('=== Starting client (%s) ===' % time.strftime("%d/%m/%Y %H:%M:%S"))
         client_process = subprocess.Popen(
-            ["./install/client-gnome/bin/gnome-ring", "-d"],
+            ["./install/client-gnome/bin/jami-gnome", "-d"],
             stdout=client_log,
             stderr=client_log,
             env=run_env
         )
 
-        with open('gnome-ring.pid', 'w') as f:
+        with open('jami-gnome.pid', 'w') as f:
             f.write(str(client_process.pid)+'\n')
 
         if args.debug:

@@ -32,6 +32,7 @@ RUN apt-get update && \
         qttools5-dev \
         qttools5-dev-tools \
         yasm \
+        nasm \
         autotools-dev \
         gettext \
         libpulse-dev \
