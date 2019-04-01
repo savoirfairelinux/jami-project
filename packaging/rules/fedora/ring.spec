@@ -181,6 +181,7 @@ rm -rfv %{buildroot}/%{_libdir}/cmake
 ## gnome client install ##
 ##########################
 DESTDIR=%{buildroot} make -C client-gnome/build install
+ln -sf %{_bindir}/jami %{_bindir}/ring.cx
 
 %files
 %defattr(-,root,root,-)
