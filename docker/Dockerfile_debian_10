@@ -1,0 +1,70 @@
+FROM debian:buster
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get clean
+RUN apt-get update && \
+    apt-get install -y vim devscripts
+
+# Speed up mk-build-deps
+RUN apt-get clean
+RUN apt-get update && \
+    apt-get install -y -o Acquire::Retires=10 \
+        git \
+        autoconf \
+        automake \
+        autopoint \
+        cmake \
+        libtool \
+        libdbus-1-dev \
+        libdbus-c++-dev \
+        libupnp-dev \
+        libargon2-0-dev \
+        libebook1.2-dev \
+	libcanberra-gtk3-dev \
+        libclutter-gtk-1.0-dev \
+        libclutter-1.0-dev \
+        libglib2.0-dev \
+        libgtk-3-dev \
+        libnotify-dev \
+        qtbase5-dev \
+        qttools5-dev \
+        qttools5-dev-tools \
+        yasm \
+        nasm \
+        autotools-dev \
+        gettext \
+        libpulse-dev \
+        libasound2-dev \
+        libexpat1-dev \
+        libpcre3-dev \
+        libyaml-cpp-dev \
+        libboost-dev \
+        libxext-dev \
+        libxfixes-dev \
+        libspeex-dev \
+        libspeexdsp-dev \
+        uuid-dev \
+        libavcodec-dev \
+        libavutil-dev \
+        libavformat-dev \
+        libswscale-dev \
+        libavdevice-dev \
+        libopus-dev \
+        libudev-dev \
+        libgsm1-dev \
+        libjsoncpp-dev \
+        libmsgpack-dev \
+        libnatpmp-dev \
+        libappindicator3-dev \
+        libqrencode-dev \
+        libnm-dev \
+        libwebkit2gtk-4.0-dev \
+        libcrypto++-dev \
+        libva-dev \
+        libvdpau-dev \
+        libssl-dev
+
+ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
+
+CMD /opt/build-package-debian.sh
