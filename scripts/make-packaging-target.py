@@ -125,6 +125,32 @@ def run_generate_all(parsed_args):
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
             "version": "$(DEBIAN_OCI_VERSION)",
         },
+        {
+            "distribution": "debian_10",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+        },
+        {
+            "distribution": "debian_10_i386",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+        },
+        {
+            "distribution": "debian_10_oci",
+            "docker_image": "debian_10",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
+            "version": "$(DEBIAN_OCI_VERSION)",
+        },
+        {
+            "distribution": "debian_10_i386_oci",
+            "docker_image": "debian_10_i386",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
+            "version": "$(DEBIAN_OCI_VERSION)",
+        },
         # Ubuntu
         {
             "distribution": "ubuntu_16.04",

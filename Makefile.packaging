@@ -79,6 +79,10 @@ package-all: package-debian_9 \
              package-debian_9_i386 \
              package-debian_9_oci \
              package-debian_9_i386_oci \
+             package-debian_10 \
+             package-debian_10_i386 \
+             package-debian_10_oci \
+             package-debian_10_i386_oci \
              package-ubuntu_16.04 \
              package-ubuntu_16.04_i386 \
              package-ubuntu_16.04_oci \
