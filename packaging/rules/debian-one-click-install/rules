@@ -156,7 +156,7 @@ override_dh_auto_install:
 
         ## GNOME client
 	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME) install
-	ln -sf /usr/bin/jami $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/bin/ring.cx
+	ln -sf /usr/bin/jami $(CURDIR)/debian/ring-all/usr/bin/ring.cx
 
 tmpdir:= $(shell mktemp -d)
 workdir:= $(shell pwd)
