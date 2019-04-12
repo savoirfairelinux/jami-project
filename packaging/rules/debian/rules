@@ -161,6 +161,7 @@ override_dh_auto_install:
 
         ## GNOME client
 	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/$(RING_CLIENT_PKG_NAME) install
+	ln -sf /usr/bin/jami $(CURDIR)/debian/ring/usr/bin/ring.cx
 
 	######################
 	## Ring AiO install ##

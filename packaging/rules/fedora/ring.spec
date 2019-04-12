@@ -189,7 +189,7 @@ ln -sf %{_bindir}/jami %{buildroot}/%{_bindir}/ring.cx
 %{_bindir}/ring.cx
 %{_bindir}/jami-gnome
 %{_libdir}/libringclient*.so*
-%{_datadir}/glib-2.0/schemas/net.jami.client.gnome.gschema.xml
+%{_datadir}/glib-2.0/schemas/net.jami.Jami.gschema.xml
 %{_datadir}/applications/jami-gnome.desktop
 %{_datadir}/jami-gnome/jami-gnome.desktop
 %{_datadir}/icons/hicolor/scalable/apps/jami.svg
