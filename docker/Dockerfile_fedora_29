@@ -60,7 +60,8 @@ RUN dnf upgrade -y && \
         NetworkManager-libnm-devel \
         openssl-devel \
         openssl-static \
-        sqlite-devel
+        sqlite-devel \
+        libsndfile-devel
 
 RUN echo "exclude=qt5-qtbase* qt5-linguist* qt5-qttools-devel*" >> /etc/dnf/dnf.conf
 

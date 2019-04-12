@@ -56,7 +56,8 @@ RUN dnf upgrade -y && \
         NetworkManager-libnm-devel \
         openssl-devel \
         openssl-static \
-        sqlite-devel
+        sqlite-devel \
+        libsndfile-devel
 
 ADD scripts/build-package-fedora.sh /opt/build-package-fedora.sh
 

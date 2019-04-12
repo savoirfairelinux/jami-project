@@ -64,7 +64,8 @@ RUN apt-get update && \
         libcrypto++-dev \
         libva-dev \
         libvdpau-dev \
-        libssl-dev
+        libssl-dev \
+        libsndfile1-dev
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 
