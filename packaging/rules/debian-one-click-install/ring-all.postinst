@@ -26,7 +26,7 @@ set -e
 # $RING_REPO = $RING_REPO_BASE/debian_9
 #
 # To update the appended end tags, modify the switch in [2].
-RING_REPO_BASE="https://dl.ring.cx/ring-nightly"
+RING_REPO_BASE="https://dl.jami.net/ring-nightly"
 
 # Ring release key.
 RING_KEY_FINGERPRINT="A295D773307D25A33AE72F2F64CD5FA175348F84"
