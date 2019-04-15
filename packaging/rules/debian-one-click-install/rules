@@ -166,6 +166,9 @@ version_to_download := $(shell dpkg-parsechangelog -ldebian/changelog | perl -ne
 # Repacks the tarball with contrib tarballs unpacked.
 get-orig-source:
 	# Download ring tarball
+
+	ls /opt -la
+	echo "$$GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL"
 	if [ -n "$$GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL" ]; then \
 	    mv $$GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL ${tmpdir}; \
 	else \
