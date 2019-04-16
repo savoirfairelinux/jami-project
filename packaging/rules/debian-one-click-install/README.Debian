@@ -1,10 +1,10 @@
-# ring-all package for ring.cx website
+# ring-all package for jami.net website
 
 This source package provides a single ring-all binary package.
 
 This binary package is the same as the mainline ring-all, apart from
-the fact that it installs release keys and ring.cx package repository
-as trusted peers so Ring can be updated from ring.cx along with
+the fact that it installs release keys and jami.net package repository
+as trusted peers so Jami can be updated from jami.net along with
 system updates.
 
 # Notes
@@ -13,7 +13,7 @@ system updates.
 
 1- Prepare the new changelog entry mentioning the new version.
    (the version on the changelog will be used to determine what to download).
-   Releases are available here: https://dl.ring.cx/ring-release/tarballs/
+   Releases are available here: https://dl.jami.net/ring-release/tarballs/
 
 2- Run debian/rules get-orig-source
 

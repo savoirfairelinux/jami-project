@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: ring
 Upstream-Contact: Alexandre Viau <alexandre.viau@savoirfairelinux.net>
-Source: https://dl.ring.cx/ring-release/tarballs/
+Source: https://dl.jami.net/ring-release/tarballs/
 Files-Excluded: client-electron/*
                 client-uwp/*
                 client-windows/*
