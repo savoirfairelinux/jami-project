@@ -52,7 +52,7 @@ DEBEMAIL="The Ring project <ring@gnu.org>" dch --create --package ring --newvers
 DEBEMAIL="The Ring project <ring@gnu.org>" dch --release --distribution "unstable" debian/changelog
 
 # create orig tarball
-mk-origtargz ${RELEASE_TARBALL_FILENAME}
+mk-origtargz --compression gzip ${RELEASE_TARBALL_FILENAME}
 rm --verbose ${RELEASE_TARBALL_FILENAME}
 
 GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL=$(readlink -f ../ring_*.orig.tar.gz) debian/rules get-orig-source

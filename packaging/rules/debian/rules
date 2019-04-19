@@ -208,6 +208,9 @@ get-orig-source:
 	rm ${tmpdir}/*.tar.gz
 
 	# Unpack all of the orig tarballs into tarballs-unpacked
+	if [ -d "${tmpdir}/ring/" ]; then \
+		mv ${tmpdir}/ring/ ${tmpdir}/ring-project/; \
+	fi
 	mkdir ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked
 	for i in `find ${tmpdir}/ring-project/daemon/contrib/tarballs/ -name "*.tar.*"`; do \
 		projectname=`basename $$i` && \
