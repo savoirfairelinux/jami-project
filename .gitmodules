@@ -1,27 +1,27 @@
 [submodule "client-android"]
 	path = client-android
-	url = https://gerrit-ring.savoirfairelinux.com/ring-client-android
+	url = https://review.jami.net/ring-client-android
 [submodule "client-gnome"]
 	path = client-gnome
-	url = https://gerrit-ring.savoirfairelinux.com/ring-client-gnome
+	url = https://review.jami.net/ring-client-gnome
 [submodule "client-windows"]
 	path = client-windows
-	url = https://gerrit-ring.savoirfairelinux.com/ring-client-windows
+	url = https://review.jami.net/ring-client-windows
 [submodule "daemon"]
 	path = daemon
-	url = https://gerrit-ring.savoirfairelinux.com/ring-daemon
+	url = https://review.jami.net/ring-daemon
 [submodule "lrc"]
 	path = lrc
-	url = https://gerrit-ring.savoirfairelinux.com/ring-lrc
+	url = https://review.jami.net/ring-lrc
 [submodule "client-macosx"]
 	path = client-macosx
-	url = https://gerrit-ring.savoirfairelinux.com/ring-client-macosx
+	url = https://review.jami.net/ring-client-macosx
 [submodule "client-ios"]
 	path = client-ios
-	url = https://gerrit-ring.savoirfairelinux.com/ring-client-ios
+	url = https://review.jami.net/ring-client-ios
 [submodule "client-uwp"]
 	path = client-uwp
-	url = https://gerrit-ring.savoirfairelinux.com/ring-client-uwp
+	url = https://review.jami.net/ring-client-uwp
 [submodule "client-electron"]
 	path = client-electron
-	url = https://gerrit-ring.savoirfairelinux.com/ring-client-electron
+	url = https://review.jami.net/ring-client-electron
