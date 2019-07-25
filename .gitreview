@@ -1,5 +1,5 @@
 [gerrit]
-host=gerrit-ring.savoirfairelinux.com
+host=review.jami.net
 port=29420
 project=ring-project
 defaultremote=origin
