@@ -129,7 +129,8 @@ APT_DEPENDENCIES = [
     'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libupnp1.8-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'libqt5sql5-sqlite', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
-    'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-dev', 'libvdpau-dev', 'libmsgpack-dev', 'libcanberra-gtk3-dev'
+    'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-dev', 'libvdpau-dev', 'libmsgpack-dev', 'libcanberra-gtk3-dev',
+    'libdrm-dev', 'xorg', 'xorg-dev', 'openbox', 'libx11-dev', 'libgl1-mesa-glx', 'libgl1-mesa-dev'
 ]
 
 PACMAN_DEPENDENCIES = [
