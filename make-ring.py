@@ -21,6 +21,7 @@ ANDROID_DISTRIBUTION_NAME="android"
 
 APT_BASED_DISTROS = [
     'debian',
+    'devuan',
     'ubuntu',
     'linuxmint',
     'raspbian',
