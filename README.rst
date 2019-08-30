@@ -1,10 +1,10 @@
-ring-project
+jami-project
 ============
 
-This repository is the master repository for Ring. It contains a build script, make-ring.py,
+This repository is the master repository for Jami. It contains a build script, make-ring.py,
 that can be used to build and install ring from source on different platforms.
 
-More documentation can be found on http://docs.ring.cx. You may also build the documentation
+More documentation can be found on http://docs.jami.net. You may also build the documentation
 with ``make docs``. The documentation will be built in ``docs/build/html``.
 
 Using make-ring
@@ -13,7 +13,7 @@ Using make-ring
 Dependencies
 ------------
 
-The Ring installer uses python3. Please make sure it is installed before running it.
+The Jami installer uses python3. Please make sure it is installed before running it.
 
 Initialize the repositories
 ---------------------------
@@ -25,7 +25,7 @@ Initialize the repositories
 It initializes and updates the submodules to set them at the top of their master branch. This
 is ideal to have the latest development version.
 
-However, in order to build a specific version of Ring, such as the Production one, please use
+However, in order to build a specific version of Jami, such as the Production one, please use
 
 .. code-block:: bash
 

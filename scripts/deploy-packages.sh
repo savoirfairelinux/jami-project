@@ -123,9 +123,9 @@ function package_rpm()
     cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/ring-nightly.repo
 [ring]
 name=Ring \$releasever - \$basearch - ring
-baseurl=https://dl.ring.cx/ring-nightly/fedora_\$releasever
+baseurl=https://dl.jami.net/ring-nightly/fedora_\$releasever
 gpgcheck=1
-gpgkey=https://dl.ring.cx/ring.pub.key
+gpgkey=https://dl.jami.net/ring.pub.key
 enabled=1
 EOF
 
