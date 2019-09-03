@@ -14,10 +14,12 @@ import time
 import platform
 import multiprocessing
 import shutil
+import signal
 
-IOS_DISTRIBUTION_NAME="ios"
-OSX_DISTRIBUTION_NAME="osx"
-ANDROID_DISTRIBUTION_NAME="android"
+IOS_DISTRIBUTION_NAME = "ios"
+OSX_DISTRIBUTION_NAME = "osx"
+ANDROID_DISTRIBUTION_NAME = "android"
+WIN32_DISTRIBUTION_NAME = "win32"
 
 APT_BASED_DISTROS = [
     'debian',
@@ -69,38 +71,22 @@ ZYPPER_INSTALL_SCRIPT = [
 ]
 
 ZYPPER_DEPENDENCIES = [
-# build system
+    # build system
     'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++', 'libtool', 'which',
-# contrib dependencies
+    # contrib dependencies
     'curl', 'gzip', 'bzip2',
-# daemon
+    # daemon
     'speexdsp-devel', 'speex-devel', 'libdbus-c++-devel', 'jsoncpp-devel', 'yaml-cpp-devel',
     'yasm', 'libuuid-devel', 'libnettle-devel', 'libopus-devel',
     'libgnutls-devel', 'msgpack-devel', 'libavcodec-devel', 'libavdevice-devel', 'pcre-devel',
     'alsa-devel', 'libpulse-devel', 'libudev-devel', 'libva-devel', 'libvdpau-devel',
     'libopenssl-devel',
-# lrc
+    # lrc
     'libQt5Core-devel', 'libQt5DBus-devel', 'libqt5-linguist-devel',
-# gnome client
+    # gnome client
     'gtk3-devel', 'clutter-gtk-devel', 'qrencode-devel',
     'gettext-tools', 'libnotify-devel', 'libappindicator3-devel', 'webkit2gtk3-devel',
     'NetworkManager-devel', 'libcanberra-gtk3-devel'
-]
-
-MINGW64_FEDORA_DEPENDENCIES = [
-    'mingw64-binutils', 'mingw64-gcc', 'mingw64-headers', 'mingw64-crt', 'mingw64-gcc-c++',
-    'mingw64-pkg-config', 'yasm', 'gettext-devel', 'cmake', 'patch', 'libtool', 'automake',
-    'autoconf', 'autoconf-archive', 'make', 'xz', 'bzip2', 'which', 'mingw64-qt5-qtbase',
-    'mingw64-qt5-qttools', 'mingw64-qt5-qtsvg', 'mingw64-qt5-qtwinextras', 'mingw64-libidn',
-    'mingw64-xz-libs','msgpack-devel'
-]
-
-MINGW32_FEDORA_DEPENDENCIES = [
-    'mingw32-binutils', 'mingw32-gcc', 'mingw32-headers', 'mingw32-crt', 'mingw32-gcc-c++',
-    'mingw32-pkg-config', 'yasm', 'gettext-devel', 'cmake', 'patch', 'libtool', 'automake',
-    'autoconf', 'autoconf-archive', 'make', 'xz', 'bzip2', 'which', 'mingw32-qt5-qtbase',
-    'mingw32-qt5-qttools', 'mingw32-qt5-qtsvg', 'mingw32-qt5-qtwinextras', 'mingw32-libidn',
-    'mingw32-xz-libs', 'msgpack-devel'
 ]
 
 DNF_DEPENDENCIES = [
@@ -180,26 +166,29 @@ STOP_SCRIPT = [
 ]
 
 
+def run_powersell_cmd(cmd):
+    p = subprocess.Popen(["powershell.exe", cmd], stdout=sys.stdout)
+    p.communicate()
+    p.wait()
+    return
+
+
 def run_dependencies(args):
-    if args.distribution in APT_BASED_DISTROS:
+    if(args.distribution == WIN32_DISTRIBUTION_NAME):
+        run_powersell_cmd(
+            'Set-ExecutionPolicy Unrestricted; .\\scripts\\build-package-windows.ps1')
+
+    elif args.distribution in APT_BASED_DISTROS:
         execute_script(APT_INSTALL_SCRIPT,
-            {"packages": ' '.join(APT_DEPENDENCIES)}
-        )
+                       {"packages": ' '.join(APT_DEPENDENCIES)}
+                       )
+
     elif args.distribution in DNF_BASED_DISTROS:
         execute_script(
             RPM_INSTALL_SCRIPT,
             {"packages": ' '.join(DNF_DEPENDENCIES)}
         )
-    elif args.distribution == "mingw32":
-        execute_script(
-            RPM_INSTALL_SCRIPT,
-            {"packages": ' '.join(MINGW32_FEDORA_DEPENDENCIES)}
-        )
-    elif args.distribution == "mingw64":
-        execute_script(
-            RPM_INSTALL_SCRIPT,
-            {"packages": ' '.join(MINGW64_FEDORA_DEPENDENCIES)}
-        )
+
     elif args.distribution in PACMAN_BASED_DISTROS:
         execute_script(
             PACMAN_INSTALL_SCRIPT,
@@ -240,9 +229,15 @@ def run_dependencies(args):
         print("The Android version does not need more dependencies.\nPlease continue with the --install instruction.")
         sys.exit(1)
 
-    else:
-        print("Not yet implemented for current distribution (%s)" % args.distribution)
+    elif args.distribution == WIN32_DISTRIBUTION_NAME:
+        print("The win32 version does not install dependencies with this script.\nPlease continue with the --install instruction.")
         sys.exit(1)
+
+    else:
+        print("Not yet implemented for current distribution (%s)" %
+              args.distribution)
+        sys.exit(1)
+
 
 def run_init():
     # Extract modules path from '.gitmodules' file
@@ -257,6 +252,7 @@ def run_init():
     for name in module_names:
         copy_file("./scripts/commit-msg", ".git/modules/"+name+"/hooks")
 
+
 def copy_file(src, dest):
     print("Copying:" + src + " to " + dest)
     try:
@@ -268,6 +264,7 @@ def copy_file(src, dest):
     except IOError as e:
         print('Error: %s' % e.strerror)
 
+
 def run_install(args):
     install_args = ' -p ' + str(multiprocessing.cpu_count())
     if args.static:
@@ -275,30 +272,25 @@ def run_install(args):
     if args.global_install:
         install_args += ' -g'
     if args.distribution == OSX_DISTRIBUTION_NAME:
-        proc= subprocess.Popen("brew --prefix qt5", shell=True, stdout=subprocess.PIPE)
+        proc = subprocess.Popen("brew --prefix qt5",
+                                shell=True, stdout=subprocess.PIPE)
         qt5dir = proc.stdout.read()
         os.environ['CMAKE_PREFIX_PATH'] = str(qt5dir.decode('ascii'))
         install_args += " -c client-macosx"
-        execute_script(["CONFIGURE_FLAGS='--without-dbus' ./scripts/install.sh " + install_args])
+        execute_script(
+            ["CONFIGURE_FLAGS='--without-dbus' ./scripts/install.sh " + install_args])
     elif args.distribution == IOS_DISTRIBUTION_NAME:
         os.chdir("./client-ios")
         execute_script(["./compile-ios.sh"])
     elif args.distribution == ANDROID_DISTRIBUTION_NAME:
         os.chdir("./client-android")
         execute_script(["./compile.sh"])
-    elif args.distribution == 'mingw32':
-        os.environ['CMAKE_PREFIX_PATH'] = '/usr/i686-w64-mingw32/sys-root/mingw/lib/cmake'
-        os.environ['QTDIR'] = '/usr/i686-w64-mingw32/sys-root/mingw/lib/qt5/'
-        os.environ['PATH'] = '/usr/i686-w64-mingw32/bin/qt5/:' + os.environ['PATH']
-        execute_script(["./scripts/win_compile.sh"])
-    elif args.distribution == 'mingw64':
-        os.environ['CMAKE_PREFIX_PATH'] = '/usr/x86_64-w64-mingw32/sys-root/mingw/lib/cmake'
-        os.environ['QTDIR'] = '/usr/x86_64-w64-mingw32/sys-root/mingw/lib/qt5/'
-        os.environ['PATH'] = '/usr/x86_64-w64-mingw32/bin/qt5/:' + os.environ['PATH']
-        execute_script(["./scripts/win_compile.sh --arch=64"])
+    elif args.distribution == WIN32_DISTRIBUTION_NAME:
+        subprocess.call('python ' + os.getcwd() + '/scripts/build-windows.py')
     else:
         if args.distribution in ZYPPER_BASED_DISTROS:
-            os.environ['JSONCPP_LIBS'] = "-ljsoncpp" #fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
+            # fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
+            os.environ['JSONCPP_LIBS'] = "-ljsoncpp"
         install_args += ' -c client-gnome'
         execute_script(["./scripts/install.sh " + install_args])
 
@@ -312,15 +304,18 @@ def run_uninstall(args):
 
 def run_run(args):
     if args.distribution == OSX_DISTRIBUTION_NAME:
-        subprocess.Popen(["install/client-macosx/Ring.app/Contents/MacOS/Ring"])
+        subprocess.Popen(
+            ["install/client-macosx/Ring.app/Contents/MacOS/Ring"])
         return True
 
     run_env = os.environ
-    run_env['LD_LIBRARY_PATH'] = run_env.get('LD_LIBRARY_PATH', '') + ":install/lrc/lib"
+    run_env['LD_LIBRARY_PATH'] = run_env.get(
+        'LD_LIBRARY_PATH', '') + ":install/lrc/lib"
 
     try:
         dring_log = open("daemon.log", 'a')
-        dring_log.write('=== Starting daemon (%s) ===' % time.strftime("%d/%m/%Y %H:%M:%S"))
+        dring_log.write('=== Starting daemon (%s) ===' %
+                        time.strftime("%d/%m/%Y %H:%M:%S"))
         dring_process = subprocess.Popen(
             ["./install/daemon/lib/ring/dring", "-c", "-d"],
             stdout=dring_log,
@@ -331,7 +326,8 @@ def run_run(args):
             f.write(str(dring_process.pid)+'\n')
 
         client_log = open("jami-gnome.log", 'a')
-        client_log.write('=== Starting client (%s) ===' % time.strftime("%d/%m/%Y %H:%M:%S"))
+        client_log.write('=== Starting client (%s) ===' %
+                         time.strftime("%d/%m/%Y %H:%M:%S"))
         client_process = subprocess.Popen(
             ["./install/client-gnome/bin/jami-gnome", "-d"],
             stdout=client_log,
@@ -344,7 +340,7 @@ def run_run(args):
 
         if args.debug:
             subprocess.call(
-                ['gdb','-x', 'gdb.gdb', './install/daemon/lib/ring/dring'],
+                ['gdb', '-x', 'gdb.gdb', './install/daemon/lib/ring/dring'],
             )
 
         if args.background == False:
@@ -377,6 +373,7 @@ def run_run(args):
 def run_stop(args):
     execute_script(STOP_SCRIPT)
 
+
 def execute_script(script, settings=None, fail=True):
     if settings == None:
         settings = {}
@@ -384,20 +381,24 @@ def execute_script(script, settings=None, fail=True):
         line = line % settings
         rv = os.system(line)
         if rv != 0 and fail == True:
-            print('Error executing script! Exit code: %s' % rv, file=sys.stderr)
+            print('Error executing script! Exit code: %s' %
+                  rv, file=sys.stderr)
             sys.exit(1)
+
 
 def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = [ANDROID_DISTRIBUTION_NAME, OSX_DISTRIBUTION_NAME, IOS_DISTRIBUTION_NAME] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS + ZYPPER_BASED_DISTROS + ['mingw32','mingw64']
+    supported_distros = [ANDROID_DISTRIBUTION_NAME, OSX_DISTRIBUTION_NAME, IOS_DISTRIBUTION_NAME,
+                         WIN32_DISTRIBUTION_NAME] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS + ZYPPER_BASED_DISTROS
 
     if parsed_args.distribution not in supported_distros:
-        print('Distribution \''+parsed_args.distribution+'\' not supported.\nChoose one of: %s' \
-                  % ', '.join(supported_distros),
-            file=sys.stderr)
+        print('Distribution \''+parsed_args.distribution+'\' not supported.\nChoose one of: %s'
+              % ', '.join(supported_distros),
+              file=sys.stderr)
         sys.exit(1)
+
 
 def parse_args():
     ap = argparse.ArgumentParser(description="Ring build tool")
@@ -417,7 +418,7 @@ def parse_args():
         help='Uninstall Ring')
     ga.add_argument(
         '--run', action='store_true',
-         help='Run the Ring daemon and client')
+        help='Run the Ring daemon and client')
     ga.add_argument(
         '--stop', action='store_true',
         help='Stop the Ring processes')
@@ -435,27 +436,31 @@ def parse_args():
     else:
         parsed_args.distribution = choose_distribution()
 
-    if parsed_args.distribution in ['mingw32', 'mingw64']:
-        if choose_distribution() != "fedora":
-            print('Windows version must be built on a Fedora distribution (>=23)')
+    if parsed_args.distribution == WIN32_DISTRIBUTION_NAME:
+        if platform.release() != '10':
+            print('Windows version must be built on Windows 10')
             sys.exit(1)
 
     validate_args(parsed_args)
 
     return parsed_args
 
+
 def choose_distribution():
     system = platform.system().lower()
+
     if system == "linux" or system == "linux2":
         if os.path.isfile("/etc/arch-release"):
             return "arch"
         with open("/etc/os-release") as f:
             for line in f:
-                k,v = line.split("=")
+                k, v = line.split("=")
                 if k.strip() == 'ID':
-                    return v.strip().replace('"','').split(' ')[0]
+                    return v.strip().replace('"', '').split(' ')[0]
     elif system == "darwin":
         return OSX_DISTRIBUTION_NAME
+    elif system == "windows":
+        return WIN32_DISTRIBUTION_NAME
 
     return 'Unknown'
 
