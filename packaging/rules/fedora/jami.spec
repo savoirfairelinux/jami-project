@@ -1,4 +1,4 @@
-%define name        ring
+%define name        jami
 %define version     RELEASE_VERSION
 %define release     0
 
@@ -9,9 +9,11 @@ Summary:       Free software for distributed and secured communication.
 Group:         Applications/Internet
 License:       GPLv3+
 URL:           https://jami.net/
-Source:        ring_%{version}.tar.gz
-Requires:      ring-daemon = %{version}
-Obsoletes:     ring-gnome
+Source:        jami_%{version}.tar.gz
+Requires:      jami-daemon = %{version}
+Obsoletes:     ring
+Provides:      ring
+Conflicts:     ring
 
 BuildRequires: make
 BuildRequires: autoconf
