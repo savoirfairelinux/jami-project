@@ -54,6 +54,7 @@ RUN dnf upgrade -y && \
         webkitgtk4-devel \
         cryptopp-devel \
         libva-devel \
+        libsndfile-devel \
         libvdpau-devel \
         msgpack-devel \
         NetworkManager-libnm-devel \
