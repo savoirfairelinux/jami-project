@@ -1,4 +1,4 @@
-%define name        ring
+%define name        jami
 %define version     RELEASE_VERSION
 %define release     0
 
@@ -9,9 +9,11 @@ Summary:       Free software for distributed and secured communication.
 Group:         Applications/Internet
 License:       GPLv3+
 URL:           https://jami.net/
-Source:        ring_%{version}.tar.gz
-Requires:      ring-daemon = %{version}
-Obsoletes:     ring-gnome
+Source:        jami_%{version}.tar.gz
+Requires:      jami-daemon = %{version}
+Obsoletes:     ring
+Provides:      ring
+Conflicts:     ring
 
 BuildRequires: make
 BuildRequires: autoconf
@@ -67,7 +69,7 @@ BuildRequires: cryptopp-devel
 BuildRequires: libvdpau-devel
 
 %description
-Ring is free software for universal communication which respects freedoms
+Jami is free software for universal communication which respects freedoms
 and privacy of its users.
 .
 This package contains the desktop client: jami-gnome.
@@ -76,20 +78,20 @@ This package contains the desktop client: jami-gnome.
 Summary: Free software for distributed and secured communication - daemon
 
 %description daemon
-Ring is free software for universal communication which respects freedoms
+Jami is free software for universal communication which respects freedoms
 and privacy of its users.
 .
-This package contains the Ring daemon: dring.
+This package contains the Jami daemon: dring.
 
 %prep
-%setup -n ring-project
+%setup -n jami
 
 %build
 ###########################
 ## Ring Daemon configure ##
 ###########################
 mkdir -p daemon/contrib/native
-cd %{_builddir}/ring-project/daemon/contrib/native && \
+cd %{_builddir}/jami/daemon/contrib/native && \
     ../bootstrap \
         --no-checksums \
         --disable-ogg \
@@ -105,7 +107,7 @@ cd %{_builddir}/ring-project/daemon/contrib/native && \
     make fetch && \
     make -j4 V=1
 
-cd %{_builddir}/ring-project/daemon && \
+cd %{_builddir}/jami/daemon && \
     ./autogen.sh && \
     ./configure \
         --prefix=%{_prefix} \
@@ -115,11 +117,11 @@ cd %{_builddir}/ring-project/daemon && \
 #############################
 ## libringclient configure ##
 #############################
-cd %{_builddir}/ring-project/lrc && \
+cd %{_builddir}/jami/lrc && \
     mkdir build && \
     cd build && \
     cmake \
-        -DRING_BUILD_DIR=%{_builddir}/ring-project/daemon/src \
+        -DRING_BUILD_DIR=%{_builddir}/jami/daemon/src \
         -DCMAKE_INSTALL_PREFIX=%{_prefix} \
         -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
         -DCMAKE_BUILD_TYPE=Debug \
@@ -128,31 +130,31 @@ cd %{_builddir}/ring-project/lrc && \
 ############################
 ## gnome client configure ##
 ############################
-cd %{_builddir}/ring-project/client-gnome && \
+cd %{_builddir}/jami/client-gnome && \
     mkdir build && \
     cd build && \
     cmake \
         -DCMAKE_INSTALL_PREFIX=%{_prefix} \
         -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
-        -DLibRingClient_PROJECT_DIR=%{_builddir}/ring-project/lrc \
+        -DLibRingClient_PROJECT_DIR=%{_builddir}/jami/lrc \
         -DGSETTINGS_LOCALCOMPILE=OFF \
         ..
 
 #######################
 ## Ring Daemon build ##
 #######################
-make -C %{_builddir}/ring-project/daemon -j4 V=1
-pod2man %{_builddir}/ring-project/daemon/man/dring.pod > %{_builddir}/ring-project/daemon/dring.1
+make -C %{_builddir}/jami/daemon -j4 V=1
+pod2man %{_builddir}/jami/daemon/man/dring.pod > %{_builddir}/jami/daemon/dring.1
 
 #########################
 ## libringclient build ##
 #########################
-make -C %{_builddir}/ring-project/lrc/build -j4 V=1
+make -C %{_builddir}/jami/lrc/build -j4 V=1
 
 ########################
 ## gnome client build ##
 ########################
-make -C %{_builddir}/ring-project/client-gnome/build LDFLAGS="-lpthread" -j4 V=1
+make -C %{_builddir}/jami/client-gnome/build LDFLAGS="-lpthread" -j4 V=1
 
 
 %install
@@ -160,7 +162,7 @@ make -C %{_builddir}/ring-project/client-gnome/build LDFLAGS="-lpthread" -j4 V=1
 ## Ring Daemon install ##
 #########################
 DESTDIR=%{buildroot} make -C daemon install
-cp %{_builddir}/ring-project/daemon/dring.1 %{buildroot}/%{_mandir}/man1/dring.1
+cp %{_builddir}/jami/daemon/dring.1 %{buildroot}/%{_mandir}/man1/dring.1
 rm -rfv %{buildroot}/%{_prefix}/include
 rm -rfv %{buildroot}/%{_libdir}/*.a
 rm -rfv %{buildroot}/%{_libdir}/*.la

@@ -68,6 +68,7 @@ cd /opt/ring-packaging
 tar -xvf /opt/ring-packaging/ring_*.orig.tar.gz
 
 # move to ring-project dir
+ls -la
 cd ring-project
 
 # import debian folder into ring-packaging directory
