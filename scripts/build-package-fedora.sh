@@ -26,21 +26,21 @@ set -e
 # import the spec file
 mkdir -p /opt/ring-project
 cd /opt/ring-project
-cp /opt/ring-project-ro/packaging/rules/fedora/ring.spec .
+cp /opt/ring-project-ro/packaging/rules/fedora/jami.spec .
 
 # Set the version
-sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" ring.spec
-rpmdev-bumpspec --comment="Automatic nightly release" --userstring="Jenkins <ring@lists.savoirfairelinux.net>" ring.spec
+sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" jami.spec
+rpmdev-bumpspec --comment="Automatic nightly release" --userstring="Jenkins <ring@lists.savoirfairelinux.net>" jami.spec
 
 # install build deps
-dnf builddep -y ring.spec || echo "ignoring dnf builddep failure"
+dnf builddep -y jami.spec || echo "ignoring dnf builddep failure"
 
 # place the source
 mkdir -p /root/rpmbuild/SOURCES
-cp /opt/ring-project-ro/ring_*.tar.gz /root/rpmbuild/SOURCES
+cp /opt/ring-project-ro/jami_*.tar.gz /root/rpmbuild/SOURCES
 
 # build the package
-rpmbuild -ba ring.spec
+rpmbuild -ba jami.spec
 
 # move to output
 mv /root/rpmbuild/RPMS/*/* /opt/output
