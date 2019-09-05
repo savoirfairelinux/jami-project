@@ -1,4 +1,4 @@
-%define name        ring
+%define name        jami
 %define version     RELEASE_VERSION
 %define release     0
 
@@ -9,9 +9,11 @@ Summary:       Free software for distributed and secured communication.
 Group:         Applications/Internet
 License:       GPLv3+
 URL:           https://jami.net/
-Source:        ring_%{version}.tar.gz
-Requires:      ring-daemon = %{version}
-Obsoletes:     ring-gnome
+Source:        jami_%{version}.tar.gz
+Requires:      jami-daemon = %{version}
+Obsoletes:     ring
+Provides:      ring
+Conflicts:     ring
 
 BuildRequires: make
 BuildRequires: autoconf
@@ -68,7 +70,7 @@ BuildRequires: cryptopp-devel
 BuildRequires: libvdpau-devel
 
 %description
-Ring is free software for universal communication which respects freedoms
+Jami is free software for universal communication which respects freedoms
 and privacy of its users.
 .
 This package contains the desktop client: jami-gnome.
@@ -77,10 +79,10 @@ This package contains the desktop client: jami-gnome.
 Summary: Free software for distributed and secured communication - daemon
 
 %description daemon
-Ring is free software for universal communication which respects freedoms
+Jami is free software for universal communication which respects freedoms
 and privacy of its users.
 .
-This package contains the Ring daemon: dring.
+This package contains the Jami daemon: dring.
 
 %prep
 %setup -n ring-project
