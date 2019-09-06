@@ -111,7 +111,7 @@ DNF_DEPENDENCIES = [
     'speex-devel', 'chrpath', 'check', 'astyle', 'uuid-c++-devel', 'gettext-devel',
     'gcc-c++', 'which', 'alsa-lib-devel', 'systemd-devel', 'libuuid-devel',
     'uuid-devel', 'gnutls-devel', 'nettle-devel', 'opus-devel', 'speexdsp-devel',
-    'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
+    'yaml-cpp-devel', 'qt5-qtbase-devel', 'qt5-qtmultimedia-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
     'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel',
     'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel', 'openssl-devel',
     'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel', 'libcanberra-devel',
@@ -127,7 +127,7 @@ APT_DEPENDENCIES = [
     'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
     'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libssl-dev',
     'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
-    'libudev-dev', 'libupnp1.8-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'libqt5sql5-sqlite', 'sip-tester', 'swig',
+    'libudev-dev', 'libupnp1.8-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'libqt5sql5-sqlite', 'libqt5multimedia5', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
     'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-dev', 'libvdpau-dev', 'libmsgpack-dev', 'libcanberra-gtk3-dev'
 ]

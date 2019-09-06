@@ -7,7 +7,7 @@ RUN dnf clean all
 RUN dnf upgrade -y && \
     dnf install -y mesa-libgbm-devel mesa-dri-drivers && \
     dnf install -y libinput-devel && \
-    dnf install -y qt5-qtbase-5.11.1-7.fc29 qt5-linguist-5.11.1-2.fc29 qt5-qtbase-devel-5.11.1-7.fc29 qt5-qttools-devel-5.11.1-2.fc29 && \
+    dnf install -y qt5-qtbase-5.11.1-7.fc29 qt5-linguist-5.11.1-2.fc29 qt5-qtbase-devel-5.11.1-7.fc29 qt5-qttools-devel-5.11.1-2.fc29 qt5-qtmultimedia-devel && \
     dnf install -y \
         git \
         rpm-build \

@@ -51,6 +51,7 @@ BuildRequires: gsm-devel
 BuildRequires: libupnp-devel
 BuildRequires: gcc-c++
 BuildRequires: qt5-qtbase-devel
+BuildRequires: qt5-qtmultimedia-devel
 BuildRequires: gnome-icon-theme-symbolic
 BuildRequires: clutter-gtk-devel
 BuildRequires: clutter-devel

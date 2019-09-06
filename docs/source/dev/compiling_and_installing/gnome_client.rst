@@ -17,13 +17,13 @@ On Debian/Ubuntu these can be installed with:
 
 .. code-block:: bash
 
-    sudo apt-get install g++ cmake libgtk-3-dev qtbase5-dev libclutter-gtk-1.0-dev gnome-icon-theme-symbolic libebook1.2-dev libnotify-dev gettext
+    sudo apt-get install g++ cmake libgtk-3-dev qtbase5-dev qtmultimedia5-dev libclutter-gtk-1.0-dev gnome-icon-theme-symbolic libebook1.2-dev libnotify-dev gettext
 
 On Fedora:
 
 .. code-block:: bash
 
-    sudo yum install gcc-c++ cmake gtk3-devel qt5-qtbase-devel clutter-gtk-devel gnome-icon-theme-symbolic libnotify-devel gettext
+    sudo yum install gcc-c++ cmake gtk3-devel qt5-qtbase-devel qt5-qtmultimedia-devel clutter-gtk-devel gnome-icon-theme-symbolic libnotify-devel gettext
 
 Compiling
 #########
