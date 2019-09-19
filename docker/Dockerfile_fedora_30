@@ -37,7 +37,6 @@ RUN dnf upgrade -y && \
         check \
         astyle \
         uuid-c++-devel \
-        libupnp-devel \
         gettext-devel \
         gcc-c++ \
         which \
