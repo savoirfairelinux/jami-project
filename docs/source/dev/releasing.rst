@@ -1,14 +1,14 @@
-Ring release process
+Jami release process
 ====================
 
-This page explains the process of making a new Ring release. It can be used as checklist of things to remember when making a new release. It was written to clarify the release process between the Ring dev team and the distribution maintainers.
+This page explains the process of making a new Jami release. It can be used as checklist of things to remember when making a new release. It was written to clarify the release process between the Jami dev team and the distribution maintainers.
 
 Release tarball
 ###############
 
-Ring is released in the form of a tarball. They are hosted here:
+Jami is released in the form of a tarball. They are hosted here:
 
- - https://dl.ring.cx/ring-release/tarballs/
+ - https://dl.jami.net/ring-release/tarballs/
 
 Tarballs are generated from the integration branch of the `ring-project <https://github.com/savoirfairelinux/ring-project>`_ repository with a job on our `Jenkins server <https://test.savoirfairelinux.com/>`_. They include a copy of all contrib libraries configured in ``daemon/contrib/src``. If you are a Savoir-faire Linux employee, you may trigger the job from `this page <https://test.savoirfairelinux.com/job/ring-release/>`_.
 
@@ -40,14 +40,9 @@ The packaging is maintained using git-buildpackage and can be found in the follo
 - git.debian.org:/git/pkg-voip/ring.git
 
 
-The repository contains a Debian.README file explaining the process of importing a new version. To upload a new version of Ring, manual action is required by Alexandre. If he is unavailable, other members of the Debian VoIP team may do the upload.
+The repository contains a Debian.README file explaining the process of importing a new version. To upload a new version of Jami, manual action is required by Alexandre. If he is unavailable, other members of the Debian VoIP team may do the upload.
 
 Upstream packaging
 ------------------
 
-The Ring dev team builds packages for popular Linux distributions. Those packages are built weekly. Instructions on installing the repositories can be found on `ring.cx/download <https://ring.cx/en/download>`_.
-
-Stable releases
-###############
-
-At this moment Ring is still considered in beta and does not support stable releases. This may or may not change when the beta period is over. The most secure and stable version of ring is the tip of the master branch.
+The Jami dev team builds packages for popular Linux distributions. Those packages are built weekly. Instructions on installing the repositories can be found on `jami.net/download <https://jami.net/en/download>`_.

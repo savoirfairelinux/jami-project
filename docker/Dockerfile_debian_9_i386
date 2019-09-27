@@ -18,7 +18,6 @@ RUN apt-get update && \
         libtool \
         libdbus-1-dev \
         libdbus-c++-dev \
-        libupnp-dev \
         libargon2-0-dev \
         libebook1.2-dev \
 	libcanberra-gtk3-dev \
