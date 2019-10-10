@@ -13,9 +13,9 @@ NO_CPUS=1
 endif
 
 # Binary package names
-RING_ALL_IN_ONE_PKG_NAME="ring-all"
-RING_CLIENT_PKG_NAME="ring"
-RING_DAEMON_PKG_NAME="ring-daemon"
+RING_ALL_IN_ONE_PKG_NAME="jami-all"
+RING_CLIENT_PKG_NAME="jami"
+RING_DAEMON_PKG_NAME="jami-daemon"
 
 %:
 	dh $@
@@ -161,7 +161,7 @@ override_dh_auto_install:
 
         ## GNOME client
 	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/$(RING_CLIENT_PKG_NAME) install
-	ln -sf /usr/bin/jami $(CURDIR)/debian/ring/usr/bin/ring.cx
+	ln -sf /usr/bin/jami $(CURDIR)/debian/jami/usr/bin/ring.cx
 
 	######################
 	## Ring AiO install ##
@@ -185,7 +185,7 @@ override_dh_auto_install:
 
         ## GNOME client
 	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME) install
-	ln -sf /usr/bin/jami $(CURDIR)/debian/ring-all/usr/bin/ring.cx
+	ln -sf /usr/bin/jami $(CURDIR)/debian/jami-all/usr/bin/ring.cx
 
 tmpdir:= $(shell mktemp -d)
 workdir:= $(shell pwd)
@@ -194,14 +194,14 @@ version_to_download := $(shell dpkg-parsechangelog -ldebian/changelog | perl -ne
 
 # Repacks the tarball with contrib tarballs unpacked.
 get-orig-source:
-	# Download ring tarball
+	# Download jami tarball
 	if [ -n "$$GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL" ]; then \
 	    mv $$GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL ${tmpdir}; \
 	else \
 	    uscan --rename --destdir=${tmpdir} --download-version ${version_to_download} ;\
 	fi
 
-	# Unpack ring tarball
+	# Unpack jami tarball
 	tar -C ${tmpdir} -xf ${tmpdir}/*.tar.gz
 
 	# Remove original tarball
@@ -243,7 +243,7 @@ get-orig-source:
 	rm -rf ${tmpdir}/ring-project/daemon/contrib/tarballs
 
 	# Create the new tarball
-	cd ${tmpdir} && tar -czf ${workdir}/ring_${version_to_download}~dfsg1.orig.tar.gz ring-project
+	cd ${tmpdir} && tar -czf ${workdir}/jami_${version_to_download}~dfsg1.orig.tar.gz ring-project
 
 	# Clear the temp dir
 	rm -rf ${tmpdir}

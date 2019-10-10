@@ -1,8 +1,8 @@
-# ring-all package for jami.net website
+# jami-all package for jami.net website
 
-This source package provides a single ring-all binary package.
+This source package provides a single jami-all binary package.
 
-This binary package is the same as the mainline ring-all, apart from
+This binary package is the same as the mainline jami-all, apart from
 the fact that it installs release keys and jami.net package repository
 as trusted peers so Jami can be updated from jami.net along with
 system updates.
