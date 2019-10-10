@@ -28,14 +28,14 @@ target_template = """\
 ## Distro: %(distribution)s
 ##
 
-# We don't simply use ring-packaging-distro as the docker image name because
+# We don't simply use jami-packaging-distro as the docker image name because
 # we want to be able to build multiple versions of the same distro at the
 # same time and it could result in race conditions on the machine as we would
 # overwrite the docker image of other builds.
 #
 # This does not impact caching as the docker daemon does not care about the image
 # names, just about the contents of the Dockerfile.
-PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME:=ring-packaging-%(distribution)s$(RING_PACKAGING_IMAGE_SUFFIX)
+PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME:=jami-packaging-%(distribution)s$(RING_PACKAGING_IMAGE_SUFFIX)
 PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE:=.docker-image-$(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 DOCKER_EXTRA_ARGS =
 
