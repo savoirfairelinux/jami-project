@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: ring
+Upstream-Name: jami
 Upstream-Contact: Alexandre Viau <alexandre.viau@savoirfairelinux.net>
-Source: https://dl.jami.net/ring-release/tarballs/
+Source: https://dl.jami.net/release/tarballs/
 Files-Excluded: client-electron/*
                 client-uwp/*
                 client-windows/*
@@ -21,18 +21,18 @@ Copyright: 2004-2019 Savoir-faire Linux Inc.
            2012-2013 LOTES TM LLC
            2011-2014 lolilolicon <lolilolicon@gmail.com>
 License: GPL-3+
-Comment: Upstream embeds everything that is needed to build ring inside the release tarball.
+Comment: Upstream embeds everything that is needed to build jami inside the release tarball.
  Everything that is already in Debian has been removed.
  .
- OpenDHT was kept and not packaged independently. OpenDHT was written for Ring and is a moving
+ OpenDHT was kept and not packaged independently. OpenDHT was written for Jami and is a moving
  target. It is best to wait until it is more mature before packaging it separately.
  .
- Msgpack was kept because the version available in Debian is currently too old for Ring to build.
+ Msgpack was kept because the version available in Debian is currently too old for Jami to build.
  The Debian version of Msgpack cannot be updated at the moment because of reverse dependencies which
  are not ready.
  .
- Pjproject was kept because it is heavily patched by Ring developers. None of the patches were merged
- upstream and Ring developers are still waiting for a reaction from Pjproject developers.
+ Pjproject was kept because it is heavily patched by Jami developers. None of the patches were merged
+ upstream and Jami developers are still waiting for a reaction from Pjproject developers.
  See the relevant threads:
   - http://lists.pjsip.org/pipermail/pjsip_lists.pjsip.org/2014-October/017905.html
   - http://lists.pjsip.org/pipermail/pjsip_lists.pjsip.org/2015-January/018072.html
