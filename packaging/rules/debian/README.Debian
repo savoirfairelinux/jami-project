@@ -1,17 +1,17 @@
 # Differences and compatibility with official debian.org package
 
-This source package also provides binary package ring-all. ring-all is an
+This source package also provides binary package jami-all. jami-all is an
 all-in-one package that is it ships both the Jami Daemon and the GNOME
 client. This package is not available in the debian.org repositories (not
 needed in the Debian case).
 
-ring-all allows easy installation of Jami as a single package from jami.net.
+jami-all allows easy installation of Jami as a single package from jami.net.
 The reason is that one cannot register a repository in source.list.d and
 directly use it to fetch the dependencies. As a consequence it is not
 possible to have a one-click installation with two binary packages. That's
-why we build ring-all.
+why we build jami-all.
 
-ring-all conflicts with ring and ring-daemon since they are distributing the
+jami-all conflicts with jami and jami-daemon since they are distributing the
 same files.
 
 # Notes
