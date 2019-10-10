@@ -48,24 +48,24 @@ apt-get upgrade -o Acquire::Retires=10 -y
 mk-build-deps --remove --install debian/control -t "apt-get -y --no-install-recommends"
 
 # create changelog file
-DEBEMAIL="The Ring project <ring@gnu.org>" dch --create --package ring --newversion ${DEBIAN_VERSION} "Automatic nightly release"
-DEBEMAIL="The Ring project <ring@gnu.org>" dch --release --distribution "unstable" debian/changelog
+DEBEMAIL="The Jami project <jami@gnu.org>" dch --create --package jami --newversion ${DEBIAN_VERSION} "Automatic nightly release"
+DEBEMAIL="The Jami project <jami@gnu.org>" dch --release --distribution "unstable" debian/changelog
 
 # create orig tarball
 mk-origtargz --compression gzip ${RELEASE_TARBALL_FILENAME}
 rm --verbose ${RELEASE_TARBALL_FILENAME}
 
-GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL=$(readlink -f ../ring_*.orig.tar.gz) debian/rules get-orig-source
+GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL=$(readlink -f ../jami_*.orig.tar.gz) debian/rules get-orig-source
 
 # move the tarball to the work directory
-mkdir -p /opt/ring-packaging
-mv ring_*.orig.tar.gz /opt/ring-packaging
+mkdir -p /opt/jami-packaging
+mv jami_*.orig.tar.gz /opt/jami-packaging
 
 # move to work directory
-cd /opt/ring-packaging
+cd /opt/jami-packaging
 
 # unpack the orig tarball
-tar -xvf /opt/ring-packaging/ring_*.orig.tar.gz
+tar -xvf /opt/jami-packaging/jami_*.orig.tar.gz
 
 # move to ring-project dir
 cd ring-project
