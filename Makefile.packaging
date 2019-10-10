@@ -32,13 +32,13 @@ LAST_COMMIT_DATE_SHORT:=$(shell echo $(LAST_COMMIT_DATE) | sed -s 's/-//g')
 COMMIT_ID:=$(shell git rev-parse --short HEAD)
 
 RELEASE_VERSION:=$(LAST_COMMIT_DATE_SHORT).$(NUMBER_OF_COMMITS).$(COMMIT_ID)
-RELEASE_TARBALL_FILENAME:=ring_$(RELEASE_VERSION).tar.gz
+RELEASE_TARBALL_FILENAME:=jami_$(RELEASE_VERSION).tar.gz
 
 # Debian versions
 DEBIAN_VERSION:=$(RELEASE_VERSION)~dfsg1-1
-DEBIAN_DSC_FILENAME:=ring_$(DEBIAN_VERSION).dsc
+DEBIAN_DSC_FILENAME:=jami_$(DEBIAN_VERSION).dsc
 DEBIAN_OCI_VERSION:=$(RELEASE_VERSION)~dfsg1-0
-DEBIAN_OCI_DSC_FILENAME:=ring_$(DEBIAN_OCI_VERSION).dsc
+DEBIAN_OCI_DSC_FILENAME:=jami_$(DEBIAN_OCI_VERSION).dsc
 DEBIAN_OCI_PKG_DIR:="packaging/rules/debian-one-click-install"
 
 #####################
@@ -134,7 +134,7 @@ env:
 clean:
 	rm -rf env
 	rm -rf docs/build
-	rm -f ring_*.tar.gz
+	rm -f jami_*.tar.gz
 	rm -rf packages
 	rm -f Makefile.packaging.distro_targets
 	rm -f .docker-image-*

@@ -1,4 +1,4 @@
-Source: ring
+Source: jami
 Section: comm
 Priority: optional
 Maintainer: Alexandre Viau <aviau@debian.org>
@@ -23,7 +23,7 @@ Build-Depends: debhelper (>= 9),
                libayatana-appindicator3-dev | libappindicator3-dev,
                libnm-dev,
                libwebkit2gtk-4.0-dev | libwebkit2gtk-3.0-dev,
-# ring-daemon
+# jami-daemon
                libdbus-1-dev,
                libdbus-c++-dev,
                libupnp-dev,
@@ -59,18 +59,26 @@ Homepage: https://jami.net
 Vcs-Git: https://git.jami.net/savoirfairelinux/ring-project.git
 Vcs-Browser: https://git.jami.net/savoirfairelinux/ring-project
 
-Package: ring-all
+Package: jami-all
 Architecture: any
 Depends: libqt5sql5-sqlite,
          gnupg,
          ${shlibs:Depends},
          ${misc:Depends}
-Replaces: ring,
-          ring-gnome,
-          ring-daemon
-Conflicts: ring,
-           ring-gnome,
-           ring-daemon
+Replaces: jami,
+          jami-daemon,
+          jami-gnome,
+          ring,
+          ring-all,
+          ring-daemon,
+          ring-gnome
+Conflicts: jami,
+           jami-daemon,
+           jami-gnome,
+           ring,
+           ring-all,
+           ring-daemon,
+           ring-gnome
 Description: Secure and distributed voice, video and chat platform - all in one package
  Jami (jami.net) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy
