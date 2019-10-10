@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: ring
+Upstream-Name: jami
 Upstream-Contact: Alexandre Viau <alexandre.viau@savoirfairelinux.net>
-Source: https://dl.jami.net/ring-release/tarballs/
+Source: https://dl.jami.net/release/tarballs/
 Files-Excluded: client-electron/*
                 client-uwp/*
                 client-windows/*
@@ -21,7 +21,7 @@ Copyright: 2004-2019 Savoir-faire Linux Inc.
            2012-2013 LOTES TM LLC
            2011-2014 lolilolicon <lolilolicon@gmail.com>
 License: GPL-3+
-Comment: Upstream embeds everything that is needed to build ring inside the release tarball.
+Comment: Upstream embeds everything that is needed to build Jami inside the release tarball.
  Everything that is already in Debian has been removed.
  .
  OpenDHT was kept and not packaged independently. OpenDHT was written for Jami and is a moving
