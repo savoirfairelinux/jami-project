@@ -262,6 +262,14 @@ def run_generate_all(parsed_args):
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
         },
+        {
+            "distribution": "ubuntu_19.10",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "--privileged --security-opt apparmor=docker-default",
+        },
+
+
         # Fedora
         {
             "distribution": "fedora_27",
