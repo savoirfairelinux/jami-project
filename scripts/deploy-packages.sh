@@ -128,7 +128,7 @@ function package_rpm()
     cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/ring-nightly.repo
 [ring]
 name=Ring \$releasever - \$basearch - ring
-baseurl=https://dl.jami.net/ring-nightly/fedora_\$releasever
+baseurl=https://dl.jami.net/ring-nightly/${DISTRIBUTION}_\$releasever
 gpgcheck=1
 gpgkey=https://dl.jami.net/ring.pub.key
 enabled=1
@@ -211,7 +211,7 @@ function package()
     if [[ "${DISTRIBUTION:0:6}" == "debian" || "${DISTRIBUTION:0:6}" == "ubuntu" ]];
     then
         package_deb
-    elif [[ "${DISTRIBUTION:0:6}" == "fedora" ]];
+    elif [[ "${DISTRIBUTION:0:6}" == "fedora" || "${DISTRIBUTION:0:4}" == "rhel" ]];
     then
         package_rpm
     else
