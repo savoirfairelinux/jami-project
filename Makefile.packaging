@@ -99,6 +99,10 @@ package-all: package-debian_9 \
              package-ubuntu_19.04_i386 \
              package-ubuntu_19.04_oci \
              package-ubuntu_19.04_i386_oci \
+	     package-ubuntu_19.10 \
+	     package-ubuntu_19.10_i386 \
+             package-ubuntu_19.10_oci \
+             package-ubuntu_19.10_i386_oci \
              package-fedora_27 \
              package-fedora_27_i386 \
              package-fedora_28 \
