@@ -103,6 +103,13 @@ Description: Secure and distributed voice, video and chat platform - desktop cli
  .
  This package contains the desktop client: jami-gnome.
 
+Package: ring
+Source: ring
+Depends: jami, ${misc:Depends}
+Architecture: all
+Description: transitional package for jami
+ This is a transitional package. It can safely be removed.
+
 Package: jami-daemon
 Architecture: any
 Depends: ${shlibs:Depends},
