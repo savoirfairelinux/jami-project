@@ -86,6 +86,12 @@ Description: Secure and distributed voice, video and chat platform - all in one 
  .
  This package contains the GNOME desktop client and dring, the Jami daemon.
 
+Package: ring-all
+Depends: jami-all, ${misc:Depends}
+Architecture: all
+Description: transitional package for jami-all
+ This is a transitional package. It can safely be removed.
+
 Package: jami
 Architecture: any
 Depends: ${shlibs:Depends},
@@ -103,6 +109,12 @@ Description: Secure and distributed voice, video and chat platform - desktop cli
  .
  This package contains the desktop client: jami-gnome.
 
+Package: ring
+Depends: jami, ${misc:Depends}
+Architecture: all
+Description: transitional package for jami
+ This is a transitional package. It can safely be removed.
+
 Package: jami-daemon
 Architecture: any
 Depends: ${shlibs:Depends},
@@ -115,3 +127,9 @@ Description: Secure and distributed voice, video and chat platform - daemon
  in the hands of the user.
  .
  This package contains the Jami daemon: dring.
+
+Package: ring-daemon
+Depends: jami-daemon, ${misc:Depends}
+Architecture: all
+Description: transitional package for jami-daemon
+ This is a transitional package. It can safely be removed.
