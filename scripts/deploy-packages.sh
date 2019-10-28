@@ -46,12 +46,12 @@ function package_deb()
 
     # Distributions file
     cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf/distributions
-Origin: ring
-Label: Ring ${DISTRIBUTION} Repository
-Codename: ring
+Origin: jami
+Label: Jami ${DISTRIBUTION} Repository
+Codename: jami
 Architectures: i386 amd64
 Components: main
-Description: This repository contains Ring ${DISTRIBUTION} packages
+Description: This repository contains Jami ${DISTRIBUTION} packages
 SignWith: ${KEYID}
 EOF
 
@@ -77,16 +77,16 @@ EOF
         if [ ${package_arch} = "all" ]; then
             # Removing to avoid the error of adding the same deb twice.
             # This happens with arch all packages, which are generated in amd64 and i386.
-            reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} remove ring ${package_name}
+            reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} remove jami ${package_name}
         fi
-        reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} includedeb ring ${package}
+        reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} includedeb jami ${package}
     done
 
     # Rebuild the index
-    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} export ring
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} export jami
 
     # Show the contents
-    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list ring
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list jami
 
     #######################################
     ## create the manual download folder ##
