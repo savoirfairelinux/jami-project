@@ -1,7 +1,9 @@
 # Packaging dockerfiles
 
-This folder contains Dockerfiles for building Ring. They are used by
+This folder contains Dockerfiles for building Jami. They are used by
 Makefile.packaging, at the root of this repository
+
+It also contains Dockerfiles for testing Jami. They will install all the required dependencies in this way using their image we can save time in our testing process.
 
 ## 32bit images
 
