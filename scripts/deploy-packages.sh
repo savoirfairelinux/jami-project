@@ -93,12 +93,18 @@ EOF
     #######################################
     DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
     mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-    for package in packages/${DISTRIBUTION}*/*.deb; do
-        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-        package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
-        package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
-        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.deb
+    # packages with dfsg1-0 contains the postinstall script that adds the repository
+    cp packages/${DISTRIBUTION}*/jami-all_????????\..\.*\~dfsg1-0_*.deb ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+    for package in ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/*; do
+	    echo "################# DEBUG ###################"
+	    echo package: $package
     done
+#    for package in packages/${DISTRIBUTION}*/*.deb; do
+#        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+#        package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
+#        package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
+#        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.deb
+#    done
 }
 
 
