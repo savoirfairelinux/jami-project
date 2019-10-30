@@ -93,12 +93,26 @@ EOF
     #######################################
     DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
     mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-    for package in packages/${DISTRIBUTION}*/*.deb; do
-        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+    #DEBUG
+    ls packages/${DISTRIBUTION}
+    # packages with dfsg1-0 contains the postinstall script that adds the repository
+    # FIXME el pkg es jami
+    cp packages/${DISTRIBUTION}*/ring-all_????????.?.*\~dfsg1-0_*.deb ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+    for package in ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/*; do
+	    echo "################# DEBUG ###################"
+	    echo package: $package
         package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
         package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
-        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.deb
+	package_linkname=${package_name}_${package_arch}.deb
+	ln -s ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package} \
+	      ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/{package_linkname}
     done
+#    for package in packages/${DISTRIBUTION}*/*.deb; do
+#        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+#        package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
+#        package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
+#        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.deb
+#    done
 }
 
 
