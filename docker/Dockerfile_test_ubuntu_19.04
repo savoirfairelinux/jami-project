@@ -1,0 +1,22 @@
+FROM ubuntu:disco
+
+# Non root user with sudo
+RUN apt-get update && apt-get install --no-install-recommends -y sudo
+RUN useradd -ms /bin/bash -G sudo user
+RUN sed -i 's/^%sudo.*/%sudo ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+
+# Required to add jami repos to debian
+RUN apt-get install --no-install-recommends -y \
+	gnupg \
+	dirmngr \
+	ca-certificates
+
+# Jami dependencies in the advance (made jami installation faster)
+#RUN apt install --no-install-recommends -y \
+
+# Jami daemon dependencies in the advance (made jami installation faster)
+#RUN apt install --no-install-recommends -y \
+
+
+USER user
+WORKDIR /home/user
