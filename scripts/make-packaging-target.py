@@ -338,6 +338,19 @@ def run_generate_all(parsed_args):
             "output_file": ".packages-built",
             "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
         },
+         {
+            "distribution": "fedora_31",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
+        },
+        {
+            "distribution": "fedora_31_i386",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
+        },
+
         # Gentoo
         {
             "distribution": "gentoo",
