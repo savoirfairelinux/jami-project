@@ -1,18 +1,9 @@
 [submodule "client-android"]
 	path = client-android
 	url = https://review.jami.net/ring-client-android
-[submodule "client-gnome"]
-	path = client-gnome
-	url = https://review.jami.net/ring-client-gnome
 [submodule "client-windows"]
 	path = client-windows
 	url = https://review.jami.net/ring-client-windows
-[submodule "daemon"]
-	path = daemon
-	url = https://review.jami.net/ring-daemon
-[submodule "lrc"]
-	path = lrc
-	url = https://review.jami.net/ring-lrc
 [submodule "client-macosx"]
 	path = client-macosx
 	url = https://review.jami.net/ring-client-macosx
