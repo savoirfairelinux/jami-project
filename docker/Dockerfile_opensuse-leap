@@ -1,8 +1,6 @@
-#FROM fedora:30
 FROM opensuse/leap
 RUN zypper --non-interactive install  dnf 
 RUN dnf clean all
-#RUN zypper --non-interactive addrepo https://download.opensuse.org/repositories/devel:tools/openSUSE_Leap_15.1/devel:tools.repo
 RUN zypper --non-interactive lr
 RUN zypper --non-interactive  --gpg-auto-import-key refresh  
 RUN zypper --non-interactive lr 
@@ -26,7 +24,6 @@ RUN zypper --non-interactive up -y && \
         libcurl-devel \
         libtool \
         libQt5DBus-devel \
-       # expat-devel \
         pcre-devel \
         yaml-cpp-devel \
         boost-devel \
@@ -50,11 +47,9 @@ RUN zypper --non-interactive up -y && \
         libuuid-devel \
         uuid-devel \
         gnutls-devel \
-        #nettle-devel \
         libopus-devel \
         patch \
         jsoncpp-devel \
-        #libnatpmp-devel \
         webkit2gtk3-devel \
         libcryptopp-devel \
         libva-devel \
@@ -63,7 +58,6 @@ RUN zypper --non-interactive up -y && \
         libnma-devel \
 	clutter-devel \
         openssl-devel \
-        #openssl-static \
          clutter-devel \
         clutter-gtk-devel \
         libnma-devel \
