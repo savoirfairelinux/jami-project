@@ -21,7 +21,7 @@
 # rpm-based distros.
 #
 
-set -e
+set -ex
 
 # import the spec file
 mkdir -p /opt/ring-project
@@ -36,8 +36,8 @@ rpmdev-bumpspec --comment="Automatic nightly release" --userstring="Jenkins <rin
 dnf builddep -y ring.spec || echo "ignoring dnf builddep failure"
 
 # place the source
-mkdir -p /root/rpmbuild/SOURCES
-cp /opt/ring-project-ro/ring_*.tar.gz /root/rpmbuild/SOURCES
+mkdir -p  /usr/src/packages/SOURCES/
+cp /opt/ring-project-ro/ring_*.tar.gz  /usr/src/packages/SOURCES/
 
 # build the package
 rpmbuild -ba ring.spec
