@@ -35,7 +35,7 @@ PACMAN_BASED_DISTROS = [
 ]
 
 ZYPPER_BASED_DISTROS = [
-    'opensuse',
+    'opensuse-leap',
 ]
 
 APT_INSTALL_SCRIPT = [
