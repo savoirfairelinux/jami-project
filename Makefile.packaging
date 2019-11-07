@@ -113,6 +113,7 @@ package-all: package-debian_9 \
              package-fedora_30_i386 \
              package-fedora_31 \
              package-fedora_31_i386 \
+	     package-opensuse-leap \
 	     package-gentoo
 
 # Append the output of make-packaging-target to this Makefile
