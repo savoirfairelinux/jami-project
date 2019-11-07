@@ -114,7 +114,8 @@ package-all: package-debian_9 \
              package-fedora_31 \
              package-fedora_31_i386 \
              package-rhel_8 \
-             package-gentoo
+	     package-opensuse-leap_15 \
+	     package-gentoo
 
 # Append the output of make-packaging-target to this Makefile
 # see Makefile.packaging.distro_targets
