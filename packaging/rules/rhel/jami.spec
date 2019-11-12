@@ -15,6 +15,7 @@ Obsoletes:     ring ring-daemon
 Provides:      ring
 Conflicts:     ring ring-daemon
 
+
 BuildRequires: make
 BuildRequires: autoconf
 BuildRequires: automake
@@ -22,20 +23,13 @@ BuildRequires: cmake
 BuildRequires: pulseaudio-libs-devel
 BuildRequires: libcanberra-devel
 BuildRequires: libtool
-BuildRequires: dbus-devel
 BuildRequires: expat-devel
 BuildRequires: pcre-devel
-BuildRequires: yaml-cpp-devel
 BuildRequires: boost-devel
-BuildRequires: dbus-c++-devel
 BuildRequires: dbus-devel
 BuildRequires: libXext-devel
-BuildRequires: yasm
-BuildRequires: speex-devel
 BuildRequires: chrpath
 BuildRequires: check
-BuildRequires: astyle
-BuildRequires: uuid-c++-devel
 BuildRequires: gettext-devel
 BuildRequires: gcc-c++
 BuildRequires: which
@@ -43,30 +37,31 @@ BuildRequires: alsa-lib-devel
 BuildRequires: systemd-devel
 BuildRequires: libuuid-devel
 BuildRequires: libXfixes-devel
-BuildRequires: uuid-devel
 BuildRequires: gnutls-devel
 BuildRequires: nettle-devel
-BuildRequires: opus-devel
-BuildRequires: jsoncpp-devel
-BuildRequires: libnatpmp-devel
-BuildRequires: gsm-devel
-BuildRequires: libupnp-devel
+#BuildRequires: jsoncpp-devel
+#BuildRequires: json-devel
 BuildRequires: gcc-c++
-BuildRequires: qt5-qtbase-devel
-BuildRequires: gnome-icon-theme-symbolic
-BuildRequires: clutter-gtk-devel
-BuildRequires: clutter-devel
 BuildRequires: glib2-devel
 BuildRequires: gtk3-devel
-BuildRequires: libnotify-devel
-BuildRequires: qt5-qttools-devel
-BuildRequires: qrencode-devel
-BuildRequires: libappindicator-gtk3-devel
-BuildRequires: NetworkManager-libnm-devel
 BuildRequires: libva-devel
 BuildRequires: webkitgtk4-devel
-BuildRequires: cryptopp-devel
+BuildRequires: qt5-devel
+BuildRequires: clutter
+BuildRequires: clutter-devel
+BuildRequires: clutter-gtk-devel
+BuildRequires: qrencode-devel
+BuildRequires: yasm
+BuildRequires: opus
+BuildRequires: opus-devel
 BuildRequires: libvdpau-devel
+BuildRequires: libvdpau
+BuildRequires: speexdsp
+BuildRequires: speexdsp-devel
+BuildRequires: cppunit-devel
+BuildRequires: cppunit
+BuildRequires: dbus-c++
+
 
 %description
 Jami is free software for universal communication which respects freedoms
