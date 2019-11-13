@@ -88,21 +88,17 @@ EOF
     # Show the contents
     reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list ring
 
-    #######################################
-    ## create the manual download folder ##
-    #######################################
-    DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
-    mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-    ls packages/${DISTRIBUTION}
+    ############################################
+    ## Add oci debs to distribution directory ##
+    ############################################
     # packages with dfsg1-0 contains the postinstall script that adds the repository
-    cp packages/${DISTRIBUTION}*/jami-all_????????.?.*\~dfsg1-0_*.deb ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-    for package in ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/*; do
+    cp packages/${DISTRIBUTION}*/jami-all_????????.?.*\~dfsg1-0_*.deb ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+    for package in ${DISTRIBUTION_REPOSITOIRY_FOLDER}/*.deb; do
         package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
         package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
-	package_linkname=${package_name}_${package_arch}.deb
-	cd ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-	cp ${package} ${package_linkname}
-	cd -
+	package_shortname=${package_name}_${package_arch}.deb
+	cp ${DISTRIBUTION_REPOSITOIRY_FOLDER}/${package} \
+		${DISTRIBUTION_REPOSITOIRY_FOLDER}/${package_shortname}
     done
 }
 
