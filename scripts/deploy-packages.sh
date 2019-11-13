@@ -91,9 +91,7 @@ EOF
     #######################################
     ## create the manual download folder ##
     #######################################
-    DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
-    mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-    ls packages/${DISTRIBUTION}
+    DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=${DISTRIBUTION_REPOSITOIRY_FOLDER}
     # packages with dfsg1-0 contains the postinstall script that adds the repository
     cp packages/${DISTRIBUTION}*/jami-all_????????.?.*\~dfsg1-0_*.deb ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
     for package in ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/*; do
