@@ -27,7 +27,7 @@ APT_BASED_DISTROS = [
 ]
 
 DNF_BASED_DISTROS = [
-    'fedora', 'rhel',
+    'fedora',
 ]
 
 PACMAN_BASED_DISTROS = [
