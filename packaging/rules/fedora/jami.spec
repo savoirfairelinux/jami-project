@@ -105,8 +105,7 @@ cd %{_builddir}/ring-project/daemon/contrib/native && \
         --disable-natpmp && \
     make list && \
     make fetch && \
-    make -j4 V=1 && \
-    make -j4 V=1 .ffmpeg
+    make -j4 V=1
 
 cd %{_builddir}/ring-project/daemon && \
     ./autogen.sh && \
