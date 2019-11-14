@@ -95,7 +95,7 @@ EOF
     mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
     ls packages/${DISTRIBUTION}
     # packages with dfsg1-0 contains the postinstall script that adds the repository
-    cp packages/${DISTRIBUTION}*/jami-all_????????.?.*\~dfsg1-0_*.deb ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+    cp packages/${DISTRIBUTION}*/jami-all_????????.*\~dfsg1-0_*.deb ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
     for package in ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/*; do
         package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
         package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
