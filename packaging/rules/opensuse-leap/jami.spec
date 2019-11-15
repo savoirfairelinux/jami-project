@@ -11,31 +11,22 @@ License:       GPLv3+
 URL:           https://jami.net/
 Source:        jami_%{version}.tar.gz
 Requires:      jami-daemon = %{version}
-Obsoletes:     ring ring-daemon
-Provides:      ring
-Conflicts:     ring ring-daemon
 
 BuildRequires: make
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: cmake
-BuildRequires: pulseaudio-libs-devel
 BuildRequires: libcanberra-devel
 BuildRequires: libtool
-BuildRequires: dbus-devel
-BuildRequires: expat-devel
 BuildRequires: pcre-devel
 BuildRequires: yaml-cpp-devel
 BuildRequires: boost-devel
-BuildRequires: dbus-c++-devel
-BuildRequires: dbus-devel
 BuildRequires: libXext-devel
 BuildRequires: yasm
 BuildRequires: speex-devel
 BuildRequires: chrpath
 BuildRequires: check
 BuildRequires: astyle
-BuildRequires: uuid-c++-devel
 BuildRequires: gettext-devel
 BuildRequires: gcc-c++
 BuildRequires: which
@@ -45,27 +36,15 @@ BuildRequires: libuuid-devel
 BuildRequires: libXfixes-devel
 BuildRequires: uuid-devel
 BuildRequires: gnutls-devel
-BuildRequires: nettle-devel
-BuildRequires: opus-devel
 BuildRequires: jsoncpp-devel
-BuildRequires: libnatpmp-devel
-BuildRequires: gsm-devel
-BuildRequires: libupnp-devel
 BuildRequires: gcc-c++
-BuildRequires: qt5-qtbase-devel
 BuildRequires: gnome-icon-theme-symbolic
 BuildRequires: clutter-gtk-devel
 BuildRequires: clutter-devel
 BuildRequires: glib2-devel
 BuildRequires: gtk3-devel
-BuildRequires: libnotify-devel
-BuildRequires: qt5-qttools-devel
-BuildRequires: qrencode-devel
-BuildRequires: libappindicator-gtk3-devel
-BuildRequires: NetworkManager-libnm-devel
+BuildRequires: libnma-devel
 BuildRequires: libva-devel
-BuildRequires: webkitgtk4-devel
-BuildRequires: cryptopp-devel
 BuildRequires: libvdpau-devel
 
 %description
@@ -105,8 +84,7 @@ cd %{_builddir}/ring-project/daemon/contrib/native && \
         --disable-natpmp && \
     make list && \
     make fetch && \
-    make -j4 V=1 && \
-    make -j4 V=1 .ffmpeg
+    make -j4 V=1
 
 cd %{_builddir}/ring-project/daemon && \
     ./autogen.sh && \
@@ -216,23 +194,12 @@ ln -sf %{_bindir}/jami %{buildroot}/%{_bindir}/ring.cx
 %postun
 /sbin/ldconfig
 
-#for < f24 we have to update the schema explicitly
-%if 0%{?fedora} < 24
-    if [ $1 -eq 0 ] ; then
-        /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
-    fi
-%endif
-
 if [ $1 -eq 0 ] ; then
     /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
 
 %posttrans
-#for < f24 we have to update the schema explicitly
-%if 0%{?fedora} < 24
-    /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
-%endif
 
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
