@@ -1,0 +1,39 @@
+This server mainly contains Jami's binary packages and repositories.
+
+We see this server as a non-user oriented technical stuff but in order to provide an overview we documented the content in Nov of 2019.
+
+
+ * docs: files for https://docs.jami.net/
+ * ring.pub.key: gpg public key used to sign packages
+
+ * release: tarballs from our classic release way (lot of changes in one shoot).
+   * release -> ring-release
+   * ring-release
+
+ * stable: Linux  repositories based in releases
+   * ring -> stable
+   * stable
+
+ * mac_osx: .dmg binaries for Mac OSX
+ * windows: .exe and .msi binaries for Windows
+
+
+ * manual-nightly: Linux one click install binaries from our CI/CD pipeline.
+   * manual-nightly -> ring-manual-nightly
+   * ring-manual -> ring-manual-nightly
+   * ring-manual-nightly
+
+ * nightly: Linux repositories from our CI/CD pipeline.
+   * nightly -> ring-nightly
+   * ring-nightly
+
+ * manual-internal: Linux one click install binaries from our EXPERIMENTAL CI/CD pipeline.
+  * manual-internal -> ring-manual-internal
+  * ring-manual-internal
+
+ * internal: Linux repositories from our EXPERIMENTAL CI/CD pipeline.
+  * internal -> ring-internal
+  * ring-internal
+
+ * web: ringtones we used for an old survey
+
