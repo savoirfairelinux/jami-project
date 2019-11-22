@@ -163,7 +163,7 @@ EOF
     #######################################
     DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
     mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-    for package in packages/${DISTRIBUTION}*/*.rpm; do
+    for package in packages/${DISTRIBUTION}*/rhel-one-click-install/*.rpm; do
         cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
         package_name=$(rpm -qp --queryformat '%{NAME}' ${package})
         package_arch=$(rpm -qp --queryformat '%{ARCH}' ${package})
