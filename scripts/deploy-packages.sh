@@ -163,12 +163,22 @@ EOF
     #######################################
     DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
     mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-    for package in packages/${DISTRIBUTION}*/*.rpm; do
-        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-        package_name=$(rpm -qp --queryformat '%{NAME}' ${package})
-        package_arch=$(rpm -qp --queryformat '%{ARCH}' ${package})
-        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.rpm
-    done
+    if [ -d "packages/${DISTRIBUTION}/one-click-install/" ];
+    then
+        for package in packages/${DISTRIBUTION}*/one-click-install/*.rpm; do
+            cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+            package_name=$(rpm -qp --queryformat '%{NAME}' ${package})
+            package_arch=$(rpm -qp --queryformat '%{ARCH}' ${package})
+            cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.rpm
+        done
+    else
+        for package in packages/${DISTRIBUTION}*/*.rpm; do
+            cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+            package_name=$(rpm -qp --queryformat '%{NAME}' ${package})
+            package_arch=$(rpm -qp --queryformat '%{ARCH}' ${package})
+            cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.rpm
+        done
+    fi
 }
 
 
