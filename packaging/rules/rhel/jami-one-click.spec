@@ -1,7 +1,7 @@
-%define spec_install_pre %{___build_pre}     ; mkdir -p `dirname "$RPM_BUILD_ROOT"`;     mkdir "$RPM_BUILD_ROOT" %{nil}
-%define name        jami
+%define name        jami-all
 %define version     RELEASE_VERSION
 %define release     0
+%define postinst    jami-all.postinst
 
 Name:          %{name}
 Version:       %{version}
@@ -11,11 +11,10 @@ Group:         Applications/Internet
 License:       GPLv3+
 URL:           https://jami.net/
 Source:        jami_%{version}.tar.gz
-Requires:      jami-daemon = %{version}
+#Requires:      jami-daemon = %{version}
 Obsoletes:     ring ring-daemon
 Provides:      ring
 Conflicts:     ring ring-daemon
-#ENVRA:         01
 
 
 BuildRequires: make
@@ -70,24 +69,6 @@ Jami is free software for universal communication which respects freedoms
 and privacy of its users.
 .
 This package contains the desktop client: jami-gnome.
-
-%package daemon
-Summary: Free software for distributed and secured communication - daemon
-
-%description daemon
-Jami is free software for universal communication which respects freedoms
-and privacy of its users.
-.
-This package contains the Jami daemon: dring.
-
-
-%package all
-Summary: Free software for distributed and secured communication - daemon
-
-%description all
-Jami is free software for universal communication which respects freedoms
-and privacy of its users.
-
 
 %prep
 %setup -n ring-project
@@ -192,32 +173,14 @@ rm -rfv %{buildroot}/%{_libdir}/cmake
 DESTDIR=%{buildroot} make -C client-gnome/build install
 ln -sf %{_bindir}/jami %{buildroot}/%{_bindir}/ring.cx
 
+##########################
+## post install script  ##
+##########################
+#mkdir -p %{buildroot}/opt/repo-package/
+cp %{_builddir}/ring-project/packaging/rules/rhel/%{postinst} %{buildroot}/%{_bindir}
+chmod a+x %{buildroot}/%{_bindir}/%{postinst}
 
-%files
-%defattr(-,root,root,-)
-%{_bindir}/jami
-%{_bindir}/ring.cx
-%{_bindir}/jami-gnome
-%{_libdir}/libringclient*.so*
-%{_datadir}/glib-2.0/schemas/net.jami.Jami.gschema.xml
-%{_datadir}/applications/jami-gnome.desktop
-%{_datadir}/jami-gnome/jami-gnome.desktop
-%{_datadir}/icons/hicolor/scalable/apps/jami.svg
-%{_datadir}/metainfo/jami-gnome.appdata.xml
-%{_datadir}/libringclient/*
-%{_datadir}/locale/*
-%{_datadir}/sounds/jami-gnome/*
-%doc %{_mandir}/man1/dring*
-
-%files daemon
-%defattr(-,root,root,-)
-%{_libdir}/ring/dring
-%{_datadir}/ring/ringtones
-%{_datadir}/dbus-1/services/*
-%{_datadir}/dbus-1/interfaces/*
-
-
-%files all
+%files 
 %{_bindir}/jami
 %{_bindir}/ring.cx
 %{_bindir}/jami-gnome
@@ -235,15 +198,15 @@ ln -sf %{_bindir}/jami %{buildroot}/%{_bindir}/ring.cx
 %{_datadir}/ring/ringtones
 %{_datadir}/dbus-1/services/*
 %{_datadir}/dbus-1/interfaces/*
+%{_bindir}/%{postinst}
+
+
+
 
 %post
 /sbin/ldconfig
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-
-%post all
-/sbin/ldconfig
-/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-
+%{_bindir}/%{postinst} 
 
 %postun
 /sbin/ldconfig
@@ -260,23 +223,6 @@ if [ $1 -eq 0 ] ; then
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
 
-
-%postun all
-/sbin/ldconfig
-
-#for < f24 we have to update the schema explicitly
-%if 0%{?fedora} < 24
-    if [ $1 -eq 0 ] ; then
-        /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
-    fi
-%endif
-
-if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-fi
-
-
 %posttrans
 #for < f24 we have to update the schema explicitly
 %if 0%{?fedora} < 24
@@ -285,15 +231,4 @@ fi
 
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
-
-%posttrans all
-#for < f24 we have to update the schema explicitly
-%if 0%{?fedora} < 24
-    /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
-%endif
-
-/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-
-
 %changelog
-
