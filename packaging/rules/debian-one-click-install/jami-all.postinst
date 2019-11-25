@@ -99,6 +99,8 @@ if [ -f /etc/os-release ]; then
         ENDTAG="debian_9"
     elif [ "${DEBIAN_CODENAME}" = "buster" ] || [ "${ID}_${VERSION_ID}" = "debian_10" ]; then
         ENDTAG="debian_10"
+    elif [ "${ID}_${VERSION_ID}" = "trisquel_8.0" ]; then
+        ENDTAG="ubuntu_16.04"
     elif [ "${UBUNTU_CODENAME}" = "xenial" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_16.04" ]; then
         ENDTAG="ubuntu_16.04"
     elif [ "${UBUNTU_CODENAME}" = "bionic" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_18.04" ]; then
