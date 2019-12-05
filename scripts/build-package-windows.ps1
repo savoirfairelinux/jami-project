@@ -46,9 +46,11 @@ if(Test-Path -Path "C:\Strawberry"){
 }
 
 if(!(Test-Path -Path "C:\msys64")){
-    if(!(Test-Path -Path "C:\tools\msys64")){
-        $Env:Path += ";C:\tools\msys64\usr\bin"
-        $msys2_path = "C:\tools\msys64\usr\bin"
+    $Env:Path += ";C:\tools\msys64\usr\bin"
+    $msys2_path = "C:\tools\msys64\usr\bin"
+    if((Test-Path -Path "C:\tools\msys64")){
+        $null = $packages.Remove('msys2')
+        write-host "MSYS2 64 installed" -ForegroundColor Green
     }
 } else {
     $null = $packages.Remove('msys2')
