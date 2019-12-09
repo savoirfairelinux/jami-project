@@ -53,6 +53,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(docker_image)s
+	%(qemu_bitfmt)s
 	docker build \\
         -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME) \\
         -f docker/Dockerfile_%(docker_image)s \\
@@ -138,6 +139,18 @@ def run_generate_all(parsed_args):
             "options": "--privileged --security-opt apparmor=docker-default",
         },
         {
+            "distribution": "debian_10_armhf",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "--privileged --security-opt apparmor=docker-default",
+        },
+        {
+            "distribution": "debian_10_arm64",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "--privileged --security-opt apparmor=docker-default",
+        },
+        {
             "distribution": "debian_10_oci",
             "docker_image": "debian_10",
             "debian_packaging_override": "",
@@ -152,6 +165,14 @@ def run_generate_all(parsed_args):
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
+        },
+        # Raspbian
+        {
+            "distribution": "raspbian_10_armhf",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "--privileged --security-opt apparmor=docker-default",
+            "qemu_bitfmt": "cp /usr/bin/qemu-arm-static .",
         },
         # Ubuntu
         {
