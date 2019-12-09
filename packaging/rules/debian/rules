@@ -17,6 +17,13 @@ RING_ALL_IN_ONE_PKG_NAME="jami-all"
 RING_CLIENT_PKG_NAME="jami"
 RING_DAEMON_PKG_NAME="jami-daemon"
 
+# Bundled packages from contrib
+BUNDLED_PKGS = .ffmpeg
+ifeq ($(DISTRIBUTION),raspbian_10_armhf)
+# Raspbian's yaml-cpp lib does not work properly
+BUNDLED_PKGS += .yaml-cpp
+endif
+
 %:
 	dh $@
 
@@ -53,7 +60,7 @@ override_dh_auto_configure:
 				--enable-gnutls && \
 		make list && \
 		make -j$(NO_CPUS) V=1 && \
-		make -j$(NO_CPUS) .ffmpeg V=1
+		make -j$(NO_CPUS) $(BUNDLED_PKGS) V=1
 	cd daemon && \
 		./autogen.sh && \
 		./configure \
