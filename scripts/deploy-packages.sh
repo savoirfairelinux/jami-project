@@ -49,7 +49,7 @@ function package_deb()
 Origin: ring
 Label: Ring ${DISTRIBUTION} Repository
 Codename: ring
-Architectures: i386 amd64
+Architectures: i386 amd64 armhf arm64
 Components: main
 Description: This repository contains Ring ${DISTRIBUTION} packages
 SignWith: ${KEYID}
@@ -91,19 +91,19 @@ EOF
     #######################################
     ## create the manual download folder ##
     #######################################
-    DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
-    mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-    ls packages/${DISTRIBUTION}
-    # packages with dfsg1-0 contains the postinstall script that adds the repository
-    cp packages/${DISTRIBUTION}*/jami-all_????????.*\~dfsg1-0_*.deb ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-    for package in ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/*; do
-        package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
-        package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
-	package_linkname=${package_name}_${package_arch}.deb
-	cd ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-	cp ${package} ${package_linkname}
-	cd -
-    done
+    if [ -d packages/${DISTRIBUTION}*_oci ]; then
+      DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
+      mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+      NAME_PATTERN=jami-all_????????.*\~dfsg*.deb
+      cp packages/${DISTRIBUTION}*_oci/${NAME_PATTERN} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+      for package in ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${NAME_PATTERN} ; do
+          package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
+          package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
+          package_shortname=${package_name}_${package_arch}.deb
+          rm -f ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_shortname}
+          cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_shortname}
+      done
+    fi
 }
 
 
@@ -208,7 +208,7 @@ function deploy()
 
 function package()
 {
-    if [[ "${DISTRIBUTION:0:6}" == "debian" || "${DISTRIBUTION:0:6}" == "ubuntu" ]];
+    if [[ "${DISTRIBUTION:0:6}" == "debian" || "${DISTRIBUTION:0:6}" == "ubuntu" || "${DISTRIBUTION:0:8}" == "raspbian" ]];
     then
         package_deb
     elif [[ "${DISTRIBUTION:0:6}" == "fedora" || "${DISTRIBUTION:0:4}" == "rhel" || "${DISTRIBUTION:0:13}" == "opensuse-leap" ]];
