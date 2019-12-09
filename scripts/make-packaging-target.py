@@ -138,6 +138,12 @@ def run_generate_all(parsed_args):
             "options": "--privileged --security-opt apparmor=docker-default",
         },
         {
+            "distribution": "debian_10_arm64",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "--privileged --security-opt apparmor=docker-default",
+        },
+        {
             "distribution": "debian_10_oci",
             "docker_image": "debian_10",
             "debian_packaging_override": "",
