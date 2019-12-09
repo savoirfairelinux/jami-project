@@ -17,6 +17,12 @@ RING_ALL_IN_ONE_PKG_NAME="jami-all"
 RING_CLIENT_PKG_NAME="jami"
 RING_DAEMON_PKG_NAME="jami-daemon"
 
+# Bundled packages from contrib
+BUNDLED_PKGS = .ffmpeg
+ifeq ($(DISTRIBUTION),raspbian_10_armhf)
+BUNDLED_PKGS += .yaml-cpp
+endif
+
 %:
 	dh $@
 
@@ -53,7 +59,9 @@ override_dh_auto_configure:
 				--enable-gnutls && \
 		make list && \
 		make -j$(NO_CPUS) V=1 && \
-		make -j$(NO_CPUS) .ffmpeg V=1
+		make -j$(NO_CPUS) $(BUNDLED_PKGS) V=1
+		# line before is a temporal test, must to be refactored properly
+		# to isolate the Raspberry-pi deb (the yaml-cpp problem is on rasbian only)
 	cd daemon && \
 		./autogen.sh && \
 		./configure \
