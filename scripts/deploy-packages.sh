@@ -49,7 +49,7 @@ function package_deb()
 Origin: ring
 Label: Ring ${DISTRIBUTION} Repository
 Codename: ring
-Architectures: i386 amd64
+Architectures: i386 amd64 armhf arm64
 Components: main
 Description: This repository contains Ring ${DISTRIBUTION} packages
 SignWith: ${KEYID}
@@ -208,7 +208,7 @@ function deploy()
 
 function package()
 {
-    if [[ "${DISTRIBUTION:0:6}" == "debian" || "${DISTRIBUTION:0:6}" == "ubuntu" ]];
+    if [[ "${DISTRIBUTION:0:6}" == "debian" || "${DISTRIBUTION:0:6}" == "ubuntu" || "${DISTRIBUTION:0:8}" == "raspbian" ]];
     then
         package_deb
     elif [[ "${DISTRIBUTION:0:6}" == "fedora" || "${DISTRIBUTION:0:4}" == "rhel" || "${DISTRIBUTION:0:13}" == "opensuse-leap" ]];
