@@ -81,8 +81,11 @@ package-all: package-debian_9 \
              package-debian_9_i386_oci \
              package-debian_10 \
              package-debian_10_i386 \
+             package-debian_10_armhf \
+             package-debian_10_arm64 \
              package-debian_10_oci \
              package-debian_10_i386_oci \
+             package-raspbian_10_armhf \
              package-ubuntu_16.04 \
              package-ubuntu_16.04_i386 \
              package-ubuntu_16.04_oci \
