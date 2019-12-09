@@ -38,6 +38,7 @@ target_template = """\
 PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME:=jami-packaging-%(distribution)s$(RING_PACKAGING_IMAGE_SUFFIX)
 PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE:=.docker-image-$(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 DOCKER_EXTRA_ARGS =
+QEMU_STATIC_%(distribution)s = %(qemu_static)s
 
 PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     --rm \\
@@ -52,7 +53,12 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -t $(DOCKER_EXTRA_ARGS) %(options)s \\
     $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
-$(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(docker_image)s
+# FIXME: dirty qemu-static hack required because our Jenkis node runs Docker 17
+# Remove all the qemu-static / QEMU-STATIC stuff as soon as we get Docker 18 +
+QEMU_STATIC_%(distribution)s:
+	if [ ! -z $(QEMU_STATIC_%(distribution)s) ]; then mkdir -p qemu-static && cp -af /usr/bin/$(QEMU_STATIC_%(distribution)s) qemu-static/; fi
+
+$(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): QEMU_STATIC_%(distribution)s docker/Dockerfile_%(docker_image)s
 	docker build \\
         -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME) \\
         -f docker/Dockerfile_%(docker_image)s \\
@@ -76,7 +82,7 @@ package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(dis
 """
 
 
-def generate_target(distribution, debian_packaging_override, output_file, options='', docker_image='', version=''):
+def generate_target(distribution, debian_packaging_override, output_file, options='', docker_image='', version='', qemu_static=''):
     if (docker_image == ''):
         docker_image = distribution
     if (version == ''):
@@ -88,12 +94,18 @@ def generate_target(distribution, debian_packaging_override, output_file, option
         "output_file": output_file,
         "options": options,
         "version": version,
+        "qemu_static": qemu_static,
     }
 
 
 def run_generate(parsed_args):
     print(generate_target(parsed_args.distribution,
-                          parsed_args.debian_packaging_override))
+                          parsed_args.debian_packaging_override,
+                          parsed_args.output_file,
+                          parsed_args.options,
+                          parsed_args.docker_image,
+                          parsed_args.version,
+                          parsed_args.qemu_static))
 
 
 def run_generate_all(parsed_args):
@@ -138,6 +150,20 @@ def run_generate_all(parsed_args):
             "options": "--privileged --security-opt apparmor=docker-default",
         },
         {
+            "distribution": "debian_10_armhf",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "--privileged --security-opt apparmor=docker-default",
+            "qemu_static": 'qemu-arm-static',
+        },
+        {
+            "distribution": "debian_10_arm64",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "--privileged --security-opt apparmor=docker-default",
+            "qemu_static": 'qemu-aarch64-static',
+        },
+        {
             "distribution": "debian_10_oci",
             "docker_image": "debian_10",
             "debian_packaging_override": "",
@@ -152,6 +178,14 @@ def run_generate_all(parsed_args):
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
+        },
+        # Raspbian
+        {
+            "distribution": "raspbian_10_armhf",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "--privileged --security-opt apparmor=docker-default",
+            "qemu_static": 'qemu-arm-static',
         },
         # Ubuntu
         {
@@ -393,9 +427,12 @@ def parse_args():
 
     # Parameters
     ap.add_argument('--distribution')
-    ap.add_argument('--architecture')
     ap.add_argument('--debian_packaging_override', default='')
     ap.add_argument('--output_file')
+    ap.add_argument('--options', default='')
+    ap.add_argument('--docker_image', default='')
+    ap.add_argument('--version', default='')
+    ap.add_argument('--qemu_static', default='')
 
     parsed_args = ap.parse_args()
 
