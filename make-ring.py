@@ -296,6 +296,8 @@ def run_install(args):
         install_args.append('-s')
     if args.global_install:
         install_args.append('-g')
+    if not args.priv_install:
+        install_args.append('-u')
 
     if args.distribution == OSX_DISTRIBUTION_NAME:
         proc = subprocess.run(["brew", "--prefix", "qt5"],
@@ -449,6 +451,7 @@ def parse_args():
     ap.add_argument('--global-install', default=False, action='store_true')
     ap.add_argument('--debug', default=False, action='store_true')
     ap.add_argument('--background', default=False, action='store_true')
+    ap.add_argument('--no-priv-install', dest='priv_install', default=True, action='store_false')
 
     if choose_distribution() == WIN32_DISTRIBUTION_NAME:
         ap.add_argument('--toolset', default=win_toolset_default, type=str, help='Windows use only, specify Visual Studio toolset version')
