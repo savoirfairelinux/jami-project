@@ -9,6 +9,7 @@ export OSTYPE
   # -s: link everything statically, no D-Bus communication. More likely to work!
   # -c: client to build
   # -p: number of processors to use
+  # -u: disable use of privileges (sudo) during install
 
 set -ex
 
@@ -16,7 +17,8 @@ global=false
 static=''
 client=''
 proc='1'
-while getopts gsc:p: OPT; do
+priv_install=true
+while getopts gsc:p:u OPT; do
   case "$OPT" in
     g)
       global='true'
@@ -30,6 +32,9 @@ while getopts gsc:p: OPT; do
     p)
       proc="${OPTARG}"
     ;;
+    u)
+      priv_install='false'
+    ;;
     \?)
       exit 1
     ;;
@@ -37,7 +42,7 @@ while getopts gsc:p: OPT; do
 done
 
 make_install() {
-  if [ "$1" = "true" ]; then
+  if [ "$1" = "true" ] && [ "$2" != "false" ]; then
     sudo make install
     # Or else the next non-sudo install will fail, because this generates some
     # root owned files like install_manifest.txt under the build directory.
@@ -77,7 +82,7 @@ else
   ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
 fi
 make -j"${proc}"
-make_install "${global}"
+make_install "${global}" "${priv_install}"
 
 cd "${TOP}/lrc"
 mkdir -p "${BUILDDIR}"
@@ -91,7 +96,7 @@ else
             -DRING_BUILD_DIR="${DAEMON}/src" $static
 fi
 make -j"${proc}"
-make_install "${global}"
+make_install "${global}"  "${priv_install}"
 
 cd "${TOP}/${client}"
 mkdir -p "${BUILDDIR}"
@@ -105,4 +110,4 @@ else
             -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
 fi
 make -j"${proc}"
-make_install "${global}"
+make_install "${global}" "${priv_install}"
