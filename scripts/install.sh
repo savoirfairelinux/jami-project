@@ -18,7 +18,7 @@ static=''
 client=''
 proc='1'
 priv_install=true
-while getopts gsc:p:u OPT; do
+while getopts gsc:P:p:u OPT; do
   case "$OPT" in
     g)
       global='true'
@@ -28,6 +28,9 @@ while getopts gsc:p:u OPT; do
     ;;
     c)
       client="${OPTARG}"
+    ;;
+    P)
+      prefix="${OPTARG}"
     ;;
     p)
       proc="${OPTARG}"
@@ -66,7 +69,11 @@ DAEMON="$(pwd)"
 cd contrib
 mkdir -p native
 cd native
-../bootstrap
+if [ "${prefix+set}" ]; then
+    ../bootstrap --prefix="${prefix}"
+else
+    ../bootstrap
+fi
 make
 cd "${DAEMON}"
 ./autogen.sh
@@ -77,7 +84,11 @@ if [[ "$OSTYPE" != "darwin"* ]]; then
 fi
 
 if [ "${global}" = "true" ]; then
-  ./configure $sharedLib $CONFIGURE_FLAGS
+  if [ "${prefix+set}" ]; then
+    ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${prefix}"
+  else
+    ./configure $sharedLib $CONFIGURE_FLAGS
+  fi
 else
   ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
 fi
@@ -88,7 +99,11 @@ cd "${TOP}/lrc"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 if [ "${global}" = "true" ]; then
-  cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_BUILD_TYPE=Debug $static
+  if [ "${prefix+set}" ]; then
+    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="${prefix}" $static
+  else
+    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_BUILD_TYPE=Debug $static
+  fi
 else
   cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
             -DCMAKE_BUILD_TYPE=Debug \
@@ -102,7 +117,11 @@ cd "${TOP}/${client}"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 if [ "${global}" = "true" ]; then
-  cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
+  if [ "${prefix+set}" ]; then
+    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_INSTALL_PREFIX="${prefix}" $static
+  else
+    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
+  fi
 else
   cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
             -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
