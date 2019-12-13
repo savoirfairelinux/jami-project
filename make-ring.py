@@ -296,6 +296,8 @@ def run_install(args):
         install_args.append('-s')
     if args.global_install:
         install_args.append('-g')
+    if args.prefix is not None:
+        install_args += ('-P', args.prefix)
     if not args.priv_install:
         install_args.append('-u')
 
@@ -451,6 +453,7 @@ def parse_args():
         help='Stop the Ring processes')
 
     ap.add_argument('--distribution')
+    ap.add_argument('--prefix')
     ap.add_argument('--static', default=False, action='store_true')
     ap.add_argument('--global-install', default=False, action='store_true')
     ap.add_argument('--debug', default=False, action='store_true')
