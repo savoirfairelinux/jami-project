@@ -44,6 +44,10 @@ ZYPPER_BASED_DISTROS = [
     'opensuse-leap',
 ]
 
+FLATPAK_BASED_RUNTIMES = [
+    'org.gnome.Platform',
+]
+
 APT_INSTALL_SCRIPT = [
     'apt-get update',
     'apt-get install -y %(packages)s'
@@ -394,13 +398,16 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = [ANDROID_DISTRIBUTION_NAME, OSX_DISTRIBUTION_NAME, IOS_DISTRIBUTION_NAME,
-                         WIN32_DISTRIBUTION_NAME] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS + ZYPPER_BASED_DISTROS
+    supported_distros = [
+        ANDROID_DISTRIBUTION_NAME, OSX_DISTRIBUTION_NAME, IOS_DISTRIBUTION_NAME,
+        WIN32_DISTRIBUTION_NAME
+    ] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS \
+      + ZYPPER_BASED_DISTROS + FLATPAK_BASED_RUNTIMES
 
     if parsed_args.distribution not in supported_distros:
-        print('Distribution \''+parsed_args.distribution+'\' not supported.\nChoose one of: %s'
-              % ', '.join(supported_distros),
-              file=sys.stderr)
+        print('Distribution \'{0}\' not supported.\nChoose one of: {1}'.format(
+            parsed_args.distribution, ', '.join(supported_distros)
+        ), file=sys.stderr)
         sys.exit(1)
 
 
