@@ -13,6 +13,7 @@ import sys
 import time
 import platform
 import multiprocessing
+import shlex
 import shutil
 import signal
 
@@ -42,6 +43,10 @@ PACMAN_BASED_DISTROS = [
 
 ZYPPER_BASED_DISTROS = [
     'opensuse-leap',
+]
+
+FLATPAK_BASED_RUNTIMES = [
+    'org.gnome.Platform',
 ]
 
 APT_INSTALL_SCRIPT = [
@@ -183,49 +188,50 @@ def run_dependencies(args):
             'Set-ExecutionPolicy Unrestricted; .\\scripts\\build-package-windows.ps1')
 
     elif args.distribution in APT_BASED_DISTROS:
-        execute_script(APT_INSTALL_SCRIPT,
-                       {"packages": ' '.join(APT_DEPENDENCIES)}
-                       )
+        execute_script(
+            APT_INSTALL_SCRIPT,
+            {"packages": ' '.join(map(shlex.quote, APT_DEPENDENCIES))}
+        )
 
     elif args.distribution in DNF_BASED_DISTROS:
         execute_script(
             RPM_INSTALL_SCRIPT,
-            {"packages": ' '.join(DNF_DEPENDENCIES)}
+            {"packages": ' '.join(map(shlex.quote, DNF_DEPENDENCIES))}
         )
 
     elif args.distribution in PACMAN_BASED_DISTROS:
         execute_script(
             PACMAN_INSTALL_SCRIPT,
-            {"packages": ' '.join(PACMAN_DEPENDENCIES)}
+            {"packages": ' '.join(map(shlex.quote, PACMAN_DEPENDENCIES))}
         )
 
     elif args.distribution in ZYPPER_BASED_DISTROS:
         execute_script(
             ZYPPER_INSTALL_SCRIPT,
-            {"packages": ' '.join(ZYPPER_DEPENDENCIES)}
+            {"packages": ' '.join(map(shlex.quote, ZYPPER_DEPENDENCIES))}
         )
 
     elif args.distribution == OSX_DISTRIBUTION_NAME:
         execute_script(
             BREW_UNLINK_SCRIPT,
-            {"packages": ' '.join(OSX_DEPENDENCIES_UNLINK)},
+            {"packages": ' '.join(map(shlex.quote, OSX_DEPENDENCIES_UNLINK))},
             False
         )
         execute_script(
             BREW_INSTALL_SCRIPT,
-            {"packages": ' '.join(OSX_DEPENDENCIES)},
+            {"packages": ' '.join(map(shlex.quote, OSX_DEPENDENCIES))},
             False
         )
 
     elif args.distribution == IOS_DISTRIBUTION_NAME:
         execute_script(
             BREW_UNLINK_SCRIPT,
-            {"packages": ' '.join(IOS_DEPENDENCIES_UNLINK)},
+            {"packages": ' '.join(map(shlex.quote, IOS_DEPENDENCIES_UNLINK))},
             False
         )
         execute_script(
             BREW_INSTALL_SCRIPT,
-            {"packages": ' '.join(IOS_DEPENDENCIES)},
+            {"packages": ' '.join(map(shlex.quote, IOS_DEPENDENCIES))},
             False
         )
 
@@ -251,8 +257,8 @@ def run_init():
             if line.startswith('[submodule "'):
                 module_names.append(line[line.find('"')+1:line.rfind('"')])
 
-    os.system("git submodule update --init")
-    os.system("git submodule foreach 'git checkout master && git pull'")
+    subprocess.run(["git", "submodule", "update", "--init"], check=True)
+    subprocess.run(["git", "submodule", "foreach", "git checkout master && git pull"], check=True)
     for name in module_names:
         copy_file("./scripts/commit-msg", ".git/modules/"+name+"/hooks")
 
@@ -270,33 +276,49 @@ def copy_file(src, dest):
 
 
 def run_install(args):
-    install_args = ' -p ' + str(multiprocessing.cpu_count())
-    if args.static:
-        install_args += ' -s'
-    if args.global_install:
-        install_args += ' -g'
-    if args.distribution == OSX_DISTRIBUTION_NAME:
-        proc = subprocess.Popen("brew --prefix qt5",
-                                shell=True, stdout=subprocess.PIPE)
-        qt5dir = proc.stdout.read()
-        os.environ['CMAKE_PREFIX_PATH'] = str(qt5dir.decode('ascii'))
-        install_args += " -c client-macosx"
-        execute_script(
-            ["CONFIGURE_FLAGS='--without-dbus' ./scripts/install.sh " + install_args])
-    elif args.distribution == IOS_DISTRIBUTION_NAME:
-        os.chdir("./client-ios")
-        execute_script(["./compile-ios.sh"])
+    # Platforms with special compilation scripts
+    if args.distribution == IOS_DISTRIBUTION_NAME:
+        return subprocess.run(["./compile-ios.sh"], cwd="./client-ios", check=True)
     elif args.distribution == ANDROID_DISTRIBUTION_NAME:
-        os.chdir("./client-android")
-        execute_script(["./compile.sh"])
+        return subprocess.run(["./compile.sh"], cwd="./client-android", check=True)
     elif args.distribution == WIN32_DISTRIBUTION_NAME:
-        subprocess.call('python ' + os.getcwd() + '/scripts/build-windows.py ' + '--toolset ' + args.toolset + ' --sdk ' + args.sdk)
+        return subprocess.run([
+            sys.executable, os.path.join(os.getcwd(), "scripts/build-windows.py"),
+            "--toolset", args.toolset,
+            "--sdk", args.sdk
+        ], check=True)
+
+    # Unix-like platforms
+    environ = os.environ.copy()
+    
+    install_args = ['-p', str(multiprocessing.cpu_count())]
+    if args.static:
+        install_args.append('-s')
+    if args.global_install:
+        install_args.append('-g')
+    if args.prefix is not None:
+        install_args += ('-P', args.prefix)
+    if not args.priv_install:
+        install_args.append('-u')
+
+    if args.distribution == OSX_DISTRIBUTION_NAME:
+        # The `universal_newlines` parameter has been renamed to `text` in
+        # Python 3.7+ and triggering automatical binary to text conversion is
+        # what it actually does
+        proc = subprocess.run(["brew", "--prefix", "qt5"],
+                              stdout=subprocess.PIPE, check=True,
+                              universal_newlines=True)
+        
+        environ['CMAKE_PREFIX_PATH'] = proc.stdout.rstrip("\n")
+        environ['CONFIGURE_FLAGS']   = '--without-dbus'
+        install_args += ("-c", "client-macosx")
     else:
         if args.distribution in ZYPPER_BASED_DISTROS:
             # fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
-            os.environ['JSONCPP_LIBS'] = "-ljsoncpp"
-        install_args += ' -c client-gnome'
-        execute_script(["./scripts/install.sh " + install_args])
+            environ['JSONCPP_LIBS'] = "-ljsoncpp"
+        install_args += ("-c", "client-gnome")
+
+    return subprocess.run(["./scripts/install.sh"] + install_args, env=environ, check=True)
 
 
 def run_uninstall(args):
@@ -394,13 +416,16 @@ def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Check arg values
-    supported_distros = [ANDROID_DISTRIBUTION_NAME, OSX_DISTRIBUTION_NAME, IOS_DISTRIBUTION_NAME,
-                         WIN32_DISTRIBUTION_NAME] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS + ZYPPER_BASED_DISTROS
+    supported_distros = [
+        ANDROID_DISTRIBUTION_NAME, OSX_DISTRIBUTION_NAME, IOS_DISTRIBUTION_NAME,
+        WIN32_DISTRIBUTION_NAME
+    ] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS \
+      + ZYPPER_BASED_DISTROS + FLATPAK_BASED_RUNTIMES
 
     if parsed_args.distribution not in supported_distros:
-        print('Distribution \''+parsed_args.distribution+'\' not supported.\nChoose one of: %s'
-              % ', '.join(supported_distros),
-              file=sys.stderr)
+        print('Distribution \'{0}\' not supported.\nChoose one of: {1}'.format(
+            parsed_args.distribution, ', '.join(supported_distros)
+        ), file=sys.stderr)
         sys.exit(1)
 
 
@@ -428,10 +453,12 @@ def parse_args():
         help='Stop the Ring processes')
 
     ap.add_argument('--distribution')
+    ap.add_argument('--prefix')
     ap.add_argument('--static', default=False, action='store_true')
     ap.add_argument('--global-install', default=False, action='store_true')
     ap.add_argument('--debug', default=False, action='store_true')
     ap.add_argument('--background', default=False, action='store_true')
+    ap.add_argument('--no-priv-install', dest='priv_install', default=True, action='store_false')
 
     if choose_distribution() == WIN32_DISTRIBUTION_NAME:
         ap.add_argument('--toolset', default=win_toolset_default, type=str, help='Windows use only, specify Visual Studio toolset version')
