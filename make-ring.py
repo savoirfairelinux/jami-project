@@ -285,12 +285,13 @@ def run_install(args):
         return subprocess.run([
             sys.executable, os.path.join(os.getcwd(), "scripts/build-windows.py"),
             "--toolset", args.toolset,
-            "--sdk", args.sdk
+            "--sdk", args.sdk,
+            "--qtver", args.qtver
         ], check=True)
 
     # Unix-like platforms
     environ = os.environ.copy()
-    
+
     install_args = ['-p', str(multiprocessing.cpu_count())]
     if args.static:
         install_args.append('-s')
@@ -308,7 +309,7 @@ def run_install(args):
         proc = subprocess.run(["brew", "--prefix", "qt5"],
                               stdout=subprocess.PIPE, check=True,
                               universal_newlines=True)
-        
+
         environ['CMAKE_PREFIX_PATH'] = proc.stdout.rstrip("\n")
         environ['CONFIGURE_FLAGS']   = '--without-dbus'
         install_args += ("-c", "client-macosx")
@@ -463,6 +464,7 @@ def parse_args():
     if choose_distribution() == WIN32_DISTRIBUTION_NAME:
         ap.add_argument('--toolset', default=win_toolset_default, type=str, help='Windows use only, specify Visual Studio toolset version')
         ap.add_argument('--sdk', default=win_sdk_default, type=str, help='Windows use only, specify Windows SDK version')
+        ap.add_argument('--qtver', default='5.9.4', help='Sets the Qt version to build with')
 
     parsed_args = ap.parse_args()
 
