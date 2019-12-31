@@ -16,12 +16,15 @@ def execute_cmd(cmd, with_shell=False):
 
 def build_daemon(parsed_args):
     make_cmd = os.path.dirname(this_dir) + '\\daemon\\msvc\\winmake.py'
+    os.chdir(os.path.dirname(this_dir) + '\\daemon\\msvc')
+    execute_cmd('cmake -DCMAKE_CONFIGURATION_TYPES="ReleaseLib_win32" -DCMAKE_VS_PLATFORM_NAME="x64" -G "Visual Studio 16 2019" -A x64 -T $(DefaultPlatformToolset) ..')
+    os.chdir(os.path.dirname(this_dir))
     return execute_cmd('python ' + make_cmd + ' -iv -t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -b daemon')
 
 
 def build_lrc(parsed_args):
     make_cmd = os.path.dirname(this_dir) + '\\lrc\\make-lrc.py'
-    return execute_cmd('python ' + make_cmd + ' -gb ' + ' -t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk)
+    return execute_cmd('python ' + make_cmd + ' -gb ' + ' -t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -q ' + parsed_args.qtver)
 
 
 def build_client(parsed_args):
@@ -29,7 +32,7 @@ def build_client(parsed_args):
     ret = 0
     ret &= not execute_cmd('pandoc -f markdown -t html5 -o changelog.html changelog.md', True)
     ret &= not execute_cmd('python make-client.py -d')
-    ret &= not execute_cmd('python make-client.py -b ' + '-t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk)
+    ret &= not execute_cmd('python make-client.py -b ' + '-t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -q ' + parsed_args.qtver)
 
     if not os.path.exists('./x64/Release/qt.conf'):
         ret &= not execute_cmd(
@@ -43,6 +46,8 @@ def parse_args():
                     help='Windows use only, specify Visual Studio toolset version')
     ap.add_argument('--sdk', default='', type=str,
                     help='Windows use only, specify Windows SDK version')
+    ap.add_argument('--qtver', default='5.9.4',
+                    help='Sets the Qt version to build with')
 
     parsed_args = ap.parse_args()
 
