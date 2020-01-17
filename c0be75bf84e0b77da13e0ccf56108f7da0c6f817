@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7818d15_c6ebd455",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 16
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-01-17T19:26:31Z",
+      "side": 1,
+      "message": "why do you need this?",
+      "range": {
+        "startLine": 166,
+        "startChar": 45,
+        "endLine": 166,
+        "endChar": 67
+      },
+      "revId": "c0be75bf84e0b77da13e0ccf56108f7da0c6f817",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
