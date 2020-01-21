@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "171e43d7_61e61b92",
+        "filename": "packaging/rules/rhel/jami.spec",
+        "patchSetId": 22
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-01-21T14:55:17Z",
+      "side": 1,
+      "message": "usefull?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "b0835a66979db8e68b80c1b49798d22cb996ec5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33bc2ec_f0309469",
+        "filename": "packaging/rules/rhel/jami.spec",
+        "patchSetId": 22
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-01-21T14:55:17Z",
+      "side": 1,
+      "message": "Do we need f24 instructions for rhel?",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 6
+      },
+      "revId": "b0835a66979db8e68b80c1b49798d22cb996ec5b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
