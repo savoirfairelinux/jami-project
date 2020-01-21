@@ -94,7 +94,8 @@ EOF
     if [ -d packages/${DISTRIBUTION}*_oci ]; then
       DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
       mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-      NAME_PATTERN=jami-all_????????.*\~dfsg*.deb
+      # packages with dfsg1-0 contains the postinstall script that adds the repository
+      NAME_PATTERN=jami-all_????????.*\~dfsg1-0_*.deb
       cp packages/${DISTRIBUTION}*_oci/${NAME_PATTERN} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
       for package in ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${NAME_PATTERN} ; do
           package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
