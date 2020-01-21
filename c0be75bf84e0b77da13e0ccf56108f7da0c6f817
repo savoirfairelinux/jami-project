@@ -22,6 +22,30 @@
       "revId": "c0be75bf84e0b77da13e0ccf56108f7da0c6f817",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72085b2a_693e760b",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 16
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 661
+      },
+      "writtenOn": "2020-01-21T15:27:41Z",
+      "side": 1,
+      "message": "actually the packaes for one cisck install is saved in the directory:\n \npackages/rhel_8/rhel-one-click-install/\n\nand  the script is looking the new packages from \"packages/rhel_8/rhel-one-click-install/\" and copy them to  https://dl.jami.net/ring-manual-internal/rhel_8/\n\n\nbefore  the packages from https://dl.jami.net/ring-manual-internal/rhel_8/  and https://dl.jami.net/ring-internal/rhel_8/ were the same",
+      "parentUuid": "f7818d15_c6ebd455",
+      "range": {
+        "startLine": 166,
+        "startChar": 45,
+        "endLine": 166,
+        "endChar": 67
+      },
+      "revId": "c0be75bf84e0b77da13e0ccf56108f7da0c6f817",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
