@@ -91,7 +91,7 @@ EOF
     #######################################
     ## create the manual download folder ##
     #######################################
-    if [ -d packages/${DISTRIBUTION}*_oci ]; then
+    if ls packages/${DISTRIBUTION}*_oci &> /dev/null; then
       DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
       mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
       NAME_PATTERN=jami-all_????????.*\~dfsg*.deb
@@ -103,6 +103,8 @@ EOF
           rm -f ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_shortname}
           cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_shortname}
       done
+    else
+      echo "WARNING: OCI packages directory not found"
     fi
 }
 
