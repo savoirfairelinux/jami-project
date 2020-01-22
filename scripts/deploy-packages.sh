@@ -91,6 +91,12 @@ EOF
     #######################################
     ## create the manual download folder ##
     #######################################
+    echo "########## DEBUG FREDY ##########"
+    echo "pwd is $PWD"
+    echo ls packages dir
+    ls packages
+    echo ls packages oci for distro :${DISTRIBUTION}
+    ls packages/${DISTRIBUTION}*_oci
     if [ -d packages/${DISTRIBUTION}*_oci ]; then
       DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
       mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
@@ -102,6 +108,10 @@ EOF
           package_shortname=${package_name}_${package_arch}.deb
           rm -f ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_shortname}
           cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_shortname}
+          echo "########## DEBUG FREDY ##########"
+	  echo ls path: ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+	  ls ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+	  echo shortname is: ${package_shortname}
       done
     fi
 }
