@@ -20,8 +20,11 @@ RING_DAEMON_PKG_NAME="jami-daemon"
 # Bundled packages from contrib
 BUNDLED_PKGS = .ffmpeg
 ifeq ($(DISTRIBUTION),raspbian_10_armhf)
+# Raspbian have a customized ffmpeg then we do not bundle it
+BUNDLED_PKGS = ""
 # Raspbian's yaml-cpp lib does not work properly
 BUNDLED_PKGS += .yaml-cpp
+	echo DEBUG FREDY $(BUNDLED_PKGS)
 endif
 
 %:
