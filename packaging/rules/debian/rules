@@ -20,11 +20,13 @@ RING_DAEMON_PKG_NAME="jami-daemon"
 # Bundled packages from contrib
 BUNDLED_PKGS = .ffmpeg
 ifeq ($(DISTRIBUTION),raspbian_10_armhf)
+# Raspbian have a customized ffmpeg then we do not bundle it
 # Raspbian's yaml-cpp lib does not work properly
-BUNDLED_PKGS += .yaml-cpp
+BUNDLED_PKGS = .yaml-cpp
 endif
 
 %:
+	echo DEBUG FREDY $(BUNDLED_PKGS)
 	dh $@
 
 override_dh_auto_configure:
