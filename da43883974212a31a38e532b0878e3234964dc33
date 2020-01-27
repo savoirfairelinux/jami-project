@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1e65c48_42761300",
+        "filename": "packaging/rules/fedora/jami-all.postinst",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-01-27T02:27:02Z",
+      "side": 1,
+      "message": "rename to jami",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 73,
+        "endChar": 55
+      },
+      "revId": "da43883974212a31a38e532b0878e3234964dc33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca722ed_6c83cd09",
+        "filename": "packaging/rules/fedora/jami-all.postinst",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-01-27T02:27:02Z",
+      "side": 1,
+      "message": "rename for Jami",
+      "range": {
+        "startLine": 130,
+        "startChar": 1,
+        "endLine": 130,
+        "endChar": 9
+      },
+      "revId": "da43883974212a31a38e532b0878e3234964dc33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4131f4_75b419cb",
+        "filename": "packaging/rules/fedora/jami-one-click.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-01-27T02:27:02Z",
+      "side": 1,
+      "message": "trailing",
+      "range": {
+        "startLine": 188,
+        "startChar": 1,
+        "endLine": 188,
+        "endChar": 7
+      },
+      "revId": "da43883974212a31a38e532b0878e3234964dc33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd16089_77239ff7",
+        "filename": "packaging/rules/fedora/jami-one-click.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-01-27T02:27:02Z",
+      "side": 1,
+      "message": "remove f\u003c24",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 6
+      },
+      "revId": "da43883974212a31a38e532b0878e3234964dc33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab16684_0a1a0015",
+        "filename": "packaging/rules/fedora/jami.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-01-27T02:27:02Z",
+      "side": 1,
+      "message": "In fact, f24 is depreciated since a long time, so I think we don\u0027t care anymore about version \u003c 24",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 6
+      },
+      "revId": "da43883974212a31a38e532b0878e3234964dc33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d65fa7_358b14a5",
+        "filename": "packaging/rules/fedora/jami.spec",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-01-27T02:27:02Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 294,
+        "endChar": 6
+      },
+      "revId": "da43883974212a31a38e532b0878e3234964dc33",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
