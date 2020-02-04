@@ -4,6 +4,8 @@ FROM arm32v7/debian:buster
 # FIXME: dirty qemu-static hack required because our Jenkins node runs Docker 17
 # Remove next line as soon as we get Docker 18 +
 COPY qemu-static/qemu-arm-static /usr/bin/qemu-arm-static
+# Raspbian repos only to avoid broken packages because different versions in Debian
+RUN echo "deb http://raspbian.raspberrypi.org/raspbian/ buster main contrib non-free rpi" >  /etc/apt/sources.list
 
 ENV DEBIAN_FRONTEND noninteractive
 
