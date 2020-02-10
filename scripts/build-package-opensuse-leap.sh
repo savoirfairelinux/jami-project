@@ -21,21 +21,29 @@
 # rpm-based distros.
 #
 
-set -e
+set -x
 
 # import the spec file
 mkdir -p /opt/ring-project
 cd /opt/ring-project
-cp /opt/ring-project-ro/packaging/rules/opensuse-leap/jami.spec .
+cp /opt/ring-project-ro/packaging/rules/opensuse-leap/* .
+
+	
+#create tree for build
+rpmdev-setuptree
 
 
 # place the source
-mkdir -p /root/rpmbuild/SOURCES
+#mkdir -p /root/rpmbuild/SOURCES
 cp /opt/ring-project-ro/jami_*.tar.gz /usr/src/packages/SOURCES
+cp /opt/ring-project-ro/jami_*.tar.gz /root/rpmbuild/SOURCES/
+
 
 # Set the version
-sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" jami.spec
+sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" *.spec
 rpmdev-bumpspec --comment="Automatic nightly release" --userstring="Jenkins <ring@lists.savoirfairelinux.net>" jami.spec
+rpmdev-bumpspec --comment="Automatic nightly release" --userstring="Jenkins <ring@lists.savoirfairelinux.net>" jami-one-click.spec
+
 
 # install build deps
 dnf builddep -y jami.spec || echo "ignoring dnf builddep failure"
@@ -45,7 +53,26 @@ dnf builddep -y jami.spec || echo "ignoring dnf builddep failure"
 rpmbuild -ba jami.spec
 
 # move to output
-mv /usr/src/packages/RPMS/*/* /opt/output
+mv /root/rpmbuild/RPMS/*/* /opt/output
+#mv /usr/src/packages/RPMS/*/* /opt/output
 touch /opt/output/.packages-built
 chown -R ${CURRENT_UID}:${CURRENT_UID} /opt/output
+
+	
+## JAMI ONE CLICK INSTALL RPM
+	
+#copy script jami-all.postinst which add repo
+mkdir -p /root/rpmbuild/BUILD/ring-project/packaging/rules/one-click-install/
+cp jami-all.postinst  /root/rpmbuild/BUILD/ring-project/packaging/rules/one-click-install/
+	
+# build the package
+rpmbuild -ba jami-one-click.spec
+	
+# move to output
+mkdir -p /opt/output/one-click-install
+mv /root/rpmbuild/RPMS/*/* /opt/output/one-click-install
+touch /opt/output/one-click-install/.packages-built
+chown -R ${CURRENT_UID}:${CURRENT_UID} /opt/output/one-click-install
+	
+
 
