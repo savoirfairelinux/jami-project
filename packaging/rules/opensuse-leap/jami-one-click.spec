@@ -1,6 +1,7 @@
-%define name        jami
+%define name        jami-all
 %define version     RELEASE_VERSION
 %define release     0
+%define postinst    jami-all.postinst
 
 Name:          %{name}
 Version:       %{version}
@@ -10,7 +11,10 @@ Group:         Applications/Internet
 License:       GPLv3+
 URL:           https://jami.net/
 Source:        jami_%{version}.tar.gz
-Requires:      jami-daemon = %{version}
+#Requires:      jami-daemon = %{version}
+Obsoletes:     ring ring-daemon
+Provides:      ring
+Conflicts:     ring ring-daemon
 
 BuildRequires: make
 BuildRequires: autoconf
@@ -52,25 +56,6 @@ Jami is free software for universal communication which respects freedoms
 and privacy of its users.
 
 This package contains the desktop client: jami-gnome.
-
-%package daemon
-Summary: Free software for distributed and secured communication - daemon
-
-%description daemon
-Jami is free software for universal communication which respects freedoms
-and privacy of its users.
-
-This package contains the Jami daemon: dring.
-
-%package all
-Summary: Free software for distributed and secured communication
-
-%description all
-Jami is free software for universal communication which respects freedoms
-and privacy of its users.
-
-This package contains the Jami daemon: dring.
-
 
 %prep
 %setup -n ring-project
@@ -174,6 +159,12 @@ rm -rfv %{buildroot}/%{_libdir}/cmake
 DESTDIR=%{buildroot} make -C client-gnome/build install
 ln -sf %{_bindir}/jami %{buildroot}/%{_bindir}/ring.cx
 
+##########################
+## post install script  ##
+##########################
+cp %{_builddir}/ring-project/packaging/rules/opensuse-leap/%{postinst} %{buildroot}/%{_bindir}
+chmod a+x %{buildroot}/%{_bindir}/%{postinst}
+
 %files
 %defattr(-,root,root,-)
 %{_bindir}/jami
@@ -189,54 +180,20 @@ ln -sf %{_bindir}/jami %{buildroot}/%{_bindir}/ring.cx
 %{_datadir}/locale/*
 %{_datadir}/sounds/jami-gnome/*
 %doc %{_mandir}/man1/dring*
-
-%files daemon
-%defattr(-,root,root,-)
 %{_libdir}/ring/dring
 %{_datadir}/ring/ringtones
 %{_datadir}/dbus-1/services/*
 %{_datadir}/dbus-1/interfaces/*
-
-
-%files all
-%defattr(-,root,root,-)
-%{_bindir}/jami
-%{_bindir}/ring.cx
-%{_bindir}/jami-gnome
-%{_libdir}/libringclient*.so*
-%{_datadir}/glib-2.0/schemas/net.jami.Jami.gschema.xml
-%{_datadir}/applications/jami-gnome.desktop
-%{_datadir}/jami-gnome/jami-gnome.desktop
-%{_datadir}/icons/hicolor/scalable/apps/jami.svg
-%{_datadir}/metainfo/jami-gnome.appdata.xml
-%{_datadir}/libringclient/*
-%{_datadir}/locale/*
-%{_datadir}/sounds/jami-gnome/*
-%doc %{_mandir}/man1/dring*
-%{_libdir}/ring/dring
-%{_datadir}/ring/ringtones
-%{_datadir}/dbus-1/services/*
-%{_datadir}/dbus-1/interfaces/*
-
+%{_bindir}/%{postinst}
 
 %post
 /sbin/ldconfig
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-
-%post all
-/sbin/ldconfig
-/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-
-
-%postun
-/sbin/ldconfig
-
-if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+if [ $1 == 1 ];then
+   %{_bindir}/%{postinst}
 fi
 
-%postun all
+%postun
 /sbin/ldconfig
 
 if [ $1 -eq 0 ] ; then
@@ -247,10 +204,5 @@ fi
 %posttrans
 
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-
-%posttrans all
-
-/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-
 
 %changelog
