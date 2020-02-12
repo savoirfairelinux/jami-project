@@ -36,7 +36,7 @@ def build_client(parsed_args):
 
     if not os.path.exists('./x64/Release/qt.conf'):
         ret &= not execute_cmd(
-            'powershell -ExecutionPolicy Unrestricted -File copy-runtime-files.ps1', True)
+            'powershell -ExecutionPolicy Unrestricted -File copy-runtime-files.ps1' + ' "Release" ' + '"' + parsed_args.qtver + '"', True)
     return ret
 
 def parse_args():
