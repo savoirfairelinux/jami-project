@@ -15,7 +15,7 @@ def execute_cmd(cmd, with_shell=False):
 
 
 def build_daemon(parsed_args):
-    make_cmd = os.path.dirname(this_dir) + '\\daemon\\msvc\\winmake.py'
+    make_cmd = os.path.dirname(this_dir) + '\\daemon\\src\\compat\\msvc\\winmake.py'
     return execute_cmd('python ' + make_cmd + ' -iv -t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -b daemon')
 
 
