@@ -16,9 +16,6 @@ def execute_cmd(cmd, with_shell=False):
 
 def build_daemon(parsed_args):
     make_cmd = os.path.dirname(this_dir) + '\\daemon\\msvc\\winmake.py'
-    os.chdir(os.path.dirname(this_dir) + '\\daemon\\msvc')
-    execute_cmd('cmake -DCMAKE_CONFIGURATION_TYPES="ReleaseLib_win32" -DCMAKE_VS_PLATFORM_NAME="x64" -G "Visual Studio 16 2019" -A x64 -T $(DefaultPlatformToolset) ..')
-    os.chdir(os.path.dirname(this_dir))
     return execute_cmd('python ' + make_cmd + ' -iv -t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -b daemon')
 
 
