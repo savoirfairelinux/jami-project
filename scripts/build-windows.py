@@ -15,11 +15,11 @@ def execute_cmd(cmd, with_shell=False):
 
 
 def build_daemon(parsed_args):
-    make_cmd = os.path.dirname(this_dir) + '\\daemon\\msvc\\winmake.py'
-    os.chdir(os.path.dirname(this_dir) + '\\daemon\\msvc')
-    execute_cmd('cmake -DCMAKE_CONFIGURATION_TYPES="ReleaseLib_win32" -DCMAKE_VS_PLATFORM_NAME="x64" -G "Visual Studio 16 2019" -A x64 -T $(DefaultPlatformToolset) ..')
+    make_cmd = os.path.dirname(this_dir) + '\\daemon\\compat\\msvc\\winmake.py'
+    os.chdir(os.path.dirname(this_dir) + '\\daemon\\compat\\msvc')
+    status_code = execute_cmd('python ' + make_cmd + ' -iv -t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -b daemon')
     os.chdir(os.path.dirname(this_dir))
-    return execute_cmd('python ' + make_cmd + ' -iv -t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -b daemon')
+    return status_code
 
 
 def build_lrc(parsed_args):
@@ -36,7 +36,7 @@ def build_client(parsed_args):
 
     if not os.path.exists('./x64/Release/qt.conf'):
         ret &= not execute_cmd(
-            'powershell -ExecutionPolicy Unrestricted -File copy-runtime-files.ps1', True)
+            'powershell -ExecutionPolicy Unrestricted -File copy-runtime-files.ps1' + ' "Release" ' + '"' + parsed_args.qtver + '"', True)
     return ret
 
 def parse_args():
