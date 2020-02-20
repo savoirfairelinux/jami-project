@@ -9,9 +9,7 @@ this_dir = os.path.dirname(os.path.realpath(__file__))
 def execute_cmd(cmd, with_shell=False):
     p = subprocess.Popen(cmd, shell=with_shell)
     _, perr = p.communicate()
-    if perr:
-        return 1
-    return 0
+    return p.returncode
 
 
 def build_daemon(parsed_args):
