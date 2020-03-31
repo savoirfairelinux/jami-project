@@ -136,7 +136,7 @@ PACMAN_DEPENDENCIES = [
     'expat', 'gsm', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse',
     'speex', 'speexdsp', 'libtool', 'libupnp', 'yaml-cpp', 'qt5-base',
     'swig', 'yasm', 'qrencode', 'evolution-data-server', 'make', 'patch', 'pkg-config',
-    'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanbera', 'openssl'
+    'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanberra', 'openssl'
 ]
 
 OSX_DEPENDENCIES = [
