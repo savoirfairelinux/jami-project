@@ -111,6 +111,8 @@ if [ -f /etc/os-release ]; then
         ENDTAG="ubuntu_19.04"
     elif [ "${UBUNTU_CODENAME}" = "eoan" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_19.10" ]; then
         ENDTAG="ubuntu_19.10"
+    elif [ "${UBUNTU_CODENAME}" = "focal" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_20.04" ]; then
+        ENDTAG="ubuntu_20.04"
     else
         # Distribution is not supported. Don't provide automatic updates.
         CAN_ADD_DEB_SOURCE=false
