@@ -37,6 +37,12 @@ cp /opt/ring-project-ro/jami_*.tar.gz /root/rpmbuild/SOURCES
 # Set the version
 #sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" jami.spec
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" *.spec
+if [ ${RELEASE_VERSION} == "32" ]; then
+    sed -i '/^Obsoletes:/d' *.spec
+    sed -i '/^Provides:/d' *.spec
+    sed -i '/^Conflicts:/d' *.spec
+    sed -i '/gnome-icon-theme-symbolic/d' *.spec
+fi
 
 rpmdev-bumpspec --comment="Automatic nightly release" --userstring="Jenkins <ring@lists.savoirfairelinux.net>" jami.spec
 rpmdev-bumpspec --comment="Automatic nightly release" --userstring="Jenkins <ring@lists.savoirfairelinux.net>" jami-one-click.spec
