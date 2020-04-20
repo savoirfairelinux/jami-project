@@ -11,9 +11,9 @@ License:       GPLv3+
 URL:           https://jami.net/
 Source:        jami_%{version}.tar.gz
 Requires:      jami-daemon = %{version}
-Obsoletes:     ring ring-daemon
+Obsoletes:     ring ring-daemon < 32
 Provides:      ring
-Conflicts:     ring ring-daemon
+Conflicts:     ring ring-daemon < 32
 
 BuildRequires: make
 BuildRequires: autoconf
