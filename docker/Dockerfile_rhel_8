@@ -1,6 +1,6 @@
 FROM docker.io/roboxes/rhel8
 
-RUN subscription-manager register --username=jamisfl --password=swDO9RBtTocv
+RUN subscription-manager register --username=jamisfl --password=$PASS
 RUN subscription-manager attach --auto
 RUN subscription-manager repos  --enable=codeready-builder-for-rhel-8-x86_64-rpms
 
@@ -69,4 +69,3 @@ ADD scripts/build-package-rhel.sh  /opt/build-package-rhel.sh
 CMD /opt/build-package-rhel.sh
 
 RUN subscription-manager unregister
-
