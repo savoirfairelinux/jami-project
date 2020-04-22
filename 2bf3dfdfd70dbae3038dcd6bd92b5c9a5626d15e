@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d731bcf_4c39331f",
+        "filename": "scripts/make-packaging-target.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-04-22T16:51:58Z",
+      "side": 1,
+      "message": "trailing space",
+      "range": {
+        "startLine": 89,
+        "startChar": 25,
+        "endLine": 89,
+        "endChar": 40
+      },
+      "revId": "2bf3dfdfd70dbae3038dcd6bd92b5c9a5626d15e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
