@@ -61,7 +61,7 @@ QEMU_STATIC_%(distribution)s:
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): QEMU_STATIC_%(distribution)s docker/Dockerfile_%(docker_image)s
 	docker build \\
         -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME) \\
-        -f docker/Dockerfile_%(docker_image)s \\
+        -f docker/Dockerfile_%(docker_image)s %(password_rhel8)s \\
         $(CURDIR)
 	touch $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 
@@ -82,9 +82,11 @@ package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(dis
 """
 
 
-def generate_target(distribution, debian_packaging_override, output_file, options='', docker_image='', version='', qemu_static=''):
+def generate_target(distribution, debian_packaging_override, output_file, options='', docker_image='', version='', qemu_static='', password_rhel8 = ''):
     if (docker_image == ''):
         docker_image = distribution
+    if (docker_image == 'rhel_8'):
+        password_rhel8 = password_rhel8
     if (version == ''):
         version = "$(DEBIAN_VERSION)"
     return target_template % {
@@ -95,6 +97,7 @@ def generate_target(distribution, debian_packaging_override, output_file, option
         "options": options,
         "version": version,
         "qemu_static": qemu_static,
+        "password_rhel8": password_rhel8,
     }
 
 
@@ -462,6 +465,7 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": ".packages-built",
             "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
+            "password_rhel8": "--build-arg PASS=${PASS}"
         },
         #opensuse_leap
         {
