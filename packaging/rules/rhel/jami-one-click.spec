@@ -61,6 +61,7 @@ BuildRequires: speexdsp
 BuildRequires: speexdsp-devel
 BuildRequires: cppunit-devel
 BuildRequires: cppunit
+BuildRequires: qt5-qtbase
 BuildRequires: dbus-c++
 
 
