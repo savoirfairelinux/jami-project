@@ -25,7 +25,7 @@
 #
 
 # Exit immediately if a command exits with a non-zero status
-set -e
+set -x
 
 ###############################
 ## Debian / Ubuntu packaging ##
@@ -41,7 +41,7 @@ function package_deb()
     echo "#########################"
 
     DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
-    rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+#   rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
     mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf
 
     # Distributions file
@@ -67,8 +67,11 @@ EOF
     for package in packages/${DISTRIBUTION}*/*.deb; do
 
         # Sign the deb
-        echo "## signing: ${package} ##"
-        dpkg-sig -k ${KEYID} --sign builder ${package}
+	if [ ! -z "${KEYID}" ];
+	then
+		echo "## signing: ${package} ##"
+                dpkg-sig -k ${KEYID} --sign builder ${package}
+	fi
 
         # Include the deb
         echo "## including ${package} ##"
@@ -123,7 +126,7 @@ function package_rpm()
     echo "#########################"
 
     DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
-    rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+#    rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
     mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
 
     # .repo file
@@ -146,16 +149,19 @@ EOF
     echo "##################"
 
     # RPM macros
-    if [ ! -f ~/.rpmmacros ];
+    if [ ! -f ~/.rpmmacros ] && [ ! -z "${KEYID}" ];
     then
         echo "%_signature gpg" > ~/.rpmmacros
         echo "%_gpg_name ${KEYID}" >> ~/.rpmmacros
     fi
 
-    for package in packages/${DISTRIBUTION}*/*.rpm; do
-        rpmsign --resign --key-id=${KEYID} ${package}
-        cp ${package} ${DISTRIBUTION_REPOSITOIRY_FOLDER}
-    done
+    if [ ! -z "${KEYID}" ];
+    then
+        for package in packages/${DISTRIBUTION}*/*.rpm; do
+	    rpmsign --resign --key-id=${KEYID} ${package}
+	    cp ${package} ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+	done
+    fi
 
     # Create the repo
     createrepo --update ${DISTRIBUTION_REPOSITOIRY_FOLDER}
@@ -209,8 +215,12 @@ function deploy()
     rsync --archive --recursive --verbose --delete ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER} ${REMOTE_MANUAL_DOWNLOAD_LOCATION}
 
     # remove deployed files
-    rm -rf manual-download
-    rm -rf repositories
+#    if [ -z "${KEYID}" ];
+#    then
+#	rm -rf manual-download
+#	rm -rf repositories
+#	rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+#    fi
 }
 
 
@@ -231,6 +241,21 @@ function package()
     fi
 }
 
+function remove-deployed-files()
+{
+    # remove deployed files
+    echo "remove files REMOVE_DEPLOYED_FILES: ${REMOVE_DEPLOYED_FILES}" 
+    if [ "${REMOVE_DEPLOYED_FILES}" == true ];
+    then
+	ls -la
+	pwd
+	rm -rf manual-download
+	rm -rf repositories
+	rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+	ls -la
+	pwd
+    fi
+}
 
 for i in "$@"
 do
@@ -255,6 +280,10 @@ case $i in
     SSH_IDENTIY_FILE="${i#*=}"
     shift
     ;;
+    --remove-deployed-files=*)
+    REMOVE_DEPLOYED_FILES="${i#*=}"
+    shift
+    ;;
     *)
     echo "Unrecognized option ${i}"
     exit 1
@@ -264,3 +293,4 @@ done
 
 package
 deploy
+remove-deployed-files
