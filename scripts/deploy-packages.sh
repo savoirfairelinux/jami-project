@@ -25,7 +25,7 @@
 #
 
 # Exit immediately if a command exits with a non-zero status
-set -e
+set -x
 
 ###############################
 ## Debian / Ubuntu packaging ##
@@ -41,7 +41,6 @@ function package_deb()
     echo "#########################"
 
     DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
-    rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
     mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf
 
     # Distributions file
@@ -123,7 +122,6 @@ function package_rpm()
     echo "#########################"
 
     DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
-    rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
     mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
 
     # .repo file
@@ -207,10 +205,9 @@ function deploy()
     echo "## deploying manual download files ##"
     echo "#####################################"
     rsync --archive --recursive --verbose --delete ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER} ${REMOTE_MANUAL_DOWNLOAD_LOCATION}
+    echo "------pwd-----"
+    pwd
 
-    # remove deployed files
-    rm -rf manual-download
-    rm -rf repositories
 }
 
 
@@ -231,6 +228,13 @@ function package()
     fi
 }
 
+function remove-deployed-files()
+{
+    # remove deployed files
+	rm -rf manual-download
+	rm -rf repositories
+	rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+}
 
 for i in "$@"
 do
@@ -255,6 +259,10 @@ case $i in
     SSH_IDENTIY_FILE="${i#*=}"
     shift
     ;;
+    --remove-deployed-files=*)
+    REMOVE_DEPLOYED_FILES="${i#*=}"
+    shift
+    ;;
     *)
     echo "Unrecognized option ${i}"
     exit 1
@@ -262,5 +270,18 @@ case $i in
 esac
 done
 
-package
-deploy
+
+if [ "${REMOVE_DEPLOYED_FILES}" == true ];
+then
+	DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
+	echo"DISTRIBUTION_REPOSITOIRY_FOLDER=${DISTRIBUTION_REPOSITOIRY_FOLDER}"
+	DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
+	deploy
+	remove-deployed-files
+else
+	package
+	deploy
+fi
+#package
+#deploy
+#remove-deployed-files
