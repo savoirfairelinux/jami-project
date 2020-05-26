@@ -67,8 +67,11 @@ EOF
     for package in packages/${DISTRIBUTION}*/*.deb; do
 
         # Sign the deb
-        echo "## signing: ${package} ##"
-        dpkg-sig -k ${KEYID} --sign builder ${package}
+	if [ ! -z "${KEYID}" ];
+	then
+		echo "## signing: ${package} ##"
+                dpkg-sig -k ${KEYID} --sign builder ${package}
+	fi
 
         # Include the deb
         echo "## including ${package} ##"
@@ -146,16 +149,19 @@ EOF
     echo "##################"
 
     # RPM macros
-    if [ ! -f ~/.rpmmacros ];
+    if [ ! -f ~/.rpmmacros ] && [ ! -z "${KEYID}" ];
     then
         echo "%_signature gpg" > ~/.rpmmacros
         echo "%_gpg_name ${KEYID}" >> ~/.rpmmacros
     fi
 
-    for package in packages/${DISTRIBUTION}*/*.rpm; do
-        rpmsign --resign --key-id=${KEYID} ${package}
-        cp ${package} ${DISTRIBUTION_REPOSITOIRY_FOLDER}
-    done
+    if [ ! -z "${KEYID}" ];
+    then
+        for package in packages/${DISTRIBUTION}*/*.rpm; do
+	    rpmsign --resign --key-id=${KEYID} ${package}
+	    cp ${package} ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+	done
+    fi
 
     # Create the repo
     createrepo --update ${DISTRIBUTION_REPOSITOIRY_FOLDER}
