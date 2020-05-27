@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eda08c1_23f3bea3",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 16
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-05-27T18:14:21Z",
+      "side": 0,
+      "message": "rm",
+      "revId": "69dd5a09a0dc4a39880ef2ff9f07efe4c7b86c81",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}

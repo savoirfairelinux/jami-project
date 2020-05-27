@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "286f7b4e_80527956",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 16
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-05-27T18:14:21Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 45
+      },
+      "revId": "0406b39c109001dcf39a1f2683ba4bb129e66152",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9af5e2_f06d63e8",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-05-27T18:14:21Z",
+      "side": 1,
+      "message": "see next comment",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 3
+      },
+      "revId": "0406b39c109001dcf39a1f2683ba4bb129e66152",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c469f0_c59a63e7",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 16
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-05-27T18:14:21Z",
+      "side": 1,
+      "message": "imho we always want to sign the rpm. So this should fail if no KEYID provided",
+      "revId": "0406b39c109001dcf39a1f2683ba4bb129e66152",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fdb8fc6_e1f9c8f2",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 16
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-05-27T18:14:21Z",
+      "side": 1,
+      "message": "trailing space",
+      "range": {
+        "startLine": 240,
+        "startChar": 69,
+        "endLine": 240,
+        "endChar": 72
+      },
+      "revId": "0406b39c109001dcf39a1f2683ba4bb129e66152",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
