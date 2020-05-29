@@ -25,3 +25,6 @@
 [submodule "client-electron"]
 	path = client-electron
 	url = https://review.jami.net/ring-client-electron
+[submodule "jami-plugins"]
+	path = jami-plugins
+	url = https://review.jami.net/jami-plugins
