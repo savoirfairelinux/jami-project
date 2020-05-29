@@ -64,16 +64,27 @@ else
     BUILDDIR="build-local"
 fi
 
+plugin="--disable-plugin"
+archive="--disable-libarchive"
+if [[ "$OSTYPE" == "linux"* ]]; then
+    plugin=""
+fi
+
+if [ -z "${plugin}"]; then
+    archive=""
+fi
+
 cd "${TOP}/daemon"
 DAEMON="$(pwd)"
 cd contrib
 mkdir -p native
 cd native
 if [ "${prefix+set}" ]; then
-    ../bootstrap --prefix="${prefix}"
+    ../bootstrap --prefix="${prefix}" $archive
 else
-    ../bootstrap
+    ../bootstrap $archive
 fi
+make list
 make
 cd "${DAEMON}"
 ./autogen.sh
@@ -85,12 +96,12 @@ fi
 
 if [ "${global}" = "true" ]; then
   if [ "${prefix+set}" ]; then
-    ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${prefix}"
+    ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${prefix}" $plugin
   else
-    ./configure $sharedLib $CONFIGURE_FLAGS
+    ./configure $sharedLib $CONFIGURE_FLAGS $plugin
   fi
 else
-  ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
+  ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon" $plugin
 fi
 make -j"${proc}"
 make_install "${global}" "${priv_install}"
