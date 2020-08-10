@@ -16,9 +16,11 @@ set -ex
 global=false
 static=''
 client=''
+qt5ver='5.12'
+qt5path=''
 proc='1'
 priv_install=true
-while getopts gsc:P:p:u OPT; do
+while getopts gsc:q:Q:P:p:u OPT; do
   case "$OPT" in
     g)
       global='true'
@@ -28,6 +30,12 @@ while getopts gsc:P:p:u OPT; do
     ;;
     c)
       client="${OPTARG}"
+    ;;
+    q)
+      qt5ver="${OPTARG}"
+    ;;
+    Q)
+      qt5path="${OPTARG}"
     ;;
     P)
       prefix="${OPTARG}"
@@ -64,6 +72,7 @@ else
     BUILDDIR="build-local"
 fi
 
+# dring
 cd "${TOP}/daemon"
 DAEMON="$(pwd)"
 cd contrib
@@ -95,6 +104,7 @@ fi
 make -j"${proc}"
 make_install "${global}" "${priv_install}"
 
+# libringclient
 cd "${TOP}/lrc"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
@@ -113,20 +123,27 @@ fi
 make -j"${proc}"
 make_install "${global}"  "${priv_install}"
 
+# client
 cd "${TOP}/${client}"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
-if [ "${global}" = "true" ]; then
-  if [ "${prefix+set}" ]; then
-    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_INSTALL_PREFIX="${prefix}" $static
-  else
-    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
-  fi
+if [ "${client}" = "client-qt" ]; then
+    echo building client-qt using Qt v${qt5ver}
+    pandoc -f markdown -t html5 -o ../changelog.html ../changelog.md
+    qmake -qt=${qt5ver} -set PREFIX="${INSTALL}/${client}" ..
 else
-  cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
-            -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
-            -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
-            -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
+    if [ "${global}" = "true" ]; then
+      if [ "${prefix+set}" ]; then
+        cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_INSTALL_PREFIX="${prefix}" $static
+      else
+        cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
+      fi
+    else
+      cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
+                -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
+                -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
+                -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
+    fi
 fi
 make -j"${proc}"
 make_install "${global}" "${priv_install}"
