@@ -15,7 +15,8 @@ def execute_cmd(cmd, with_shell=False):
 def build_daemon(parsed_args):
     make_cmd = os.path.dirname(this_dir) + '\\daemon\\compat\\msvc\\winmake.py'
     os.chdir(os.path.dirname(this_dir) + '\\daemon\\compat\\msvc')
-    status_code = execute_cmd('python ' + make_cmd + ' -iv -t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -b daemon')
+    status_code = execute_cmd('python ' + make_cmd + ' -iv -t ' +
+                              parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -b daemon')
     os.chdir(os.path.dirname(this_dir))
     return status_code
 
@@ -26,16 +27,19 @@ def build_lrc(parsed_args):
 
 
 def build_client(parsed_args):
-    os.chdir('./client-windows')
+    os.chdir('./client-qt')
     ret = 0
-    ret &= not execute_cmd('pandoc -f markdown -t html5 -o changelog.html changelog.md', True)
+    ret &= not execute_cmd(
+        'pandoc -f markdown -t html5 -o changelog.html changelog.md', True)
     ret &= not execute_cmd('python make-client.py -d')
-    ret &= not execute_cmd('python make-client.py -b ' + '-t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -q ' + parsed_args.qtver)
+    ret &= not execute_cmd('python make-client.py -b ' + '-t ' +
+                           parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -q ' + parsed_args.qtver)
 
     if not os.path.exists('./x64/Release/qt.conf'):
         ret &= not execute_cmd(
             'powershell -ExecutionPolicy Unrestricted -File copy-runtime-files.ps1' + ' "Release" ' + '"' + parsed_args.qtver + '"', True)
     return ret
+
 
 def parse_args():
     ap = argparse.ArgumentParser(description="Qt Client build tool")
@@ -44,13 +48,13 @@ def parse_args():
                     help='Windows use only, specify Visual Studio toolset version')
     ap.add_argument('--sdk', default='', type=str,
                     help='Windows use only, specify Windows SDK version')
-    ap.add_argument('--qtver', default='5.9.4',
+    ap.add_argument('--qtver', default='5.15.0',
                     help='Sets the Qt version to build with')
 
     parsed_args = ap.parse_args()
 
-
     return parsed_args
+
 
 def main():
 
