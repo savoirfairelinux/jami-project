@@ -22,9 +22,11 @@ OSX_DISTRIBUTION_NAME = "osx"
 ANDROID_DISTRIBUTION_NAME = "android"
 WIN32_DISTRIBUTION_NAME = "win32"
 
-# vs help
+QT5_VERSION = "5.15"
+
+# vs vars
 win_sdk_default = '10.0.16299.0'
-win_toolset_default = 'v141'
+win_toolset_default = 'v142'
 
 APT_BASED_DISTROS = [
     'debian',
@@ -182,8 +184,23 @@ def run_powersell_cmd(cmd):
     return
 
 
+def write_qt_conf(path):
+    # Add a configuration that can be supplied to qmake
+    # e.g. `qmake -qt=5.15 [mode] [options] [files]`
+    if path is '':
+        return
+    with open('/usr/share/qtchooser/' + QT5_VERSION + '.conf', 'w+') as fd:
+        fd.write(path.rstrip('/') + '/bin\n')
+        fd.write(path.rstrip('/') + '/lib\n')
+    return
+
+
 def run_dependencies(args):
-    if(args.distribution == WIN32_DISTRIBUTION_NAME):
+    if args.qt is not None:
+        write_qt_conf(args.qt)
+        return
+
+    if args.distribution == WIN32_DISTRIBUTION_NAME:
         run_powersell_cmd(
             'Set-ExecutionPolicy Unrestricted; .\\scripts\\build-package-windows.ps1')
 
@@ -258,7 +275,8 @@ def run_init():
                 module_names.append(line[line.find('"')+1:line.rfind('"')])
 
     subprocess.run(["git", "submodule", "update", "--init"], check=True)
-    subprocess.run(["git", "submodule", "foreach", "git checkout master && git pull"], check=True)
+    subprocess.run(["git", "submodule", "foreach",
+                    "git checkout master && git pull"], check=True)
     for name in module_names:
         copy_file("./scripts/commit-msg", ".git/modules/"+name+"/hooks")
 
@@ -283,7 +301,8 @@ def run_install(args):
         return subprocess.run(["./compile.sh"], cwd="./client-android", check=True)
     elif args.distribution == WIN32_DISTRIBUTION_NAME:
         return subprocess.run([
-            sys.executable, os.path.join(os.getcwd(), "scripts/build-windows.py"),
+            sys.executable, os.path.join(
+                os.getcwd(), "scripts/build-windows.py"),
             "--toolset", args.toolset,
             "--sdk", args.sdk,
             "--qtver", args.qtver
@@ -311,13 +330,18 @@ def run_install(args):
                               universal_newlines=True)
 
         environ['CMAKE_PREFIX_PATH'] = proc.stdout.rstrip("\n")
-        environ['CONFIGURE_FLAGS']   = '--without-dbus'
+        environ['CONFIGURE_FLAGS'] = '--without-dbus'
         install_args += ("-c", "client-macosx")
     else:
         if args.distribution in ZYPPER_BASED_DISTROS:
             # fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
             environ['JSONCPP_LIBS'] = "-ljsoncpp"
-        install_args += ("-c", "client-gnome")
+        if args.gtk:
+            install_args += ("-c", "client-gnome")
+        else:
+            install_args += ("-c", "client-qt")
+            install_args += ("-q", QT5_VERSION)
+            install_args += ("-Q", args.qt)
 
     return subprocess.run(["./scripts/install.sh"] + install_args, env=environ, check=True)
 
@@ -416,7 +440,7 @@ def execute_script(script, settings=None, fail=True):
 def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
-    # Check arg values
+    # Filter unsupported distributions.
     supported_distros = [
         ANDROID_DISTRIBUTION_NAME, OSX_DISTRIBUTION_NAME, IOS_DISTRIBUTION_NAME,
         WIN32_DISTRIBUTION_NAME
@@ -428,6 +452,24 @@ def validate_args(parsed_args):
             parsed_args.distribution, ', '.join(supported_distros)
         ), file=sys.stderr)
         sys.exit(1)
+
+    # The Qt client support will be added incrementally.
+    if parsed_args.qt is not None:
+        supported_qt_distros = [
+            WIN32_DISTRIBUTION_NAME, APT_BASED_DISTROS, DNF_BASED_DISTROS
+        ]
+        if parsed_args.distribution not in supported_distros:
+            print('Distribution \'{0}\' not supported when building the Qt client.'
+                  '\nChoose one of: {1}'.format(
+                      parsed_args.distribution, ', '.join(supported_qt_distros)
+                  ), file=sys.stderr)
+            sys.exit(1)
+
+    # The windows client can only be built on a Windows 10 host.
+    if parsed_args.distribution == WIN32_DISTRIBUTION_NAME:
+        if platform.release() != '10':
+            print('Windows version must be built on Windows 10')
+            sys.exit(1)
 
 
 def parse_args():
@@ -459,24 +501,26 @@ def parse_args():
     ap.add_argument('--global-install', default=False, action='store_true')
     ap.add_argument('--debug', default=False, action='store_true')
     ap.add_argument('--background', default=False, action='store_true')
-    ap.add_argument('--no-priv-install', dest='priv_install', default=True, action='store_false')
+    ap.add_argument('--no-priv-install', dest='priv_install',
+                    default=True, action='store_false')
+    ap.add_argument('--qt', nargs='?', const='', type=str,
+                    help='Build the Qt client with the Qt 5.15 path supplied')
 
-    if choose_distribution() == WIN32_DISTRIBUTION_NAME:
-        ap.add_argument('--toolset', default=win_toolset_default, type=str, help='Windows use only, specify Visual Studio toolset version')
-        ap.add_argument('--sdk', default=win_sdk_default, type=str, help='Windows use only, specify Windows SDK version')
-        ap.add_argument('--qtver', default='5.9.4', help='Sets the Qt version to build with')
+    dist = choose_distribution()
+    if dist == WIN32_DISTRIBUTION_NAME:
+        ap.add_argument('--toolset', default=win_toolset_default, type=str,
+                        help='Windows use only, specify Visual Studio toolset version')
+        ap.add_argument('--sdk', default=win_sdk_default, type=str,
+                        help='Windows use only, specify Windows SDK version')
+        ap.add_argument('--qtver', default='5.15.0',
+                        help='Sets the Qt version to build with')
 
     parsed_args = ap.parse_args()
 
     if (parsed_args.distribution is not None):
         parsed_args.distribution = parsed_args.distribution.lower()
     else:
-        parsed_args.distribution = choose_distribution()
-
-    if parsed_args.distribution == WIN32_DISTRIBUTION_NAME:
-        if platform.release() != '10':
-            print('Windows version must be built on Windows 10')
-            sys.exit(1)
+        parsed_args.distribution = dist
 
     validate_args(parsed_args)
 

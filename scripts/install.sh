@@ -16,6 +16,8 @@ set -ex
 global=false
 static=''
 client=''
+qt5ver='5.12'
+qt5path=''
 proc='1'
 priv_install=true
 while getopts gsc:P:p:u OPT; do
@@ -28,6 +30,12 @@ while getopts gsc:P:p:u OPT; do
     ;;
     c)
       client="${OPTARG}"
+    ;;
+    q)
+      qtver="${OPTARG}"
+    ;;
+    Q)
+      qt5path="${OPTARG}"
     ;;
     P)
       prefix="${OPTARG}"
@@ -64,69 +72,76 @@ else
     BUILDDIR="build-local"
 fi
 
-cd "${TOP}/daemon"
-DAEMON="$(pwd)"
-cd contrib
-mkdir -p native
-cd native
-if [ "${prefix+set}" ]; then
-    ../bootstrap --prefix="${prefix}"
-else
-    ../bootstrap
-fi
-make
-cd "${DAEMON}"
-./autogen.sh
+# # dring
+# cd "${TOP}/daemon"
+# DAEMON="$(pwd)"
+# cd contrib
+# mkdir -p native
+# cd native
+# if [ "${prefix+set}" ]; then
+#     ../bootstrap --prefix="${prefix}"
+# else
+#     ../bootstrap
+# fi
+# make
+# cd "${DAEMON}"
+# ./autogen.sh
 
-#keep shared Lib on MAC OSX
-if [[ "$OSTYPE" != "darwin"* ]]; then
-    sharedLib="--disable-shared"
-fi
+# #keep shared Lib on MAC OSX
+# if [[ "$OSTYPE" != "darwin"* ]]; then
+#     sharedLib="--disable-shared"
+# fi
 
-if [ "${global}" = "true" ]; then
-  if [ "${prefix+set}" ]; then
-    ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${prefix}"
-  else
-    ./configure $sharedLib $CONFIGURE_FLAGS
-  fi
-else
-  ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
-fi
-make -j"${proc}"
-make_install "${global}" "${priv_install}"
+# if [ "${global}" = "true" ]; then
+#   if [ "${prefix+set}" ]; then
+#     ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${prefix}"
+#   else
+#     ./configure $sharedLib $CONFIGURE_FLAGS
+#   fi
+# else
+#   ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
+# fi
+# make -j"${proc}"
+# make_install "${global}" "${priv_install}"
 
-cd "${TOP}/lrc"
-mkdir -p "${BUILDDIR}"
-cd "${BUILDDIR}"
-if [ "${global}" = "true" ]; then
-  if [ "${prefix+set}" ]; then
-    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="${prefix}" $static
-  else
-    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_BUILD_TYPE=Debug $static
-  fi
-else
-  cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
-            -DCMAKE_BUILD_TYPE=Debug \
-            -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
-            -DRING_BUILD_DIR="${DAEMON}/src" $static
-fi
-make -j"${proc}"
-make_install "${global}"  "${priv_install}"
+# # libringclient
+# cd "${TOP}/lrc"
+# mkdir -p "${BUILDDIR}"
+# cd "${BUILDDIR}"
+# if [ "${global}" = "true" ]; then
+#   if [ "${prefix+set}" ]; then
+#     cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="${prefix}" $static
+#   else
+#     cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_BUILD_TYPE=Debug $static
+#   fi
+# else
+#   cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
+#             -DCMAKE_BUILD_TYPE=Debug \
+#             -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
+#             -DRING_BUILD_DIR="${DAEMON}/src" $static
+# fi
+# make -j"${proc}"
+# make_install "${global}"  "${priv_install}"
 
+# client
 cd "${TOP}/${client}"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
-if [ "${global}" = "true" ]; then
-  if [ "${prefix+set}" ]; then
-    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_INSTALL_PREFIX="${prefix}" $static
-  else
-    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
-  fi
+if [ "${client}" = "client-qt" ]; then
+    echo building jami-qt ${qt5ver} ${qt5path}
 else
-  cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
-            -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
-            -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
-            -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
+    if [ "${global}" = "true" ]; then
+      if [ "${prefix+set}" ]; then
+        cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_INSTALL_PREFIX="${prefix}" $static
+      else
+        cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
+      fi
+    else
+      cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
+                -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
+                -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
+                -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
+    fi
 fi
 make -j"${proc}"
 make_install "${global}" "${priv_install}"

@@ -4,7 +4,7 @@ Upstream-Contact: Alexandre Viau <alexandre.viau@savoirfairelinux.net>
 Source: https://dl.jami.net/release/tarballs/
 Files-Excluded: client-electron/*
                 client-uwp/*
-                client-windows/*
+                client-qt/*
                 client-android/*
                 client-macosx/*
                 client-ios/*
