@@ -1,7 +1,9 @@
 client-android
 client-gnome
+client-ios
 client-macosx
-client-windows
+client-qt
+client-uwp
 daemon
 lrc
 ring_*
