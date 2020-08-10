@@ -11,3 +11,6 @@ repositories
 manual-download
 .docker-image-*
 qemu-static
+
+# QtCreator
+/build-*
