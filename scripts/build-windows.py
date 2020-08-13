@@ -29,14 +29,15 @@ def build_lrc(parsed_args):
 def build_client(parsed_args):
     os.chdir('./client-qt')
     ret = 0
-    ret &= not execute_cmd(
+    ret |= execute_cmd(
         'pandoc -f markdown -t html5 -o changelog.html changelog.md', True)
-    ret &= not execute_cmd('python make-client.py -d')
-    ret &= not execute_cmd('python make-client.py -b ' + '-t ' +
+    ret |= execute_cmd('python make-client.py -d')
+    ret |= execute_cmd('python make-client.py -b ' + '-t ' +
                            parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -q ' + parsed_args.qtver)
-
-    if not os.path.exists('./x64/Release/qt.conf'):
-        ret &= not execute_cmd(
+    if ret != 0:
+        sys.exit(1)
+    else:
+        execute_cmd(
             'powershell -ExecutionPolicy Unrestricted -File copy-runtime-files.ps1' + ' "Release" ' + '"' + parsed_args.qtver + '"', True)
     return ret
 
