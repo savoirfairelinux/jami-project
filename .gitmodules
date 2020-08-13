@@ -25,3 +25,6 @@
 [submodule "client-qt"]
 	path = client-qt
 	url = https://review.jami.net/jami-client-qt
+[submodule "jami-plugins"]
+	path = jami-plugins
+	url = ../jami-plugins
