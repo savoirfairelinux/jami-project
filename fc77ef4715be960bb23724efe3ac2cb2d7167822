@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "6faf3ba0_86966316",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-08-18T18:19:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22059b56_025c015b",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "fc77ef4715be960bb23724efe3ac2cb2d7167822",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8654f6d4_19fe51e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-08-18T18:19:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00acaa02_03c9cccd",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 89
+      },
+      "revId": "fc77ef4715be960bb23724efe3ac2cb2d7167822",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66ac4d0b_b97f2995",
         "filename": "scripts/build-windows.py",
         "patchSetId": 2
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1492885f_ccbef270",
+        "filename": "scripts/build-windows.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-08-18T18:19:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ac4d0b_b97f2995",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "fc77ef4715be960bb23724efe3ac2cb2d7167822",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42ef1951_b5cfcefa",
         "filename": "scripts/build-windows.py",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "fc77ef4715be960bb23724efe3ac2cb2d7167822",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee8f621_03596690",
+        "filename": "scripts/build-windows.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-08-18T18:19:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42ef1951_b5cfcefa",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 52
+      },
+      "revId": "fc77ef4715be960bb23724efe3ac2cb2d7167822",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
