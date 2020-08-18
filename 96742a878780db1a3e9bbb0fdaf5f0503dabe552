@@ -22,6 +22,30 @@
       "revId": "96742a878780db1a3e9bbb0fdaf5f0503dabe552",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae651ec3_6f0c0c55",
+        "filename": "scripts/build-windows.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 649
+      },
+      "writtenOn": "2020-08-18T19:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b477034_6af961ff",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "96742a878780db1a3e9bbb0fdaf5f0503dabe552",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
