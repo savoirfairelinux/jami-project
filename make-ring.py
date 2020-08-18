@@ -268,7 +268,7 @@ def run_dependencies(args):
         sys.exit(1)
 
 
-def run_init():
+def run_init(args={}):
     # Extract modules path from '.gitmodules' file
     module_names = []
     with open('.gitmodules') as fd:
@@ -288,6 +288,16 @@ def run_init():
             ['./scripts/format.sh --install  %(path)s'],
             {"path": ".git/modules/" + name + "/hooks"}
         )
+
+    if args.qt is not None:
+        # try to append some QML formatting to the client-qt pre-commit hook
+        if args.qt is '':
+            qmlformat_cmd = DEFAULT_QT_5_15_PATH + '/bin/qmlformat'
+        else:
+            qmlformat_cmd = args.qt + '/bin/qmlformat'
+        with open('.git/modules/client-qt/hooks/pre-commit', 'a+') as fd:
+            fd.write('files=$(git diff-index --cached --name-only HEAD | grep -iE "\.(qml)") || exit 0\n')
+            fd.write(qmlformat_cmd + ' -i "$files"')
 
 
 def copy_file(src, dest):
@@ -571,7 +581,7 @@ def main():
         run_dependencies(parsed_args)
 
     elif parsed_args.init:
-        run_init()
+        run_init(parsed_args)
 
     elif parsed_args.install:
         run_install(parsed_args)
