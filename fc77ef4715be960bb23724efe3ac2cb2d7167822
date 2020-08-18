@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66ac4d0b_b97f2995",
+        "filename": "scripts/build-windows.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-08-18T17:45:30Z",
+      "side": 1,
+      "message": "forget this and put sys.exit(1) if p.returncode is non-zero in execute_cmd()",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "fc77ef4715be960bb23724efe3ac2cb2d7167822",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ef1951_b5cfcefa",
+        "filename": "scripts/build-windows.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-08-18T17:45:30Z",
+      "side": 1,
+      "message": "remove this check for now too",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 52
+      },
+      "revId": "fc77ef4715be960bb23724efe3ac2cb2d7167822",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
