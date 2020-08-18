@@ -282,6 +282,13 @@ def run_init():
     for name in module_names:
         copy_file("./scripts/commit-msg", ".git/modules/"+name+"/hooks")
 
+    module_names_to_format = ['daemon', 'lrc', 'client-qt']
+    for name in module_names_to_format:
+        execute_script(
+            ['./scripts/format.sh --install  %(path)s'],
+            {"path": ".git/modules/" + name + "/hooks"}
+        )
+
 
 def copy_file(src, dest):
     print("Copying:" + src + " to " + dest)
