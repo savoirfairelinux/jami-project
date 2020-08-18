@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b477034_6af961ff",
+        "filename": "scripts/build-windows.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-08-18T18:23:11Z",
+      "side": 1,
+      "message": "don\u0027t pass this in, surely there must be some sensible data in \u0027p\u0027 to display, otherwise don\u0027t print anything",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "96742a878780db1a3e9bbb0fdaf5f0503dabe552",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
