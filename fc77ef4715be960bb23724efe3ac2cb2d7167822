@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "00acaa02_03c9cccd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-08-18T17:51:54Z",
+      "side": 1,
+      "message": "exit when build script command fails",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 89
+      },
+      "revId": "fc77ef4715be960bb23724efe3ac2cb2d7167822",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22059b56_025c015b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-08-18T17:51:54Z",
+      "side": 1,
+      "message": "misc",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "fc77ef4715be960bb23724efe3ac2cb2d7167822",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66ac4d0b_b97f2995",
         "filename": "scripts/build-windows.py",
         "patchSetId": 2
