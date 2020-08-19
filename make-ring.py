@@ -204,7 +204,7 @@ def run_dependencies(args):
 
     if args.distribution == WIN32_DISTRIBUTION_NAME:
         run_powersell_cmd(
-            'Set-ExecutionPolicy Unrestricted; .\\scripts\\build-package-windows.ps1')
+            'Set-ExecutionPolicy Unrestricted; .\\scripts\\install-deps-windows.ps1')
 
     elif args.distribution in APT_BASED_DISTROS:
         execute_script(
