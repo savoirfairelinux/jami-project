@@ -4,9 +4,6 @@
 [submodule "client-gnome"]
 	path = client-gnome
 	url = https://review.jami.net/ring-client-gnome
-[submodule "client-windows"]
-	path = client-windows
-	url = https://review.jami.net/ring-client-windows
 [submodule "daemon"]
 	path = daemon
 	url = https://review.jami.net/ring-daemon
@@ -25,3 +22,9 @@
 [submodule "client-electron"]
 	path = client-electron
 	url = https://review.jami.net/ring-client-electron
+[submodule "client-qt"]
+	path = client-qt
+	url = https://review.jami.net/jami-client-qt
+[submodule "jami-plugins"]
+	path = jami-plugins
+	url = ../jami-plugins
