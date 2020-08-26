@@ -41,8 +41,7 @@ BuildRequires: libuuid-devel
 BuildRequires: libXfixes-devel
 BuildRequires: gnutls-devel
 BuildRequires: nettle-devel
-#BuildRequires: jsoncpp-devel
-#BuildRequires: json-devel
+BuildRequires: jsoncpp-devel
 BuildRequires: gcc-c++
 BuildRequires: glib2-devel
 BuildRequires: gtk3-devel
@@ -113,7 +112,7 @@ cd %{_builddir}/ring-project/daemon/contrib/native && \
     make list && \
     make fetch && \
     make -j4 V=1 && \
-    make -j4 V=1 .ffmpeg
+    make -j4 V=1 .ffmpeg .gnutls
 
 cd %{_builddir}/ring-project/daemon && \
     ./autogen.sh && \
