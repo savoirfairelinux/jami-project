@@ -2,7 +2,7 @@ FROM opensuse/leap
 RUN zypper --non-interactive install  dnf
 RUN dnf clean all
 RUN zypper --non-interactive lr
-RUN zypper --non-interactive  --gpg-auto-import-key refresh
+RUN zypper --non-interactive  --gpg-auto-import-keys refresh
 RUN zypper --non-interactive lr
 RUN zypper --non-interactive  install -y dnf-command\(builddep\) rpmdevtools
 
