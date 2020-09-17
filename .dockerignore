@@ -7,5 +7,6 @@ client-uwp
 daemon
 lrc
 ring_*
+plugins
 .git
 */.git
