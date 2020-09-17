@@ -8,5 +8,6 @@ git add client-android \
         client-qt \
         client-uwp \
         daemon \
-        lrc
+        lrc \
+        plugins
 git commit
