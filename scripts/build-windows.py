@@ -13,6 +13,10 @@ def execute_cmd(cmd, with_shell=False):
         sys.exit(1)
     return p.returncode
 
+def generate_msi():
+    os.chdir(os.path.dirname(this_dir) + '\\client-qt')
+    execute_cmd('python make-client.py --msi')
+    os.chdir(os.path.dirname(this_dir))
 
 def build_daemon(parsed_args):
     make_cmd = os.path.dirname(this_dir) + '\\daemon\\compat\\msvc\\winmake.py'
@@ -45,6 +49,8 @@ def parse_args():
                     help='Windows use only, specify Windows SDK version')
     ap.add_argument('--qtver', default='5.15.0',
                     help='Sets the Qt version to build with')
+    ap.add_argument('--msi', action='store_true',
+                    help='Generate msi')
 
     parsed_args = ap.parse_args()
 
@@ -53,9 +59,12 @@ def parse_args():
 
 def main():
     parsed_args = parse_args()
-    build_daemon(parsed_args)
-    build_lrc(parsed_args)
-    build_client(parsed_args)
+    if parsed_args.msi:
+        generate_msi()
+    else:
+        build_daemon(parsed_args)
+        build_lrc(parsed_args)
+        build_client(parsed_args)
 
 
 if __name__ == "__main__":

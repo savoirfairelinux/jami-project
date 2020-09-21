@@ -180,6 +180,13 @@ STOP_SCRIPT = [
 ]
 
 
+def run_generate_msi():
+    return subprocess.run([
+            sys.executable, os.path.join(
+                os.getcwd(), "scripts/build-windows.py"),
+                "--msi"
+        ], check=True)
+
 def run_powersell_cmd(cmd):
     p = subprocess.Popen(["powershell.exe", cmd], stdout=sys.stdout)
     p.communicate()
@@ -526,6 +533,8 @@ def parse_args():
 
     dist = choose_distribution()
     if dist == WIN32_DISTRIBUTION_NAME:
+        ga.add_argument('--msi', action='store_true',
+                        help='Generate msi')
         ap.add_argument('--toolset', default=win_toolset_default, type=str,
                         help='Windows use only, specify Visual Studio toolset version')
         ap.add_argument('--sdk', default=win_sdk_default, type=str,
@@ -584,6 +593,9 @@ def main():
 
     elif parsed_args.stop:
         run_stop(parsed_args)
+
+    elif parsed_args.msi:
+        run_generate_msi()
 
 
 if __name__ == "__main__":
