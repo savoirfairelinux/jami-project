@@ -14,5 +14,5 @@ command='cd client-android && ./compile.sh'
 command='cd client-android && ./compile.sh --daemon'
 
 [release]
-command='cd client-android && ./compile.sh --release'
+command='cd client-android && ./compile.sh --daemon --release'
 
