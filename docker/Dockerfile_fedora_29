@@ -12,6 +12,7 @@ RUN dnf upgrade -y && \
         git \
         rpm-build \
         tar \
+        nasm \
         make \
         autoconf \
         automake \

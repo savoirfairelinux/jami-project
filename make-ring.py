@@ -86,7 +86,7 @@ ZYPPER_INSTALL_SCRIPT = [
 ZYPPER_DEPENDENCIES = [
     # build system
     'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++',
-    'libtool', 'which', 'pandoc',
+    'libtool', 'which', 'pandoc','nasm',
     # contrib dependencies
     'curl', 'gzip', 'bzip2',
     # daemon
@@ -115,7 +115,7 @@ DNF_DEPENDENCIES = [
     'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel',
     'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel', 'openssl-devel',
     'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel', 'libcanberra-devel',
-    'sqlite-devel', 'openssl-static', 'pandoc'
+    'sqlite-devel', 'openssl-static', 'pandoc', 'nasm'
 ]
 
 APT_DEPENDENCIES = [
@@ -130,7 +130,7 @@ APT_DEPENDENCIES = [
     'libudev-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'libqt5sql5-sqlite', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
     'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-dev', 'libvdpau-dev', 'libmsgpack-dev', 'libcanberra-gtk3-dev',
-    'pandoc'
+    'pandoc', 'nasm'
 ]
 
 PACMAN_DEPENDENCIES = [
@@ -140,7 +140,7 @@ PACMAN_DEPENDENCIES = [
     'opus', 'pcre', 'libpulse', 'speex', 'speexdsp', 'libtool', 'yaml-cpp',
     'qt5-base', 'swig', 'yasm', 'qrencode', 'make', 'patch', 'pkg-config',
     'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanberra',
-    'openssl', 'pandoc'
+    'openssl', 'pandoc', 'nasm'
 ]
 
 OSX_DEPENDENCIES = [

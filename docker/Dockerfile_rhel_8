@@ -21,6 +21,7 @@ RUN dnf upgrade -y && \
         autoconf \
         automake \
         cmake \
+        nasm \
         pulseaudio-libs-devel \
         libcanberra-devel \
         libcurl-devel \
