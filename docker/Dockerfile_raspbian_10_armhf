@@ -21,6 +21,7 @@ RUN apt-get update && \
         autopoint \
         cmake \
         libtool \
+        nasm \
         libdbus-1-dev \
         libdbus-c++-dev \
         libargon2-0-dev \

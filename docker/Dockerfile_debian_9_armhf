@@ -19,6 +19,7 @@ RUN apt-get update && \
         automake \
         autopoint \
         cmake \
+        nasm \
         libtool \
         libdbus-1-dev \
         libdbus-c++-dev \
