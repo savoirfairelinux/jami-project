@@ -92,10 +92,6 @@ package-all: package-debian_9 \
              package-debian_10_armhf_oci \
              package-debian_10_arm64_oci \
              package-raspbian_10_armhf \
-             package-ubuntu_16.04 \
-             package-ubuntu_16.04_i386 \
-             package-ubuntu_16.04_oci \
-             package-ubuntu_16.04_i386_oci \
              package-ubuntu_18.04 \
              package-ubuntu_18.04_i386 \
              package-ubuntu_18.04_oci \
@@ -104,24 +100,12 @@ package-all: package-debian_9 \
              package-ubuntu_18.10_i386 \
              package-ubuntu_18.10_oci \
              package-ubuntu_18.10_i386_oci \
-             package-ubuntu_19.04 \
-             package-ubuntu_19.04_i386 \
-             package-ubuntu_19.04_oci \
-             package-ubuntu_19.04_i386_oci \
              package-ubuntu_19.10 \
              package-ubuntu_19.10_i386 \
              package-ubuntu_19.10_oci \
              package-ubuntu_19.10_i386_oci \
              package-ubuntu_20.04 \
              package-ubuntu_20.04_oci \
-             package-fedora_27 \
-             package-fedora_27_i386 \
-             package-fedora_28 \
-             package-fedora_28_i386 \
-             package-fedora_29 \
-             package-fedora_29_i386 \
-             package-fedora_30 \
-             package-fedora_30_i386 \
              package-fedora_31 \
              package-fedora_31_i386 \
              package-fedora_32 \
