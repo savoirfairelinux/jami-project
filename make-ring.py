@@ -85,7 +85,7 @@ ZYPPER_INSTALL_SCRIPT = [
 
 ZYPPER_DEPENDENCIES = [
     # build system
-    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++',
+    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'make', 'patch', 'gcc-c++',
     'libtool', 'which', 'pandoc','nasm',
     # contrib dependencies
     'curl', 'gzip', 'bzip2',
@@ -104,7 +104,7 @@ ZYPPER_DEPENDENCIES = [
 ]
 
 DNF_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'speexdsp-devel', 'pulseaudio-libs-devel',
+    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'make', 'speexdsp-devel', 'pulseaudio-libs-devel',
     'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
     'yaml-cpp-devel', 'boost-devel', 'dbus-c++-devel', 'dbus-devel',
     'libXext-devel', 'libXfixes-devel', 'yasm',
@@ -119,7 +119,7 @@ DNF_DEPENDENCIES = [
 ]
 
 APT_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'autopoint', 'automake', 'cmake', 'dbus', 'doxygen', 'g++',
+    'autoconf', 'autoconf-archive', 'autopoint', 'automake', 'cmake', 'make', 'dbus', 'doxygen', 'g++',
     'gettext', 'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
     'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
