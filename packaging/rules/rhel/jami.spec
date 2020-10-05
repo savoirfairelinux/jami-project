@@ -52,6 +52,7 @@ BuildRequires: clutter
 BuildRequires: clutter-devel
 BuildRequires: clutter-gtk-devel
 BuildRequires: qrencode-devel
+BuildRequires: nasm
 BuildRequires: yasm
 BuildRequires: opus
 BuildRequires: opus-devel
