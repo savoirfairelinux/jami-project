@@ -21,7 +21,7 @@
 # debian-based distros.
 #
 
-set -e
+set -ex
 
 cp -r /opt/ring-project-ro /opt/ring-project
 cd /opt/ring-project
@@ -39,6 +39,16 @@ if [ -z "${DEBIAN_PACKAGING_OVERRIDE}" ]; then
     echo "DEBIAN_PACKAGING_OVERRIDE not set."
 else
     cp -r ${DEBIAN_PACKAGING_OVERRIDE}/* debian/
+fi
+
+DPKG_BUILD_OPTIONS=""
+MKBUILD_OPTIONS=""
+# Set the host architecture as armhf
+if echo "${DISTRIBUTION}" | grep -q "raspbian_10_armhf"; then
+    echo "Adding armhf host architecture"
+    dpkg --add-architecture armhf
+    DPKG_BUILD_OPTIONS="${DPKG_BUILD_OPTIONS} -a armhf"
+    MKBUILD_OPTIONS="${MKBUILD_OPTIONS} --host-arch armhf"
 fi
 
 # install build deps
@@ -74,7 +84,7 @@ cd ring-project
 cp --verbose -r /opt/ring-project/debian .
 
 # create the package
-dpkg-buildpackage -uc -us
+dpkg-buildpackage -uc -us ${DPKG_BUILD_OPTIONS}
 
 # move the artifacts to output
 cd ..
