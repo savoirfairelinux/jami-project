@@ -20,6 +20,16 @@ BUNDLED_PKGS = .ffmpeg
 ifeq ($(DISTRIBUTION),raspbian_10_armhf)
 # Raspbian's yaml-cpp lib does not work properly
 BUNDLED_PKGS += .yaml-cpp
+# Add host environment variables
+HOST_ARCH=arm-linux-gnueabihf
+CMAKE_OPTIONS=-DCHOST=${HOST_ARCH} \
+		-DCMAKE_C_COMPILER=${HOST_ARCH}-gcc \
+		-DCMAKE_CXX_COMPILER=${HOST_ARCH}-g++ \
+		-DCMAKE_FIND_ROOT_PATH=/usr/${HOST_ARCH} \
+		-DPKG_CONFIG_EXECUTABLE=/usr/bin/${HOST_ARCH}-pkg-config \
+		-DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+		-DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
+		-DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY
 endif
 
 %:
@@ -44,6 +54,7 @@ override_dh_auto_configure:
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
         ../bootstrap \
+				--host=${HOST_ARCH} \
 				--disable-downloads \
 				--no-checksums \
 				--disable-ogg \
@@ -63,7 +74,8 @@ override_dh_auto_configure:
 		./autogen.sh && \
 		./configure \
 				--prefix=/usr \
-				--disable-shared
+				--disable-shared \
+				--host=${HOST_ARCH}
 
 	#############################
 	## libringclient configure ##
@@ -75,6 +87,7 @@ override_dh_auto_configure:
 			-DRING_BUILD_DIR=$(CURDIR)/daemon/src \
 			-DCMAKE_INSTALL_PREFIX=/usr \
 			-DCMAKE_BUILD_TYPE=Debug \
+			$(CMAKE_OPTIONS) \
 			..
 
 	############################
@@ -87,6 +100,7 @@ override_dh_auto_configure:
 			-DCMAKE_INSTALL_PREFIX=/usr \
 			-DLibRingClient_PROJECT_DIR=/$(CURDIR)/lrc \
 			-DGSETTINGS_LOCALCOMPILE=OFF \
+			$(CMAKE_OPTIONS) \
 			..
 
 	dh_auto_configure
