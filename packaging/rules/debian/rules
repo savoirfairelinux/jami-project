@@ -34,11 +34,13 @@ override_dh_auto_configure:
 	mkdir -p daemon/contrib/tarballs
 
 	# Create tarballs
-	for i in $(CURDIR)/daemon/contrib/tarballs-unpacked/*; do \
-		projectname=`basename $$i` && \
-		cd $$i && tar -caf ../../tarballs/$$projectname * && \
-		echo "Repacked $$projectname"; \
-	done
+	if [ "$(ls -A $(CURDIR)/daemon/contrib/tarballs-unpacked/)" ]; then \
+		for i in $(CURDIR)/daemon/contrib/tarballs-unpacked/*; do \
+			projectname=`basename $$i` && \
+			cd $$i && tar -caf ../../tarballs/$$projectname * && \
+			echo "Repacked $$projectname"; \
+		done \
+	fi
 
 	###########################
 	## Ring Daemon configure ##
