@@ -85,7 +85,8 @@ ZYPPER_INSTALL_SCRIPT = [
 
 ZYPPER_DEPENDENCIES = [
     # build system
-    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++', 'libtool', 'which',
+    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++',
+    'libtool', 'which', 'pandoc'
     # contrib dependencies
     'curl', 'gzip', 'bzip2',
     # daemon
@@ -133,12 +134,13 @@ APT_DEPENDENCIES = [
 ]
 
 PACMAN_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc', 'gnome-icon-theme-symbolic',
-    'ffmpeg', 'boost', 'clutter-gtk', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book',
-    'expat', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse',
-    'speex', 'speexdsp', 'libtool', 'yaml-cpp', 'qt5-base',
-    'swig', 'yasm', 'qrencode', 'make', 'patch', 'pkg-config',
-    'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanberra', 'openssl'
+    'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc',
+    'gnome-icon-theme-symbolic', 'ffmpeg', 'boost', 'clutter-gtk', 'cppunit',
+    'libdbus', 'dbus-c++', 'libe-book', 'expat', 'gtk3', 'jack', 'libnotify',
+    'opus', 'pcre', 'libpulse', 'speex', 'speexdsp', 'libtool', 'yaml-cpp',
+    'qt5-base', 'swig', 'yasm', 'qrencode', 'make', 'patch', 'pkg-config',
+    'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanberra',
+    'openssl', 'pandoc'
 ]
 
 OSX_DEPENDENCIES = [
