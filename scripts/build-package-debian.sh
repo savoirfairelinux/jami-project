@@ -41,6 +41,13 @@ else
     cp -r ${DEBIAN_PACKAGING_OVERRIDE}/* debian/
 fi
 
+DPKG_BUILD_OPTIONS=""
+# Set the host architecture as armhf
+if [ "${DISTRIBUTION}" =~ raspbian_10_armhf.* ]; then
+    dpkg --add-architecture armhf
+    DPKG_BUILD_OPTIONS="${DPKG_BUILD_OPTIONS} -a armhf"
+fi
+
 # install build deps
 apt-get clean
 apt-get update
@@ -74,7 +81,7 @@ cd ring-project
 cp --verbose -r /opt/ring-project/debian .
 
 # create the package
-dpkg-buildpackage -uc -us
+dpkg-buildpackage -uc -us ${DPKG_BUILD_OPTIONS}
 
 # move the artifacts to output
 cd ..
