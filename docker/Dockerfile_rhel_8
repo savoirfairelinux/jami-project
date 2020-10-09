@@ -21,6 +21,7 @@ RUN dnf upgrade -y && \
         autoconf \
         automake \
         cmake \
+        nasm \
         pulseaudio-libs-devel \
         libcanberra-devel \
         libcurl-devel \
@@ -66,7 +67,8 @@ RUN dnf upgrade -y && \
         evolution-data-server \
         evolution-devel \
 	qt5-qtbase-5.11.1-7.el8.i686 \
-        dbus-c++
+        dbus-c++ \
+        jsoncpp-devel
 
 ADD scripts/build-package-rhel.sh  /opt/build-package-rhel.sh
 

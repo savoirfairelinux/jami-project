@@ -19,6 +19,7 @@ RUN apt-get update && \
         automake \
         autopoint \
         cmake \
+        nasm \
         libtool \
         libdbus-1-dev \
         libdbus-c++-dev \
@@ -33,7 +34,6 @@ RUN apt-get update && \
         qttools5-dev \
         qttools5-dev-tools \
         yasm \
-        nasm \
         autotools-dev \
         gettext \
         libpulse-dev \

@@ -85,7 +85,8 @@ ZYPPER_INSTALL_SCRIPT = [
 
 ZYPPER_DEPENDENCIES = [
     # build system
-    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'patch', 'gcc-c++', 'libtool', 'which',
+    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'make', 'patch', 'gcc-c++',
+    'libtool', 'which', 'pandoc','nasm',
     # contrib dependencies
     'curl', 'gzip', 'bzip2',
     # daemon
@@ -103,7 +104,7 @@ ZYPPER_DEPENDENCIES = [
 ]
 
 DNF_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'speexdsp-devel', 'pulseaudio-libs-devel',
+    'autoconf', 'autoconf-archive', 'automake', 'cmake', 'make', 'speexdsp-devel', 'pulseaudio-libs-devel',
     'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
     'yaml-cpp-devel', 'boost-devel', 'dbus-c++-devel', 'dbus-devel',
     'libXext-devel', 'libXfixes-devel', 'yasm',
@@ -114,11 +115,11 @@ DNF_DEPENDENCIES = [
     'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel',
     'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel', 'openssl-devel',
     'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel', 'libcanberra-devel',
-    'sqlite-devel', 'openssl-static', 'pandoc'
+    'sqlite-devel', 'openssl-static', 'pandoc', 'nasm'
 ]
 
 APT_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'autopoint', 'automake', 'cmake', 'dbus', 'doxygen', 'g++',
+    'autoconf', 'autoconf-archive', 'autopoint', 'automake', 'cmake', 'make', 'dbus', 'doxygen', 'g++',
     'gettext', 'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
     'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
@@ -129,16 +130,17 @@ APT_DEPENDENCIES = [
     'libudev-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'libqt5sql5-sqlite', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
     'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-dev', 'libvdpau-dev', 'libmsgpack-dev', 'libcanberra-gtk3-dev',
-    'pandoc'
+    'pandoc', 'nasm'
 ]
 
 PACMAN_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc', 'gnome-icon-theme-symbolic',
-    'ffmpeg', 'boost', 'clutter-gtk', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book',
-    'expat', 'gtk3', 'jack', 'libnotify', 'opus', 'pcre', 'libpulse',
-    'speex', 'speexdsp', 'libtool', 'yaml-cpp', 'qt5-base',
-    'swig', 'yasm', 'qrencode', 'make', 'patch', 'pkg-config',
-    'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanberra', 'openssl'
+    'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc',
+    'gnome-icon-theme-symbolic', 'ffmpeg', 'boost', 'clutter-gtk', 'cppunit',
+    'libdbus', 'dbus-c++', 'libe-book', 'expat', 'gtk3', 'jack', 'libnotify',
+    'opus', 'pcre', 'libpulse', 'speex', 'speexdsp', 'libtool', 'yaml-cpp',
+    'qt5-base', 'swig', 'yasm', 'qrencode', 'make', 'patch', 'pkg-config',
+    'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanberra',
+    'openssl', 'pandoc', 'nasm'
 ]
 
 OSX_DEPENDENCIES = [

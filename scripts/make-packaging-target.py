@@ -251,32 +251,6 @@ def run_generate_all(parsed_args):
         },
         # Ubuntu
         {
-            "distribution": "ubuntu_16.04",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "ubuntu_16.04_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "ubuntu_16.04_oci",
-            "docker_image": "ubuntu_16.04",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
-            "distribution": "ubuntu_16.04_i386_oci",
-            "docker_image": "ubuntu_16.04_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
             "distribution": "ubuntu_18.04",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
@@ -300,62 +274,6 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
-            "distribution": "ubuntu_18.10",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
-        },
-        {
-            "distribution": "ubuntu_18.10_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
-        },
-        {
-            "distribution": "ubuntu_18.10_oci",
-            "docker_image": "ubuntu_18.10",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
-            "distribution": "ubuntu_18.10_i386_oci",
-            "docker_image": "ubuntu_18.10_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
-            "distribution": "ubuntu_19.04",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
-        },
-        {
-            "distribution": "ubuntu_19.04_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
-        },
-        {
-            "distribution": "ubuntu_19.04_oci",
-            "docker_image": "ubuntu_19.04",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
-            "distribution": "ubuntu_19.04_i386_oci",
-            "docker_image": "ubuntu_19.04_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
         },
         {
@@ -402,52 +320,6 @@ def run_generate_all(parsed_args):
         },
 
         # Fedora
-        {
-            "distribution": "fedora_27",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
-            "distribution": "fedora_27_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-        },
-        {
-            "distribution": "fedora_28",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
-        },
-        {
-            "distribution": "fedora_28_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
-        },
-        {
-            "distribution": "fedora_29",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
-        },
-        {
-            "distribution": "fedora_29_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
-        },
-        {
-            "distribution": "fedora_30",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
-        },
-        {
-            "distribution": "fedora_30_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
-        },
         {
             "distribution": "fedora_31",
             "debian_packaging_override": "",
