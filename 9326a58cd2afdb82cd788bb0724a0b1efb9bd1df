@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b345573_fcc9a1a0",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2020-10-09T17:48:44Z",
+      "side": 1,
+      "message": "duplicated, same goes for others Dockerfiles, but not all. Recheck",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "9326a58cd2afdb82cd788bb0724a0b1efb9bd1df",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
