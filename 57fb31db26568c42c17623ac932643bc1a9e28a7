@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cff9eb13_3f7f6a5a",
+        "filename": "packaging/rules/debian-one-click-install/rules",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 894
+      },
+      "writtenOn": "2020-10-11T22:21:55Z",
+      "side": 1,
+      "message": "Nitpick\n\nYou could use :\n\n shopt -u nullglob\n for....\n shopt +u nullglob\n\nand remove the check using \"ls\" which i don\u0027t like.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "57fb31db26568c42c17623ac932643bc1a9e28a7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7301553_59aa15d8",
+        "filename": "packaging/rules/debian/rules",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 894
+      },
+      "writtenOn": "2020-10-11T22:21:55Z",
+      "side": 1,
+      "message": "Same nitpick as debian-one-click",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "57fb31db26568c42c17623ac932643bc1a9e28a7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
