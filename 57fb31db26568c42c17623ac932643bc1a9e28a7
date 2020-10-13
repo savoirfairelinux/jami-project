@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa704b31_37755116",
+        "filename": "packaging/rules/debian-one-click-install/rules",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 891
+      },
+      "writtenOn": "2020-10-13T15:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cff9eb13_3f7f6a5a",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "57fb31db26568c42c17623ac932643bc1a9e28a7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7301553_59aa15d8",
         "filename": "packaging/rules/debian/rules",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "57fb31db26568c42c17623ac932643bc1a9e28a7",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9680f280_6d1c1e1e",
+        "filename": "packaging/rules/debian/rules",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 891
+      },
+      "writtenOn": "2020-10-13T15:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7301553_59aa15d8",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "57fb31db26568c42c17623ac932643bc1a9e28a7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
