@@ -23,12 +23,12 @@ ANDROID_DISTRIBUTION_NAME = "android"
 WIN32_DISTRIBUTION_NAME = "win32"
 
 # Qt 5.15 is currently only available using the maintenance tool.
-QT5_VERSION = "5.15"
-DEFAULT_QT_5_15_PATH = "~/Qt/5.15.0/gcc_64"
+QT5_VERSION = "5.15.0"
+DEFAULT_QT_PATH = "~/Qt/{0}/gcc_64".format(QT5_VERSION)
 
 # vs vars
 win_sdk_default = '10.0.16299.0'
-win_toolset_default = 'v142'
+win_toolset_default = '142'
 
 APT_BASED_DISTROS = [
     'debian',
@@ -353,7 +353,7 @@ def run_install(args):
             install_args += ("-c", "client-qt")
             install_args += ("-q", QT5_VERSION)
             if args.qt is '':
-                install_args += ("-Q", DEFAULT_QT_5_15_PATH)
+                install_args += ("-Q", DEFAULT_QT_PATH)
             else:
                 install_args += ("-Q", args.qt)
 
@@ -532,7 +532,7 @@ def parse_args():
                         help='Windows use only, specify Visual Studio toolset version')
         ap.add_argument('--sdk', default=win_sdk_default, type=str,
                         help='Windows use only, specify Windows SDK version')
-        ap.add_argument('--qtver', default='5.15.0',
+        ap.add_argument('--qtver', default=QT5_VERSION,
                         help='Sets the Qt version to build with')
 
     parsed_args = ap.parse_args()
