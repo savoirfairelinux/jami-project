@@ -142,8 +142,20 @@ if [ "${client}" = "client-qt" ]; then
     if ! command -v qmake &> /dev/null; then
       eval ${qt5path}/bin/qmake PREFIX="${INSTALL}/${client}" ..
     else
-      qmake -qt=${qt5ver} PREFIX="${INSTALL}/${client}" ..
-    fi
+      # Extract installed Qt version and compare with minimum required
+      sys_qt5ver=$(qmake -v)
+      sys_qt5ver=${sys_qt5ver#*Qt version}
+      sys_qt5ver=${sys_qt5ver%\ in\ *}
+
+      installed_qt5ver=$(echo $sys_qt5ver| cut -d'.' -f 2)
+      required_qt5ver=$(echo $qt5ver| cut -d'.' -f 2)
+
+      if [[ $installed_qt5ver -ge $required_qt5ver ]] ; then
+        qmake PREFIX="${INSTALL}/${client}" ..
+      else
+        eval ${qt5path}/bin/qmake PREFIX="${INSTALL}/${client}" ..
+      fi
+   fi
 else
     if [ "${global}" = "true" ]; then
       if [ "${prefix+set}" ]; then
