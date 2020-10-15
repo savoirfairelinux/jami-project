@@ -238,7 +238,6 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default",
-            "qemu_static": 'qemu-arm-static',
         },
         {
             "distribution": "raspbian_10_armhf_oci",
@@ -247,7 +246,6 @@ def run_generate_all(parsed_args):
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
-            "qemu_static": 'qemu-arm-static',
         },
         # Ubuntu
         {
