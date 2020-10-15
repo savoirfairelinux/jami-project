@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d78858_00d5d195",
+        "filename": "docker/Dockerfile_raspbian_10_armhf",
+        "patchSetId": 24
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 894
+      },
+      "writtenOn": "2020-10-15T19:25:58Z",
+      "side": 1,
+      "message": "If removing this RUN statement is working, the modification of the source list can also be removed safely",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 32
+      },
+      "revId": "b21f88d80eea328dc6bcbaee88d7e152591a60e2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
