@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "d678daac_d68057a1",
+        "filename": "docker/Dockerfile_raspbian_10_armhf",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 894
+      },
+      "writtenOn": "2020-10-15T18:50:32Z",
+      "side": 1,
+      "message": "It is required as there is a \"rm -rf .. apt/list\" in the previous statement",
+      "parentUuid": "1bd987a9_33e75019",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 17
+      },
+      "revId": "fe9270bf76d2788da27aaa3ad878575dbf798fb9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71235531_226494a9",
         "filename": "docker/Dockerfile_raspbian_10_armhf",
         "patchSetId": 23
@@ -110,6 +134,52 @@
         "startChar": 19,
         "endLine": 92,
         "endChar": 31
+      },
+      "revId": "fe9270bf76d2788da27aaa3ad878575dbf798fb9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77df9ae6_8d94f2d4",
+        "filename": "scripts/build-package-debian.sh",
+        "patchSetId": 23
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 894
+      },
+      "writtenOn": "2020-10-15T18:50:32Z",
+      "side": 1,
+      "message": "Would be better :\n\n  grep -q \"raspbian_10_armhf\" \u003c\u003c\u003c \"${DISTRIBUTION}\"",
+      "range": {
+        "startLine": 48,
+        "startChar": 3,
+        "endLine": 48,
+        "endChar": 55
+      },
+      "revId": "fe9270bf76d2788da27aaa3ad878575dbf798fb9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191d507f_ce25e43d",
+        "filename": "scripts/build-package-debian.sh",
+        "patchSetId": 23
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 894
+      },
+      "writtenOn": "2020-10-15T18:50:32Z",
+      "side": 1,
+      "message": "Retries",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 35
       },
       "revId": "fe9270bf76d2788da27aaa3ad878575dbf798fb9",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
