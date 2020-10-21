@@ -106,6 +106,8 @@ package-all: package-debian_9 \
              package-ubuntu_19.10_i386_oci \
              package-ubuntu_20.04 \
              package-ubuntu_20.04_oci \
+             package-ubuntu_20.10 \
+             package-ubuntu_20.10_oci \
              package-fedora_31 \
              package-fedora_31_i386 \
              package-fedora_32 \
