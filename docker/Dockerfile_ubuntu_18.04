@@ -10,12 +10,18 @@ RUN apt-get update && \
 RUN apt-get clean
 RUN apt-get update && \
     apt-get install -y -o Acquire::Retries=10 \
+        g++-8 \
+        gcc-8 \
+        cpp-8 \
+        file \
+        make \
+        libc6-dev \
+        libstdc++-8-dev \
         git \
         autoconf \
         automake \
         autopoint \
         cmake \
-        libtool \
         libdbus-1-dev \
         libdbus-c++-dev \
         libgnutls28-dev \
@@ -64,6 +70,9 @@ RUN apt-get update && \
         libvdpau-dev \
 	libssl-dev \
         libsndfile1-dev
+
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 
