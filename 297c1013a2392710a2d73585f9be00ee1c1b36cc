@@ -22,6 +22,30 @@
       "revId": "297c1013a2392710a2d73585f9be00ee1c1b36cc",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801b0689_eeb84620",
+        "filename": "scripts/install.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 816
+      },
+      "writtenOn": "2020-10-22T06:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e8f5e03_969dcdb8",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 1
+      },
+      "revId": "297c1013a2392710a2d73585f9be00ee1c1b36cc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
