@@ -12,8 +12,6 @@ RUN zypper --non-interactive up -y && \
     zypper --non-interactive install -y libinput-devel && \
     zypper --non-interactive install -y \
         git \
-        gcc8 \
-        gcc8-c++ \
         rpm-build \
         tar \
         make \
@@ -79,9 +77,6 @@ RUN zypper --non-interactive up -y && \
         libqt5-linguist-devel \
         libsndfile-devel \
         evolution-devel
-
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
 
 ADD scripts/build-package-opensuse-leap.sh  /opt/build-package-opensuse-leap.sh
 

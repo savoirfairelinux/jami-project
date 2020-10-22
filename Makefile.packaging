@@ -114,6 +114,7 @@ package-all: package-debian_9 \
              package-fedora_32_i386 \
              package-rhel_8 \
              package-opensuse-leap_15.1 \
+             package-opensuse-leap_15.2 \
              package-gentoo
 
 # Append the output of make-packaging-target to this Makefile
