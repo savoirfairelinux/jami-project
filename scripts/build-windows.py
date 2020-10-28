@@ -29,7 +29,6 @@ def build_lrc(parsed_args):
 
 def build_client(parsed_args):
     os.chdir('./client-qt')
-    execute_cmd('pandoc -f markdown -t html5 -o changelog.html changelog.md', True)
     execute_cmd('python make-client.py -d')
     execute_cmd('python make-client.py -b ' + '-t ' +
                 parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -q ' + parsed_args.qtver)
