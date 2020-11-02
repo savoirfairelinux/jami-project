@@ -138,7 +138,6 @@ mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 if [ "${client}" = "client-qt" ]; then
     echo building client-qt using Qt ${qt5ver}
-    pandoc -f markdown -t html5 -o ../changelog.html ../changelog.md
     if ! command -v qmake &> /dev/null; then
       eval ${qt5path}/bin/qmake PREFIX="${INSTALL}/${client}" ..
     else
