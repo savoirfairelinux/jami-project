@@ -192,7 +192,7 @@ def run_powersell_cmd(cmd):
 def write_qt_conf(path):
     # Add a configuration that can be supplied to qmake
     # e.g. `qmake -qt=5.15 [mode] [options] [files]`
-    if path is '':
+    if path == '':
         return
     with open('/usr/share/qtchooser/' + QT5_VERSION + '.conf', 'w+') as fd:
         fd.write(path.rstrip('/') + '/bin\n')
@@ -352,7 +352,7 @@ def run_install(args):
         else:
             install_args += ("-c", "client-qt")
             install_args += ("-q", QT5_VERSION)
-            if args.qt is '':
+            if args.qt == '':
                 install_args += ("-Q", DEFAULT_QT_PATH)
             else:
                 install_args += ("-Q", args.qt)
