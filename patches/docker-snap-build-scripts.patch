@@ -1,0 +1,21 @@
+Description: add and run our build script
+ Also, use bionic (18.04) as the base image, since xenial lacks
+ libayatana-appindicator3-dev.
+Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
+
+--- ../docker/Dockerfile_snap.original	2020-11-19 17:13:43.893874250 -0500
++++ ../docker/Dockerfile_snap	2020-11-19 17:14:07.237780900 -0500
+@@ -1,4 +1,4 @@
+-FROM ubuntu:xenial as builder
++FROM ubuntu:bionic as builder
+ 
+ # Grab dependencies
+ RUN apt-get update
+@@ -53,3 +53,7 @@
+ ENV SNAP="/snap/snapcraft/current"
+ ENV SNAP_NAME="snapcraft"
+ ENV SNAP_ARCH="amd64"
++
++ADD scripts/build-package-snap.sh /opt/build-package-snap.sh
++
++CMD /opt/build-package-snap.sh
