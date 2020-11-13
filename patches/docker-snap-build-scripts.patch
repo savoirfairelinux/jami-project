@@ -1,0 +1,13 @@
+Description: add and run our build script
+Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
+
+--- ../docker/Dockerfile_snap.original	2020-11-18 13:05:37.667562815 -0500
++++ ../docker/Dockerfile_snap	2020-11-18 13:07:20.668003550 -0500
+@@ -53,3 +53,7 @@
+ ENV SNAP="/snap/snapcraft/current"
+ ENV SNAP_NAME="snapcraft"
+ ENV SNAP_ARCH="amd64"
++
++ADD scripts/build-package-snap.sh /opt/build-package-snap.sh
++
++CMD /opt/build-package-snap.sh
