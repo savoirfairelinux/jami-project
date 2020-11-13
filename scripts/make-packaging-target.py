@@ -47,6 +47,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -e DEBIAN_VERSION=%(version)s \\
     -e DEBIAN_PACKAGING_OVERRIDE=%(debian_packaging_override)s \\
     -e CURRENT_UID=$(CURRENT_UID) \\
+    -e CURRENT_GID=$(CURRENT_GID) \\
     -e DISTRIBUTION=%(distribution)s \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
@@ -397,6 +398,12 @@ def run_generate_all(parsed_args):
         # Gentoo
         {
             "distribution": "gentoo",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+        },
+        # Snap
+        {
+            "distribution": "snap",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
         },

@@ -182,6 +182,33 @@ EOF
 }
 
 
+####################
+## Snap packaging ##
+####################
+
+function package_snap()
+{
+    echo "####################"
+    echo "## deploying snap ##"
+    echo "####################"
+
+    if [[ "${CHANNEL:0:19}" == "internal_experiment" ]];
+    then
+        DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
+        mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+        cp packages/${DISTRIBUTION}*/*.snap ${DISTRIBUTION_REPOSITOIRY_FOLDER}/
+    elif [[ "${CHANNEL:0:7}" == "nightly" ]];
+    then
+        snapcraft login --with ${SNAPCRAFT_LOGIN}
+        snapcraft push packages/${DISTRIBUTION}*/*.snap --release edge
+    elif [[ "${CHANNEL:0:6}" == "stable" ]];
+    then
+        snapcraft login --with ${SNAPCRAFT_LOGIN}
+        snapcraft push packages/${DISTRIBUTION}*/*.snap --release stable
+    fi
+}
+
+
 ################################################
 ## Deploy packages on given remote repository ##
 ################################################
@@ -221,6 +248,9 @@ function package()
     elif [[ "${DISTRIBUTION:0:6}" == "fedora" || "${DISTRIBUTION:0:4}" == "rhel" || "${DISTRIBUTION:0:13}" == "opensuse-leap" || "${DISTRIBUTION:0:19}" == "opensuse-tumbleweed" ]];
     then
         package_rpm
+    elif [[ "${DISTRIBUTION:0:4}" == "snap" ]];
+    then
+        package_snap
     else
         echo "ERROR: Distribution '${DISTRIBUTION}' is unsupported"
     fi
@@ -255,6 +285,10 @@ case $i in
     ;;
     --remote-ssh-identity-file=*)
     SSH_IDENTIY_FILE="${i#*=}"
+    shift
+    ;;
+    --snapcraft-login=*)
+    SNAPCRAFT_LOGIN="${i#*=}"
     shift
     ;;
     *)
