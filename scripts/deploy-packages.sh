@@ -182,6 +182,21 @@ EOF
 }
 
 
+####################
+## Snap packaging ##
+####################
+
+function package_snap()
+{
+    echo "####################"
+    echo "## deploying snap ##"
+    echo "####################"
+
+    snapcraft login --with ${SNAPCRAFT_LOGIN}
+    snapcraft push ${SNAP_FILENAME} --release edge
+}
+
+
 ################################################
 ## Deploy packages on given remote repository ##
 ################################################
@@ -221,6 +236,9 @@ function package()
     elif [[ "${DISTRIBUTION:0:6}" == "fedora" || "${DISTRIBUTION:0:4}" == "rhel" || "${DISTRIBUTION:0:13}" == "opensuse-leap" || "${DISTRIBUTION:0:19}" == "opensuse-tumbleweed" ]];
     then
         package_rpm
+    elif [[ "${DISTRIBUTION:0:4}" == "snap" ]];
+    then
+        package_snap
     else
         echo "ERROR: Distribution '${DISTRIBUTION}' is unsupported"
     fi

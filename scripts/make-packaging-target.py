@@ -400,6 +400,12 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": ".packages-built",
         },
+        # Snap
+        {
+            "distribution": "snap",
+            "debian_packaging_override": "",
+            "output_file": "$(SNAP_FILENAME)",
+        },
 
     ]
 
