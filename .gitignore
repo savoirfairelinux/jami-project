@@ -12,5 +12,8 @@ manual-download
 .docker-image-*
 qemu-static
 
+# upstream snapcraft stable.Dockerfile
+/docker/Dockerfile_snap
+
 # QtCreator
 /build-*

@@ -41,6 +41,9 @@ DEBIAN_OCI_VERSION:=$(RELEASE_VERSION)~dfsg1-0
 DEBIAN_OCI_DSC_FILENAME:=jami_$(DEBIAN_OCI_VERSION).dsc
 DEBIAN_OCI_PKG_DIR:="packaging/rules/debian-one-click-install"
 
+# Snap
+SNAP_FILENAME:=jami_$(RELEASE_VERSION)_amd64.snap
+
 #####################
 ## Other variables ##
 #####################
@@ -116,12 +119,29 @@ package-all: package-debian_9 \
              package-opensuse-leap_15.1 \
              package-opensuse-leap_15.2 \
              package-opensuse-tumbleweed \
-             package-gentoo
+             package-gentoo \
+             package-snap
+
 
 # Append the output of make-packaging-target to this Makefile
 # see Makefile.packaging.distro_targets
 $(shell scripts/make-packaging-target.py --generate-all > Makefile.packaging.distro_targets)
 include Makefile.packaging.distro_targets
+
+# Grab a copy of snapcraft stable.Dockerfile from upstream.
+# Note: when updating SNAPCRAFT_GITREV, be sure to update the expected
+# sha256 checksum in docker/Dockerfile_snap.sha256sum as well.
+SNAPCRAFT_GITREV:=24162f9de394d11e9debf166f59fe190c9dcff3a
+SNAPCRAFT_DOCKERFILE:=https://raw.githubusercontent.com/snapcore/snapcraft/$(SNAPCRAFT_GITREV)/docker/stable.Dockerfile
+docker/Dockerfile_snap:
+	wget -N $(SNAPCRAFT_DOCKERFILE) -O docker/Dockerfile_snap
+	sha256sum -c docker/Dockerfile_snap.sha256sum
+	echo '' >> docker/Dockerfile_snap
+	echo '##########################' >> docker/Dockerfile_snap
+	echo '## Add our build script ##' >> docker/Dockerfile_snap
+	echo '##########################' >> docker/Dockerfile_snap
+	echo 'ADD scripts/build-package-snap.sh /opt/build-package-snap.sh' >> docker/Dockerfile_snap
+	echo 'CMD /opt/build-package-snap.sh' >> docker/Dockerfile_snap
 
 ###################
 ## Other targets ##
