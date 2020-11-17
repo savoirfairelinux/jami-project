@@ -145,22 +145,23 @@ PACMAN_DEPENDENCIES = [
 
 OSX_DEPENDENCIES = [
     'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt5',
-    'libtool', 'yasm', 'nasm', 'automake'
+    'libtool', 'yasm', 'nasm', 'automake', 'libtasn'
 ]
 
 OSX_DEPENDENCIES_UNLINK = [
     'autoconf*', 'cmake*', 'gettext*', 'pkg-config*', 'qt*', 'qt@5.*',
-    'libtool*', 'yasm*', 'nasm*', 'automake*', 'gnutls*', 'nettle*', 'msgpack*'
+    'libtool*', 'yasm*', 'nasm*', 'automake*', 'gnutls*', 'nettle*', 'msgpack*',
+    'libtasn'
 ]
 
 IOS_DEPENDENCIES = [
     'autoconf', 'automake', 'cmake', 'yasm', 'libtool',
-    'pkg-config', 'gettext', 'swiftlint', 'swiftgen'
+    'pkg-config', 'gettext', 'swiftlint', 'swiftgen', 'libtasn'
 ]
 
 IOS_DEPENDENCIES_UNLINK = [
     'autoconf*', 'automake*', 'cmake*', 'yasm*', 'libtool*',
-    'pkg-config*', 'gettext*', 'swiftlint*', 'swiftgen*'
+    'pkg-config*', 'gettext*', 'swiftlint*', 'swiftgen*', 'libtasn'
 ]
 
 UNINSTALL_SCRIPT = [
