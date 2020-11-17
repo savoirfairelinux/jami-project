@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "43354b39_871df54e",
+        "filename": "Makefile.packaging",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-11-17T20:27:29Z",
+      "side": 1,
+      "message": "In fact we will always get the same dockerfile, so 2 solutions:\n\n+ Copy the dockerfile from upstream directly and modify it for our need. Just add a note to be able to update the docker after.\n+ Because there is FROM ubuntu:xenial, and snap is available on DockerHub (sigh), snapcore/snapcraft",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 64
+      },
+      "revId": "913f82d1f3ce84ee6b3d6aa8c354474bf3c092ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b472b301_ddfac925",
+        "filename": "packaging/rules/snap/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-11-17T20:27:29Z",
+      "side": 1,
+      "message": "Should be from a parameter to update this",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "913f82d1f3ce84ee6b3d6aa8c354474bf3c092ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bed19149_e160a095",
         "filename": "packaging/rules/snap/snapcraft.yaml",
         "patchSetId": 1
@@ -18,6 +64,75 @@
         "startChar": 14,
         "endLine": 50,
         "endChar": 20
+      },
+      "revId": "913f82d1f3ce84ee6b3d6aa8c354474bf3c092ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f726d1_290518c0",
+        "filename": "packaging/rules/snap/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-11-17T20:27:29Z",
+      "side": 1,
+      "message": "also is our .ffmpeg build or snap give a version?",
+      "range": {
+        "startLine": 224,
+        "startChar": 48,
+        "endLine": 225,
+        "endChar": 44
+      },
+      "revId": "913f82d1f3ce84ee6b3d6aa8c354474bf3c092ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2259f95_ea19a70c",
+        "filename": "packaging/rules/snap/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-11-17T20:27:29Z",
+      "side": 1,
+      "message": "it shouldn\u0027t be necessary anymore",
+      "range": {
+        "startLine": 269,
+        "startChar": 21,
+        "endLine": 270,
+        "endChar": 21
+      },
+      "revId": "913f82d1f3ce84ee6b3d6aa8c354474bf3c092ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad60bc5b_6c30f92a",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-11-17T20:27:29Z",
+      "side": 1,
+      "message": "TODO",
+      "range": {
+        "startLine": 192,
+        "startChar": 31,
+        "endLine": 193,
+        "endChar": 31
       },
       "revId": "913f82d1f3ce84ee6b3d6aa8c354474bf3c092ba",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
