@@ -36,7 +36,7 @@ cp /opt/ring-project-ro/jami_*.tar.gz /root/rpmbuild/SOURCES
 
 # Set the version
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" *.spec
-if [ ${DISTRIBUTION} == "fedora_32" ]; then
+if [ ${DISTRIBUTION} == "fedora_32" ] || [ ${DISTRIBUTION} == "fedora_33" ]; then
     # Remove Obsoletes for Fedora 32, as we don't publish "ring"
     sed -i '/^Obsoletes:/d' *.spec
     sed -i '/^Provides:/d' *.spec
