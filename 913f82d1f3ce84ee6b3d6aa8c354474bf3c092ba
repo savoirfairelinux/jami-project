@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "758aea7b_9531fab0",
+        "filename": "packaging/rules/snap/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2020-11-18T19:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b472b301_ddfac925",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "913f82d1f3ce84ee6b3d6aa8c354474bf3c092ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bed19149_e160a095",
         "filename": "packaging/rules/snap/snapcraft.yaml",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "11fea591_78b07148",
+        "filename": "packaging/rules/snap/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2020-11-18T19:58:28Z",
+      "side": 1,
+      "message": "sure, done",
+      "parentUuid": "bed19149_e160a095",
+      "range": {
+        "startLine": 50,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "913f82d1f3ce84ee6b3d6aa8c354474bf3c092ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4f726d1_290518c0",
         "filename": "packaging/rules/snap/snapcraft.yaml",
         "patchSetId": 1
@@ -82,6 +130,30 @@
       "writtenOn": "2020-11-17T20:27:29Z",
       "side": 1,
       "message": "also is our .ffmpeg build or snap give a version?",
+      "range": {
+        "startLine": 224,
+        "startChar": 48,
+        "endLine": 225,
+        "endChar": 44
+      },
+      "revId": "913f82d1f3ce84ee6b3d6aa8c354474bf3c092ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854eb48c_a013ce5a",
+        "filename": "packaging/rules/snap/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2020-11-18T19:58:28Z",
+      "side": 1,
+      "message": "not sure? i don\u0027t see ffmpeg being listed in APT_DEPENDENCIES in make-ring.py either",
+      "parentUuid": "c4f726d1_290518c0",
       "range": {
         "startLine": 224,
         "startChar": 48,
@@ -114,6 +186,30 @@
       "revId": "913f82d1f3ce84ee6b3d6aa8c354474bf3c092ba",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7260685a_3c3a9766",
+        "filename": "packaging/rules/snap/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2020-11-18T19:58:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2259f95_ea19a70c",
+      "range": {
+        "startLine": 269,
+        "startChar": 21,
+        "endLine": 270,
+        "endChar": 21
+      },
+      "revId": "913f82d1f3ce84ee6b3d6aa8c354474bf3c092ba",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
