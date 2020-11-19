@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27a68f22_bef9f13c",
+        "filename": "docker/Dockerfile_snap",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-11-19T18:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d16d2600_81d46c65",
+      "revId": "05fcd492a136daec4444d5ec1338061ff17e2cdf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd2b5376_13ce11fb",
         "filename": "scripts/deploy-packages.sh",
         "patchSetId": 5
