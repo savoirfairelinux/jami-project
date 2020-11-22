@@ -148,13 +148,14 @@ if [ "${client}" = "client-qt" ]; then
 
       installed_qt5ver=$(echo $sys_qt5ver| cut -d'.' -f 2)
       required_qt5ver=$(echo $qt5ver| cut -d'.' -f 2)
-
-      if [[ $installed_qt5ver -ge $required_qt5ver ]] ; then
-        qmake PREFIX="${INSTALL}/${client}" ..
-      else
-        eval ${qt5path}/bin/qmake PREFIX="${INSTALL}/${client}" ..
-      fi
    fi
+fi
+if [["$OSTYPE" != "darwin"* && "${client}" = "client-qt"]]; then
+    if [[ $installed_qt5ver -ge $required_qt5ver ]] ; then
+       qmake PREFIX="${INSTALL}/${client}" ..
+    else
+       eval ${qt5path}/bin/qmake PREFIX="${INSTALL}/${client}" ..
+    fi
 else
     if [ "${global}" = "true" ]; then
       if [ "${prefix+set}" ]; then

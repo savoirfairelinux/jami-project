@@ -343,7 +343,10 @@ def run_install(args):
 
         environ['CMAKE_PREFIX_PATH'] = proc.stdout.rstrip("\n")
         environ['CONFIGURE_FLAGS'] = '--without-dbus'
-        install_args += ("-c", "client-macosx")
+        if args.qt is None:
+            install_args += ("-c", "client-macosx")
+        else:
+            install_args += ("-c", "client-qt")
     else:
         if args.distribution in ZYPPER_BASED_DISTROS:
             # fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
