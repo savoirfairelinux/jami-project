@@ -144,24 +144,13 @@ PACMAN_DEPENDENCIES = [
 ]
 
 OSX_DEPENDENCIES = [
-    'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt5',
+    'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt',
     'libtool', 'yasm', 'nasm', 'automake', 'libtasn'
-]
-
-OSX_DEPENDENCIES_UNLINK = [
-    'autoconf*', 'cmake*', 'gettext*', 'pkg-config*', 'qt*', 'qt@5.*',
-    'libtool*', 'yasm*', 'nasm*', 'automake*', 'gnutls*', 'nettle*', 'msgpack*',
-    'libtasn'
 ]
 
 IOS_DEPENDENCIES = [
     'autoconf', 'automake', 'cmake', 'yasm', 'libtool',
     'pkg-config', 'gettext', 'swiftlint', 'swiftgen', 'libtasn'
-]
-
-IOS_DEPENDENCIES_UNLINK = [
-    'autoconf*', 'automake*', 'cmake*', 'yasm*', 'libtool*',
-    'pkg-config*', 'gettext*', 'swiftlint*', 'swiftgen*', 'libtasn'
 ]
 
 UNINSTALL_SCRIPT = [
@@ -236,7 +225,7 @@ def run_dependencies(args):
     elif args.distribution == OSX_DISTRIBUTION_NAME:
         execute_script(
             BREW_UNLINK_SCRIPT,
-            {"packages": ' '.join(map(shlex.quote, OSX_DEPENDENCIES_UNLINK))},
+            {"packages": ' '.join(map(shlex.quote, OSX_DEPENDENCIES))},
             False
         )
         execute_script(
@@ -248,7 +237,7 @@ def run_dependencies(args):
     elif args.distribution == IOS_DISTRIBUTION_NAME:
         execute_script(
             BREW_UNLINK_SCRIPT,
-            {"packages": ' '.join(map(shlex.quote, IOS_DEPENDENCIES_UNLINK))},
+            {"packages": ' '.join(map(shlex.quote, IOS_DEPENDENCIES))},
             False
         )
         execute_script(
