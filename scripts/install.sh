@@ -13,6 +13,9 @@ export OSTYPE
 
 set -ex
 
+# Qt_MIN_VER required for client-qt
+QT5_MIN_VER="5.14"
+
 global=false
 static=''
 client=''
@@ -104,6 +107,25 @@ fi
 make -j"${proc}"
 make_install "${global}" "${priv_install}"
 
+
+# For the client-qt, verify system's version if no path provided
+if [ "${client}" = "client-qt" ] && [ -z "$qt5path" ]; then
+    sys_qt5ver=$(qmake -v)
+    sys_qt5ver=${sys_qt5ver#*Qt version}
+    sys_qt5ver=${sys_qt5ver%\ in\ *}
+
+    installed_qt5ver=$(echo $sys_qt5ver| cut -d'.' -f 2)
+    required_qt5ver=$(echo $QT5_MIN_VER| cut -d'.' -f 2)
+
+    if [[ $installed_qt5ver -ge $required_qt5ver ]] ; then
+        # Disable qt5path and qt5ver in order to use system's Qt
+        qt5path=""
+        qt5ver=""
+    else
+        echo "No valid Qt found: $(qmake -v)"; exit 1;
+    fi
+fi
+
 # libringclient
 cd "${TOP}/lrc"
 mkdir -p "${BUILDDIR}"
@@ -113,12 +135,12 @@ if [ "${global}" = "true" ]; then
     cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
              -DCMAKE_BUILD_TYPE=Debug \
              -DCMAKE_INSTALL_PREFIX="${prefix}" $static \
-             -DQT_MIN_VER="${qt5ver}" \
+             -DQT5_VER="${qt5ver}" \
              -DQT5_PATH="${qt5path}"
   else
     cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
              -DCMAKE_BUILD_TYPE=Debug $static \
-             -DQT_MIN_VER="${qt5ver}" \
+             -DQT5_VER="${qt5ver}" \
              -DQT5_PATH="${qt5path}"
   fi
 else
@@ -126,7 +148,7 @@ else
             -DCMAKE_BUILD_TYPE=Debug \
             -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
             -DRING_BUILD_DIR="${DAEMON}/src" $static \
-            -DQT_MIN_VER="${qt5ver}" \
+            -DQT5_VER="${qt5ver}" \
             -DQT5_PATH="${qt5path}"
 fi
 make -j"${proc}"
@@ -137,24 +159,13 @@ cd "${TOP}/${client}"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 if [ "${client}" = "client-qt" ]; then
-    echo building client-qt using Qt ${qt5ver}
-    if ! command -v qmake &> /dev/null; then
-      eval ${qt5path}/bin/qmake PREFIX="${INSTALL}/${client}" ..
-    else
-      # Extract installed Qt version and compare with minimum required
-      sys_qt5ver=$(qmake -v)
-      sys_qt5ver=${sys_qt5ver#*Qt version}
-      sys_qt5ver=${sys_qt5ver%\ in\ *}
-
-      installed_qt5ver=$(echo $sys_qt5ver| cut -d'.' -f 2)
-      required_qt5ver=$(echo $qt5ver| cut -d'.' -f 2)
-
-      if [[ $installed_qt5ver -ge $required_qt5ver ]] ; then
+    if [ -z ${qt5path} ]; then
+        echo "Build client-qt with $(qmake -v)"
         qmake PREFIX="${INSTALL}/${client}" ..
-      else
+    else
+        echo "Build client-qt using Qt ${qt5path}"
         eval ${qt5path}/bin/qmake PREFIX="${INSTALL}/${client}" ..
-      fi
-   fi
+    fi
 else
     if [ "${global}" = "true" ]; then
       if [ "${prefix+set}" ]; then
