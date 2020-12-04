@@ -22,9 +22,7 @@ OSX_DISTRIBUTION_NAME = "osx"
 ANDROID_DISTRIBUTION_NAME = "android"
 WIN32_DISTRIBUTION_NAME = "win32"
 
-# Qt 5.15 is currently only available using the maintenance tool.
 QT5_VERSION = "5.15.0"
-DEFAULT_QT_PATH = "~/Qt/{0}/gcc_64".format(QT5_VERSION)
 
 # vs vars
 win_sdk_default = '10.0.16299.0'
@@ -46,7 +44,7 @@ PACMAN_BASED_DISTROS = [
 ]
 
 ZYPPER_BASED_DISTROS = [
-    'opensuse-leap',
+    'opensuse-leap', 'opensuse-tumbleweed',
 ]
 
 FLATPAK_BASED_RUNTIMES = [
@@ -96,11 +94,16 @@ ZYPPER_DEPENDENCIES = [
     'alsa-devel', 'libpulse-devel', 'libudev-devel', 'libva-devel', 'libvdpau-devel',
     'libopenssl-devel',
     # lrc
-    'libQt5Core-devel', 'libQt5DBus-devel', 'libqt5-linguist-devel',
-    # gnome client
-    'gtk3-devel', 'clutter-gtk-devel', 'qrencode-devel',
-    'gettext-tools', 'libnotify-devel', 'libappindicator3-devel', 'webkit2gtk3-devel',
-    'NetworkManager-devel', 'libcanberra-gtk3-devel'
+    'libQt5Core-devel', 'libQt5DBus-devel', 'libqt5-linguist-devel'
+]
+
+ZYPPER_CLIENT_GNOME_DEPENDENCIES = [
+    'gtk3-devel', 'clutter-gtk-devel', 'qrencode-devel', 'gettext-tools', 'libnotify-devel',
+    'libappindicator3-devel', 'webkit2gtk3-devel', 'NetworkManager-devel', 'libcanberra-gtk3-devel'
+]
+
+ZYPPER_CLIENT_QT_DEPENDENCIES = [
+    'libqt5-qtsvg', 'libqt5-qtwebengine', 'libqt5-qtmultimedia', 'libqt5-declarative'
 ]
 
 DNF_DEPENDENCIES = [
@@ -111,11 +114,18 @@ DNF_DEPENDENCIES = [
     'speex-devel', 'chrpath', 'check', 'astyle', 'uuid-c++-devel', 'gettext-devel',
     'gcc-c++', 'which', 'alsa-lib-devel', 'systemd-devel', 'libuuid-devel',
     'uuid-devel', 'gnutls-devel', 'nettle-devel', 'opus-devel', 'speexdsp-devel',
-    'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'qrencode-devel', 'jsoncpp-devel',
-    'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel',
-    'libnotify-devel', 'libappindicator-gtk3-devel', 'patch', 'libva-devel', 'openssl-devel',
-    'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libvdpau-devel', 'msgpack-devel', 'libcanberra-devel',
+    'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'jsoncpp-devel',
+    'patch', 'libva-devel', 'openssl-devel', 'libvdpau-devel', 'msgpack-devel',
     'sqlite-devel', 'openssl-static', 'pandoc', 'nasm'
+]
+
+DNF_CLIENT_GNOME_DEPENDENCIES = [
+    'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel', 'libnotify-devel','libappindicator-gtk3-devel',
+    'webkitgtk4-devel', 'NetworkManager-libnm-devel', 'libcanberra-devel','qrencode-devel'
+]
+
+DNF_CLIENT_QT_DEPENDENCIES = [
+    'qt5-qtsvg-devel', 'qt5-qtwebengine-devel', 'qt5-qtmultimedia-devel', 'qt5-qtdeclarative-devel'
 ]
 
 APT_DEPENDENCIES = [
@@ -128,9 +138,23 @@ APT_DEPENDENCIES = [
     'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libssl-dev',
     'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'libqt5sql5-sqlite', 'sip-tester', 'swig',
-    'uuid-dev', 'yasm', 'libqrencode-dev', 'libjsoncpp-dev', 'libappindicator3-dev',
-    'libva-dev', 'libwebkit2gtk-4.0-dev', 'libnm-dev', 'libvdpau-dev', 'libmsgpack-dev', 'libcanberra-gtk3-dev',
+    'uuid-dev', 'yasm', 'libjsoncpp-dev', 'libva-dev', 'libvdpau-dev', 'libmsgpack-dev',
     'pandoc', 'nasm'
+]
+
+APT_CLIENT_GNOME_DEPENDENCIES = [
+    'libwebkit2gtk-4.0-dev', 'libnm-dev', 'libqrencode-dev', 'libappindicator3-dev',
+    'libcanberra-gtk3-dev'
+]
+
+APT_CLIENT_QT_DEPENDENCIES = [
+    'qtmultimedia5-dev', 'libqt5svg5-dev', 'qtwebengine5-dev', 'qtdeclarative5-dev',
+    'qtquickcontrols2-5-dev', 'qml-module-qtquick2', 'qml-module-qtquick-controls',
+    'qml-module-qtquick-controls2', 'qml-module-qtquick-dialogs',
+    'qml-module-qtquick-layouts', 'qml-module-qtquick-privatewidgets',
+    'qml-module-qtquick-shapes', 'qml-module-qtquick-window2',
+    'qml-module-qtquick-templates2', 'qml-module-qt-labs-platform',
+    'qml-module-qtwebengine', 'qml-module-qtwebchannel'
 ]
 
 PACMAN_DEPENDENCIES = [
@@ -190,12 +214,12 @@ def run_powersell_cmd(cmd):
     return
 
 
-def write_qt_conf(path):
+def write_qt_conf(path, qt5version=QT5_VERSION):
     # Add a configuration that can be supplied to qmake
     # e.g. `qmake -qt=5.15 [mode] [options] [files]`
     if path == '':
         return
-    with open('/usr/share/qtchooser/' + QT5_VERSION + '.conf', 'w+') as fd:
+    with open('/usr/share/qtchooser/' + qt5version + '.conf', 'w+') as fd:
         fd.write(path.rstrip('/') + '/bin\n')
         fd.write(path.rstrip('/') + '/lib\n')
     return
@@ -203,19 +227,27 @@ def write_qt_conf(path):
 
 def run_dependencies(args):
     if args.qt is not None:
-        write_qt_conf(args.qt)
+        write_qt_conf(args.qt, args.qtver)
 
     if args.distribution == WIN32_DISTRIBUTION_NAME:
         run_powersell_cmd(
             'Set-ExecutionPolicy Unrestricted; .\\scripts\\install-deps-windows.ps1')
 
     elif args.distribution in APT_BASED_DISTROS:
+        if args.qt is None:
+            APT_DEPENDENCIES.extend(APT_CLIENT_GNOME_DEPENDENCIES)
+        else:
+            APT_DEPENDENCIES.extend(APT_CLIENT_QT_DEPENDENCIES)
         execute_script(
             APT_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, APT_DEPENDENCIES))}
         )
 
     elif args.distribution in DNF_BASED_DISTROS:
+        if args.qt is None:
+            DNF_DEPENDENCIES.extend(DNF_CLIENT_GNOME_DEPENDENCIES)
+        else:
+            DNF_DEPENDENCIES.extend(DNF_CLIENT_QT_DEPENDENCIES)
         execute_script(
             RPM_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, DNF_DEPENDENCIES))}
@@ -228,6 +260,10 @@ def run_dependencies(args):
         )
 
     elif args.distribution in ZYPPER_BASED_DISTROS:
+        if args.qt is None:
+            ZYPPER_DEPENDENCIES.extend(ZYPPER_CLIENT_GNOME_DEPENDENCIES)
+        else:
+            ZYPPER_DEPENDENCIES.extend(ZYPPER_CLIENT_QT_DEPENDENCIES)
         execute_script(
             ZYPPER_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, ZYPPER_DEPENDENCIES))}
@@ -352,11 +388,8 @@ def run_install(args):
             install_args += ("-c", "client-gnome")
         else:
             install_args += ("-c", "client-qt")
-            install_args += ("-q", QT5_VERSION)
-            if args.qt == '':
-                install_args += ("-Q", DEFAULT_QT_PATH)
-            else:
-                install_args += ("-Q", args.qt)
+            install_args += ("-q", args.qtver)
+            install_args += ("-Q", args.qt)
 
     return subprocess.run(["./scripts/install.sh"] + install_args, env=environ, check=True)
 
@@ -525,7 +558,9 @@ def parse_args():
     ap.add_argument('--no-priv-install', dest='priv_install',
                     default=True, action='store_false')
     ap.add_argument('--qt', nargs='?', const='', type=str,
-                    help='Build the Qt client with the Qt 5.15 path supplied')
+                    help='Build the Qt client with the Qt path supplied')
+    ap.add_argument('--qtver', default=QT5_VERSION,
+                    help='Sets the Qt version to build with')
 
     dist = choose_distribution()
     if dist == WIN32_DISTRIBUTION_NAME:
@@ -533,8 +568,6 @@ def parse_args():
                         help='Windows use only, specify Visual Studio toolset version')
         ap.add_argument('--sdk', default=win_sdk_default, type=str,
                         help='Windows use only, specify Windows SDK version')
-        ap.add_argument('--qtver', default=QT5_VERSION,
-                        help='Sets the Qt version to build with')
 
     parsed_args = ap.parse_args()
 
