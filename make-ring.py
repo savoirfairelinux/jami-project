@@ -22,9 +22,7 @@ OSX_DISTRIBUTION_NAME = "osx"
 ANDROID_DISTRIBUTION_NAME = "android"
 WIN32_DISTRIBUTION_NAME = "win32"
 
-# Qt 5.15 is currently only available using the maintenance tool.
 QT5_VERSION = "5.15.0"
-DEFAULT_QT_PATH = "~/Qt/{0}/gcc_64".format(QT5_VERSION)
 
 # vs vars
 win_sdk_default = '10.0.16299.0'
@@ -190,12 +188,12 @@ def run_powersell_cmd(cmd):
     return
 
 
-def write_qt_conf(path):
+def write_qt_conf(path, qt5version=QT5_VERSION):
     # Add a configuration that can be supplied to qmake
     # e.g. `qmake -qt=5.15 [mode] [options] [files]`
     if path == '':
         return
-    with open('/usr/share/qtchooser/' + QT5_VERSION + '.conf', 'w+') as fd:
+    with open('/usr/share/qtchooser/' + qt5version + '.conf', 'w+') as fd:
         fd.write(path.rstrip('/') + '/bin\n')
         fd.write(path.rstrip('/') + '/lib\n')
     return
@@ -203,7 +201,7 @@ def write_qt_conf(path):
 
 def run_dependencies(args):
     if args.qt is not None:
-        write_qt_conf(args.qt)
+        write_qt_conf(args.qt, args.qtver)
 
     if args.distribution == WIN32_DISTRIBUTION_NAME:
         run_powersell_cmd(
@@ -352,11 +350,8 @@ def run_install(args):
             install_args += ("-c", "client-gnome")
         else:
             install_args += ("-c", "client-qt")
-            install_args += ("-q", QT5_VERSION)
-            if args.qt == '':
-                install_args += ("-Q", DEFAULT_QT_PATH)
-            else:
-                install_args += ("-Q", args.qt)
+            install_args += ("-q", args.qtver)
+            install_args += ("-Q", args.qt)
 
     return subprocess.run(["./scripts/install.sh"] + install_args, env=environ, check=True)
 
@@ -525,7 +520,9 @@ def parse_args():
     ap.add_argument('--no-priv-install', dest='priv_install',
                     default=True, action='store_false')
     ap.add_argument('--qt', nargs='?', const='', type=str,
-                    help='Build the Qt client with the Qt 5.15 path supplied')
+                    help='Build the Qt client with the Qt path supplied')
+    ap.add_argument('--qtver', default=QT5_VERSION,
+                    help='Sets the Qt version to build with')
 
     dist = choose_distribution()
     if dist == WIN32_DISTRIBUTION_NAME:
@@ -533,8 +530,6 @@ def parse_args():
                         help='Windows use only, specify Visual Studio toolset version')
         ap.add_argument('--sdk', default=win_sdk_default, type=str,
                         help='Windows use only, specify Windows SDK version')
-        ap.add_argument('--qtver', default=QT5_VERSION,
-                        help='Sets the Qt version to build with')
 
     parsed_args = ap.parse_args()
 
