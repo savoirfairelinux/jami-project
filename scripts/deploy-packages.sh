@@ -260,6 +260,15 @@ function package_snap()
     fi
 }
 
+function package_appimage()
+{
+    echo "#########################"
+    echo "## deploying appimage ##"
+    echo "########################"
+
+    rsync --archive --recursive --verbose --delete packages/${DISTRIBUTION}*/Jami*.AppImage ${REMOTE_REPOSITORY_LOCATION}
+}
+
 
 ################################################
 ## Deploy packages on given remote repository ##
@@ -306,6 +315,9 @@ function package()
         package_rpm
     elif [[ "${DISTRIBUTION:0:4}" == "snap" ]]; then
         package_snap
+    elif [[ "${DISTRIBUTION:0:8}" == "appimage" ]];
+    then
+        package_appimage
     else
         echo "ERROR: Distribution '${DISTRIBUTION}' is unsupported"
     fi
