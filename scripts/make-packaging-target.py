@@ -253,6 +253,12 @@ def run_generate_all(parsed_args):
             "distribution": "snap",
             "output_file": ".packages-built",
         },
+        {
+            "distribution": "appimage",
+            "output_file": ".packages-built",
+            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
+            "docker_build_args": "--build-arg QT_CI_LOGIN=\"${QT_CI_LOGIN}\" --build-arg QT_CI_PASSWORD=\"${QT_CI_PASSWORD}\" --build-arg SUBVERSION=\"${SUBVERSION}\""
+        },
 
     ]
 
