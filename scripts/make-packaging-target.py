@@ -407,6 +407,12 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": ".packages-built",
         },
+        {
+            "distribution": "appimage",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
+        },
 
     ]
 
