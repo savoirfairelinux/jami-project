@@ -270,7 +270,9 @@ parts:
                -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
                -DENABLE_STATIC=true \
                -DLRC=$SNAPCRAFT_PART_BUILD/lrc \
+               -DDAEMON=$SNAPCRAFT_PART_BUILD/daemon \
                -DLRCLIB=$SNAPCRAFT_PART_INSTALL/usr/lib \
+               -DDAEMONLIB=$SNAPCRAFT_PART_INSTALL/usr/lib \
                -DQT5_VER=$QTVER -DQT5_PATH=$QTDIR
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
