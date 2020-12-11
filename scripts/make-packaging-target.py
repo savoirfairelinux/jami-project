@@ -70,7 +70,7 @@ $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(docker_image)
 packages/%(distribution)s:
 	mkdir -p packages/%(distribution)s
 
-packages/%(distribution)s/%(output_file)s: $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
+packages/%(distribution)s/%(output_file)s: %(do_tarballs)s packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 	$(PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND)
 	touch packages/%(distribution)s/*
 
@@ -80,7 +80,7 @@ PACKAGE-TARGETS += package-%(distribution)s
 
 .PHONY: package-%(distribution)s-interactive
 package-%(distribution)s-interactive: DOCKER_EXTRA_ARGS = -i
-package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
+package-%(distribution)s-interactive: %(do_tarballs)s packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 	$(PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND) bash
 """
 
@@ -106,6 +106,9 @@ def generate_target(distribution, output_file, options='', docker_image='',
         docker_image = distribution
     if (version == ''):
         version = "$(DEBIAN_VERSION)"
+    do_tarballs = " $(RELEASE_TARBALL_FILENAME)"
+    if (distribution == 'appimage'):
+        do_tarballs = ''
     return target_template % {
         "distribution": distribution,
         "docker_image": docker_image,
@@ -113,6 +116,7 @@ def generate_target(distribution, output_file, options='', docker_image='',
         "options": options,
         "version": version,
         "docker_build_args": docker_build_args,
+        "do_tarballs": do_tarballs,
     }
 
 
@@ -252,6 +256,12 @@ def run_generate_all(parsed_args):
         {
             "distribution": "snap",
             "output_file": ".packages-built",
+        },
+        {
+            "distribution": "appimage",
+            "output_file": ".packages-built",
+            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
+            "docker_build_args": "--build-arg QT_CI_LOGIN=\"${QT_CI_LOGIN}\" --build-arg QT_CI_PASSWORD=\"${QT_CI_PASSWORD}\" --build-arg SUBVERSION=\"${SUBVERSION}\""
         },
 
     ]

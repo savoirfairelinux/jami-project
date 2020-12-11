@@ -236,10 +236,10 @@ def run_dependencies(args):
             'Set-ExecutionPolicy Unrestricted; .\\scripts\\install-deps-windows.ps1')
 
     elif args.distribution in APT_BASED_DISTROS:
-        if args.qt is None:
-            APT_DEPENDENCIES.extend(APT_CLIENT_GNOME_DEPENDENCIES)
-        else:
-            APT_DEPENDENCIES.extend(APT_CLIENT_QT_DEPENDENCIES)
+        #if args.qt is None:
+        #    APT_DEPENDENCIES.extend(APT_CLIENT_GNOME_DEPENDENCIES)
+        #else:
+        #    APT_DEPENDENCIES.extend(APT_CLIENT_QT_DEPENDENCIES)
         execute_script(
             APT_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, APT_DEPENDENCIES))}
@@ -389,7 +389,11 @@ def run_install(args):
     else:
         if args.distribution in ZYPPER_BASED_DISTROS:
             # fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
-            environ['JSONCPP_LIBS'] = "-ljsoncpp"
+            environ['JSONCPP_LIBS'] = "-ljsoncpp"	
+        if args.appimage:
+            install_args.append('-a')
+        if args.subversion is not None:
+            install_args += ('-v', args.subversion)
         if args.qt is None:
             install_args += ("-c", "client-gnome")
         else:
@@ -585,6 +589,10 @@ def parse_args():
     ap.add_argument('--background', default=False, action='store_true')
     ap.add_argument('--no-priv-install', dest='priv_install',
                     default=True, action='store_false')
+    ap.add_argument('--appimage', dest='appimage',
+                    default=False, action='store_true')
+    ap.add_argument('--subversion', nargs='?', const='', type=str,
+                    help='Give a subversion name to the appimage build')
     ap.add_argument('--qt', nargs='?', const='', type=str,
                     help='Build the Qt client with the Qt path supplied')
     ap.add_argument('--qtver', default=QT5_VERSION,
