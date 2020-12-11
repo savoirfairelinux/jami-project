@@ -120,6 +120,7 @@ package-all: package-debian_9 \
              package-opensuse-leap_15.2 \
              package-opensuse-tumbleweed \
              package-gentoo \
+             package-appimage \
              package-snap
 
 
