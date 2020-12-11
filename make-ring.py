@@ -387,6 +387,8 @@ def run_install(args):
         if args.distribution in ZYPPER_BASED_DISTROS:
             # fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
             environ['JSONCPP_LIBS'] = "-ljsoncpp"
+        if args.appimage is not None:
+            install_args.append('-a')
         if args.qt is None:
             install_args += ("-c", "client-gnome")
         else:
@@ -560,6 +562,8 @@ def parse_args():
     ap.add_argument('--background', default=False, action='store_true')
     ap.add_argument('--no-priv-install', dest='priv_install',
                     default=True, action='store_false')
+    ap.add_argument('--appimage', nargs='?', const='', type=str,
+                    help='Build the Qt client in an appimage')
     ap.add_argument('--qt', nargs='?', const='', type=str,
                     help='Build the Qt client with the Qt path supplied')
     ap.add_argument('--qtver', default=QT5_VERSION,

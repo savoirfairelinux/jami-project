@@ -17,16 +17,22 @@ set -ex
 QT5_MIN_VER="5.14"
 
 global=false
+appimage=''
 static=''
 client=''
 qt5ver=''
 qt5path=''
 proc='1'
 priv_install=true
-while getopts gsc:q:Q:P:p:u OPT; do
+while getopts gsc:q:Q:P:p:u:a OPT; do
   case "$OPT" in
     g)
       global='true'
+    ;;
+    a)
+      appimage='-DENABLE_LIBWRAP=true'
+      static='-DENABLE_STATIC=true'
+      priv_install='false'
     ;;
     s)
       static='-DENABLE_STATIC=true'
@@ -143,12 +149,12 @@ if [ "${global}" = "true" ]; then
     cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
              -DCMAKE_BUILD_TYPE=Debug \
              -DCMAKE_INSTALL_PREFIX="${prefix}" $static \
-             -DQT5_VER="${qt5ver}" \
+             -DQT5_VER="${qt5ver}" $appimage \
              -DQT5_PATH="${qt5path}"
   else
     cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
              -DCMAKE_BUILD_TYPE=Debug $static \
-             -DQT5_VER="${qt5ver}" \
+             -DQT5_VER="${qt5ver}" $appimage \
              -DQT5_PATH="${qt5path}"
   fi
 else
@@ -156,7 +162,7 @@ else
             -DCMAKE_BUILD_TYPE=Debug \
             -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
             -DRING_BUILD_DIR="${DAEMON}/src" $static \
-            -DQT5_VER="${qt5ver}" \
+            -DQT5_VER="${qt5ver}" $appimage \
             -DQT5_PATH="${qt5path}"
 fi
 make -j"${proc}"
@@ -195,3 +201,9 @@ else
 fi
 make -j"${proc}"
 make_install "${global}" "${priv_install}"
+
+
+if [ "$appimage" ]; then
+  cd ..
+  sh ./packaging/package-appimage.sh
+fi
