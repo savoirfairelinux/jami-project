@@ -138,16 +138,28 @@ apps:
     - x11
 
 parts:
+  qt5-ppa:
+    plugin: nil
+    override-pull: |
+      sudo add-apt-repository --yes ppa:beineri/opt-qt-5.15.2-bionic
+      sudo apt update
+      # qt515base consists of:
+      #   Qt5Concurrent, Qt5Core, Qt5DBus, Qt5EglFSDeviceIntegration,
+      #   Qt5EglFsKmsSupport, Qt5Gui, Qt5Network, Qt5OpenGL,
+      #   Qt5PrintSupport, Qt5Sql, Qt5Test, Qt5Widgets, Qt5XcbQpa,
+      #   Qt5Xml
+
   desktop-launch:
+    after: [qt5-ppa]
     source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
     plugin: nil
     build-packages:
-    - gcc-8
-    - qtbase5-dev
     - dpkg-dev
+    - gcc-8
+    - qt515base
     stage-packages:
-    - libqt5gui5
-    - libqt5svg5 # for loading icon themes which are svg
+    - qt515base
+    - qt515svg # for loading icon themes which are svg
     - try: [appmenu-qt5] # not available on core18
     override-pull: |
       snapcraftctl pull
@@ -195,7 +207,7 @@ parts:
       - libasound2-plugins
 
   jami:
-    after: [alsa-mixin]
+    after: [alsa-mixin, qt5-ppa]
     source: ../../..
     source-type: local
     plugin: nil
@@ -292,8 +304,7 @@ parts:
     - libwebkit2gtk-4.0-dev
     - libyaml-cpp-dev
     - nasm # seems to be needed for building libvpx on an 18.04 base
-    - qtbase5-dev
-    - qttools5-dev
+    - qt515base
     - uuid-dev
     - yasm
     stage-packages:
@@ -316,11 +327,6 @@ parts:
     - libopus0
     - libpcre3
     - libqrencode3
-    - libqt5core5a
-    - libqt5dbus5
-    - libqt5gui5
-    - libqt5sql5
-    - libqt5sql5-sqlite
     - libsamplerate0
     - libslang2
     - libsndfile1
@@ -336,4 +342,5 @@ parts:
     - libva2
     - libvdpau-va-gl1
     - libvdpau1
+    - qt515base
     - va-driver-all
