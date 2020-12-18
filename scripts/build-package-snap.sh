@@ -29,7 +29,7 @@ cd /opt/ring-project/packaging/rules/snap/
 # set the version and tarball filename
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" snapcraft.yaml
 
-snapcraft
+snapcraft  --enable-experimental-package-repositories # requires snapcraft >= 4.4
 
 # move the built snap to output
 mv *.snap /opt/output/
