@@ -197,4 +197,8 @@ make -j"${proc}"
 make_install "${global}" "${priv_install}"
 
 # copy runtime files
-python ../copy-runtime-files.py -q ${qt5path}
+if [ -z ${qt5path}]; then
+  python ../copy-runtime-files.py
+else
+  python ../copy-runtime-files.py -q ${qt5path}
+fi
