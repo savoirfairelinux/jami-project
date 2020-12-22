@@ -197,8 +197,10 @@ make -j"${proc}"
 make_install "${global}" "${priv_install}"
 
 # copy runtime files
-if [ -z ${qt5path}]; then
-  python ../copy-runtime-files.py
-else
-  python ../copy-runtime-files.py -q ${qt5path}
+if [ ${client} = "client-qt" ]; then
+  if [ -z ${qt5path} ]; then
+    python ../copy-runtime-files.py
+  else
+    python ../copy-runtime-files.py -q ${qt5path}
+  fi
 fi
