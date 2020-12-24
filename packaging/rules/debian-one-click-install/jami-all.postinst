@@ -22,12 +22,11 @@ set -e
 # Ubuntu 18.04:
 # $JAMI_REPO = $JAMI_REPO_BASE/ubuntu_18.04/
 #
-# Debian 9:
+# Debian 10:
 # $JAMI_REPO = $JAMI_REPO_BASE/debian_10
 #
 # To update the appended end tags, modify the switch in [2].
-# FIXME As soon as the repo get renamed to /nightly fix this url
-JAMI_REPO_BASE="https://dl.jami.net/ring-nightly"
+JAMI_REPO_BASE="https://dl.jami.net/nightly"
 
 # Jami release key.
 JAMI_KEY_FINGERPRINT="A295D773307D25A33AE72F2F64CD5FA175348F84"
@@ -135,9 +134,8 @@ EOF
 
             # Add an entry for the package repository to the trusted package
             # sources (DEB822 format)
-	    # FIXME As soon as we rename the repo use ring instead of jami
             cat > $APT_FILE <<EOF
-deb ${JAMI_REPO} ring main
+deb ${JAMI_REPO} jami main
 EOF
 
             # Additionally, if update manager is installed we inform it about
@@ -150,7 +148,7 @@ EOF
 # Added by Jami to prevent disabling of Jami repository sources on
 # distribution release upgrade.
 [ThirdPartyMirrors]
-ring/${JAMI_UPDATE_MANAGER_ID}=${JAMI_REPO}
+jami/${JAMI_UPDATE_MANAGER_ID}=${JAMI_REPO}
 EOF
             fi
         fi
