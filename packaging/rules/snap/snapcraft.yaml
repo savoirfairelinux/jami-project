@@ -99,6 +99,8 @@ layout:
     bind: $SNAP/gnome-platform/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0
   /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib:
     bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib
+  /usr/share/alsa:
+    bind: $SNAP/usr/share/alsa
   /usr/local/share/jami-gnome:
     bind: $SNAP/usr/share/jami-gnome
 
@@ -120,6 +122,7 @@ apps:
     - dbus-ring
     - dbus-jamignome
     plugs:
+    - alsa
     - audio-playback
     - audio-record
     - browser-support
@@ -193,6 +196,7 @@ parts:
     stage-packages:
       - libasound2
       - libasound2-plugins
+      - yad
 
   jami:
     after: [alsa-mixin]
