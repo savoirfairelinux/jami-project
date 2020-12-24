@@ -45,6 +45,15 @@ function package_deb()
 
     # Distributions file
     cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf/distributions
+Origin: jami
+Label: Jami ${DISTRIBUTION} Repository
+Codename: jami
+Architectures: i386 amd64 armhf arm64
+Components: main
+Description: This repository contains Jami ${DISTRIBUTION} packages
+SignWith: ${KEYID}
+
+# TODO: Remove when April 2024 comes.
 Origin: ring
 Label: Ring ${DISTRIBUTION} Repository
 Codename: ring
@@ -69,15 +78,23 @@ EOF
         if [ ${package_arch} = "all" ]; then
             # Removing to avoid the error of adding the same deb twice.
             # This happens with arch all packages, which are generated in amd64 and i386.
+            reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} remove jami ${package_name}
+            # TODO: Remove when April 2024 comes.
             reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} remove ring ${package_name}
         fi
+        reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} includedeb jami ${package}
+        # TODO: Remove when April 2024 comes.
         reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} includedeb ring ${package}
     done
 
     # Rebuild the index
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} export jami
+    # TODO: Remove when April 2024 comes.
     reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} export ring
 
     # Show the contents
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list jami
+    # TODO: Remove when April 2024 comes.
     reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list ring
 
     #######################################
@@ -122,19 +139,19 @@ function package_rpm()
 
     # .repo file
     if [ "${DISTRIBUTION:0:19}" == "opensuse-tumbleweed" ]; then
-        name="Ring \$basearch - ring"
-        baseurl="https://dl.jami.net/ring-nightly/${DISTRIBUTION%_*}"
+        name="Jami \$basearch - jami"
+        baseurl="https://dl.jami.net/nightly/${DISTRIBUTION%_*}"
     else
-        name="Ring \$releasever - \$basearch - ring"
-        baseurl="https://dl.jami.net/ring-nightly/${DISTRIBUTION%_*}_\$releasever"
+        name="Jami \$releasever - \$basearch - jami"
+        baseurl="https://dl.jami.net/nightly/${DISTRIBUTION%_*}_\$releasever"
     fi
 
-    cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/ring-nightly.repo
+    cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/jami-nightly.repo
 [jami]
 name=$name
 baseurl=$baseurl
 gpgcheck=1
-gpgkey=https://dl.jami.net/ring.pub.key
+gpgkey=https://dl.jami.net/jami.pub.key
 enabled=1
 EOF
 

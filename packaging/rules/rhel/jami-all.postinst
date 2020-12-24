@@ -19,8 +19,7 @@
 # depending on the system the postinst script is run on.
 #
 # To update the appended end tags, modify the switch in [2].
-# FIXME As soon as the repo get renamed to /nightly fix this url
-JAMI_REPO_BASE="https://dl.jami.net/ring-nightly"
+JAMI_REPO_BASE="https://dl.jami.net/nightly"
 
 # Jami release key.
 JAMI_KEY_FINGERPRINT="A295D773307D25A33AE72F2F64CD5FA175348F84"
@@ -89,7 +88,7 @@ JAMI_REPO='
 name=Jami $releasever - $basearch - jami
 baseurl='"${JAMI_REPO_BASE}"/"${ID}"'_$releasever
 gpgcheck=1
-gpgkey=https://dl.jami.net/ring.pub.key
+gpgkey=https://dl.jami.net/jami.pub.key
 enabled=1'
 
     # Set-up Jami repository end tag
