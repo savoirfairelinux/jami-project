@@ -13,7 +13,7 @@ NO_CPUS=1
 endif
 
 # Binary package names
-RING_ALL_IN_ONE_PKG_NAME="jami-all"
+JAMI_ALL_IN_ONE_PKG_NAME="jami-all"
 
 # Bundled packages from contrib
 BUNDLED_PKGS = .ffmpeg
@@ -157,23 +157,23 @@ override_dh_auto_install:
 	######################
 
         ## daemon
-	cd daemon && make DESTDIR=$(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME) install
-	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/include
-	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/*.a
-	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/*.la
+	cd daemon && make DESTDIR=$(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME) install
+	rm -rfv $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/include
+	rm -rfv $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/lib/*.a
+	rm -rfv $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/lib/*.la
 
         ## LibRingClient
-	cd lrc/build && make DESTDIR=$(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME) install
-	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/include
+	cd lrc/build && make DESTDIR=$(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME) install
+	rm -rfv $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/include
 
 	# This is a symlink, should be in -dev package
-	rm -v $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/libringclient.so
+	rm -v $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/lib/libringclient.so
 
 	# cmake files
-	rm -rfv $(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME)/usr/lib/cmake
+	rm -rfv $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/lib/cmake
 
         ## GNOME client
-	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/$(RING_ALL_IN_ONE_PKG_NAME) install
+	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME) install
 	ln -sf /usr/bin/jami $(CURDIR)/debian/jami-all/usr/bin/ring.cx
 
 tmpdir:= $(shell mktemp -d)

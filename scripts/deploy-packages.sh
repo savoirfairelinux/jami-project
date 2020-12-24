@@ -45,12 +45,12 @@ function package_deb()
 
     # Distributions file
     cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf/distributions
-Origin: ring
-Label: Ring ${DISTRIBUTION} Repository
-Codename: ring
+Origin: jami
+Label: Jami ${DISTRIBUTION} Repository
+Codename: jami
 Architectures: i386 amd64 armhf arm64
 Components: main
-Description: This repository contains Ring ${DISTRIBUTION} packages
+Description: This repository contains Jami ${DISTRIBUTION} packages
 SignWith: ${KEYID}
 EOF
 
@@ -71,16 +71,16 @@ EOF
         if [ ${package_arch} = "all" ]; then
             # Removing to avoid the error of adding the same deb twice.
             # This happens with arch all packages, which are generated in amd64 and i386.
-            reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} remove ring ${package_name}
+            reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} remove jami ${package_name}
         fi
-        reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} includedeb ring ${package}
+        reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} includedeb jami ${package}
     done
 
     # Rebuild the index
-    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} export ring
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} export jami
 
     # Show the contents
-    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list ring
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list jami
 
     #######################################
     ## create the manual download folder ##
@@ -120,14 +120,25 @@ function package_rpm()
     mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
 
     # .repo file
-    cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/ring-nightly.repo
-[ring]
-name=Ring \$releasever - \$basearch - ring
-baseurl=https://dl.jami.net/ring-nightly/${DISTRIBUTION%_*}_\$releasever
+    if [ "${DISTRIBUTION:0:19}" == "opensuse-tumbleweed" ]; then
+        cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/jami-nightly.repo
+[jami]
+name=Jami \$basearch - jami
+baseurl=https://dl.jami.net/nightly/${DISTRIBUTION%_*}
 gpgcheck=1
-gpgkey=https://dl.jami.net/ring.pub.key
+gpgkey=https://dl.jami.net/jami.pub.key
 enabled=1
 EOF
+    else
+        cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/jami-nightly.repo
+[jami]
+name=Jami \$releasever - \$basearch - jami
+baseurl=https://dl.jami.net/nightly/${DISTRIBUTION%_*}_\$releasever
+gpgcheck=1
+gpgkey=https://dl.jami.net/jami.pub.key
+enabled=1
+EOF
+    fi
 
     ####################################
     ## Add packages to the repository ##
