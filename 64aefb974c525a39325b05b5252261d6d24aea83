@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70972b37_4f7baa51",
+        "filename": "make-ring.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2020-12-28T15:52:07Z",
+      "side": 1,
+      "message": "Are we encouraging the user to simply proceed to the build/install step without actually having installed the required dependencies?  If yes, the wording needs to be updated to reflect that we didn\u0027t install anything and that the user needs to either specify a supported --distribution or to install the dependencies manually before proceeding to --install.",
+      "range": {
+        "startLine": 309,
+        "startChar": 66,
+        "endLine": 309,
+        "endChar": 114
+      },
+      "revId": "64aefb974c525a39325b05b5252261d6d24aea83",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
