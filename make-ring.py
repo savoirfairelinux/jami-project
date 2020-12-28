@@ -31,6 +31,7 @@ win_toolset_default = '142'
 APT_BASED_DISTROS = [
     'debian',
     'ubuntu',
+    'trisquel',
     'linuxmint',
     'raspbian',
 ]
