@@ -22,6 +22,30 @@
       "revId": "7e29785106df63a82721017567f5d5c9b7f6b945",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ffb9ce_893bfac4",
+        "filename": "scripts/build-package-snap.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2020-12-29T18:48:51Z",
+      "side": 1,
+      "message": "Ack; latest snapcraft should be available on that machine now (might have to restart jenkins or some such for the PATH changes to take effect).",
+      "parentUuid": "1a7bf1d5_5eb59ff1",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 52
+      },
+      "revId": "7e29785106df63a82721017567f5d5c9b7f6b945",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
