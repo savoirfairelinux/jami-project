@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a7bf1d5_5eb59ff1",
+        "filename": "scripts/build-package-snap.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-12-29T18:17:07Z",
+      "side": 1,
+      "message": "note that maybe the build machine will not like this. to check",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 52
+      },
+      "revId": "7e29785106df63a82721017567f5d5c9b7f6b945",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
