@@ -22,6 +22,30 @@
       "revId": "64aefb974c525a39325b05b5252261d6d24aea83",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e974147_32961fba",
+        "filename": "make-ring.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-12-30T19:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70972b37_4f7baa51",
+      "range": {
+        "startLine": 309,
+        "startChar": 66,
+        "endLine": 309,
+        "endChar": 114
+      },
+      "revId": "64aefb974c525a39325b05b5252261d6d24aea83",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
