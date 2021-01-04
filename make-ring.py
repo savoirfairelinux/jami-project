@@ -31,6 +31,7 @@ win_toolset_default = '142'
 APT_BASED_DISTROS = [
     'debian',
     'ubuntu',
+    'trisquel',
     'linuxmint',
     'raspbian',
 ]
@@ -306,7 +307,7 @@ def run_dependencies(args):
         sys.exit(1)
 
     else:
-        print("Not yet implemented for current distribution (%s)" %
+        print("Not yet implemented for current distribution (%s). Please continue with the --install instruction. Note: You may need to install some dependencies manually." %
               args.distribution)
         sys.exit(1)
 
@@ -506,10 +507,9 @@ def validate_args(parsed_args):
       + ZYPPER_BASED_DISTROS + FLATPAK_BASED_RUNTIMES
 
     if parsed_args.distribution not in supported_distros:
-        print('Distribution \'{0}\' not supported.\nChoose one of: {1}'.format(
+        print('WARNING: Distribution \'{0}\' not supported.\nChoose one of: {1}'.format(
             parsed_args.distribution, ', '.join(supported_distros)
         ), file=sys.stderr)
-        sys.exit(1)
 
     # The Qt client support will be added incrementally.
     if parsed_args.qt is not None:

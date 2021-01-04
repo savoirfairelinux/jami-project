@@ -99,6 +99,8 @@ layout:
     bind: $SNAP/gnome-platform/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0
   /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib:
     bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib
+  /usr/share/alsa:
+    bind: $SNAP/usr/share/alsa
   /usr/local/share/jami-gnome:
     bind: $SNAP/usr/share/jami-gnome
 
@@ -120,6 +122,7 @@ apps:
     - dbus-ring
     - dbus-jamignome
     plugs:
+    - alsa
     - audio-playback
     - audio-record
     - browser-support
@@ -137,17 +140,26 @@ apps:
     - wayland
     - x11
 
+package-repositories:
+  - type: apt
+    ppa: beineri/opt-qt-5.15.2-bionic
+    # qt515base consists of:
+    #   Qt5Concurrent, Qt5Core, Qt5DBus, Qt5EglFSDeviceIntegration,
+    #   Qt5EglFsKmsSupport, Qt5Gui, Qt5Network, Qt5OpenGL,
+    #   Qt5PrintSupport, Qt5Sql, Qt5Test, Qt5Widgets, Qt5XcbQpa,
+    #   Qt5Xml
+
 parts:
   desktop-launch:
     source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
     plugin: nil
     build-packages:
-    - gcc-8
-    - qtbase5-dev
     - dpkg-dev
+    - gcc-8
+    - qt515base
     stage-packages:
-    - libqt5gui5
-    - libqt5svg5 # for loading icon themes which are svg
+    - qt515base
+    - qt515svg # for loading icon themes which are svg
     - try: [appmenu-qt5] # not available on core18
     override-pull: |
       snapcraftctl pull
@@ -193,6 +205,7 @@ parts:
     stage-packages:
       - libasound2
       - libasound2-plugins
+      - yad
 
   jami:
     after: [alsa-mixin]
@@ -200,6 +213,12 @@ parts:
     source-type: local
     plugin: nil
     parse-info: [usr/share/metainfo/jami-gnome.appdata.xml]
+    build-environment:
+      - QT_BASE_DIR: "/opt/qt515"
+      - QTDIR: "$QT_BASE_DIR"
+      - PATH: "$QT_BASE_DIR/bin:$PATH"
+      - LD_LIBRARY_PATH: "$QT_BASE_DIR/lib:$LD_LIBRARY_PATH"
+      - PKG_CONFIG_PATH: "$QT_BASE_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
     override-pull: |
       snapcraftctl pull
       sed -i -E 's|(tmpName) << (PACKAGE_NAME << "_shm_")|\1 << "snap.jami." << \2|' daemon/src/media/video/sinkclient.cpp
@@ -292,8 +311,7 @@ parts:
     - libwebkit2gtk-4.0-dev
     - libyaml-cpp-dev
     - nasm # seems to be needed for building libvpx on an 18.04 base
-    - qtbase5-dev
-    - qttools5-dev
+    - qt515base
     - uuid-dev
     - yasm
     stage-packages:
@@ -316,11 +334,6 @@ parts:
     - libopus0
     - libpcre3
     - libqrencode3
-    - libqt5core5a
-    - libqt5dbus5
-    - libqt5gui5
-    - libqt5sql5
-    - libqt5sql5-sqlite
     - libsamplerate0
     - libslang2
     - libsndfile1
@@ -336,4 +349,5 @@ parts:
     - libva2
     - libvdpau-va-gl1
     - libvdpau1
+    - qt515base
     - va-driver-all
