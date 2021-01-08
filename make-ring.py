@@ -74,7 +74,7 @@ RPM_INSTALL_SCRIPT = [
 
 PACMAN_INSTALL_SCRIPT = [
     'pacman -Sy',
-    'pacman -S %(packages)s'
+    'pacman -S --asdeps --needed %(packages)s'
 ]
 
 ZYPPER_INSTALL_SCRIPT = [
