@@ -164,12 +164,20 @@ APT_CLIENT_QT_DEPENDENCIES = [
 
 PACMAN_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc',
-    'gnome-icon-theme-symbolic', 'ffmpeg', 'boost', 'clutter-gtk', 'cppunit',
-    'libdbus', 'dbus-c++', 'libe-book', 'expat', 'gtk3', 'jack', 'libnotify',
-    'opus', 'pcre', 'libpulse', 'speex', 'speexdsp', 'libtool', 'yaml-cpp',
+    'ffmpeg', 'boost', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book', 'expat',
+    'jack', 'opus', 'pcre', 'libpulse', 'speex', 'speexdsp', 'libtool', 'yaml-cpp',
     'qt5-base', 'swig', 'yasm', 'qrencode', 'make', 'patch', 'pkg-config',
-    'automake', 'libva', 'webkit2gtk', 'libnm', 'libvdpau', 'libcanberra',
-    'openssl', 'pandoc', 'nasm'
+    'automake', 'libva', 'libnm', 'libvdpau', 'openssl', 'pandoc', 'nasm'
+]
+
+PACMAN_CLIENT_GNOME_DEPENDENCIES = [
+    'clutter-gtk','gnome-icon-theme-symbolic', 'gtk3', 'libappindicator-gtk3',
+    'libcanberra', 'libnotify', 'webkit2gtk' 
+]
+
+PACMAN_CLIENT_QT_DEPENDENCIES = [
+    'qt5-declarative', 'qt5-graphicaleffects', 'qt5-multimedia', 'qt5-quickcontrols',
+    'qt5-quickcontrols2', 'qt5-svg', 'qt5-webengine'
 ]
 
 OSX_DEPENDENCIES = [
@@ -199,6 +207,8 @@ UNINSTALL_SCRIPT = [
     'rm -rf ./lrc/build-local/',
     'rm -rf ./client-gnome/build-global',
     'rm -rf ./client-gnome/build-local',
+    'rm -rf ./client-qt/build-global',
+    'rm -rf ./client-qt/build-local',
 ]
 
 OSX_UNINSTALL_SCRIPT = [
@@ -259,6 +269,10 @@ def run_dependencies(args):
         )
 
     elif args.distribution in PACMAN_BASED_DISTROS:
+        if args.qt is None:
+            PACMAN_DEPENDENCIES.extend(PACMAN_CLIENT_GNOME_DEPENDENCIES)
+        else:
+            PACMAN_DEPENDENCIES.extend(PACMAN_CLIENT_QT_DEPENDENCIES)
         execute_script(
             PACMAN_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, PACMAN_DEPENDENCIES))}
@@ -514,9 +528,10 @@ def validate_args(parsed_args):
     # The Qt client support will be added incrementally.
     if parsed_args.qt is not None:
         supported_qt_distros = [
-            WIN32_DISTRIBUTION_NAME, APT_BASED_DISTROS, DNF_BASED_DISTROS
-        ]
-        if parsed_args.distribution not in supported_distros:
+            WIN32_DISTRIBUTION_NAME
+        ] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS
+
+        if parsed_args.distribution not in supported_qt_distros:
             print('Distribution \'{0}\' not supported when building the Qt client.'
                   '\nChoose one of: {1}'.format(
                       parsed_args.distribution, ', '.join(supported_qt_distros)
