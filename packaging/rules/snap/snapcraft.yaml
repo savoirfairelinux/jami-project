@@ -302,6 +302,7 @@ parts:
     - libspeex-dev
     - libspeexdsp-dev
     - libsrtp0-dev
+    - libssl-dev
     - libswscale-dev
     - libtool
     - libudev-dev
