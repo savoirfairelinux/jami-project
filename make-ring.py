@@ -193,24 +193,14 @@ IOS_DEPENDENCIES_UNLINK = [
     'pkg-config*', 'gettext*', 'swiftlint*', 'swiftgen*', 'libtasn'
 ]
 
-UNINSTALL_SCRIPT = [
-    'make -C daemon uninstall',
-    'rm -rf ./lrc/build-global/',
-    'rm -rf ./lrc/build-local/',
-    'rm -rf ./client-gnome/build-global',
-    'rm -rf ./client-gnome/build-local',
+UNINSTALL_DAEMON_SCRIPT = [
+    'make -C daemon uninstall'
 ]
 
 OSX_UNINSTALL_SCRIPT = [
     'make -C daemon uninstall',
-    'rm -rf install/client-macosx',
+    'rm -rf install/client-macosx'
 ]
-
-STOP_SCRIPT = [
-    'xargs kill < daemon.pid',
-    'xargs kill < jami-gnome.pid',
-]
-
 
 def run_powersell_cmd(cmd):
     p = subprocess.Popen(["powershell.exe", cmd], stdout=sys.stdout)
@@ -403,8 +393,25 @@ def run_uninstall(args):
     if args.distribution == OSX_DISTRIBUTION_NAME:
         execute_script(OSX_UNINSTALL_SCRIPT)
     else:
-        execute_script(UNINSTALL_SCRIPT)
+        execute_script(UNINSTALL_DAEMON_SCRIPT)
 
+        CLIENT_SUFFIX = 'qt' if (args.qt is not None) else 'gnome'
+        INSTALL_DIR = '/build-global' if args.global_install else '/build-local'
+
+        # Client needs to be uninstalled first
+        if (os.path.exists('./client-' + CLIENT_SUFFIX + INSTALL_DIR)):
+            UNINSTALL_CLIENT = [
+                 'make -C client-' + CLIENT_SUFFIX + INSTALL_DIR + ' uninstall',
+                 'rm -rf ./client-' + CLIENT_SUFFIX + INSTALL_DIR
+            ]
+            execute_script(UNINSTALL_CLIENT)
+
+        if (os.path.exists('./lrc' + INSTALL_DIR)):
+            UNINSTALL_LRC = [
+                'make -C lrc' + INSTALL_DIR + ' uninstall',
+                'rm -rf ./lrc' + INSTALL_DIR
+            ]
+            execute_script(UNINSTALL_LRC)
 
 def run_run(args):
     if args.distribution == OSX_DISTRIBUTION_NAME:
@@ -445,7 +452,7 @@ def run_run(args):
             env=run_env
         )
 
-        with open('jami-gnome.pid', 'w') as f:
+        with open("jami-" + client_suffix + ".pid", 'w') as f:
             f.write(str(client_process.pid)+'\n')
 
         if args.debug:
@@ -481,6 +488,11 @@ def run_run(args):
 
 
 def run_stop(args):
+    client_suffix = "qt" if (args.qt is not None) else "gnome"
+    STOP_SCRIPT = [
+        'xargs kill < daemon.pid',
+        'xargs kill < jami-' + client_suffix + '.pid'
+    ]
     execute_script(STOP_SCRIPT)
 
 
