@@ -167,40 +167,47 @@ cd "${TOP}/${client}"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 if [ "${client}" = "client-qt" ]; then
-    if [ -z ${qt5path} ]; then
-        if command -v qmake &> /dev/null; then
-            echo "Build client-qt with $(qmake -v)"
-            qmake PREFIX="${INSTALL}/${client}" ..
+    if [ "${global}" = "true" ]; then
+        if [ "${prefix+set}" ]; then
+            cmake .. -DQT5_VER="${qt5ver}" \
+                     -DQT5_PATH="${qt5path}" \
+                     -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
+                     -DCMAKE_INSTALL_PREFIX="${prefix}" $static
         else
-            echo "Build client-qt with $(qmake-qt5 -v)" # Fedora
-            qmake-qt5 PREFIX="${INSTALL}/${client}" ..
+            cmake .. -DQT5_VER="${qt5ver}" \
+                     -DQT5_PATH="${qt5path}" \
+                     -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
         fi
     else
-        echo "Build client-qt using Qt ${qt5path}"
-        eval ${qt5path}/bin/qmake PREFIX="${INSTALL}/${client}" ..
+        cmake ..  -DQT5_VER="${qt5ver}" \
+                  -DQT5_PATH="${qt5path}" \
+                  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
+                  -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
+                  -DLRC="${INSTALL}/lrc"
     fi
 else
     if [ "${global}" = "true" ]; then
-      if [ "${prefix+set}" ]; then
-        cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" -DCMAKE_INSTALL_PREFIX="${prefix}" $static
-      else
-        cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
-      fi
+        if [ "${prefix+set}" ]; then
+            cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
+                     -DCMAKE_INSTALL_PREFIX="${prefix}" $static
+        else
+            cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
+        fi
     else
-      cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
-                -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
-                -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
-                -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
+        cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
+                  -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
+                  -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
+                  -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
     fi
 fi
 make -j"${proc}"
 make_install "${global}" "${priv_install}"
 
 # copy runtime files
-if [ ${client} = "client-qt" ]; then
-  if [ -z ${qt5path} ]; then
-    python ../copy-runtime-files.py
-  else
-    python ../copy-runtime-files.py -q ${qt5path}
-  fi
+if [ "$OSTYPE" == "cygwin" ] || [ "$OSTYPE" == "msys" ]; then
+    if [ -z ${qt5path} ]; then
+        python ../copy-runtime-files.py
+    else
+        python ../copy-runtime-files.py -q ${qt5path}
+    fi
 fi
