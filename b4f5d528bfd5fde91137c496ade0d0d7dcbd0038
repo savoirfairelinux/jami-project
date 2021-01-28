@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30c1391d_919b6631",
+        "filename": "packaging/rules/snap/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-01-28T21:27:33Z",
+      "side": 1,
+      "message": "just remove, the git history is ok",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "b4f5d528bfd5fde91137c496ade0d0d7dcbd0038",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
