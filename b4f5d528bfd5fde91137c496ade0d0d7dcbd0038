@@ -22,6 +22,30 @@
       "revId": "b4f5d528bfd5fde91137c496ade0d0d7dcbd0038",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3919a33e_9d09c79e",
+        "filename": "packaging/rules/snap/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-01-28T21:45:32Z",
+      "side": 1,
+      "message": "keeping this was intentional, since i\u0027ll soon be adding a `bin/jami-qt-wrapper\u0027 which will set QTWEBENGINEPROCESS_PATH. but if you still insist, i\u0027ll remove this.",
+      "parentUuid": "30c1391d_919b6631",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "b4f5d528bfd5fde91137c496ade0d0d7dcbd0038",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
