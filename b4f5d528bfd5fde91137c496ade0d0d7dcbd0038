@@ -46,6 +46,30 @@
       "revId": "b4f5d528bfd5fde91137c496ade0d0d7dcbd0038",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef525911_626aa6d5",
+        "filename": "packaging/rules/snap/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-01-29T17:14:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3919a33e_9d09c79e",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "b4f5d528bfd5fde91137c496ade0d0d7dcbd0038",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
