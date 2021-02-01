@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85626f82_41275bc2",
+        "filename": "make-ring.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-02-01T21:32:35Z",
+      "side": 0,
+      "message": "do not remove",
+      "range": {
+        "startLine": 271,
+        "startChar": 51,
+        "endLine": 275,
+        "endChar": 69
+      },
+      "revId": "49c538bc64257c01922cc8e5144e24a13ac85bb6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
