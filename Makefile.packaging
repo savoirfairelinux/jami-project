@@ -62,6 +62,9 @@ $(RELEASE_TARBALL_FILENAME):
 	    make fetch-all -j || make fetch-all || make fetch-all
 	rm -rf daemon/contrib/native
 
+	# remove large onnxruntime tarball
+	rm daemon/contrib/tarballs/onnxruntime-v*.tar.xz
+
 	cd $(TMPDIR) && \
 	    tar -C $(CURDIR)/.. \
 	        --exclude-vcs \
