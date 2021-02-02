@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7475ccb0_e98f9e5b",
+        "filename": "Makefile.packaging",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-02-02T16:44:47Z",
+      "side": 1,
+      "message": "could be onnx*",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "38bdf1c9f5c1102aba6acf9901a6f5f2a20647d2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
