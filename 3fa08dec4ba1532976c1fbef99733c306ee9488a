@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff6ce624_f53b2dfc",
+        "filename": "Makefile.packaging",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-02-03T14:35:40Z",
+      "side": 1,
+      "message": "do we really need contrib tarballs in our release tarballs? I mean there is already contrib/src for that + shasums, we can just move line 75 up",
+      "range": {
+        "startLine": 65,
+        "startChar": 35,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "3fa08dec4ba1532976c1fbef99733c306ee9488a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
