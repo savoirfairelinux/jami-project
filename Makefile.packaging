@@ -59,8 +59,11 @@ $(RELEASE_TARBALL_FILENAME):
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
 	    ../bootstrap && make list && \
-	    make fetch -j || make fetch || make fetch
+	    make fetch-all -j || make fetch-all || make fetch-all
 	rm -rf daemon/contrib/native
+	
+  # remove large onnxruntime tarball
+	rm -rf daemon/contrib/tarballs/onnx*
 
 	cd $(TMPDIR) && \
 	    tar -C $(CURDIR)/.. \
