@@ -69,8 +69,8 @@ HUFCGSHO3/kzxSlkE1PBUX3IZ8PSFijyopBnWUhlSXuyRjte8OR7Fl/Rlf0IaOD1
 # postrm paths should be modified as well
 REPO_FILE="/etc/yum.repos.d/jami-main.repo"
 GPG_FILE="/etc/pki/rpm-gpg/RPM-GPG-KEY-JAMI"
-RING_UPDATE_MANAGER_ID="jami"
-RING_UPDATE_MANAGER_CFG="${RING_UPDATE_MANAGER_ID}.cfg"
+JAMI_UPDATE_MANAGER_ID="jami"
+JAMI_UPDATE_MANAGER_CFG="${JAMI_UPDATE_MANAGER_ID}.cfg"
 
 ###############################################################################
 # [2] Set package repo url depending on distribution and version              #
