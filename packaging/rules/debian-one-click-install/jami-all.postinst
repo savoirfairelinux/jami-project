@@ -20,18 +20,18 @@ set -e
 # depending on the system the postinst script is run on. Examples:
 #
 # Ubuntu 18.04:
-# $RING_REPO = $RING_REPO_BASE/ubuntu_18.04/
+# $JAMI_REPO = $JAMI_REPO_BASE/ubuntu_18.04/
 #
 # Debian 9:
-# $RING_REPO = $RING_REPO_BASE/debian_9
+# $JAMI_REPO = $JAMI_REPO_BASE/debian_9
 #
 # To update the appended end tags, modify the switch in [2].
 # FIXME As soon as the repo get renamed to /nightly fix this url
-RING_REPO_BASE="https://dl.jami.net/ring-nightly"
+JAMI_REPO_BASE="https://dl.jami.net/ring-nightly"
 
 # Jami release key.
-RING_KEY_FINGERPRINT="A295D773307D25A33AE72F2F64CD5FA175348F84"
-RING_KEY="\
+JAMI_KEY_FINGERPRINT="A295D773307D25A33AE72F2F64CD5FA175348F84"
+JAMI_KEY="\
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v2
 
@@ -76,10 +76,10 @@ HUFCGSHO3/kzxSlkE1PBUX3IZ8PSFijyopBnWUhlSXuyRjte8OR7Fl/Rlf0IaOD1
 # postrm paths should be modified as well
 APT_FILE="/etc/apt/sources.list.d/jami-main.list"
 UPDATE_MANAGER_PATH="/etc/update-manager/release-upgrades.d/"
-RING_UPDATE_MANAGER_ID="jami-main"
+JAMI_UPDATE_MANAGER_ID="jami-main"
 
-RING_UPDATE_MANAGER_CFG="${RING_UPDATE_MANAGER_ID}.cfg"
-UPDATE_MANAGER_CFG_PATH="${UPDATE_MANAGER_PATH}/${RING_UPDATE_MANAGER_CFG}"
+JAMI_UPDATE_MANAGER_CFG="${JAMI_UPDATE_MANAGER_ID}.cfg"
+UPDATE_MANAGER_CFG_PATH="${UPDATE_MANAGER_PATH}/${JAMI_UPDATE_MANAGER_CFG}"
 
 
 ###############################################################################
@@ -136,18 +136,18 @@ case "$1" in
         fi
 
         if [ "${CAN_ADD_DEB_SOURCE}" = "true" ]; then
-            RING_REPO="${RING_REPO_BASE}/${ENDTAG}"
+            JAMI_REPO="${JAMI_REPO_BASE}/${ENDTAG}"
 
             # We first add the key to the trusted keyring.
             apt-key add - > /dev/null 2>&1 << EOF
-$RING_KEY
+$JAMI_KEY
 EOF
 
             # Add an entry for the package repository to the trusted package
             # sources (DEB822 format)
 	    # FIXME As soon as we rename the repo use ring instead of jami
             cat > $APT_FILE <<EOF
-deb ${RING_REPO} ring main
+deb ${JAMI_REPO} ring main
 EOF
 
             # Additionally, if update manager is installed we inform it about
@@ -160,7 +160,7 @@ EOF
 # Added by Jami to prevent disabling of Jami repository sources on
 # distribution release upgrade.
 [ThirdPartyMirrors]
-ring/${RING_UPDATE_MANAGER_ID}=${RING_REPO}
+ring/${JAMI_UPDATE_MANAGER_ID}=${JAMI_REPO}
 EOF
             fi
         fi
