@@ -59,7 +59,8 @@ $(RELEASE_TARBALL_FILENAME):
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
 	    ../bootstrap && make list && \
-	    make fetch -j || make fetch || make fetch
+	    make fetch -j || make fetch || make fetch && \
+	    make -j .sum-ffmpeg .sum-ffnvcodec .sum-gnutls # Force download of gnutls/ffmpeg for debian
 	rm -rf daemon/contrib/native
 
 	cd $(TMPDIR) && \
