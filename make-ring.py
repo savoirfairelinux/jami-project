@@ -85,7 +85,7 @@ ZYPPER_INSTALL_SCRIPT = [
 ZYPPER_DEPENDENCIES = [
     # build system
     'autoconf', 'autoconf-archive', 'automake', 'cmake', 'make', 'patch', 'gcc-c++',
-    'libtool', 'which', 'pandoc','nasm',
+    'libtool', 'which', 'pandoc','nasm', 'doxygen', 'graphviz',
     # contrib dependencies
     'curl', 'gzip', 'bzip2',
     # daemon
@@ -112,7 +112,7 @@ ZYPPER_CLIENT_QT_DEPENDENCIES = [
 
 DNF_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'automake', 'cmake', 'make', 'speexdsp-devel', 'pulseaudio-libs-devel',
-    'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel',
+    'libtool', 'dbus-devel', 'expat-devel', 'pcre-devel', 'doxygen', 'graphviz',
     'yaml-cpp-devel', 'boost-devel', 'dbus-c++-devel', 'dbus-devel',
     'libXext-devel', 'libXfixes-devel', 'yasm',
     'speex-devel', 'chrpath', 'check', 'astyle', 'uuid-c++-devel', 'gettext-devel',
@@ -135,8 +135,8 @@ DNF_CLIENT_QT_DEPENDENCIES = [
 ]
 
 APT_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'autopoint', 'automake', 'cmake', 'make', 'dbus', 'doxygen', 'g++',
-    'gettext', 'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
+    'autoconf', 'autoconf-archive', 'autopoint', 'automake', 'cmake', 'make', 'dbus', 'doxygen', 'graphviz',
+    'g++', 'gettext', 'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
     'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
     'libclutter-gtk-1.0-dev', 'libcppunit-dev', 'libdbus-1-dev',
     'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
@@ -163,8 +163,8 @@ APT_CLIENT_QT_DEPENDENCIES = [
 ]
 
 PACMAN_DEPENDENCIES = [
-    'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'gcc',
-    'ffmpeg', 'boost', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book', 'expat',
+    'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'graphviz',
+    'gcc', 'ffmpeg', 'boost', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book', 'expat',
     'jack', 'opus', 'pcre', 'libpulse', 'speex', 'speexdsp', 'libtool', 'yaml-cpp',
     'qt5-base', 'swig', 'yasm', 'qrencode', 'make', 'patch', 'pkg-config',
     'automake', 'libva', 'libnm', 'libvdpau', 'openssl', 'pandoc', 'nasm'
@@ -201,26 +201,14 @@ IOS_DEPENDENCIES_UNLINK = [
     'pkg-config*', 'gettext*', 'swiftlint*', 'swiftgen*', 'libtasn'
 ]
 
-UNINSTALL_SCRIPT = [
-    'make -C daemon uninstall',
-    'rm -rf ./lrc/build-global/',
-    'rm -rf ./lrc/build-local/',
-    'rm -rf ./client-gnome/build-global',
-    'rm -rf ./client-gnome/build-local',
-    'rm -rf ./client-qt/build-global',
-    'rm -rf ./client-qt/build-local',
+UNINSTALL_DAEMON_SCRIPT = [
+    'make -C daemon uninstall'
 ]
 
 OSX_UNINSTALL_SCRIPT = [
     'make -C daemon uninstall',
-    'rm -rf install/client-macosx',
+    'rm -rf install/client-macosx'
 ]
-
-STOP_SCRIPT = [
-    'xargs kill < daemon.pid',
-    'xargs kill < jami-gnome.pid',
-]
-
 
 def run_powersell_cmd(cmd):
     p = subprocess.Popen(["powershell.exe", cmd], stdout=sys.stdout)
@@ -417,8 +405,25 @@ def run_uninstall(args):
     if args.distribution == OSX_DISTRIBUTION_NAME:
         execute_script(OSX_UNINSTALL_SCRIPT)
     else:
-        execute_script(UNINSTALL_SCRIPT)
+        execute_script(UNINSTALL_DAEMON_SCRIPT)
 
+        CLIENT_SUFFIX = 'qt' if (args.qt is not None) else 'gnome'
+        INSTALL_DIR = '/build-global' if args.global_install else '/build-local'
+
+        # Client needs to be uninstalled first
+        if (os.path.exists('./client-' + CLIENT_SUFFIX + INSTALL_DIR)):
+            UNINSTALL_CLIENT = [
+                 'make -C client-' + CLIENT_SUFFIX + INSTALL_DIR + ' uninstall',
+                 'rm -rf ./client-' + CLIENT_SUFFIX + INSTALL_DIR
+            ]
+            execute_script(UNINSTALL_CLIENT)
+
+        if (os.path.exists('./lrc' + INSTALL_DIR)):
+            UNINSTALL_LRC = [
+                'make -C lrc' + INSTALL_DIR + ' uninstall',
+                'rm -rf ./lrc' + INSTALL_DIR
+            ]
+            execute_script(UNINSTALL_LRC)
 
 def run_run(args):
     if args.distribution == OSX_DISTRIBUTION_NAME:
@@ -459,7 +464,7 @@ def run_run(args):
             env=run_env
         )
 
-        with open('jami-gnome.pid', 'w') as f:
+        with open("jami-" + client_suffix + ".pid", 'w') as f:
             f.write(str(client_process.pid)+'\n')
 
         if args.debug:
@@ -495,6 +500,11 @@ def run_run(args):
 
 
 def run_stop(args):
+    client_suffix = "qt" if (args.qt is not None) else "gnome"
+    STOP_SCRIPT = [
+        'xargs kill < daemon.pid',
+        'xargs kill < jami-' + client_suffix + '.pid'
+    ]
     execute_script(STOP_SCRIPT)
 
 
