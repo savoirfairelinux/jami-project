@@ -95,16 +95,6 @@ enabled=1'
     # Set-up Jami repository end tag
     if [ "${PLATFORM_ID}" = "platform:el8" ] || [ "${ID}_${VERSION_ID%.*}" = "rhel_8" ]; then
         ENDTAG="rhel_8"
-    elif [ "${PLATFORM_ID}" = "platform:f27" ] || [ "${ID}_${VERSION_ID}" = "fedora_27" ]; then
-        ENDTAG="fedora_27"
-    elif [ "${PLATFORM_ID}" = "platform:f28" ] || [ "${ID}_${VERSION_ID}" = "fedora_28" ]; then
-        ENDTAG="fedora_28"
-    elif [ "${PLATFORM_ID}" = "platform:f29" ] || [ "${ID}_${VERSION_ID}" = "fedora_29" ]; then
-        ENDTAG="fedora_29"
-    elif [ "${PLATFORM_ID}" = "platform:f30" ] || [ "${ID}_${VERSION_ID}" = "fedora_30" ]; then
-        ENDTAG="fedora_30"
-    elif [ "${PLATFORM_ID}" = "platform:f31" ] || [ "${ID}_${VERSION_ID}" = "fedora_31" ]; then
-        ENDTAG="fedora_31"
     elif [ "${PLATFORM_ID}" = "platform:f32" ] || [ "${ID}_${VERSION_ID}" = "fedora_32" ]; then
         ENDTAG="fedora_32"
     elif [ "${PLATFORM_ID}" = "platform:f33" ] || [ "${ID}_${VERSION_ID}" = "fedora_33" ]; then
