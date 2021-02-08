@@ -69,8 +69,6 @@ $(RELEASE_TARBALL_FILENAME):
 	        $(shell basename $(CURDIR)) && \
 	    mv $(RELEASE_TARBALL_FILENAME) $(CURDIR)
 
-	rm -rf $(CURDIR)/daemon/contrib/tarballs/*
-
 #######################
 ## Packaging targets ##
 #######################
@@ -143,3 +141,4 @@ clean:
 	rm -rf packages
 	rm -f Makefile.packaging.distro_targets
 	rm -f .docker-image-*
+	rm -rf daemon/contrib/tarballs/*
