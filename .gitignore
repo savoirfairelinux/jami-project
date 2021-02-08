@@ -10,7 +10,6 @@ Makefile.packaging.distro_targets
 repositories
 manual-download
 .docker-image-*
-qemu-static
 
 # QtCreator
 /build-*
