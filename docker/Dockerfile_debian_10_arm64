@@ -1,9 +1,5 @@
 FROM arm64v8/debian:buster
 
-# FIXME: dirty qemu-static hack required because our Jenkins node runs Docker 17
-# Remove next line as soon as we get Docker 18 +
-COPY qemu-static/qemu-aarch64-static /usr/bin/qemu-aarch64-static
-
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get clean
