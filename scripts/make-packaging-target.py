@@ -75,6 +75,7 @@ packages/%(distribution)s/%(output_file)s: $(RELEASE_TARBALL_FILENAME) packages/
 
 .PHONY: package-%(distribution)s
 package-%(distribution)s: packages/%(distribution)s/%(output_file)s
+PACKAGE-TARGETS += package-%(distribution)s
 
 .PHONY: package-%(distribution)s-interactive
 package-%(distribution)s-interactive: DOCKER_EXTRA_ARGS = -i
@@ -115,64 +116,6 @@ def run_generate(parsed_args):
 def run_generate_all(parsed_args):
     targets = [
         # Debian
-        {
-            "distribution": "debian_9",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "debian_9_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-        },
-        {
-            "distribution": "debian_9_armhf",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
-            "qemu_static": 'qemu-arm-static',
-        },
-        {
-            "distribution": "debian_9_arm64",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
-            "qemu_static": 'qemu-aarch64-static',
-        },
-        {
-            "distribution": "debian_9_oci",
-            "docker_image": "debian_9",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
-            "distribution": "debian_9_i386_oci",
-            "docker_image": "debian_9_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
-            "distribution": "debian_9_armhf_oci",
-            "docker_image": "debian_9_armhf",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
-            "qemu_static": 'qemu-arm-static',
-        },
-        {
-            "distribution": "debian_9_arm64_oci",
-            "docker_image": "debian_9_arm64",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
-            "qemu_static": 'qemu-aarch64-static',
-        },
         {
             "distribution": "debian_10",
             "debian_packaging_override": "",
@@ -276,34 +219,6 @@ def run_generate_all(parsed_args):
             "version": "$(DEBIAN_OCI_VERSION)",
         },
         {
-            "distribution": "ubuntu_19.10",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
-        },
-        {
-            "distribution": "ubuntu_19.10_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
-        },
-        {
-            "distribution": "ubuntu_19.10_oci",
-            "docker_image": "ubuntu_19.10",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
-            "distribution": "ubuntu_19.10_i386_oci",
-            "docker_image": "ubuntu_19.10_i386",
-            "debian_packaging_override": "",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
             "distribution": "ubuntu_20.04",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
@@ -334,25 +249,7 @@ def run_generate_all(parsed_args):
 
         # Fedora
         {
-            "distribution": "fedora_31",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
-        },
-        {
-            "distribution": "fedora_31_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
-        },
-        {
             "distribution": "fedora_32",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
-        },
-        {
-            "distribution": "fedora_32_i386",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
             "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
@@ -364,25 +261,13 @@ def run_generate_all(parsed_args):
             "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
         },
         {
-            "distribution": "fedora_33_i386",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
-        },
-        {
             "distribution": "rhel_8",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
             "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
             "password_rhel8": "--build-arg PASS=${PASS}"
         },
-        #opensuse_leap
-        {
-            "distribution": "opensuse-leap_15.1",
-            "debian_packaging_override": "",
-            "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged"
-        },
+        # OpenSUSE
         {
             "distribution": "opensuse-leap_15.2",
             "debian_packaging_override": "",
