@@ -23,7 +23,7 @@ set -e
 # $JAMI_REPO = $JAMI_REPO_BASE/ubuntu_18.04/
 #
 # Debian 9:
-# $JAMI_REPO = $JAMI_REPO_BASE/debian_9
+# $JAMI_REPO = $JAMI_REPO_BASE/debian_10
 #
 # To update the appended end tags, modify the switch in [2].
 # FIXME As soon as the repo get renamed to /nightly fix this url
@@ -95,22 +95,12 @@ if [ -f /etc/os-release ]; then
     . /etc/os-release
 
     # Set-up Jami repository end tag
-    if [ "${DEBIAN_CODENAME}" = "stretch" ] || [ "${ID}_${VERSION_ID}" = "debian_9" ]; then
-        ENDTAG="debian_9"
-    elif [ "${DEBIAN_CODENAME}" = "buster" ] || [ "${ID}_${VERSION_ID}" = "debian_10" ]; then
+    if [ "${DEBIAN_CODENAME}" = "buster" ] || [ "${ID}_${VERSION_ID}" = "debian_10" ]; then
         ENDTAG="debian_10"
-    elif [ "${ID}_${VERSION_ID}" = "trisquel_8.0" ]; then
-        ENDTAG="ubuntu_16.04"
-    elif [ "${UBUNTU_CODENAME}" = "xenial" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_16.04" ]; then
-        ENDTAG="ubuntu_16.04"
+    elif [ "${ID}_${VERSION_ID}" = "trisquel_9.0" ]; then
+        ENDTAG="ubuntu_18.04"
     elif [ "${UBUNTU_CODENAME}" = "bionic" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_18.04" ]; then
         ENDTAG="ubuntu_18.04"
-    elif [ "${UBUNTU_CODENAME}" = "cosmic" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_18.10" ]; then
-        ENDTAG="ubuntu_18.10"
-    elif [ "${UBUNTU_CODENAME}" = "disco" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_19.04" ]; then
-        ENDTAG="ubuntu_19.04"
-    elif [ "${UBUNTU_CODENAME}" = "eoan" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_19.10" ]; then
-        ENDTAG="ubuntu_19.10"
     elif [ "${UBUNTU_CODENAME}" = "focal" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_20.04" ]; then
         ENDTAG="ubuntu_20.04"
     elif [ "${UBUNTU_CODENAME}" = "groovy" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_20.10" ]; then
