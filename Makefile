@@ -75,58 +75,17 @@ $(RELEASE_TARBALL_FILENAME):
 ## Packaging targets ##
 #######################
 
-.PHONY: package-all
-package-all: package-debian_9 \
-             package-debian_9_i386 \
-             package-debian_9_armhf \
-             package-debian_9_arm64 \
-             package-debian_9_oci \
-             package-debian_9_i386_oci \
-             package-debian_9_armhf_oci \
-             package-debian_9_arm64_oci \
-             package-debian_10 \
-             package-debian_10_i386 \
-             package-debian_10_armhf \
-             package-debian_10_arm64 \
-             package-debian_10_oci \
-             package-debian_10_i386_oci \
-             package-debian_10_armhf_oci \
-             package-debian_10_arm64_oci \
-             package-raspbian_10_armhf \
-             package-ubuntu_18.04 \
-             package-ubuntu_18.04_i386 \
-             package-ubuntu_18.04_oci \
-             package-ubuntu_18.04_i386_oci \
-             package-ubuntu_18.10 \
-             package-ubuntu_18.10_i386 \
-             package-ubuntu_18.10_oci \
-             package-ubuntu_18.10_i386_oci \
-             package-ubuntu_19.10 \
-             package-ubuntu_19.10_i386 \
-             package-ubuntu_19.10_oci \
-             package-ubuntu_19.10_i386_oci \
-             package-ubuntu_20.04 \
-             package-ubuntu_20.04_oci \
-             package-ubuntu_20.10 \
-             package-ubuntu_20.10_oci \
-             package-fedora_31 \
-             package-fedora_31_i386 \
-             package-fedora_32 \
-             package-fedora_32_i386 \
-             package-fedora_33 \
-             package-fedora_33_i386 \
-             package-rhel_8 \
-             package-opensuse-leap_15.1 \
-             package-opensuse-leap_15.2 \
-             package-opensuse-tumbleweed \
-             package-gentoo \
-             package-snap
-
-
 # Append the output of make-packaging-target to this Makefile
 # see Makefile.packaging.distro_targets
 $(shell scripts/make-packaging-target.py --generate-all > Makefile.packaging.distro_targets)
 include Makefile.packaging.distro_targets
+
+package-all: $(PACKAGE-TARGETS)
+
+.PHONY: list-package-targets
+list-package-targets:
+	$(foreach p,$(PACKAGE-TARGETS),\
+		echo $(p);)
 
 docker/Dockerfile_snap: patches/docker-snap-build-scripts.patch
 	if patch -p1 -fR --dry-run < $< >/dev/null 2>&1; then \
