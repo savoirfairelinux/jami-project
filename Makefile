@@ -121,4 +121,3 @@ clean:
 	rm -rf packages
 	rm -f Makefile.packaging.distro_targets
 	rm -f .docker-image-*
-	rm -fr qemu-static
