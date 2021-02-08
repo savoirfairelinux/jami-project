@@ -76,15 +76,7 @@ $(RELEASE_TARBALL_FILENAME):
 #######################
 
 .PHONY: package-all
-package-all: package-debian_9 \
-             package-debian_9_i386 \
-             package-debian_9_armhf \
-             package-debian_9_arm64 \
-             package-debian_9_oci \
-             package-debian_9_i386_oci \
-             package-debian_9_armhf_oci \
-             package-debian_9_arm64_oci \
-             package-debian_10 \
+package-all: package-debian_10 \
              package-debian_10_i386 \
              package-debian_10_armhf \
              package-debian_10_arm64 \
@@ -97,26 +89,15 @@ package-all: package-debian_9 \
              package-ubuntu_18.04_i386 \
              package-ubuntu_18.04_oci \
              package-ubuntu_18.04_i386_oci \
-             package-ubuntu_18.10 \
-             package-ubuntu_18.10_i386 \
-             package-ubuntu_18.10_oci \
-             package-ubuntu_18.10_i386_oci \
-             package-ubuntu_19.10 \
-             package-ubuntu_19.10_i386 \
-             package-ubuntu_19.10_oci \
-             package-ubuntu_19.10_i386_oci \
              package-ubuntu_20.04 \
              package-ubuntu_20.04_oci \
              package-ubuntu_20.10 \
              package-ubuntu_20.10_oci \
-             package-fedora_31 \
-             package-fedora_31_i386 \
              package-fedora_32 \
              package-fedora_32_i386 \
              package-fedora_33 \
              package-fedora_33_i386 \
              package-rhel_8 \
-             package-opensuse-leap_15.1 \
              package-opensuse-leap_15.2 \
              package-opensuse-tumbleweed \
              package-gentoo \
