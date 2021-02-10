@@ -1,0 +1,16 @@
+# This is a minimal container image that can be used to create a
+# release archive.  As it doesn't contain much, it'll bundle all the
+# required libraries, allowing the source release to be portable
+# across distributions.
+
+FROM alpine
+
+RUN apk add --no-cache \
+    coreutils \
+    gcc \
+    git \
+    make \
+    pkgconfig \
+    python3 \
+    tar \
+    wget
