@@ -1,4 +1,4 @@
-# Copyright (C) 2019-2020 Savoir-faire Linux Inc.
+# Copyright (C) 2019-2021 Savoir-faire Linux Inc.
 #
 # Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
 # Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
@@ -47,7 +47,7 @@
 name: jami
 version: "RELEASE_VERSION"
 adopt-info: jami
-icon: icons/jami.svg
+icon: ../common/icons/jami.svg
 summary: 'Jami: secure, distributed communication software & SIP client'
 description: >
   Jami is free software which allows its users to communicate in multiple ways.
@@ -101,8 +101,6 @@ layout:
     bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib
   /usr/share/alsa:
     bind: $SNAP/usr/share/alsa
-  /usr/local/share/jami-gnome:
-    bind: $SNAP/usr/share/jami-gnome
 
 environment:
   DISABLE_WAYLAND: 'true'
@@ -114,7 +112,6 @@ apps:
     command-chain:
     - bin/desktop-launch
     - snap/command-chain/alsa-launch
-    # - bin/jami-gnome-wrapper
     common-id: net.jami.Jami
     desktop: usr/share/applications/jami-gnome.desktop
     slots:
@@ -189,12 +186,6 @@ parts:
       install -D -m644 bindtextdomain.so $SNAPCRAFT_PART_INSTALL/lib/bindtextdomain.so
 
       mkdir -pv $SNAPCRAFT_PART_INSTALL/gnome-platform
-
-  scripts:
-    plugin: dump
-    source: scripts
-    organize:
-      jami-gnome-wrapper: bin/jami-gnome-wrapper
 
   alsa-mixin:
     plugin: dump

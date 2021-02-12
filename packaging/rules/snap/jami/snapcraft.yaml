@@ -1,0 +1,383 @@
+# Copyright (C) 2019-2021 Savoir-faire Linux Inc.
+#
+# Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
+# Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# This file is based on earlier work by Daniel Llewellyn, under the
+# Expat License (also referred to as "the MIT License"), per the
+# following notice:
+
+# Copyright (C) 2017-2020 Daniel Llewellyn <daniel@bowlhat.net>
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation files
+# (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+# BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+# ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+
+name: jami
+version: "RELEASE_VERSION"
+adopt-info: jami
+icon: ../common/icons/jami.svg
+summary: 'Jami: secure, distributed communication software & SIP client'
+description: >
+  Jami is free software which allows its users to communicate in multiple ways.
+
+  * A telephone: a simple tool to connect, communicate and share.
+  * A teleconferencing tool: easily join calls to create conferences with multiple participants.
+  * A media sharing tool: Jami supports a variety of video input options, including mutliple cameras and image and video files, and the selection of audio inputs and outputs; all this is supported by multiple high quality audio and video codecs.
+  * A messenger: send text messeges during calls or out of calls (as long as your peer is connected).
+  * A building block for your IoT project: re-use the universal communications technology of Jami with its portable library on your system of choice.
+
+confinement: strict
+grade: stable
+base: core18
+
+plugs:
+  gnome-3-28-1804:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-3-28-1804:gnome-3-28-1804
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes:gtk-3-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes:icon-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes:sounds-themes
+
+slots:
+  dbus-jami:
+    interface: dbus
+    bus: session
+    name: net.jami.Jami
+  dbus-ring:
+    interface: dbus
+    bus: session
+    name: cx.ring.Ring
+
+layout:
+  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib:
+    bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib
+  /usr/share/alsa:
+    bind: $SNAP/usr/share/alsa
+
+environment:
+  XDG_CURRENT_DESKTOP: Unity
+
+apps:
+  jami:
+    command: usr/bin/jami-qt
+    command-chain:
+    - bin/desktop-launch
+    - snap/command-chain/alsa-launch
+    - bin/jami-qt-wrapper
+    autostart: jami-qt.desktop
+    common-id: net.jami.Jami
+    desktop: usr/share/applications/jami-qt.desktop
+    slots:
+    - dbus-jami
+    - dbus-ring
+    plugs:
+    - alsa
+    - audio-playback
+    - audio-record
+    - browser-support
+    - camera
+    - desktop
+    - desktop-legacy
+    - gsettings
+    - hardware-observe
+    - home
+    - network
+    - network-bind
+    - network-manager
+    - opengl
+    - removable-media
+    - system-observe
+    - unity7
+    - wayland
+    - x11
+
+package-repositories:
+  - type: apt
+    ppa: beineri/opt-qt-5.15.2-bionic
+    # qt515base consists of:
+    #   Qt5Concurrent, Qt5Core, Qt5DBus, Qt5EglFSDeviceIntegration,
+    #   Qt5EglFsKmsSupport, Qt5Gui, Qt5Network, Qt5OpenGL,
+    #   Qt5PrintSupport, Qt5Sql, Qt5Test, Qt5Widgets, Qt5XcbQpa,
+    #   Qt5Xml
+
+parts:
+  desktop-launch:
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    plugin: nil
+    build-packages:
+    - dpkg-dev
+    - gcc-8
+    - qt515base
+    stage-packages:
+    - qt515base
+    - qt515svg # for loading icon themes which are svg
+    - try: [appmenu-qt5] # not available on core18
+    override-pull: |
+      snapcraftctl pull
+      sed -i -E 's|\. \$SNAP/flavor-select|USE_gtk3=true|' gtk/launcher-specific
+      sed -i -E 's|\. \$SNAP/flavor-select|USE_qt5=true|' qt/launcher-specific
+      sed -i -E 's|(append_dir GTK_PATH \$RUNTIME/usr/lib/\$ARCH/gtk-2.0)|#\1|' qt/launcher-specific
+      sed -i -E 's|\$RUNTIME|$SNAP|g' qt/launcher-specific
+      sed -i -E 's|\$WITH_RUNTIME|no|g' qt/launcher-specific
+    override-build: |
+      snapcraftctl build
+      gcc -Wall -O2 -o bindtextdomain.so -fPIC -shared src/bindtextdomain.c -ldl
+
+      echo "#!/bin/bash" > desktop-launch
+      cat common/init >> desktop-launch
+
+      cat qt/runtime-exports >> desktop-launch
+      cat gtk/runtime-exports >> desktop-launch
+
+      cat common/desktop-exports >> desktop-launch
+
+      cat qt/launcher-specific >> desktop-launch
+      cat gtk/launcher-specific >> desktop-launch
+
+      cat common/mark-and-exec >> desktop-launch
+
+      install -D -m755 desktop-launch $SNAPCRAFT_PART_INSTALL/bin/desktop-launch
+      install -D -m644 bindtextdomain.so $SNAPCRAFT_PART_INSTALL/lib/bindtextdomain.so
+
+      mkdir -pv $SNAPCRAFT_PART_INSTALL/gnome-platform
+
+  scripts:
+    plugin: dump
+    source: ../common/scripts
+    organize:
+      jami-qt-wrapper: bin/jami-qt-wrapper
+
+  alsa-mixin:
+    plugin: dump
+    source: https://github.com/diddlesnaps/snapcraft-alsa.git
+    source-subdir: snapcraft-assets
+    stage:
+      - -usr/lib/x86_64-linux-gnu/libp11-kit.so*
+      - -usr/lib/x86_64-linux-gnu/libproxy.so*
+      - -usr/share/doc/libp11-kit0/changelog.Debian.gz
+      - -usr/share/doc/libproxy1v5/changelog.Debian.gz
+    build-packages:
+      - libasound2-dev
+    stage-packages:
+      - libasound2
+      - libasound2-plugins
+      - yad
+
+  jami:
+    after: [alsa-mixin]
+    source: ../../..
+    source-type: local
+    plugin: nil
+    parse-info: [usr/share/metainfo/jami-qt.appdata.xml]
+    stage:
+      - -usr/lib/x86_64-linux-gnu/liblber-2.4.so*
+      - -usr/lib/x86_64-linux-gnu/libldap_r-2.4.so*
+      - -usr/share/doc/libldap-2.4-2/changelog.Debian.gz
+      - -usr/share/doc/libldap-common/changelog.Debian.gz
+    build-environment:
+      - QT_BASE_DIR: "/opt/qt515"
+      - QTDIR: "$QT_BASE_DIR"
+      - QTVER: "5.15.2"
+      - PATH: "$QT_BASE_DIR/bin:$PATH"
+      - LD_LIBRARY_PATH: "$QT_BASE_DIR/lib:$LD_LIBRARY_PATH"
+      - PKG_CONFIG_PATH: "$QT_BASE_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
+    override-pull: |
+      snapcraftctl pull
+      sed -i -E 's|(tmpName) << (PACKAGE_NAME << "_shm_")|\1 << "snap.jami." << \2|' daemon/src/media/video/sinkclient.cpp
+      for file in jami-qt.desktop jami-qt.desktop.autostart; do
+        sed -i -E 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/jami.svg|' client-qt/$file
+      done
+    override-build: |
+      update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 10
+      update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 20
+      update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 10
+      update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 20
+
+      cd $SNAPCRAFT_PART_BUILD/daemon/contrib
+      mkdir -p native
+      cd native
+      ../bootstrap
+      make .ffmpeg
+      make
+
+      cd $SNAPCRAFT_PART_BUILD/daemon
+      ./autogen.sh
+      ./configure --prefix=/usr
+      make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
+      DESTDIR=$SNAPCRAFT_PART_INSTALL make install
+
+      cd $SNAPCRAFT_PART_BUILD/lrc
+      mkdir build
+      cd build
+      cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
+               -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
+               -DENABLE_STATIC=true -DENABLE_LIBWRAP=true \
+               -DRING_BUILD_DIR=$SNAPCRAFT_PART_BUILD/daemon/src \
+               -DQT5_VER=$QTVER -DQT5_PATH=$QTDIR
+      make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
+      DESTDIR=$SNAPCRAFT_PART_INSTALL make install
+
+      sed -i "s|/usr|$SNAPCRAFT_PART_INSTALL/usr|g" $SNAPCRAFT_PART_INSTALL/usr/lib/cmake/LibRingClient/LibRingClientConfig.cmake
+
+      cd $SNAPCRAFT_PART_BUILD/client-qt
+      mkdir build
+      cd build
+      cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
+               -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
+               -DLRC=$SNAPCRAFT_PART_BUILD/lrc \
+               -DLRCLIB=$SNAPCRAFT_PART_INSTALL/usr/lib \
+               -DQT5_VER=$QTVER -DQT5_PATH=$QTDIR
+      make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
+      DESTDIR=$SNAPCRAFT_PART_INSTALL make install
+    build-packages:
+    - autoconf
+    - autoconf-archive
+    - automake
+    - autopoint
+    - bzip2
+    - cmake
+    - curl
+    - g++-8
+    - gettext
+    - gnome-icon-theme-symbolic
+    - git
+    - gzip
+    - libappindicator3-dev
+    - libayatana-appindicator3-dev
+    - libasound2-dev
+    - libavcodec-dev
+    - libavdevice-dev
+    - libavformat-dev
+    - libboost-dev
+    - libcanberra-gtk3-dev
+    - libclutter-gtk-1.0-dev
+    - libdbus-1-dev
+    - libdbus-c++-dev
+    - libexpat1-dev
+    - libgnutls28-dev
+    - libgsm1-dev
+    - libgtk-3-dev
+    - libjack-jackd2-dev
+    - libjsoncpp-dev
+    - libnm-dev
+    - libnotify-dev
+    - libopus-dev
+    - libpcre3-dev
+    - libpulse-dev
+    - libqrencode-dev
+    - libsamplerate0-dev
+    - libsndfile1-dev
+    - libspeex-dev
+    - libspeexdsp-dev
+    - libsrtp0-dev
+    - libssl-dev
+    - libswscale-dev
+    - libtool
+    - libudev-dev
+    - libupnp-dev
+    - libva-dev
+    - libvdpau-dev
+    - libwebkit2gtk-4.0-dev
+    - libyaml-cpp-dev
+    - nasm # seems to be needed for building libvpx on an 18.04 base
+    - qt515base
+    - qt515declarative
+    - qt515graphicaleffects
+    - qt515multimedia
+    - qt515quickcontrols
+    - qt515quickcontrols2
+    - qt515svg
+    - qt515tools
+    - qt515webchannel
+    - qt515webengine
+    - uuid-dev
+    - yasm
+    stage-packages:
+    - freeglut3
+    - libappindicator3-1
+    - libayatana-appindicator3-1
+    - libavcodec-extra
+    - libavcodec57
+    - libavdevice57
+    - libavformat57
+    - libdbus-1-3
+    - libdbus-c++-1-0v5
+    - libebook-1.2-19
+    - libexpat1
+    - libglu1-mesa
+    - libgnutls30
+    - libgsm1
+    - libjack-jackd2-0
+    - libjsoncpp1
+    - libnm-dev
+    - libopus0
+    - libpcre3
+    - libqrencode3
+    - libsamplerate0
+    - libslang2
+    - libsndfile1
+    - libspeex1
+    - libspeexdsp1
+    - libswscale4
+    - libudev1
+    - libupnp6
+    - libuuid1
+    - libva-drm2
+    - libva-glx2
+    - libva-wayland2
+    - libva2
+    - libvdpau-va-gl1
+    - libvdpau1
+    - qt515base
+    - qt515declarative
+    - qt515graphicaleffects
+    - qt515multimedia
+    - qt515quickcontrols
+    - qt515quickcontrols2
+    - qt515svg
+    - qt515tools
+    - qt515webchannel
+    - qt515webengine
+    - va-driver-all
