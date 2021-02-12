@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (C) 2020 Savoir-faire Linux Inc.
+# Copyright (C) 2020-2021 Savoir-faire Linux Inc.
 #
 # Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
 #
@@ -24,7 +24,7 @@
 set -e
 
 cp -rp /opt/ring-project-ro /opt/ring-project
-cd /opt/ring-project/packaging/rules/snap/
+cd /opt/ring-project/packaging/rules/snap/jami/
 
 # set the version and tarball filename
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" snapcraft.yaml
