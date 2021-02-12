@@ -1,4 +1,0 @@
-#!/bin/sh
-
-$SNAP/usr/lib/ring/dring -cd &
-exec "$@"
