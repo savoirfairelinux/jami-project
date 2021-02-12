@@ -1,4 +1,4 @@
-# Copyright (C) 2019-2020 Savoir-faire Linux Inc.
+# Copyright (C) 2019-2021 Savoir-faire Linux Inc.
 #
 # Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
 # Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
@@ -47,7 +47,7 @@
 name: jami
 version: "RELEASE_VERSION"
 adopt-info: jami
-icon: icons/jami.svg
+icon: ../common/icons/jami.svg
 summary: 'Jami: secure, distributed communication software & SIP client'
 description: >
   Jami is free software which allows its users to communicate in multiple ways.
@@ -89,38 +89,29 @@ slots:
     interface: dbus
     bus: session
     name: cx.ring.Ring
-  dbus-jamignome:
-    interface: dbus
-    bus: session
-    name: cx.ring.RingGnome
 
 layout:
-  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0:
-    bind: $SNAP/gnome-platform/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0
   /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib:
     bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib
   /usr/share/alsa:
     bind: $SNAP/usr/share/alsa
-  /usr/local/share/jami-gnome:
-    bind: $SNAP/usr/share/jami-gnome
 
 environment:
-  DISABLE_WAYLAND: 'true'
   XDG_CURRENT_DESKTOP: Unity
 
 apps:
   jami:
-    command: usr/bin/jami-gnome
+    command: usr/bin/jami-qt
     command-chain:
     - bin/desktop-launch
     - snap/command-chain/alsa-launch
-    # - bin/jami-gnome-wrapper
+    - bin/jami-qt-wrapper
+    autostart: jami-qt.desktop
     common-id: net.jami.Jami
-    desktop: usr/share/applications/jami-gnome.desktop
+    desktop: usr/share/applications/jami-qt.desktop
     slots:
     - dbus-jami
     - dbus-ring
-    - dbus-jamignome
     plugs:
     - alsa
     - audio-playback
@@ -134,8 +125,10 @@ apps:
     - home
     - network
     - network-bind
+    - network-manager
     - opengl
     - removable-media
+    - system-observe
     - unity7
     - wayland
     - x11
@@ -194,12 +187,17 @@ parts:
     plugin: dump
     source: scripts
     organize:
-      jami-gnome-wrapper: bin/jami-gnome-wrapper
+      jami-qt-wrapper: bin/jami-qt-wrapper
 
   alsa-mixin:
     plugin: dump
     source: https://github.com/diddlesnaps/snapcraft-alsa.git
     source-subdir: snapcraft-assets
+    stage:
+      - -usr/lib/x86_64-linux-gnu/libp11-kit.so*
+      - -usr/lib/x86_64-linux-gnu/libproxy.so*
+      - -usr/share/doc/libp11-kit0/changelog.Debian.gz
+      - -usr/share/doc/libproxy1v5/changelog.Debian.gz
     build-packages:
       - libasound2-dev
     stage-packages:
@@ -212,18 +210,24 @@ parts:
     source: ../../..
     source-type: local
     plugin: nil
-    parse-info: [usr/share/metainfo/jami-gnome.appdata.xml]
+    parse-info: [usr/share/metainfo/jami-qt.appdata.xml]
+    stage:
+      - -usr/lib/x86_64-linux-gnu/liblber-2.4.so*
+      - -usr/lib/x86_64-linux-gnu/libldap_r-2.4.so*
+      - -usr/share/doc/libldap-2.4-2/changelog.Debian.gz
+      - -usr/share/doc/libldap-common/changelog.Debian.gz
     build-environment:
       - QT_BASE_DIR: "/opt/qt515"
       - QTDIR: "$QT_BASE_DIR"
+      - QTVER: "5.15.2"
       - PATH: "$QT_BASE_DIR/bin:$PATH"
       - LD_LIBRARY_PATH: "$QT_BASE_DIR/lib:$LD_LIBRARY_PATH"
       - PKG_CONFIG_PATH: "$QT_BASE_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
     override-pull: |
       snapcraftctl pull
       sed -i -E 's|(tmpName) << (PACKAGE_NAME << "_shm_")|\1 << "snap.jami." << \2|' daemon/src/media/video/sinkclient.cpp
-      for file in jami-gnome.desktop jami-gnome.desktop.autostart; do
-        sed -i -E 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/jami.svg|' client-gnome/$file
+      for file in jami-qt.desktop jami-qt.desktop.autostart; do
+        sed -i -E 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/jami.svg|' client-qt/$file
       done
     override-build: |
       update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 10
@@ -250,18 +254,21 @@ parts:
       cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
                -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
                -DENABLE_STATIC=true -DENABLE_LIBWRAP=true \
-               -DRING_BUILD_DIR=$SNAPCRAFT_PART_BUILD/daemon/src
+               -DRING_BUILD_DIR=$SNAPCRAFT_PART_BUILD/daemon/src \
+               -DQT5_VER=$QTVER -DQT5_PATH=$QTDIR
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
 
       sed -i "s|/usr|$SNAPCRAFT_PART_INSTALL/usr|g" $SNAPCRAFT_PART_INSTALL/usr/lib/cmake/LibRingClient/LibRingClientConfig.cmake
 
-      cd $SNAPCRAFT_PART_BUILD/client-gnome
+      cd $SNAPCRAFT_PART_BUILD/client-qt
       mkdir build
       cd build
       cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
                -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
-               -DLibRingClient_DIR=$SNAPCRAFT_PART_INSTALL/usr/lib/cmake/LibRingClient
+               -DLRC=$SNAPCRAFT_PART_BUILD/lrc \
+               -DLRCLIB=$SNAPCRAFT_PART_INSTALL/usr/lib \
+               -DQT5_VER=$QTVER -DQT5_PATH=$QTDIR
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
     build-packages:
@@ -275,6 +282,7 @@ parts:
     - g++-8
     - gettext
     - gnome-icon-theme-symbolic
+    - git
     - gzip
     - libappindicator3-dev
     - libayatana-appindicator3-dev
@@ -293,6 +301,7 @@ parts:
     - libgtk-3-dev
     - libjack-jackd2-dev
     - libjsoncpp-dev
+    - libnm-dev
     - libnotify-dev
     - libopus-dev
     - libpcre3-dev
@@ -314,6 +323,15 @@ parts:
     - libyaml-cpp-dev
     - nasm # seems to be needed for building libvpx on an 18.04 base
     - qt515base
+    - qt515declarative
+    - qt515graphicaleffects
+    - qt515multimedia
+    - qt515quickcontrols
+    - qt515quickcontrols2
+    - qt515svg
+    - qt515tools
+    - qt515webchannel
+    - qt515webengine
     - uuid-dev
     - yasm
     stage-packages:
@@ -333,6 +351,7 @@ parts:
     - libgsm1
     - libjack-jackd2-0
     - libjsoncpp1
+    - libnm-dev
     - libopus0
     - libpcre3
     - libqrencode3
@@ -352,4 +371,13 @@ parts:
     - libvdpau-va-gl1
     - libvdpau1
     - qt515base
+    - qt515declarative
+    - qt515graphicaleffects
+    - qt515multimedia
+    - qt515quickcontrols
+    - qt515quickcontrols2
+    - qt515svg
+    - qt515tools
+    - qt515webchannel
+    - qt515webengine
     - va-driver-all
