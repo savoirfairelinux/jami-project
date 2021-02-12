@@ -54,11 +54,6 @@ Description: This repository contains Ring ${DISTRIBUTION} packages
 SignWith: ${KEYID}
 EOF
 
-    # Options file
-    cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf/options
-basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER}
-EOF
-
     ####################################
     ## Add packages to the repository ##
     ####################################
