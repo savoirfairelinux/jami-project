@@ -8,6 +8,7 @@ packages
 ring_*.tar.gz
 Makefile.packaging.distro_targets
 repositories
+tarballs.manifest
 manual-download
 .docker-image-*
 
