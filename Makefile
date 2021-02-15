@@ -1,5 +1,5 @@
 # -*- mode: makefile; -*-
-# Copyright (C) 2016-2019 Savoir-faire Linux Inc.
+# Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -51,23 +51,49 @@ CURRENT_GID:=$(shell id -g)
 #############################
 ## Release tarball targets ##
 #############################
-.PHONY: release-tarball
+.PHONY: release-tarball tarballs-manifest
 release-tarball: $(RELEASE_TARBALL_FILENAME)
+tarballs-manifest: $(TMPDIR)/tarballs.manifest
 
-$(RELEASE_TARBALL_FILENAME):
-	# Fetch tarballs
-	mkdir -p daemon/contrib/native
+# Fetch the required contrib sources and copy them to
+# daemon/contrib/tarballs.  To use a custom tarballs cache directory,
+# export the TARBALLS environment variable.
+$(TMPDIR)/tarballs.manifest:
+	rm -rf daemon/contrib/native
+	mkdir -p daemon/contrib/native && \
 	cd daemon/contrib/native && \
-	    ../bootstrap && make list && \
-	    make fetch-all -j || make fetch-all || make fetch-all
+	../bootstrap && \
+        $(MAKE) list && \
+        $(MAKE) fetch -j && \
+	$(MAKE) --silent list-tarballs > $@
+	@echo "The generated tarballs manifest is at: $@"
 	rm -rf daemon/contrib/native
 
-	cd $(TMPDIR) && \
-	    tar -C $(CURDIR)/.. \
-	        --exclude-vcs \
-	        -zcf $(RELEASE_TARBALL_FILENAME) \
-	        $(shell basename $(CURDIR)) && \
-	    mv $(RELEASE_TARBALL_FILENAME) $(CURDIR)
+# Generate the release tarball.  Note: to avoid building 1+ GiB
+# tarball containing all the bundled libraries, only the required
+# tarballs are included.  This means the resulting release tarball
+# content depends on what libraries the host has installed.  To build
+# a single release tarball that can be used for any GNU/Linux machine,
+# it should be built in a minimal container.)
+$(RELEASE_TARBALL_FILENAME): $(TMPDIR)/tarballs.manifest
+# Prepare the sources of the top repository and relevant submodules.
+	rm -f "$@"
+	mkdir $(TMPDIR)/ring-project
+	git archive HEAD | tar xf - -C $(TMPDIR)/ring-project
+	for m in daemon lrc client-gnome; do \
+		(cd "$$m" && git archive --prefix "$$m/" HEAD \
+			| tar xf - -C $(TMPDIR)/ring-project); \
+	done
+# Create the base archive.
+	tar --create --file $(TMPDIR)/ring-project.tar $(TMPDIR)/ring-project \
+		--transform 's,.*/ring-project,ring-project,'
+# Append the cached tarballs listed in the manifest.
+	tar --append --file $(TMPDIR)/ring-project.tar \
+		--files-from $(TMPDIR)/tarballs.manifest \
+		--transform 's,^.*/,ring-project/daemon/contrib/tarballs/,'
+	gzip $(TMPDIR)/ring-project.tar
+	mv $(TMPDIR)/ring-project.tar.gz "$@"
+	rm -rf $(TMPDIR)
 
 #######################
 ## Packaging targets ##
