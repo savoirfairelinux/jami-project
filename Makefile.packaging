@@ -55,13 +55,19 @@ CURRENT_GID:=$(shell id -g)
 release-tarball: $(RELEASE_TARBALL_FILENAME)
 
 $(RELEASE_TARBALL_FILENAME):
-	# Fetch tarballs
+# Fetch the contrib sources.
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
 	    ../bootstrap && make list && \
-	    make fetch-all -j || make fetch-all || make fetch-all
+	    make fetch -j
+# Copy only needed tarballs locally, if using cached tarballs, to
+# avoid adding extraneous cached tarballs to the release tarball.
+	if [ -n "$TARBALLS" ]; then \
+	    rm -rf ../tarballs && mkdir ../tarballs \
+	    make list-tarballs | xargs cp --reflink=auto {} ../tarballs \
+	fi
 	rm -rf daemon/contrib/native
-
+# Generate the release tarball.
 	cd $(TMPDIR) && \
 	    tar -C $(CURDIR)/.. \
 	        --exclude-vcs \
