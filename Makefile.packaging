@@ -1,5 +1,5 @@
 # -*- mode: makefile; -*-
-# Copyright (C) 2016-2019 Savoir-faire Linux Inc.
+# Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -51,17 +51,29 @@ CURRENT_GID:=$(shell id -g)
 #############################
 ## Release tarball targets ##
 #############################
-.PHONY: release-tarball
+.PHONY: release-tarball copy-tarballs
 release-tarball: $(RELEASE_TARBALL_FILENAME)
 
-$(RELEASE_TARBALL_FILENAME):
-	# Fetch tarballs
-	mkdir -p daemon/contrib/native
+# Fetch the required contrib sources and copy them to
+# daemon/contrib/tarballs.  To use a custom tarballs cache directory,
+# export the TARBALLS environment variable.
+copy-tarballs:
+	rm -rf daemon/contrib/native && \
+	mkdir -p daemon/contrib/native && \
 	cd daemon/contrib/native && \
-	    ../bootstrap && make list && \
-	    make fetch-all -j || make fetch-all || make fetch-all
+	../bootstrap && \
+        $(MAKE) list && \
+        $(MAKE) fetch -j && \
+	if [ -n "$(TARBALLS)" ]; then \
+	    rm -rf ../tarballs/* && \
+	    mkdir -p ../tarballs && \
+	    $(MAKE) --silent list-tarballs \
+	        | xargs -I{} cp --reflink=auto {} ../tarballs; \
+	fi
 	rm -rf daemon/contrib/native
 
+# Generate the release tarball.
+$(RELEASE_TARBALL_FILENAME): copy-tarballs
 	cd $(TMPDIR) && \
 	    tar -C $(CURDIR)/.. \
 	        --exclude-vcs \
