@@ -6,7 +6,8 @@ client-qt
 client-uwp
 daemon
 lrc
-ring_*
+jami_*
+packages
 plugins
 .git
 */.git
