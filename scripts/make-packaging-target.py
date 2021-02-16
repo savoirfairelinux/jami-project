@@ -57,7 +57,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -e DISTRIBUTION=%(distribution)s \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
-    -t $(DOCKER_EXTRA_ARGS) %(options)s \\
+    -it $(DOCKER_EXTRA_ARGS) %(options)s \\
     $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(docker_image)s
@@ -78,7 +78,6 @@ packages/%(distribution)s/%(output_file)s: $(RELEASE_TARBALL_FILENAME) packages/
 package-%(distribution)s: packages/%(distribution)s/%(output_file)s
 
 .PHONY: package-%(distribution)s-interactive
-package-%(distribution)s-interactive: DOCKER_EXTRA_ARGS = -i
 package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 	$(PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND) bash
 """
