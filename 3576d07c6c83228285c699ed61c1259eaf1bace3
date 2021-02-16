@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "acf3f338_03c55e45",
+        "filename": "packaging/rules/snap/jami/snapcraft.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-02-16T22:09:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f88228e2_410a4b4b",
+      "range": {
+        "startLine": 283,
+        "startChar": 13,
+        "endLine": 284,
+        "endChar": 31
+      },
+      "revId": "3576d07c6c83228285c699ed61c1259eaf1bace3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9356cad4_b1e3fc1a",
         "filename": "packaging/rules/snap/jami/snapcraft.yaml",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "3576d07c6c83228285c699ed61c1259eaf1bace3",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b62f7f_72533e7e",
+        "filename": "packaging/rules/snap/jami/snapcraft.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-02-16T22:09:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9356cad4_b1e3fc1a",
+      "range": {
+        "startLine": 286,
+        "startChar": 11,
+        "endLine": 287,
+        "endChar": 12
+      },
+      "revId": "3576d07c6c83228285c699ed61c1259eaf1bace3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "945a896a_f3144bd4",
+        "filename": "packaging/rules/snap/jami/snapcraft.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-02-16T22:09:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11d170ce_86f498fc",
+      "range": {
+        "startLine": 293,
+        "startChar": 18,
+        "endLine": 294,
+        "endChar": 19
+      },
+      "revId": "3576d07c6c83228285c699ed61c1259eaf1bace3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aceae3c_744cff57",
         "filename": "packaging/rules/snap/jami/snapcraft.yaml",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d2787f5d_62c56af9",
+        "filename": "packaging/rules/snap/jami/snapcraft.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-02-16T22:09:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aceae3c_744cff57",
+      "range": {
+        "startLine": 295,
+        "startChar": 19,
+        "endLine": 296,
+        "endChar": 21
+      },
+      "revId": "3576d07c6c83228285c699ed61c1259eaf1bace3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6df48664_bf2d44d9",
         "filename": "packaging/rules/snap/jami/snapcraft.yaml",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "3576d07c6c83228285c699ed61c1259eaf1bace3",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1e87ba_22abbb4c",
+        "filename": "packaging/rules/snap/jami/snapcraft.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-02-16T22:09:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df48664_bf2d44d9",
+      "range": {
+        "startLine": 300,
+        "startChar": 11,
+        "endLine": 300,
+        "endChar": 16
+      },
+      "revId": "3576d07c6c83228285c699ed61c1259eaf1bace3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
