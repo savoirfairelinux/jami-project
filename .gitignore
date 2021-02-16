@@ -5,7 +5,7 @@
 env
 docs/build
 packages
-ring_*.tar.gz
+jami_*.tar.gz
 Makefile.packaging.distro_targets
 repositories
 tarballs.manifest
