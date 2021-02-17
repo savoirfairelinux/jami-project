@@ -266,6 +266,7 @@ parts:
       cd build
       cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
                -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
+               -DENABLE_STATIC=true \
                -DLRC=$SNAPCRAFT_PART_BUILD/lrc \
                -DLRCLIB=$SNAPCRAFT_PART_INSTALL/usr/lib \
                -DQT5_VER=$QTVER -DQT5_PATH=$QTDIR
@@ -287,7 +288,10 @@ parts:
     - libavdevice-dev
     - libavformat-dev
     - libboost-dev
+    - libdbus-1-dev
+    - libdbus-c++-dev
     - libexpat1-dev
+    - libglu1-mesa
     - libgnutls28-dev
     - libjack-jackd2-dev
     - libjsoncpp-dev
@@ -328,7 +332,10 @@ parts:
     - libavcodec57
     - libavdevice57
     - libavformat57
+    - libdbus-1-3
+    - libdbus-c++-1-0v5
     - libexpat1
+    - libglu1-mesa
     - libgnutls30
     - libjack-jackd2-0
     - libjsoncpp1
