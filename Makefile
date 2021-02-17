@@ -97,34 +97,40 @@ $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 ## Packaging targets ##
 #######################
 
-.PHONY: package-all
-package-all: package-debian_10 \
-             package-debian_10_i386 \
-             package-debian_10_armhf \
-             package-debian_10_arm64 \
-             package-debian_10_oci \
-             package-debian_10_i386_oci \
-             package-debian_10_armhf_oci \
-             package-debian_10_arm64_oci \
-             package-raspbian_10_armhf \
-             package-ubuntu_18.04 \
-             package-ubuntu_18.04_i386 \
-             package-ubuntu_18.04_oci \
-             package-ubuntu_18.04_i386_oci \
-             package-ubuntu_20.04 \
-             package-ubuntu_20.04_oci \
-             package-ubuntu_20.10 \
-             package-ubuntu_20.10_oci \
-             package-fedora_32 \
-             package-fedora_32_i386 \
-             package-fedora_33 \
-             package-fedora_33_i386 \
-             package-rhel_8 \
-             package-opensuse-leap_15.2 \
-             package-opensuse-tumbleweed \
-             package-gentoo \
-             package-snap
+PACKAGE-TARGETS = \
+	package-debian_10 \
+	package-debian_10_i386 \
+	package-debian_10_armhf \
+	package-debian_10_arm64 \
+	package-debian_10_oci \
+	package-debian_10_i386_oci \
+	package-debian_10_armhf_oci \
+	package-debian_10_arm64_oci \
+	package-raspbian_10_armhf \
+	package-ubuntu_18.04 \
+	package-ubuntu_18.04_i386 \
+	package-ubuntu_18.04_oci \
+	package-ubuntu_18.04_i386_oci \
+	package-ubuntu_20.04 \
+	package-ubuntu_20.04_oci \
+	package-ubuntu_20.10 \
+	package-ubuntu_20.10_oci \
+	package-fedora_32 \
+	package-fedora_32_i386 \
+	package-fedora_33 \
+	package-fedora_33_i386 \
+	package-rhel_8 \
+	package-opensuse-leap_15.2 \
+	package-opensuse-tumbleweed \
+	package-gentoo \
+	package-snap
 
+package-all: $(PACKAGE-ALL)
+
+.PHONY: list-package-targets
+list-package-targets:
+	$(foreach p,$(PACKAGE-TARGETS),\
+		echo $(p);)
 
 # Append the output of make-packaging-target to this Makefile
 # see Makefile.packaging.distro_targets
