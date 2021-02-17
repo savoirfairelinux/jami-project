@@ -244,7 +244,7 @@ parts:
 
       cd $SNAPCRAFT_PART_BUILD/daemon
       ./autogen.sh
-      ./configure --prefix=/usr
+      ./configure --prefix=/usr --without-dbus
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
 
@@ -266,6 +266,7 @@ parts:
       cd build
       cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
                -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
+               -DENABLE_STATIC=true \
                -DLRC=$SNAPCRAFT_PART_BUILD/lrc \
                -DLRCLIB=$SNAPCRAFT_PART_INSTALL/usr/lib \
                -DQT5_VER=$QTVER -DQT5_PATH=$QTDIR
