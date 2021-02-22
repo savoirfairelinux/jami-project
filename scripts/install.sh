@@ -183,7 +183,8 @@ if [ "${client}" = "client-qt" ]; then
                   -DQT5_PATH="${qt5path}" \
                   -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
                   -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
-                  -DLRC="${INSTALL}/lrc"
+                  -DLRC="${INSTALL}/lrc" \
+                  -DLRCDATA="${INSTALL}/lrc/share"
     fi
 else
     if [ "${global}" = "true" ]; then
