@@ -121,7 +121,7 @@ DNF_DEPENDENCIES = [
     'yaml-cpp-devel', 'qt5-qtbase-devel', 'swig', 'jsoncpp-devel',
     'patch', 'libva-devel', 'openssl-devel', 'libvdpau-devel', 'msgpack-devel',
     'sqlite-devel', 'openssl-static', 'pandoc', 'nasm', 'qrencode-devel', 'NetworkManager-libnm-devel',
-    'bzip2'
+    'bzip2', 'qt5-qttools-devel'
 ]
 
 DNF_CLIENT_GNOME_DEPENDENCIES = [
@@ -145,7 +145,7 @@ APT_DEPENDENCIES = [
     'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
     'libudev-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'libqt5sql5-sqlite', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libjsoncpp-dev', 'libva-dev', 'libvdpau-dev', 'libmsgpack-dev',
-    'pandoc', 'nasm', 'libqrencode-dev', 'libnm-dev', 'dpkg-dev'
+    'pandoc', 'nasm', 'libqrencode-dev', 'libnm-dev', 'dpkg-dev', 'qttools5-dev', 'qttools5-dev-tools'
 ]
 
 APT_CLIENT_GNOME_DEPENDENCIES = [
@@ -167,7 +167,7 @@ PACMAN_DEPENDENCIES = [
     'gcc', 'ffmpeg', 'boost', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book', 'expat',
     'jack', 'opus', 'pcre', 'libpulse', 'speex', 'speexdsp', 'libtool', 'yaml-cpp',
     'qt5-base', 'swig', 'yasm', 'qrencode', 'make', 'patch', 'pkg-config',
-    'automake', 'libva', 'libnm', 'libvdpau', 'openssl', 'pandoc', 'nasm'
+    'automake', 'libva', 'libnm', 'libvdpau', 'openssl', 'pandoc', 'nasm', 'qt5-tools'
 ]
 
 PACMAN_CLIENT_GNOME_DEPENDENCIES = [
