@@ -397,6 +397,8 @@ def run_install(args):
             install_args += ("-c", "client-qt")
             install_args += ("-q", args.qtver)
             install_args += ("-Q", args.qt)
+            environ['CONFIGURE_FLAGS'] = '--without-alsa --without-jack \
+                                          --without-portaudio --without-dbus'
 
     return subprocess.run(["./scripts/install.sh"] + install_args, env=environ, check=True)
 
