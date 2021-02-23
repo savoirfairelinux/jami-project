@@ -86,12 +86,19 @@ if [ "${prefix+set}" ]; then
 else
     ../bootstrap
 fi
+
+# force make ffmpeg to patch out the undecodable APP frame data logs
+if [ "${client}" == "client-qt" ]; then
+  make .yaml-cpp
+  make .ffmpeg
+fi
+
 make
 cd "${DAEMON}"
 ./autogen.sh
 
 #keep shared Lib on MAC OSX
-if [[ "$OSTYPE" != "darwin"* ]]; then
+if [ "$OSTYPE" != "darwin"*] && [ "${client}" == "client-qt" ]; then
     sharedLib="--disable-shared"
 fi
 
@@ -106,7 +113,6 @@ else
 fi
 make -j"${proc}"
 make_install "${global}" "${priv_install}"
-
 
 # For the client-qt, verify system's version if no path provided
 if [ "${client}" = "client-qt" ] && [ -z "$qt5path" ]; then
@@ -138,18 +144,25 @@ fi
 cd "${TOP}/lrc"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
+extra_flags=()
+if [ "${client}" = "client-qt" ]; then
+  extra_flags=( -DENABLE_LIBWRAP=true -DENABLE_STATIC=true )
+fi
+
 if [ "${global}" = "true" ]; then
   if [ "${prefix+set}" ]; then
     cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
              -DCMAKE_BUILD_TYPE=Debug \
              -DCMAKE_INSTALL_PREFIX="${prefix}" $static \
              -DQT5_VER="${qt5ver}" \
-             -DQT5_PATH="${qt5path}"
+             -DQT5_PATH="${qt5path}" \
+             "${extra_flags[@]}"
   else
     cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
              -DCMAKE_BUILD_TYPE=Debug $static \
              -DQT5_VER="${qt5ver}" \
-             -DQT5_PATH="${qt5path}"
+             -DQT5_PATH="${qt5path}" \
+             "${extra_flags[@]}"
   fi
 else
   cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
@@ -157,7 +170,8 @@ else
             -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
             -DRING_BUILD_DIR="${DAEMON}/src" $static \
             -DQT5_VER="${qt5ver}" \
-            -DQT5_PATH="${qt5path}"
+            -DQT5_PATH="${qt5path}" \
+            "${extra_flags[@]}"
 fi
 make -j"${proc}"
 make_install "${global}"  "${priv_install}"
@@ -183,7 +197,8 @@ if [ "${client}" = "client-qt" ]; then
                   -DQT5_PATH="${qt5path}" \
                   -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
                   -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
-                  -DLRC="${INSTALL}/lrc"
+                  -DLRC="${INSTALL}/lrc"\
+                  -DDAEMON="${INSTALL}/daemon"
     fi
 else
     if [ "${global}" = "true" ]; then
