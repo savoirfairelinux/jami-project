@@ -128,6 +128,7 @@ apps:
     - network-manager
     - opengl
     - removable-media
+    - screen-inhibit-control
     - system-observe
     - unity7
     - wayland
@@ -366,6 +367,7 @@ parts:
     - qt515quickcontrols2
     - qt515svg
     - qt515tools
+    - qt515wayland
     - qt515webchannel
     - qt515webengine
     - va-driver-all
