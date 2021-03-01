@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (C) 2016-2017 Savoir-faire Linux Inc.
+# Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
 # Author: Alexandre Viau <alexandre.viau@savoirfairelinux.com>
 # Author: Guillaume Roguez <guillaume.roguez@savoirfairelinux.com>
@@ -20,7 +20,7 @@
 #
 
 #
-# This script sings and deploys pacakges from packages/distro.
+# This script syncs and deploys packages from packages/distro.
 # It should be ran from the project root directory.
 #
 
@@ -57,9 +57,7 @@ EOF
     ####################################
     ## Add packages to the repository ##
     ####################################
-
     for package in packages/${DISTRIBUTION}*/*.deb; do
-
         # Sign the deb
         echo "## signing: ${package} ##"
         dpkg-sig -k ${KEYID} --sign builder ${package}
@@ -116,14 +114,25 @@ function package_rpm()
     echo "## Creating repository ##"
     echo "#########################"
 
+    local name
+    local baseurl
+
     DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
     mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
 
     # .repo file
+    if [ "${DISTRIBUTION:0:19}" == "opensuse-tumbleweed" ]; then
+        name="Ring \$basearch - ring"
+        baseurl="https://dl.jami.net/ring-nightly/${DISTRIBUTION%_*}"
+    else
+        name="Ring \$releasever - \$basearch - ring"
+        baseurl="https://dl.jami.net/ring-nightly/${DISTRIBUTION%_*}_\$releasever"
+    fi
+
     cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/ring-nightly.repo
-[ring]
-name=Ring \$releasever - \$basearch - ring
-baseurl=https://dl.jami.net/ring-nightly/${DISTRIBUTION%_*}_\$releasever
+[jami]
+name=$name
+baseurl=$baseurl
 gpgcheck=1
 gpgkey=https://dl.jami.net/ring.pub.key
 enabled=1
@@ -156,24 +165,23 @@ EOF
     #######################################
     ## create the manual download folder ##
     #######################################
+    local packages
+
     DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
     mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-    if [ -d "packages/${DISTRIBUTION}/one-click-install/" ];
-    then
-        for package in packages/${DISTRIBUTION}*/one-click-install/*.rpm; do
-            cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-            package_name=$(rpm -qp --queryformat '%{NAME}' ${package})
-            package_arch=$(rpm -qp --queryformat '%{ARCH}' ${package})
-            cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.rpm
-        done
+
+    if [ -d "packages/${DISTRIBUTION}/one-click-install/" ]; then
+        packages=(packages/${DISTRIBUTION}*/one-click-install/*.rpm)
     else
-        for package in packages/${DISTRIBUTION}*/*.rpm; do
-            cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-            package_name=$(rpm -qp --queryformat '%{NAME}' ${package})
-            package_arch=$(rpm -qp --queryformat '%{ARCH}' ${package})
-            cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.rpm
-        done
+        packages=(packages/${DISTRIBUTION}*/*.rpm)
     fi
+
+    for package in "${packages[@]}"; do
+        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+        package_name=$(rpm -qp --queryformat '%{NAME}' ${package})
+        package_arch=$(rpm -qp --queryformat '%{ARCH}' ${package})
+        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_name}_${package_arch}.rpm
+    done
 }
 
 
@@ -187,17 +195,14 @@ function package_snap()
     echo "## deploying snap ##"
     echo "####################"
 
-    if [[ "${CHANNEL:0:19}" == "internal_experiment" ]];
-    then
+    if [[ "${CHANNEL:0:19}" == "internal_experiment" ]]; then
         DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
         mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
         cp packages/${DISTRIBUTION}*/*.snap ${DISTRIBUTION_REPOSITOIRY_FOLDER}/
-    elif [[ "${CHANNEL:0:7}" == "nightly" ]];
-    then
+    elif [[ "${CHANNEL:0:7}" == "nightly" ]]; then
         snapcraft login --with ${SNAPCRAFT_LOGIN}
         snapcraft push packages/${DISTRIBUTION}*/*.snap --release edge
-    elif [[ "${CHANNEL:0:6}" == "stable" ]];
-    then
+    elif [[ "${CHANNEL:0:6}" == "stable" ]]; then
         snapcraft login --with ${SNAPCRAFT_LOGIN}
         snapcraft push packages/${DISTRIBUTION}*/*.snap --release stable
     fi
@@ -215,19 +220,20 @@ function deploy()
         RSYNC_RSH="ssh -i ${SSH_IDENTIY_FILE}"
     fi
 
-    # Deploy the repository
     echo "##########################"
     echo "## deploying repository ##"
     echo "##########################"
     echo "Using RSYNC_RSH='${RSYNC_RSH}'"
-    rsync --archive --recursive --verbose --delete ${DISTRIBUTION_REPOSITOIRY_FOLDER} ${REMOTE_REPOSITORY_LOCATION}
+    rsync --archive --recursive --verbose \
+          --delete ${DISTRIBUTION_REPOSITOIRY_FOLDER} \
+          ${REMOTE_REPOSITORY_LOCATION}
 
-    # deploy the manual download files
     echo "#####################################"
     echo "## deploying manual download files ##"
     echo "#####################################"
-    rsync --archive --recursive --verbose --delete ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER} ${REMOTE_MANUAL_DOWNLOAD_LOCATION}
-
+    rsync --archive --recursive --verbose \
+          --delete ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER} \
+          ${REMOTE_MANUAL_DOWNLOAD_LOCATION}
 }
 
 
@@ -237,14 +243,16 @@ function deploy()
 
 function package()
 {
-    if [[ "${DISTRIBUTION:0:6}" == "debian" || "${DISTRIBUTION:0:6}" == "ubuntu" || "${DISTRIBUTION:0:8}" == "raspbian" ]];
-    then
+    if [[ "${DISTRIBUTION:0:6}" == "debian" \
+              || "${DISTRIBUTION:0:6}" == "ubuntu" \
+              || "${DISTRIBUTION:0:8}" == "raspbian" ]]; then
         package_deb
-    elif [[ "${DISTRIBUTION:0:6}" == "fedora" || "${DISTRIBUTION:0:4}" == "rhel" || "${DISTRIBUTION:0:13}" == "opensuse-leap" || "${DISTRIBUTION:0:19}" == "opensuse-tumbleweed" ]];
-    then
+    elif [[ "${DISTRIBUTION:0:6}" == "fedora" \
+                || "${DISTRIBUTION:0:4}" == "rhel" \
+                || "${DISTRIBUTION:0:13}" == "opensuse-leap" \
+                || "${DISTRIBUTION:0:19}" == "opensuse-tumbleweed" ]]; then
         package_rpm
-    elif [[ "${DISTRIBUTION:0:4}" == "snap" ]];
-    then
+    elif [[ "${DISTRIBUTION:0:4}" == "snap" ]]; then
         package_snap
     else
         echo "ERROR: Distribution '${DISTRIBUTION}' is unsupported"
