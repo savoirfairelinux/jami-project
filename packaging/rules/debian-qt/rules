@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# export DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	./configure \
+		-opensource \
+		-confirm-license \
+		-nomake demos \
+		-nomake docs \
+		-nomake examples \
+		-nomake tests \
+		-prefix "/usr/local" \
+		-libdir "/usr/local/lib/qt-jami" \
+		-bindir "/usr/local/lib/qt-jami/bin" \
+		-headerdir "/usr/local/include/qt-jami" \
+		-archdatadir "/usr/local/lib/qt-jami" \
+		-datadir "/usr/local/share/qt-jami" \
+		-hostdatadir "/usr/local/lib/qt-jami"
+
+override_dh_auto_install:
+	dh_auto_install -Smakefile -- INSTALL_ROOT=$(CURDIR)/debian/tmp/
