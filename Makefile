@@ -41,6 +41,8 @@ DEBIAN_OCI_VERSION:=$(RELEASE_VERSION)~dfsg1-0
 DEBIAN_OCI_DSC_FILENAME:=jami_$(DEBIAN_OCI_VERSION).dsc
 DEBIAN_OCI_PKG_DIR:="packaging/rules/debian-one-click-install"
 
+DEBIAN_QT_DSC_FILENAME:=qt-jami_$(DEBIAN_VERSION).dsc
+
 #####################
 ## Other variables ##
 #####################
