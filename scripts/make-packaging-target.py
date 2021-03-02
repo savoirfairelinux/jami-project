@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (C) 2016-2017 Savoir-faire Linux Inc.
+# Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
 # Author: Alexandre Viau <alexandre.viau@savoirfairelinux.com>
 #
@@ -138,6 +138,13 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default"
+        },
+        {
+            "distribution": "debian_10_qt",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": "-e QTDIR=$(QT_JAMI_BASE_DIR) -e QT_MAJOR=$(QT_MAJOR) -e QT_MINOR=$(QT_MINOR) -e QT_PATCH=$(QT_PATCH) -e QT_TARBALL_CHECKSUM=$(QT_TARBALL_CHECKSUM) --privileged --security-opt apparmor=docker-default",
+            "version": "$(DEBIAN_QT_VERSION)",
         },
         {
             "distribution": "debian_10_oci",
