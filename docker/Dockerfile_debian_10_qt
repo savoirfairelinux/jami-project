@@ -1,0 +1,29 @@
+FROM debian:buster
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get clean
+RUN apt-get update && \
+    apt-get install -y -o Acquire::Retries=10 \
+        devscripts \
+        nodejs \
+        vim \
+        wget
+
+RUN apt-get clean
+RUN if [ -z "${OVERRIDE_PACKAGING_DIR}" ] && \
+       [ -f "/opt/ring-project-ro/${OVERRIDE_PACKAGING_DIR}/control" ]; then \
+           mk-build-deps \
+               --remove --install \
+               --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
+               "/opt/ring-project-ro/${OVERRIDE_PACKAGING_DIR}/control"; \
+    else \
+        mk-build-deps \
+            --remove --install \
+            --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
+            "/opt/ring-project-ro/packaging/rules/debian-qt/control"; \
+    fi
+
+ADD scripts/build-package-debian-qt.sh /opt/build-package-debian-qt.sh
+
+CMD /opt/build-package-debian-qt.sh
