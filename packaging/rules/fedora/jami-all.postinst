@@ -19,8 +19,7 @@
 # depending on the system the postinst script is run on.
 #
 # To update the appended end tags, modify the switch in [2].
-# FIXME As soon as the repo get renamed to /nightly fix this url
-JAMI_REPO_BASE="https://dl.jami.net/ring-nightly"
+JAMI_REPO_BASE="https://dl.jami.net/nightly"
 
 # Jami release key.
 JAMI_KEY_FINGERPRINT="A295D773307D25A33AE72F2F64CD5FA175348F84"
@@ -69,8 +68,8 @@ HUFCGSHO3/kzxSlkE1PBUX3IZ8PSFijyopBnWUhlSXuyRjte8OR7Fl/Rlf0IaOD1
 # postrm paths should be modified as well
 YUM_FILE="/etc/yum.repos.d/jami-main.repo"
 GPG_FILE="/etc/pki/rpm-gpg/RPM-GPG-KEY-JAMI"
-RING_UPDATE_MANAGER_ID="jami"
-RING_UPDATE_MANAGER_CFG="${RING_UPDATE_MANAGER_ID}.cfg"
+JAMI_UPDATE_MANAGER_ID="jami"
+JAMI_UPDATE_MANAGER_CFG="${JAMI_UPDATE_MANAGER_ID}.cfg"
 
 ###############################################################################
 # [2] Set package repo url depending on distribution and version              #
@@ -89,22 +88,12 @@ JAMI_REPO='
 name='"${NAME}"' $releasever - $basearch - Jami
 baseurl='"${JAMI_REPO_BASE}"/"${ID}"'_$releasever
 gpgcheck=1
-gpgkey=https://dl.jami.net/ring.pub.key
+gpgkey=https://dl.jami.net/jami.pub.key
 enabled=1'
 
     # Set-up Jami repository end tag
     if [ "${PLATFORM_ID}" = "platform:el8" ] || [ "${ID}_${VERSION_ID%.*}" = "rhel_8" ]; then
         ENDTAG="rhel_8"
-    elif [ "${PLATFORM_ID}" = "platform:f27" ] || [ "${ID}_${VERSION_ID}" = "fedora_27" ]; then
-        ENDTAG="fedora_27"
-    elif [ "${PLATFORM_ID}" = "platform:f28" ] || [ "${ID}_${VERSION_ID}" = "fedora_28" ]; then
-        ENDTAG="fedora_28"
-    elif [ "${PLATFORM_ID}" = "platform:f29" ] || [ "${ID}_${VERSION_ID}" = "fedora_29" ]; then
-        ENDTAG="fedora_29"
-    elif [ "${PLATFORM_ID}" = "platform:f30" ] || [ "${ID}_${VERSION_ID}" = "fedora_30" ]; then
-        ENDTAG="fedora_30"
-    elif [ "${PLATFORM_ID}" = "platform:f31" ] || [ "${ID}_${VERSION_ID}" = "fedora_31" ]; then
-        ENDTAG="fedora_31"
     elif [ "${PLATFORM_ID}" = "platform:f32" ] || [ "${ID}_${VERSION_ID}" = "fedora_32" ]; then
         ENDTAG="fedora_32"
     elif [ "${PLATFORM_ID}" = "platform:f33" ] || [ "${ID}_${VERSION_ID}" = "fedora_33" ]; then
@@ -137,7 +126,6 @@ EOF
         /usr/bin/rpm --import $GPG_FILE  > /dev/null 2>&1
 
         # Add an entry for the package repository to the trusted package
-        # FIXME As soon as we rename the repo use ring instead of jami
         cat > $YUM_FILE <<EOF
 $JAMI_REPO
 EOF
