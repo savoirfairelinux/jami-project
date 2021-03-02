@@ -1,0 +1,2 @@
+usr/local
+debian/qt-jami-env.sh usr/local/lib/qt-jami/bin/
