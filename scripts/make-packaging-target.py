@@ -140,6 +140,13 @@ def run_generate_all(parsed_args):
             "options": "--privileged --security-opt apparmor=docker-default"
         },
         {
+            "distribution": "debian_10_qt",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": "-e QT_MAJOR=$(QT_MAJOR) QT_MINOR=$(QT_MINOR) QT_PATCH=$(QT_PATCH) QT_TARBALL_CHECKSUM=$(QT_TARBALL_CHECKSUM) --privileged --security-opt apparmor=docker-default",
+            "version": "$(DEBIAN_QT_VERSION)",
+        },
+        {
             "distribution": "debian_10_oci",
             "docker_image": "debian_10",
             "debian_packaging_override": "",

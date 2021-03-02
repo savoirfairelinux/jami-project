@@ -1,0 +1,25 @@
+Source: qt-jami-src
+Section: libs
+Priority: optional
+Maintainer: Amin Bandali <bandali@gnu.org>
+Rules-Requires-Root: no
+Standards-Version: 4.5.1
+Build-Depends: debhelper (>= 9),
+               nodejs,
+               qtbase-opensource-src,
+               qtdeclarative-opensource-src,
+               qtgraphicaleffects-opensource-src,
+               qtmultimedia-opensource-src,
+               qtquickcontrols-opensource-src,
+               qtquickcontrols2-opensource-src,
+               qtsvg-opensource-src,
+               qttools-opensource-src,
+               qtwayland-opensource-src,
+               qtwebchannel-opensource-src,
+               qtwebengine-opensource-src
+
+
+Package: qt-jami
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Custom build of Qt framework used by the Jami Qt client.
