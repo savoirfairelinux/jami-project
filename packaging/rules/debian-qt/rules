@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+export DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	mkdir build && cd build && ./configure \
+		-opensource \
+		-confirm-license \
+		-nomake examples \
+		-nomake tests \
+		-prefix "/opt/qt-jami"
+
+override_dh_auto_build:
+	cd build && make
+
+override_dh_auto_install:
+	cd build && make install
+	ls -la /opt/qt-jami
