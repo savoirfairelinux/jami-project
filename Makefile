@@ -106,7 +106,7 @@ package-all: $(PACKAGE-TARGETS)
 
 .PHONY: list-package-targets
 list-package-targets:
-	$(foreach p,$(PACKAGE-TARGETS),\
+	@$(foreach p,$(PACKAGE-TARGETS),\
 		echo $(p);)
 
 docker/Dockerfile_snap: patches/docker-snap-build-scripts.patch
