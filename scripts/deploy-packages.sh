@@ -66,7 +66,7 @@ EOF
     ####################################
     ## Add packages to the repository ##
     ####################################
-    for package in packages/${DISTRIBUTION}*/*.deb; do
+    for package in packages/${DISTRIBUTION}*/*.deb /opt/qt-jami/pool/main/q/qt-jami/*.deb; do
         # Sign the deb
         echo "## signing: ${package} ##"
         dpkg-sig -k ${KEYID} --sign builder ${package}

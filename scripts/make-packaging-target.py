@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (C) 2016-2017 Savoir-faire Linux Inc.
+# Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
 # Author: Alexandre Viau <alexandre.viau@savoirfairelinux.com>
 #
@@ -57,6 +57,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -e DISTRIBUTION=%(distribution)s \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
+    -v $(CURDIR)/packages/%(distribution)s_qt:/opt/qt-jami \\
     -t $(DOCKER_EXTRA_ARGS) %(options)s \\
     $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
@@ -138,6 +139,13 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default"
+        },
+        {
+            "distribution": "debian_10_qt",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": "-e QT_MAJOR=$(QT_MAJOR) -e QT_MINOR=$(QT_MINOR) -e QT_PATCH=$(QT_PATCH) -e QT_TARBALL_CHECKSUM=$(QT_TARBALL_CHECKSUM) --privileged --security-opt apparmor=docker-default",
+            "version": "$(DEBIAN_QT_VERSION)",
         },
         {
             "distribution": "debian_10_oci",
