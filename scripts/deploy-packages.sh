@@ -31,8 +31,33 @@ set -e
 ## Debian / Ubuntu packaging ##
 ###############################
 
+function fetch_qt_deb()
+{
+    if [ -f "${SSH_IDENTIY_FILE}" ];
+    then
+        RSYNC_RSH="ssh -i ${SSH_IDENTIY_FILE}"
+    fi
+
+    echo "#####################"
+    echo "## fetching qt deb ##"
+    echo "#####################"
+    echo "Using RSYNC_RSH='${RSYNC_RSH}'"
+    rsync --archive --verbose \
+          ${REMOTE_REPOSITORY_LOCATION}/${DISTRIBUTION}_qt/pool/main/q/qt-jami/*.deb \
+          ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt/
+}
+
 function package_deb()
 {
+    DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
+    mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+    mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt
+
+    ##################
+    ## fetch qt deb ##
+    ##################
+    fetch_qt_deb
+
     ##################################################
     ## Create local repository for the given distro ##
     ##################################################
@@ -40,8 +65,7 @@ function package_deb()
     echo "## Creating repository ##"
     echo "#########################"
 
-    DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
-    mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf
+    mkdir ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf
 
     # Distributions file
     cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf/distributions
@@ -66,7 +90,7 @@ EOF
     ####################################
     ## Add packages to the repository ##
     ####################################
-    for package in packages/${DISTRIBUTION}*/*.deb; do
+    for package in packages/${DISTRIBUTION}*/*.deb ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt/*.deb; do
         # Sign the deb
         echo "## signing: ${package} ##"
         dpkg-sig -k ${KEYID} --sign builder ${package}
