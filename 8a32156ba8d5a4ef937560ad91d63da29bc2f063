@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc6db6ff_04caea95",
+        "filename": "make-ring.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-03-02T17:12:14Z",
+      "side": 1,
+      "message": "why no alsa nor jack?",
+      "range": {
+        "startLine": 400,
+        "startChar": 42,
+        "endLine": 400,
+        "endChar": 71
+      },
+      "revId": "8a32156ba8d5a4ef937560ad91d63da29bc2f063",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
