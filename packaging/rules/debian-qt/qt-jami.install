@@ -1,0 +1,5 @@
+usr/local/lib/qt-jami
+usr/local/include/qt-jami
+usr/local/share/qt-jami
+usr/local/etc/xdg
+debian/qt-jami-env.sh usr/local/lib/qt-jami/bin/
