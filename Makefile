@@ -41,6 +41,15 @@ DEBIAN_OCI_VERSION:=$(RELEASE_VERSION)~dfsg1-0
 DEBIAN_OCI_DSC_FILENAME:=jami_$(DEBIAN_OCI_VERSION).dsc
 DEBIAN_OCI_PKG_DIR:="packaging/rules/debian-one-click-install"
 
+# Qt versions
+QT_MAJOR:=5
+QT_MINOR:=15
+QT_PATCH:=2
+QT_TARBALL_CHECKSUM:="3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202240"
+DEBIAN_QT_VERSION:=$(QT_MAJOR).$(QT_MINOR).$(QT_PATCH)-1
+DEBIAN_QT_DSC_FILENAME:=libqt-jami_$(DEBIAN_QT_VERSION).dsc
+QT_JAMI_PREFIX:="/usr/lib/libqt-jami"
+
 #####################
 ## Other variables ##
 #####################
