@@ -1,0 +1,28 @@
+FROM debian:buster
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get clean
+RUN apt-get update && \
+    apt-get install -y vim devscripts
+
+RUN sed -i 's/# deb-src/deb-src/' /etc/apt/sources.list
+
+RUN apt-get clean
+RUN apt-get update && \
+    apt-get build-dep -y -o Acquire::Retries=10 \
+        qtbase-opensource-src \
+        qtdeclarative-opensource-src \
+        qtgraphicaleffects-opensource-src \
+        qtmultimedia-opensource-src \
+        qtquickcontrols-opensource-src \
+        qtquickcontrols2-opensource-src \
+        qtsvg-opensource-src \
+        qttools-opensource-src \
+        qtwayland-opensource-src \
+        qtwebchannel-opensource-src \
+        qtwebengine-opensource-src
+
+ADD scripts/build-package-debian-qt.sh /opt/build-package-debian-qt.sh
+
+CMD /opt/build-package-debian-qt.sh
