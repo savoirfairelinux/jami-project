@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (C) 2016-2017 Savoir-faire Linux Inc.
+# Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
 # Author: Alexandre Viau <alexandre.viau@savoirfairelinux.com>
 #
@@ -91,6 +91,16 @@ RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS = (
     '--privileged')
 
 
+DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT = (
+    '-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) '
+    '-e QT_MAJOR=$(QT_MAJOR) '
+    '-e QT_MINOR=$(QT_MINOR) '
+    '-e QT_PATCH=$(QT_PATCH) '
+    '-e QT_TARBALL_CHECKSUM=$(QT_TARBALL_CHECKSUM) '
+    '-v /opt/ring-contrib:/opt/ring-contrib '
+    '--privileged --security-opt apparmor=docker-default')
+
+
 def generate_target(distribution, debian_packaging_override, output_file, options='', docker_image='', version='', docker_build_args = ''):
     if (docker_image == ''):
         docker_image = distribution
@@ -142,6 +152,13 @@ def run_generate_all(parsed_args):
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default"
+        },
+        {
+            "distribution": "debian_10_qt",
+            "debian_packaging_override": "",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
+            "version": "$(DEBIAN_QT_VERSION)",
         },
         {
             "distribution": "debian_10_oci",

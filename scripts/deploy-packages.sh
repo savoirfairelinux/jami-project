@@ -31,8 +31,38 @@ set -e
 ## Debian / Ubuntu packaging ##
 ###############################
 
+function fetch_qt_deb()
+{
+    if [ -f "${SSH_IDENTIY_FILE}" ];
+    then
+        RSYNC_RSH="ssh -i ${SSH_IDENTIY_FILE}"
+    fi
+
+    echo "#####################"
+    echo "## fetching qt deb ##"
+    echo "#####################"
+    echo "Using RSYNC_RSH='${RSYNC_RSH}'"
+    rsync --archive --verbose \
+          ${REMOTE_REPOSITORY_LOCATION}/${DISTRIBUTION}_qt/pool/main/libq/libqt-jami/*.deb \
+          ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt/
+}
+
 function package_deb()
 {
+    DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
+    mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+    mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt
+
+    ###########################################################
+    ## fetch qt deb (if not currently building a qt package) ##
+    ###########################################################
+    case "${DISTRIBUTION}" in
+        *_qt) ;;
+        *)
+            fetch_qt_deb
+            ;;
+    esac
+
     ##################################################
     ## Create local repository for the given distro ##
     ##################################################
@@ -40,8 +70,7 @@ function package_deb()
     echo "## Creating repository ##"
     echo "#########################"
 
-    DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
-    mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf
+    mkdir ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf
 
     # Distributions file
     cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf/distributions
@@ -66,7 +95,14 @@ EOF
     ####################################
     ## Add packages to the repository ##
     ####################################
-    for package in packages/${DISTRIBUTION}*/*.deb; do
+    packages="packages/${DISTRIBUTION}*/*.deb"
+    case "${DISTRIBUTION}" in
+        *_qt) ;;
+        *)
+            packages="${packages} ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt/*.deb"
+            ;;
+    esac
+    for package in ${packages}; do
         # Sign the deb
         echo "## signing: ${package} ##"
         dpkg-sig -k ${KEYID} --sign builder ${package}
