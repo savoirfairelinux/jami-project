@@ -55,6 +55,8 @@ while getopts gsc:q:Q:P:p:u OPT; do
   esac
 done
 
+# $1: global-install?
+# $2: private-install?
 make_install() {
   if [ "$1" = "true" ] && [ "$2" != "false" ]; then
     sudo make install
