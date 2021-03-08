@@ -45,20 +45,9 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                    #!/usr/bin/env bash
                    test -f $HOME/.bashrc && . $HOME/.bashrc
                    guix environment --container --network -E TARBALLS --share=$TARBALLS \
-                       --expose=$SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt --ad-hoc \
-                       coreutils \
-                       gcc-toolchain \
-                       git-minimal \
-                       grep \
-                       gzip \
-                       make \
-                       nss-certs \
-                       pkg-config \
-                       python \
-                       sed \
-                       tar \
-                       wget \
-                       xz -- make release-tarball
+                       --expose=$SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
+                       --manifest=guix/minimal-manifest.scm \
+                       -- make release-tarball
                    '''
             }
         }
