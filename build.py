@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 #
-# This is the Ring build helper, it can do these things:
-#  - Build Ring
-#  - Install Ring
-#  - Run Ring
+# This is the Jami build helper, it can do these things:
+#  - Build Jami
+#  - Install Jami
+#  - Run Jami
 #
 
 import argparse

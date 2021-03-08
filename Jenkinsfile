@@ -42,23 +42,13 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                 // container.  Wget uses GnuTLS, which looks up its
                 // certs from /etc/ssl/certs.
                 sh '''
-                   #!/usr/bin/env bash
-                   test -f $HOME/.bashrc && . $HOME/.bashrc
-                   guix environment --container --network -E TARBALLS --share=$TARBALLS \
-                       --expose=$SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt --ad-hoc \
-                       coreutils \
-                       gcc-toolchain \
-                       git-minimal \
-                       grep \
-                       gzip \
-                       make \
-                       nss-certs \
-                       pkg-config \
-                       python \
-                       sed \
-                       tar \
-                       wget \
-                       xz -- make release-tarball
+                   #!/usr/bin/env bash --login
+                   guix environment --container --network \
+                       --preserve=TARBALLS --share=$TARBALLS \
+                       --expose=/usr/bin/env \
+                       --expose=$SSL_CERT_FILE \
+                       --manifest=guix/minimal-manifest.scm \
+                       -- make release-tarball
                    '''
             }
         }
