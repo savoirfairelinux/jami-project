@@ -15,7 +15,6 @@ import platform
 import multiprocessing
 import shlex
 import shutil
-import signal
 
 IOS_DISTRIBUTION_NAME = "ios"
 OSX_DISTRIBUTION_NAME = "osx"
@@ -529,10 +528,18 @@ def validate_args(parsed_args):
     ] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS \
       + ZYPPER_BASED_DISTROS + FLATPAK_BASED_RUNTIMES
 
+    if (parsed_args.distribution == 'no-check'
+            or 'JAMI_BUILD_NO_CHECK' in os.environ):
+        return
+
     if parsed_args.distribution not in supported_distros:
-        print('WARNING: Distribution \'{0}\' not supported.\nChoose one of: {1}'.format(
-            parsed_args.distribution, ', '.join(supported_distros)
-        ), file=sys.stderr)
+        print(f'WARNING: Distribution \'{parsed_args.distribution}\' is not '
+              f'supported. Choose one of: {", ".join(supported_distros)}. '
+              'Alternatively, you may force execution of this script '
+              'by providing the \'--distribution=no-check\' argument or by '
+              'exporting the JAMI_BUILD_NO_CHECK environment variable.',
+              file=sys.stderr)
+        sys.exit(1)
 
     # The Qt client support will be added incrementally.
     if parsed_args.qt is not None:
@@ -591,6 +598,7 @@ def parse_args():
                     help='Sets the Qt version to build with')
 
     dist = choose_distribution()
+
     if dist == WIN32_DISTRIBUTION_NAME:
         ap.add_argument('--toolset', default=win_toolset_default, type=str,
                         help='Windows use only, specify Visual Studio toolset version')
@@ -615,11 +623,14 @@ def choose_distribution():
     if system == "linux" or system == "linux2":
         if os.path.isfile("/etc/arch-release"):
             return "arch"
-        with open("/etc/os-release") as f:
-            for line in f:
-                k, v = line.split("=")
-                if k.strip() == 'ID':
-                    return v.strip().replace('"', '').split(' ')[0]
+        try:
+            with open("/etc/os-release") as f:
+                for line in f:
+                    k, v = line.split("=")
+                    if k.strip() == 'ID':
+                        return v.strip().replace('"', '').split(' ')[0]
+        except FileNotFoundError:
+            return 'Unknown'
     elif system == "darwin":
         return OSX_DISTRIBUTION_NAME
     elif system == "windows":
