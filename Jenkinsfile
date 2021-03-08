@@ -35,30 +35,12 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
 
         stage('Generate release tarball') {
             steps {
-                // The bundled tarballs included in the release
-                // tarball depend on what is available on the host.
-                // To ensure it can be shared across all different
-                // GNU/Linux distributions, generate it in a minimal
-                // container.  Wget uses GnuTLS, which looks up its
-                // certs from /etc/ssl/certs.
+                // Note: sourcing .bashrc is necessary to setup the
+                // environment variables used by Guix.
                 sh '''
                    #!/usr/bin/env bash
                    test -f $HOME/.bashrc && . $HOME/.bashrc
-                   guix environment --container --network -E TARBALLS --share=$TARBALLS \
-                       --expose=$SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt --ad-hoc \
-                       coreutils \
-                       gcc-toolchain \
-                       git-minimal \
-                       grep \
-                       gzip \
-                       make \
-                       nss-certs \
-                       pkg-config \
-                       python \
-                       sed \
-                       tar \
-                       wget \
-                       xz -- make release-tarball
+                   make portable-release-tarball
                    '''
             }
         }
