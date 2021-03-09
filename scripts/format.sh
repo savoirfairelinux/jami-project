@@ -51,7 +51,7 @@ install_hook()
         exit 1
     fi
     echo Installing pre-commit hook in "$hooks_path"
-    echo "/bin/bash $(realpath $0)" > "$hooks_path"/pre-commit
+    echo "$(realpath $0)" > "$hooks_path"/pre-commit
     chmod +x "$hooks_path"/pre-commit
 }
 
