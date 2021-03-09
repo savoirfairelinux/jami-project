@@ -306,6 +306,12 @@ def run_dependencies(args):
     elif args.distribution == WIN32_DISTRIBUTION_NAME:
         print("The win32 version does not install dependencies with this script.\nPlease continue with the --install instruction.")
         sys.exit(1)
+    elif args.distribution == 'guix':
+        print("Building the environment defined in 'guix/manifest.scm'...")
+        execute_script(['mkdir -p ~/.config/guix/profiles',
+                        ('guix time-machine  --channels=guix/channels.scm -- '
+                         'package --manifest=guix/manifest.scm '
+                         '--profile=$HOME/.config/guix/profiles/jami')])
 
     else:
         print("Not yet implemented for current distribution (%s). Please continue with the --install instruction. Note: You may need to install some dependencies manually." %
@@ -399,8 +405,25 @@ def run_install(args):
             install_args += ("-q", args.qtver)
             install_args += ("-Q", args.qt)
 
-    print(f'info: Invoking scripts/install.sh with arguments: {install_args}')
-    return subprocess.run(["./scripts/install.sh"] + install_args, env=environ, check=True)
+    command = ['bash', 'scripts/install.sh'] + install_args
+
+    if args.distribution == 'guix':
+        if args.global_install:
+            print('error: global install is not supported when using Guix.')
+            sys.exit(1)
+        # Run the build in an isolated container.
+        share_tarballs_args = []
+        if 'TARBALLS' in os.environ:
+            share_tarballs_args = ['--preserve=TARBALLS',
+                             f'--share={os.environ["TARBALLS"]}']
+        command = ['guix', 'time-machine', '-C', 'guix/channels.scm', '--',
+                   'environment', '--manifest=guix/manifest.scm',
+                   "--expose=/etc/ssl/certs", '--expose=/usr/bin/env',
+                   '--container', '--network'] + share_tarballs_args \
+                   + ['--'] + command
+
+    print(f'info: Building/installing using the command: {command}')
+    return subprocess.run(command, env=environ, check=True)
 
 
 def run_uninstall(args):
@@ -526,13 +549,25 @@ def execute_script(script, settings=None, fail=True):
             sys.exit(1)
 
 
+def has_guix():
+    """Check whether the 'guix' command is available."""
+    with open(os.devnull, 'w') as f:
+        try:
+            subprocess.run(["sh", "-c", "command -v guix"],
+                           check=True, stdout=f)
+        except subprocess.CalledProcessError:
+            return False
+        else:
+            return True
+
+
 def validate_args(parsed_args):
     """Validate the args values, exit if error is found"""
 
     # Filter unsupported distributions.
     supported_distros = [
         ANDROID_DISTRIBUTION_NAME, OSX_DISTRIBUTION_NAME, IOS_DISTRIBUTION_NAME,
-        WIN32_DISTRIBUTION_NAME
+        WIN32_DISTRIBUTION_NAME, 'guix'
     ] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS \
       + ZYPPER_BASED_DISTROS + FLATPAK_BASED_RUNTIMES
 
@@ -552,6 +587,7 @@ def validate_args(parsed_args):
     # The Qt client support will be added incrementally.
     if parsed_args.qt is not None:
         supported_qt_distros = [
+            'guix',
             WIN32_DISTRIBUTION_NAME
         ] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS
 
@@ -620,7 +656,7 @@ def parse_args():
 
     parsed_args = ap.parse_args()
 
-    if (parsed_args.distribution is not None):
+    if parsed_args.distribution:
         parsed_args.distribution = parsed_args.distribution.lower()
     else:
         parsed_args.distribution = dist
@@ -643,6 +679,8 @@ def choose_distribution():
                     if k.strip() == 'ID':
                         return v.strip().replace('"', '').split(' ')[0]
         except FileNotFoundError:
+            if has_guix():
+                return 'guix'
             return 'Unknown'
     elif system == "darwin":
         return OSX_DISTRIBUTION_NAME
@@ -670,7 +708,16 @@ def main():
         run_uninstall(parsed_args)
 
     elif parsed_args.run:
-        run_run(parsed_args)
+        if (parsed_args.distribution == 'guix'
+                and 'GUIX_ENVIRONMENT' not in os.environ):
+            # Relaunch this script, this time in a pure Guix environment.
+            guix_args = ['time-machine', '--channels=guix/channels.scm',
+                         '--', 'environment', '--pure',
+                         '--manifest=guix/manifest.scm', '--']
+            args = sys.argv + ['--distribution=guix']
+            os.execlp('guix', 'guix', *(guix_args + args))
+        else:
+            run_run(parsed_args)
 
     elif parsed_args.stop:
         run_stop(parsed_args)
