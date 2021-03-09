@@ -16,6 +16,7 @@ set -ex
 # Qt_MIN_VER required for client-qt
 QT5_MIN_VER="5.14"
 
+debug=
 global=false
 static=''
 client=''
@@ -23,7 +24,7 @@ qt5ver=''
 qt5path=''
 proc='1'
 priv_install=true
-while getopts gsc:q:Q:P:p:u OPT; do
+while getopts gsc:dq:Q:P:p:u OPT; do
   case "$OPT" in
     g)
       global='true'
@@ -33,6 +34,9 @@ while getopts gsc:q:Q:P:p:u OPT; do
     ;;
     c)
       client="${OPTARG}"
+    ;;
+    d)
+      debug=true
     ;;
     q)
       qt5ver="${OPTARG}"
@@ -78,22 +82,22 @@ else
 fi
 
 # dring
-cd "${TOP}/daemon"
-DAEMON="$(pwd)"
-cd contrib
-mkdir -p native
-cd native
-if [ "${prefix+set}" ]; then
-    ../bootstrap --prefix="${prefix}"
-else
-    ../bootstrap
-fi
-make
-cd "${DAEMON}"
+DAEMON=${TOP}/daemon
+cd "$DAEMON"
+
+# Build the contribs.
+mkdir -p contrib/native
+(
+    cd contrib/native
+    ../bootstrap ${prefix:+"--prefix=$prefix"} ${debug:+"--enable-debug"}
+    make -j"${proc}"
+)
+
+# Build the daemon itself.
 ./autogen.sh
 
-#keep shared Lib on MAC OSX
 if [[ "$OSTYPE" != "darwin"* ]]; then
+    # Keep the shared libaries on MAC OSX.
     sharedLib="--disable-shared"
 fi
 
@@ -108,7 +112,6 @@ else
 fi
 make -j"${proc}"
 make_install "${global}" "${priv_install}"
-
 
 # For the client-qt, verify system's version if no path provided
 if [ "${client}" = "client-qt" ] && [ -z "$qt5path" ]; then
