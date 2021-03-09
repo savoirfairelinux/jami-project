@@ -466,11 +466,9 @@ def run_run(args):
             f.write(str(client_process.pid)+'\n')
 
         if args.debug:
-            subprocess.call(
-                ['gdb', '-x', 'gdb.gdb', './install/daemon/lib/ring/dring'],
-            )
+            subprocess.call(['gdb', './install/daemon/lib/ring/dring'])
 
-        if args.background == False:
+        if not args.background:
             dring_process.wait()
             client_process.wait()
 
