@@ -369,10 +369,12 @@ def run_install(args):
         install_args.append('-s')
     if args.global_install:
         install_args.append('-g')
-    if args.prefix is not None:
+    if args.prefix:
         install_args += ('-P', args.prefix)
     if not args.priv_install:
         install_args.append('-u')
+    if args.debug:
+        install_args.append('-d')
 
     if args.distribution == OSX_DISTRIBUTION_NAME:
         # The `universal_newlines` parameter has been renamed to `text` in
@@ -396,6 +398,7 @@ def run_install(args):
             install_args += ("-q", args.qtver)
             install_args += ("-Q", args.qt)
 
+    print(f'info: Invoking scripts/install.sh with arguments: {install_args}')
     return subprocess.run(["./scripts/install.sh"] + install_args, env=environ, check=True)
 
 
@@ -498,8 +501,8 @@ def run_run(args):
 def run_stop(args):
     client_suffix = "qt" if (args.qt is not None) else "gnome"
     STOP_SCRIPT = [
-        'xargs kill < daemon.pid',
-        'xargs kill < jami-' + client_suffix + '.pid'
+        'xargs kill < jami-' + client_suffix + '.pid',
+        'xargs kill < daemon.pid'
     ]
     execute_script(STOP_SCRIPT)
 
@@ -586,7 +589,8 @@ def parse_args():
     ap.add_argument('--prefix')
     ap.add_argument('--static', default=False, action='store_true')
     ap.add_argument('--global-install', default=False, action='store_true')
-    ap.add_argument('--debug', default=False, action='store_true')
+    ap.add_argument('--debug', default=False, action='store_true',
+                    help='Build with debug support; run in GDB')
     ap.add_argument('--background', default=False, action='store_true')
     ap.add_argument('--no-priv-install', dest='priv_install',
                     default=True, action='store_false')
