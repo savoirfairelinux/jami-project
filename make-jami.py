@@ -427,6 +427,12 @@ def run_uninstall(args):
             ]
             execute_script(UNINSTALL_LRC)
 
+
+def run_clean():
+    execute_script(['git clean -xfdd',
+                    'git submodule foreach git clean -xfdd'])
+
+
 def run_run(args):
     if args.distribution == OSX_DISTRIBUTION_NAME:
         subprocess.Popen(
@@ -577,6 +583,10 @@ def parse_args():
         '--install', action='store_true',
         help='Build and install Ring')
     ga.add_argument(
+        '--clean', action='store_true',
+        help='Call "git clean" on every repository of the project'
+    )
+    ga.add_argument(
         '--uninstall', action='store_true',
         help='Uninstall Ring')
     ga.add_argument(
@@ -650,6 +660,8 @@ def main():
 
     elif parsed_args.init:
         run_init()
+    elif parsed_args.clean:
+        run_clean()
 
     elif parsed_args.install:
         run_install(parsed_args)
