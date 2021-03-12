@@ -94,7 +94,7 @@ mkdir -p contrib/native
 )
 
 # Build the daemon itself.
-./autogen.sh
+test -f configure || ./autogen.sh
 
 if [[ "$OSTYPE" != "darwin"* ]]; then
     # Keep the shared libaries on MAC OSX.
