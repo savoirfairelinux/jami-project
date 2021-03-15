@@ -9,6 +9,8 @@ Build-Depends: debhelper (>= 9),
                libtool,
                autotools-dev,
 # qt client
+               doxygen,
+               graphviz,
                qt-jami,
 #               libqt5svg5-dev,
 #               qml-module-qt-labs-platform,
@@ -82,7 +84,7 @@ Package: jami
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         libqt5sql5-sqlite,
+#         libqt5sql5-sqlite,
          jami-daemon (=${binary:Version})
 Provides: jami-qt
 Replaces: jami-gnome
