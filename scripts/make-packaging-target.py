@@ -119,7 +119,7 @@ def run_generate_all(parsed_args):
             "distribution": "debian_10",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
+            "options": "-e QTDIR=$(QT_JAMI_BASE_DIR) -e QTVER=$(QT_MAJOR).$(QT_MINOR).$(QT_PATCH) --privileged --security-opt apparmor=docker-default",
         },
         {
             "distribution": "debian_10_i386",
@@ -143,7 +143,7 @@ def run_generate_all(parsed_args):
             "distribution": "debian_10_qt",
             "debian_packaging_override": "",
             "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
-            "options": "-e QT_MAJOR=$(QT_MAJOR) -e QT_MINOR=$(QT_MINOR) -e QT_PATCH=$(QT_PATCH) -e QT_TARBALL_CHECKSUM=$(QT_TARBALL_CHECKSUM) --privileged --security-opt apparmor=docker-default",
+            "options": "-e QTDIR=$(QT_JAMI_BASE_DIR) -e QT_MAJOR=$(QT_MAJOR) -e QT_MINOR=$(QT_MINOR) -e QT_PATCH=$(QT_PATCH) -e QT_TARBALL_CHECKSUM=$(QT_TARBALL_CHECKSUM) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_QT_VERSION)",
         },
         {

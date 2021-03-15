@@ -31,6 +31,14 @@ CMAKE_OPTIONS=-DCHOST=${HOST_ARCH} \
 		-DPKG_CONFIG_EXECUTABLE=/usr/bin/${HOST_ARCH}-pkg-config
 endif
 
+# Qt-related variables
+export QTDIR := ${QTDIR}
+export QTVER := ${QTVER}
+export PATH := $(QTDIR)/bin:${PATH}
+export LD_LIBRARY_PATH := $(QTDIR)/lib/x86_64-linux-gnu:$(QTDIR)/lib:${LD_LIBRARY_PATH}
+export PKG_CONFIG_PATH := $(QTDIR)/lib/pkgconfig:${PKG_CONFIG_PATH}
+
+
 %:
 	dh $@
 
@@ -105,13 +113,15 @@ override_dh_auto_configure:
 	#########################
 	## qt client configure ##
 	#########################
+	ls -la client-qt
 	cd client-qt && \
 		mkdir build && \
 		cd build && \
 		cmake \
 			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DDAEMON=$(CURDIR)/daemon \
 			-DLRC=$(CURDIR)/lrc \
-			-DQT5_VER=$QTVER -DQT5_PATH=$QTDIR \
+			-DQT5_VER=$(QTVER) -DQT5_PATH=$(QTDIR) \
 			$(CMAKE_OPTIONS) \
 			..
 
