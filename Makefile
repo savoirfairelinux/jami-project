@@ -48,6 +48,7 @@ QT_PATCH:=2
 QT_TARBALL_CHECKSUM:="3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202240"
 DEBIAN_QT_VERSION:=$(QT_MAJOR).$(QT_MINOR).$(QT_PATCH)~dfsg1-1
 DEBIAN_QT_DSC_FILENAME:=qt-jami_$(DEBIAN_QT_VERSION).dsc
+QT_JAMI_BASE_DIR:="/opt/qt-jami"
 
 #####################
 ## Other variables ##
@@ -86,7 +87,7 @@ $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 	rm -f "$@"
 	mkdir $(TMPDIR)/ring-project
 	git archive HEAD | tar xf - -C $(TMPDIR)/ring-project
-	for m in daemon lrc client-gnome; do \
+	for m in daemon lrc client-gnome client-qt; do \
 		(cd "$$m" && git archive --prefix "$$m/" HEAD \
 			| tar xf - -C $(TMPDIR)/ring-project); \
 	done
