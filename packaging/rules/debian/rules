@@ -105,6 +105,10 @@ override_dh_auto_configure:
 	#########################
 	## qt client configure ##
 	#########################
+	pwd
+	ls -la
+	git status
+	git --no-pager log -n 10
 	cd client-qt && \
 		mkdir build && \
 		cd build && \
