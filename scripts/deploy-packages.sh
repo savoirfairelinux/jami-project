@@ -53,10 +53,15 @@ function package_deb()
     mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
     mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt
 
-    ##################
-    ## fetch qt deb ##
-    ##################
-    fetch_qt_deb
+    ###########################################################
+    ## fetch qt deb (if not currently building a qt package) ##
+    ###########################################################
+    case "$DISTRIBUTION" in
+        *_qt) ;;
+        *)
+            fetch_qt_deb
+            ;;
+    esac
 
     ##################################################
     ## Create local repository for the given distro ##
