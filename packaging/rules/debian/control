@@ -9,6 +9,7 @@ Build-Depends: debhelper (>= 9),
                libtool,
                autotools-dev,
 # qt client
+               doxygen,
                qt-jami,
 #               libqt5svg5-dev,
 #               qml-module-qt-labs-platform,
