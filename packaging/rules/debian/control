@@ -9,6 +9,8 @@ Build-Depends: debhelper (>= 9),
                libtool,
                autotools-dev,
 # qt client
+               doxygen,
+               graphviz,
                qt-jami,
 #               libqt5svg5-dev,
 #               qml-module-qt-labs-platform,
@@ -34,9 +36,9 @@ Build-Depends: debhelper (>= 9),
                libglib2.0-dev,
                libgtk-3-dev,
                libnotify-dev,
-               qtbase5-dev,
-               qttools5-dev,
-               qttools5-dev-tools,
+#               qtbase5-dev,
+#               qttools5-dev,
+#               qttools5-dev-tools,
                gettext,
                libqrencode-dev,
                libayatana-appindicator3-dev | libappindicator3-dev,
@@ -82,7 +84,7 @@ Package: jami
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         libqt5sql5-sqlite,
+#         libqt5sql5-sqlite,
          jami-daemon (=${binary:Version})
 Provides: jami-qt
 Replaces: jami-gnome
@@ -97,7 +99,7 @@ Package: jami-gnome
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         libqt5sql5-sqlite,
+#         libqt5sql5-sqlite,
          jami-daemon (=${binary:Version})
 Description: Secure and distributed voice, video and chat platform - desktop client
  Jami (jami.net) is a secure and distributed voice, video and chat communication

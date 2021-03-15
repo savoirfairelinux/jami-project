@@ -53,10 +53,15 @@ function package_deb()
     mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
     mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt
 
-    ##################
-    ## fetch qt deb ##
-    ##################
-    fetch_qt_deb
+    ###########################################################
+    ## fetch qt deb (if not currently building a qt package) ##
+    ###########################################################
+    case "${DISTRIBUTION}" in
+        *_qt) ;;
+        *)
+            fetch_qt_deb
+            ;;
+    esac
 
     ##################################################
     ## Create local repository for the given distro ##
@@ -90,7 +95,14 @@ EOF
     ####################################
     ## Add packages to the repository ##
     ####################################
-    for package in packages/${DISTRIBUTION}*/*.deb ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt/*.deb; do
+    packages="packages/${DISTRIBUTION}*/*.deb"
+    case "${DISTRIBUTION}" in
+        *_qt) ;;
+        *)
+            packages="${packages} ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt/*.deb"
+            ;;
+    esac
+    for package in ${packages}; do
         # Sign the deb
         echo "## signing: ${package} ##"
         dpkg-sig -k ${KEYID} --sign builder ${package}
