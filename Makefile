@@ -86,7 +86,7 @@ $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 	rm -f "$@"
 	mkdir $(TMPDIR)/ring-project
 	git archive HEAD | tar xf - -C $(TMPDIR)/ring-project
-	for m in daemon lrc client-gnome; do \
+	for m in daemon lrc client-gnome client-qt; do \
 		(cd "$$m" && git archive --prefix "$$m/" HEAD \
 			| tar xf - -C $(TMPDIR)/ring-project); \
 	done
