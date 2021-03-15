@@ -102,13 +102,9 @@ if [[ "$OSTYPE" != "darwin"* ]]; then
 fi
 
 if [ "${global}" = "true" ]; then
-  if [ "${prefix+set}" ]; then
-    ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${prefix}"
-  else
-    ./configure $sharedLib $CONFIGURE_FLAGS
-  fi
+    ./configure $sharedLib "$CONFIGURE_FLAGS" ${prefix:+"--prefix=$prefix"}
 else
-  ./configure $sharedLib $CONFIGURE_FLAGS --prefix="${INSTALL}/daemon"
+    ./configure $sharedLib "$CONFIGURE_FLAGS" --prefix="${INSTALL}/daemon"
 fi
 make -j"${proc}"
 make_install "${global}" "${priv_install}"
@@ -127,8 +123,8 @@ if [ "${client}" = "client-qt" ] && [ -z "$qt5path" ]; then
     sys_qt5ver=${sys_qt5ver#*Qt version}
     sys_qt5ver=${sys_qt5ver%\ in\ *}
 
-    installed_qt5ver=$(echo $sys_qt5ver| cut -d'.' -f 2)
-    required_qt5ver=$(echo $QT5_MIN_VER| cut -d'.' -f 2)
+    installed_qt5ver=$(echo "$sys_qt5ver" | cut -d'.' -f 2)
+    required_qt5ver=$(echo $QT5_MIN_VER | cut -d'.' -f 2)
 
     if [[ $installed_qt5ver -ge $required_qt5ver ]] ; then
         # Disable qt5path and qt5ver in order to use system's Qt
@@ -143,67 +139,55 @@ fi
 cd "${TOP}/lrc"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
+# Compute LRC CMake flags
+lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}"
+                 -DCMAKE_BUILD_TYPE=Debug
+                 -DQT5_VER="${qt5ver}"
+                 -DQT5_PATH="${qt5path}"
+                 $static)
 if [ "${global}" = "true" ]; then
-  if [ "${prefix+set}" ]; then
-    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
-             -DCMAKE_BUILD_TYPE=Debug \
-             -DCMAKE_INSTALL_PREFIX="${prefix}" $static \
-             -DQT5_VER="${qt5ver}" \
-             -DQT5_PATH="${qt5path}"
-  else
-    cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
-             -DCMAKE_BUILD_TYPE=Debug $static \
-             -DQT5_VER="${qt5ver}" \
-             -DQT5_PATH="${qt5path}"
-  fi
+    lrc_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"})
 else
-  cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
-            -DCMAKE_BUILD_TYPE=Debug \
-            -DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc" \
-            -DRING_BUILD_DIR="${DAEMON}/src" $static \
-            -DQT5_VER="${qt5ver}" \
-            -DQT5_PATH="${qt5path}"
+    lrc_cmake_flags+=(-DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc"
+                      -DRING_BUILD_DIR="${DAEMON}/src")
 fi
+echo "info: Configuring LRC with flags: ${lrc_cmake_flags[*]}"
+cmake .. "${lrc_cmake_flags[@]}"
 make -j"${proc}"
-make_install "${global}"  "${priv_install}"
+make_install "${global}" "${priv_install}"
 
 # client
 cd "${TOP}/${client}"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
+
+client_cmake_flags=(-DCMAKE_BUILD_TYPE=Debug
+                    -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}")
+
 if [ "${client}" = "client-qt" ]; then
+    # Compute Qt client CMake flags.
+    client_cmake_flags+=(-DQT5_VER="${qt5ver}"
+                         -DQT5_PATH="${qt5path}")
     if [ "${global}" = "true" ]; then
-        if [ "${prefix+set}" ]; then
-            cmake .. -DQT5_VER="${qt5ver}" \
-                     -DQT5_PATH="${qt5path}" \
-                     -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
-                     -DCMAKE_INSTALL_PREFIX="${prefix}" $static
-        else
-            cmake .. -DQT5_VER="${qt5ver}" \
-                     -DQT5_PATH="${qt5path}" \
-                     -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
-        fi
+        client_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"}
+                             $static)
     else
-        cmake ..  -DQT5_VER="${qt5ver}" \
-                  -DQT5_PATH="${qt5path}" \
-                  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
-                  -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
-                  -DLRC="${INSTALL}/lrc"
+        client_cmake_flags+=(-DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}"
+                             -DLRC="${INSTALL}/lrc")
     fi
 else
+    # Compute GNOME client CMake flags.
+    client_cmake_flags+=($static)
     if [ "${global}" = "true" ]; then
-        if [ "${prefix+set}" ]; then
-            cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
-                     -DCMAKE_INSTALL_PREFIX="${prefix}" $static
-        else
-            cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
-        fi
+        client_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"})
     else
-        cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
-                  -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
-                  -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
-                  -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
+        client_cmake_flags+=(
+            -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}"
+            -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones"
+            -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient")
     fi
 fi
+echo "info: Configuring $client client with flags: ${client_cmake_flags[*]}"
+cmake .. "${client_cmake_flags[@]}"
 make -j"${proc}"
 make_install "${global}" "${priv_install}"
