@@ -105,6 +105,8 @@ override_dh_auto_configure:
 	#########################
 	## qt client configure ##
 	#########################
+	pwd
+	ls -la
 	cd client-qt && \
 		mkdir build && \
 		cd build && \
