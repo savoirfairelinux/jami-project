@@ -66,6 +66,13 @@ EOF
     ####################################
     ## Add packages to the repository ##
     ####################################
+    ls -la packages/
+    ls -la packages/${DISTRIBUTION}*/
+    ls -la /opt/
+    ls -la /opt/qt-jami/
+    ls -la /opt/qt-jami/pool/
+    ls -la /opt/qt-jami/pool/main/
+    ls -la /opt/qt-jami/pool/main/q/qt-jami/*
     for package in packages/${DISTRIBUTION}*/*.deb; do
         # Sign the deb
         echo "## signing: ${package} ##"
