@@ -31,6 +31,14 @@ CMAKE_OPTIONS=-DCHOST=${HOST_ARCH} \
 		-DPKG_CONFIG_EXECUTABLE=/usr/bin/${HOST_ARCH}-pkg-config
 endif
 
+# Qt-related variables
+export QTDIR := ${QTDIR}
+export QTVER := ${QTVER}
+export PATH := $(QTDIR)/bin:${PATH}
+export LD_LIBRARY_PATH := $(QTDIR)/lib:${LD_LIBRARY_PATH}
+export PKG_CONFIG_PATH := $(QTDIR)/lib/pkgconfig:${PKG_CONFIG_PATH}
+
+
 %:
 	dh $@
 
@@ -105,15 +113,7 @@ override_dh_auto_configure:
 	#########################
 	## qt client configure ##
 	#########################
-	cd client-qt && \
-		mkdir build && \
-		cd build && \
-		cmake \
-			-DCMAKE_INSTALL_PREFIX=/usr \
-			-DLRC=$(CURDIR)/lrc \
-			-DQT5_VER=$QTVER -DQT5_PATH=$QTDIR \
-			$(CMAKE_OPTIONS) \
-			..
+	# needs to be done after lrc is built; see below
 
 	dh_auto_configure
 
@@ -134,9 +134,18 @@ override_dh_auto_build:
 	########################
 	make -C client-gnome/build LDFLAGS="-lpthread" -j$(NO_CPUS) V=1
 
-	#####################
-	## qt client build ##
-	#####################
+	###################################
+	## qt client configure and build ##
+	###################################
+	cd client-qt && \
+		mkdir build && \
+		cd build && \
+		cmake \
+			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DLRC=$(CURDIR)/lrc \
+			-DQT5_VER=$(QTVER) -DQT5_PATH=$(QTDIR) \
+			$(CMAKE_OPTIONS) \
+			..
 	make -C client-qt/build -j$(NO_CPUS) V=1
 
 override_dh_auto_clean:
