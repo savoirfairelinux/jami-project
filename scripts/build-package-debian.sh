@@ -75,6 +75,10 @@ mk-build-deps ${MKBUILD_OPTIONS} --remove --install debian/control \
 DEBEMAIL="The Jami project <jami@gnu.org>" dch --create --package jami --newversion ${DEBIAN_VERSION} "Automatic nightly release"
 DEBEMAIL="The Jami project <jami@gnu.org>" dch --release --distribution "unstable" debian/changelog
 
+pwd
+ls -la
+ls -la ..
+
 # create orig tarball
 mk-origtargz --compression gzip ${RELEASE_TARBALL_FILENAME}
 rm --verbose ${RELEASE_TARBALL_FILENAME}
