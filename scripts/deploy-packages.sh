@@ -66,6 +66,9 @@ EOF
     ####################################
     ## Add packages to the repository ##
     ####################################
+    ls -la packages/
+    ls -la packages/${DISTRIBUTION}*/
+    ls -la packages/${DISTRIBUTION}*/*.deb
     for package in packages/${DISTRIBUTION}*/*.deb; do
         # Sign the deb
         echo "## signing: ${package} ##"
