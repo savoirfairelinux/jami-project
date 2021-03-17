@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 #
-# Copyright (C) 2016-2019 Savoir-faire Linux Inc.
+# Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
 # Author: Alexandre Viau <alexandre.viau@savoirfairelinux.com>
+# Author: Maxim Cournoyer <maxim.cournoyer@savoirfairelinux.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,55 +24,41 @@
 
 set -e
 
-# import the spec file
+# Import the spec file.
 mkdir -p /opt/ring-project
 cd /opt/ring-project
 cp /opt/ring-project-ro/packaging/rules/fedora/* .
 
-#create tree for build
+# Prepare the build tree.
 rpmdev-setuptree
 
-# place the source
+# Copy the source tarball.
 cp /opt/ring-project-ro/jami_*.tar.gz /root/rpmbuild/SOURCES
 
-# Set the version
+# Set the version and associated comment.
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" *.spec
-if [ ${DISTRIBUTION} == "fedora_32" ] || [ ${DISTRIBUTION} == "fedora_33" ] || [ ${DISTRIBUTION} == "fedora_34" ]; then
-    # Remove Obsoletes for Fedora 32, as we don't publish "ring"
-    sed -i '/^Obsoletes:/d' *.spec
-    sed -i '/^Provides:/d' *.spec
-    sed -i '/^Conflicts:/d' *.spec
-    # gnome-icon-theme-symbolic is removed from Fedora, but icons are well integrated
-    sed -i '/gnome-icon-theme-symbolic/d' *.spec
-fi
+rpmdev-bumpspec --comment="Automatic nightly release" \
+                --userstring="Jenkins <jami@lists.savoirfairelinux.net>" *.spec
 
-rpmdev-bumpspec --comment="Automatic nightly release" --userstring="Jenkins <ring@lists.savoirfairelinux.net>" jami.spec
-rpmdev-bumpspec --comment="Automatic nightly release" --userstring="Jenkins <ring@lists.savoirfairelinux.net>" jami-one-click.spec
+# TODO: We could use mock to build Fedora/RHEL packages in minimal
+# chroots matching the environment defined in the spec files.  It also
+# has a --chain option to chain the build of dependent packages.
 
+# Build the daemon and install it.
+rpmbuild -ba jami-daemon.spec
+rpm --install /root/rpmbuild/RPMS/x86_64/jami-daemon-*
 
-# install build deps
-dnf builddep -y jami.spec || echo "ignoring dnf builddep failure"
+# Build the client library and install it.
+rpmbuild -ba jami-libclient.spec
+rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-*
 
-# build the package
-QA_RPATHS=$(( 0x0001|0x0010 )) rpmbuild -ba jami.spec
+# Build the GNOME client.
+rpmbuild -ba jami-gnome.spec
 
-# move to output
+# Move the built packages to the output directory.
 mv /root/rpmbuild/RPMS/*/* /opt/output
 touch /opt/output/.packages-built
 chown -R ${CURRENT_UID}:${CURRENT_UID} /opt/output
 
-## JAMI ONE CLICK INSTALL RPM
-
-#copy script jami-all.postinst which add repo
-mkdir -p /root/rpmbuild/BUILD/ring-project/packaging/rules/one-click-install/
-cp jami-all.postinst  /root/rpmbuild/BUILD/ring-project/packaging/rules/one-click-install/
-
-# build the package
-QA_RPATHS=$(( 0x0001|0x0010 )) rpmbuild -ba jami-one-click.spec
-
-# move to output
-mkdir -p /opt/output/one-click-install
-mv /root/rpmbuild/RPMS/*/* /opt/output/one-click-install
-touch /opt/output/one-click-install/.packages-built
-chown -R ${CURRENT_UID}:${CURRENT_UID} /opt/output/one-click-install
-
+# TODO: One click install: create a package that combines the already
+# built package into one.
