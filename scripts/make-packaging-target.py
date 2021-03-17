@@ -51,7 +51,6 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -e RELEASE_VERSION=$(RELEASE_VERSION) \\
     -e RELEASE_TARBALL_FILENAME=$(RELEASE_TARBALL_FILENAME) \\
     -e DEBIAN_VERSION=%(version)s \\
-    -e DEBIAN_PACKAGING_OVERRIDE=%(debian_packaging_override)s \\
     -e CURRENT_UID=$(CURRENT_UID) \\
     -e CURRENT_GID=$(CURRENT_GID) \\
     -e DISTRIBUTION=%(distribution)s \\
@@ -101,7 +100,7 @@ DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT = (
     '--privileged --security-opt apparmor=docker-default')
 
 
-def generate_target(distribution, debian_packaging_override, output_file, options='', docker_image='', version='', docker_build_args = ''):
+def generate_target(distribution, output_file, options='', docker_image='', version='', docker_build_args = ''):
     if (docker_image == ''):
         docker_image = distribution
     if (version == ''):
@@ -109,7 +108,6 @@ def generate_target(distribution, debian_packaging_override, output_file, option
     return target_template % {
         "distribution": distribution,
         "docker_image": docker_image,
-        "debian_packaging_override": debian_packaging_override,
         "output_file": output_file,
         "options": options,
         "version": version,
@@ -119,7 +117,6 @@ def generate_target(distribution, debian_packaging_override, output_file, option
 
 def run_generate(parsed_args):
     print(generate_target(parsed_args.distribution,
-                          parsed_args.debian_packaging_override,
                           parsed_args.output_file,
                           parsed_args.options,
                           parsed_args.docker_image,
@@ -131,31 +128,26 @@ def run_generate_all(parsed_args):
         # Debian
         {
             "distribution": "debian_10",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
+            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
         },
         {
             "distribution": "debian_10_i386",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default",
         },
         {
             "distribution": "debian_10_armhf",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default",
         },
         {
             "distribution": "debian_10_arm64",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default"
         },
         {
             "distribution": "debian_10_qt",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
             "version": "$(DEBIAN_QT_VERSION)",
@@ -163,15 +155,13 @@ def run_generate_all(parsed_args):
         {
             "distribution": "debian_10_oci",
             "docker_image": "debian_10",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) -e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
         },
         {
             "distribution": "debian_10_i386_oci",
             "docker_image": "debian_10_i386",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
@@ -179,7 +169,6 @@ def run_generate_all(parsed_args):
         {
             "distribution": "debian_10_armhf_oci",
             "docker_image": "debian_10_armhf",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)"
@@ -187,7 +176,6 @@ def run_generate_all(parsed_args):
         {
             "distribution": "debian_10_arm64_oci",
             "docker_image": "debian_10_arm64",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)"
@@ -195,14 +183,12 @@ def run_generate_all(parsed_args):
         # Raspbian
         {
             "distribution": "raspbian_10_armhf",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default",
         },
         {
             "distribution": "raspbian_10_armhf_oci",
             "docker_image": "raspbian_10_armhf",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
@@ -210,18 +196,15 @@ def run_generate_all(parsed_args):
         # Ubuntu
         {
             "distribution": "ubuntu_18.04",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
             "distribution": "ubuntu_18.04_i386",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
             "distribution": "ubuntu_18.04_oci",
             "docker_image": "ubuntu_18.04",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
             "version": "$(DEBIAN_OCI_VERSION)",
@@ -229,35 +212,30 @@ def run_generate_all(parsed_args):
         {
             "distribution": "ubuntu_18.04_i386_oci",
             "docker_image": "ubuntu_18.04_i386",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR)",
             "version": "$(DEBIAN_OCI_VERSION)",
         },
         {
             "distribution": "ubuntu_20.04",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default",
         },
         {
             "distribution": "ubuntu_20.04_oci",
             "docker_image": "ubuntu_20.04",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
         },
         {
             "distribution": "ubuntu_20.10",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default",
         },
         {
             "distribution": "ubuntu_20.10_oci",
             "docker_image": "ubuntu_20.10",
-            "debian_packaging_override": "",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
@@ -280,13 +258,11 @@ def run_generate_all(parsed_args):
         # Fedora
         {
             "distribution": "fedora_32",
-            "debian_packaging_override": "",
             "output_file": ".packages-built",
             "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
         },
         {
             "distribution": "fedora_33",
-            "debian_packaging_override": "",
             "output_file": ".packages-built",
             "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
         },
@@ -298,7 +274,6 @@ def run_generate_all(parsed_args):
         },
         {
             "distribution": "rhel_8",
-            "debian_packaging_override": "",
             "output_file": ".packages-built",
             "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
             "docker_build_args": "--build-arg PASS=${PASS}"
@@ -306,20 +281,17 @@ def run_generate_all(parsed_args):
         # OpenSUSE
         {
             "distribution": "opensuse-leap_15.2",
-            "debian_packaging_override": "",
             "output_file": ".packages-built",
             "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
         },
         {
             "distribution": "opensuse-tumbleweed",
-            "debian_packaging_override": "",
             "output_file": ".packages-built",
             "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
         },
         # Snap
         {
             "distribution": "snap",
-            "debian_packaging_override": "",
             "output_file": ".packages-built",
         },
 
@@ -346,7 +318,6 @@ def parse_args():
 
     # Parameters
     ap.add_argument('--distribution')
-    ap.add_argument('--debian_packaging_override', default='')
     ap.add_argument('--output_file')
     ap.add_argument('--options', default='')
     ap.add_argument('--docker_image', default='')
