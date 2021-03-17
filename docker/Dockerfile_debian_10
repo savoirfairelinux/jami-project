@@ -9,7 +9,7 @@ RUN apt-get update && \
 # Speed up mk-build-deps
 RUN apt-get clean
 RUN apt-get update && \
-    apt-get install -y -o Acquire::Retires=10 \
+    apt-get install -y -o Acquire::Retries=10 \
         git \
         autoconf \
         automake \
