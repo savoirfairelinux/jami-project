@@ -15,6 +15,8 @@ endif
 # Binary package names
 JAMI_ALL_IN_ONE_PKG_NAME="jami-all"
 JAMI_CLIENT_PKG_NAME="jami"
+JAMI_CLIENT_GNOME_PKG_NAME="jami-gnome"
+JAMI_LIB_CLIENT_PKG_NAME="jami-libclient"
 JAMI_DAEMON_PKG_NAME="jami-daemon"
 
 # Bundled packages from contrib
@@ -33,6 +35,14 @@ ifneq (ubuntu_21.04,$(findstring ubuntu_21.04, $(DISTRIBUTION)))
 BUNDLED_PKGS="--enable-ffmpeg" # For ubuntu 21.04 it seems there is massive issues with linking for swscale
 endif
 endif
+
+# Qt-related variables
+QT_JAMI_PREFIX := ${QT_JAMI_PREFIX}
+export PATH := $(QT_JAMI_PREFIX)/bin:${PATH}
+export LD_LIBRARY_PATH := $(QT_JAMI_PREFIX)/lib:${LD_LIBRARY_PATH}
+export PKG_CONFIG_PATH := $(QT_JAMI_PREFIX)/lib/pkgconfig:${PKG_CONFIG_PATH}
+export CMAKE_PREFIX_PATH := $(QT_JAMI_PREFIX)/lib/cmake:${CMAKE_PREFIX_PATH}
+
 
 %:
 	dh $@
@@ -103,6 +113,11 @@ override_dh_auto_configure:
 			$(CMAKE_OPTIONS) \
 			..
 
+	#########################
+	## qt client configure ##
+	#########################
+	# needs to be done after lrc is built; see below
+
 	dh_auto_configure
 
 override_dh_auto_build:
@@ -121,6 +136,19 @@ override_dh_auto_build:
 	## gnome client build ##
 	########################
 	make -C client-gnome/build LDFLAGS="-lpthread" -j$(NO_CPUS) V=1
+
+	###################################
+	## qt client configure and build ##
+	###################################
+	cd client-qt && \
+		mkdir build && \
+		cd build && \
+		cmake \
+			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DLRC=$(CURDIR)/lrc \
+			$(CMAKE_OPTIONS) \
+			..
+	make -C client-qt/build -j$(NO_CPUS) V=1
 
 override_dh_auto_clean:
 	################################
@@ -149,6 +177,13 @@ override_dh_auto_clean:
 	if [ -f client-gnome/build/Makefile ]; then make -C client-gnome/build clean; fi
 	rm -rfv client-gnome/build
 
+	#####################
+	## qt client clean ##
+	#####################
+	# CMake build system has no distclean target, so use clean.
+	if [ -f client-qt/build/Makefile ]; then make -C client-qt/build clean; fi
+	rm -rfv client-qt/build
+
 override_dh_clean:
 	# GNUTLS contains:
 	# ring-project/daemon/contrib/tarballs-unpacked/gnutls-3.5.10.tar.xz/gnutls-3.5.10/src/certtool-args.c.bak
@@ -170,17 +205,24 @@ override_dh_auto_install:
 	#########################
 
         ## LibRingClient
-	cd lrc/build && make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME) install
-	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME)/usr/include
+	cd lrc/build && make DESTDIR=$(CURDIR)/debian/$(JAMI_LIB_CLIENT_PKG_NAME) install
+	rm -rfv $(CURDIR)/debian/$(JAMI_LIB_CLIENT_PKG_NAME)/usr/include
 
 	# This is a symlink, should be in -dev package
-	rm -v $(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME)/usr/lib/libringclient.so
+	rm -v $(CURDIR)/debian/$(JAMI_LIB_CLIENT_PKG_NAME)/usr/lib/libringclient.so
 
 	# cmake files
 	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME)/usr/lib/cmake
 
         ## GNOME client
-	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME) install
+	cd client-gnome/build && \
+		make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME) install
+	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME)/usr/bin/jami
+
+	## Qt client
+	cd client-qt/build && \
+		make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME) install
+
 	ln -sf /usr/bin/jami $(CURDIR)/debian/jami/usr/bin/ring.cx
 
 	######################
@@ -205,7 +247,16 @@ override_dh_auto_install:
 
         ## GNOME client
 	cd client-gnome/build && make DESTDIR=$(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME) install
-	ln -sf /usr/bin/jami $(CURDIR)/debian/jami-all/usr/bin/ring.cx
+	rm -rfv $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/bin/jami
+
+	## Qt client
+	cd client-qt/build && \
+		make DESTDIR=$(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME) install
+
+	ln -sf /usr/bin/jami $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/bin/ring.cx
+
+override_dh_shlibdeps:
+	dh_shlibdeps -- -x$(JAMI_ALL_IN_ONE_PKG_NAME)
 
 tmpdir:= $(shell mktemp -d)
 workdir:= $(shell pwd)
