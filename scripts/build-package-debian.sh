@@ -35,29 +35,15 @@ fi
 
 # import the debian folder and override files if needed
 cp -r ${PKG_DIR} debian
-if [ -z "${DEBIAN_PACKAGING_OVERRIDE}" ]; then
-    echo "DEBIAN_PACKAGING_OVERRIDE not set."
-else
-    cp -r ${DEBIAN_PACKAGING_OVERRIDE}/* debian/
-fi
 
 DPKG_BUILD_OPTIONS=""
-MKBUILD_OPTIONS=""
 # Set the host architecture as armhf and add some specific architecture
 # options to the package builder.
 if grep -q "raspbian_10_armhf" <<< "${DISTRIBUTION}"; then
     echo "Adding armhf as the host architecture."
     export HOST_ARCH=arm-linux-gnueabihf
-    dpkg --add-architecture armhf
     DPKG_BUILD_OPTIONS="${DPKG_BUILD_OPTIONS} -a armhf"
-    MKBUILD_OPTIONS="${MKBUILD_OPTIONS} --host-arch armhf"
 fi
-
-# install build deps
-apt-get clean
-apt-get update
-apt-get upgrade -o Acquire::Retries=10 -y
-mk-build-deps ${MKBUILD_OPTIONS} --remove --install debian/control -t "apt-get -y --no-install-recommends"
 
 # create changelog file
 DEBEMAIL="The Jami project <jami@gnu.org>" dch --create --package jami --newversion ${DEBIAN_VERSION} "Automatic nightly release"
