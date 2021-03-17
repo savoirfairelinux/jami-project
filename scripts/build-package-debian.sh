@@ -53,11 +53,23 @@ if grep -q "raspbian_10_armhf" <<< "${DISTRIBUTION}"; then
     MKBUILD_OPTIONS="${MKBUILD_OPTIONS} --host-arch armhf"
 fi
 
-# install build deps
+# clean and upgrade
 apt-get clean
 apt-get update
 apt-get upgrade -o Acquire::Retries=10 -y
-mk-build-deps ${MKBUILD_OPTIONS} --remove --install debian/control -t "apt-get -y --no-install-recommends"
+
+# add repo for qt-jami
+apt-get install -o Acquire::Retries=10 -y \
+        gnupg dirmngr ca-certificates curl
+curl --retry 10 -s https://dl.jami.net/public-key.gpg | \
+    tee /usr/share/keyrings/jami-archive-keyring.gpg > /dev/null
+# TODO: replace 'internal' with 'nightly' when merging
+sh -c "echo 'deb [signed-by=/usr/share/keyrings/jami-archive-keyring.gpg] https://dl.jami.net/internal/debian_10_qt/ jami main' > /etc/apt/sources.list.d/qt-jami.list"
+apt-get update
+
+# install build deps
+mk-build-deps ${MKBUILD_OPTIONS} --remove --install debian/control \
+              -t "apt-get -o Acquire::Retries=10 -y --no-install-recommends"
 
 # create changelog file
 DEBEMAIL="The Jami project <jami@gnu.org>" dch --create --package jami --newversion ${DEBIAN_VERSION} "Automatic nightly release"
