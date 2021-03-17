@@ -46,6 +46,30 @@
       "revId": "3316dea07f14c8f79488b528a41ca0ede00b5c2c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a4dff5_79be3260",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-03-17T22:10:47Z",
+      "side": 1,
+      "message": "The CI flow is still unclear to me; currently IIUC we build all the packages for a given distribution at the same time and rsync them to the remote DL server.  Couldn\u0027t the same be done here?  With building Qt at first so that jami-qt can build using it.  I don\u0027t see when fetching from qt from the dl server is needed; is it because we want to build it only once and reuse it?",
+      "parentUuid": "a9853698_69d0f190",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 84
+      },
+      "revId": "3316dea07f14c8f79488b528a41ca0ede00b5c2c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
