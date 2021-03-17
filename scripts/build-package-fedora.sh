@@ -52,8 +52,8 @@ rpm --install /root/rpmbuild/RPMS/x86_64/jami-daemon-*
 rpmbuild -ba jami-libclient.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-*
 
-# Build the GNOME client.
-rpmbuild -ba jami-gnome.spec
+# Build the GNOME and Qt clients.
+rpmbuild -ba jami-gnome.spec jami-qt.spec
 
 # Move the built packages to the output directory.
 mv /root/rpmbuild/RPMS/*/* /opt/output
