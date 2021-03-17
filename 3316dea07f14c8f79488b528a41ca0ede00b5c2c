@@ -22,6 +22,30 @@
       "revId": "3316dea07f14c8f79488b528a41ca0ede00b5c2c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9853698_69d0f190",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-03-17T01:55:56Z",
+      "side": 1,
+      "message": "for each distro $D, a build of $D_qt would build the qt package at the location expected here. e.g. debian_10_qt for debian_10. hypothetically, things could be improved to not require a separate $D_qt distro for each current deb-based distro, but i think it\u0027s not urgent, and it\u0027s more important we package and get client-qt out there :-)",
+      "parentUuid": "4a9af698_4cfec2cf",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 84
+      },
+      "revId": "3316dea07f14c8f79488b528a41ca0ede00b5c2c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
