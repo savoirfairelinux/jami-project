@@ -63,7 +63,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(docker_image)s
 	docker build \\
         -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME) \\
-        -f docker/Dockerfile_%(docker_image)s %(password_rhel8)s \\
+        -f docker/Dockerfile_%(docker_image)s %(docker_build_args)s \\
         $(CURDIR)
 	touch $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 
@@ -85,11 +85,14 @@ package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(dis
 """
 
 
-def generate_target(distribution, debian_packaging_override, output_file, options='', docker_image='', version='', password_rhel8 = ''):
+RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS = (
+    '--security-opt seccomp=./docker/profile-seccomp-fedora_28.json '
+    '--privileged')
+
+
+def generate_target(distribution, debian_packaging_override, output_file, options='', docker_image='', version='', docker_build_args = ''):
     if (docker_image == ''):
         docker_image = distribution
-    if (docker_image == 'rhel_8'):
-        password_rhel8 = password_rhel8
     if (version == ''):
         version = "$(DEBIAN_VERSION)"
     return target_template % {
@@ -99,7 +102,7 @@ def generate_target(distribution, debian_packaging_override, output_file, option
         "output_file": output_file,
         "options": options,
         "version": version,
-        "password_rhel8": password_rhel8,
+        "docker_build_args": docker_build_args,
     }
 
 
@@ -247,33 +250,33 @@ def run_generate_all(parsed_args):
             "distribution": "fedora_32",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
+            "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
         },
         {
             "distribution": "fedora_33",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
+            "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
         },
         {
             "distribution": "rhel_8",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged",
-            "password_rhel8": "--build-arg PASS=${PASS}"
+            "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
+            "docker_build_args": "--build-arg PASS=${PASS}"
         },
         # OpenSUSE
         {
             "distribution": "opensuse-leap_15.2",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged"
+            "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
         },
         {
             "distribution": "opensuse-tumbleweed",
             "debian_packaging_override": "",
             "output_file": ".packages-built",
-            "options": "--security-opt seccomp=./docker/profile-seccomp-fedora_28.json --privileged"
+            "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
         },
         # Snap
         {
