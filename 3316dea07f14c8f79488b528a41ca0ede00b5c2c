@@ -70,6 +70,30 @@
       "revId": "3316dea07f14c8f79488b528a41ca0ede00b5c2c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6ede41_e46c8f0d",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-03-18T12:52:56Z",
+      "side": 1,
+      "message": "yes exactly; we don\u0027t want to build qt-jami every time we build jami-qt, as building it is quite a computationally heavy task.  we only want to build qt-jami occasionally, and keep using it in many jami-qt builds until we decide we need to build qt-jami again.  does this help clarify things a bit?",
+      "parentUuid": "54a4dff5_79be3260",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 84
+      },
+      "revId": "3316dea07f14c8f79488b528a41ca0ede00b5c2c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
