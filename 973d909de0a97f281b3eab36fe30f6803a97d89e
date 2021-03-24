@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93b17bad_a9f0c026",
+        "filename": "docker/Dockerfile_fedora_32",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-03-24T16:32:09Z",
+      "side": 1,
+      "message": "why mock?",
+      "range": {
+        "startLine": 6,
+        "startChar": 19,
+        "endLine": 6,
+        "endChar": 23
+      },
+      "revId": "973d909de0a97f281b3eab36fe30f6803a97d89e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
