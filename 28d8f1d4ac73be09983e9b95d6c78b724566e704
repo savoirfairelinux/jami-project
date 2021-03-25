@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52429008_430cba13",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 28
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-03-25T15:16:15Z",
+      "side": 1,
+      "message": "How long does it take the build farm to build Qt? If it\u0027s like 10 minutes, I\u0027d say let\u0027s build it every time and forego the caching complications and special cases.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 8
+      },
+      "revId": "28d8f1d4ac73be09983e9b95d6c78b724566e704",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b601de74_3d90f62d",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 28
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-03-25T15:16:15Z",
+      "side": 1,
+      "message": "When is the Qt package uploaded?  Some CI job?  Which one?",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 34
+      },
+      "revId": "28d8f1d4ac73be09983e9b95d6c78b724566e704",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
