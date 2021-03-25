@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b01acb88_93892730",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 28
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-03-25T15:44:57Z",
+      "side": 1,
+      "message": "It actually takes on the order of 1h30m or more.  Definitely not something we want to incur for every build (which currently takes 10-15 mins).",
+      "parentUuid": "52429008_430cba13",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 8
+      },
+      "revId": "28d8f1d4ac73be09983e9b95d6c78b724566e704",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b601de74_3d90f62d",
         "filename": "scripts/deploy-packages.sh",
         "patchSetId": 28
@@ -36,6 +60,30 @@
       "writtenOn": "2021-03-25T15:16:15Z",
       "side": 1,
       "message": "When is the Qt package uploaded?  Some CI job?  Which one?",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 34
+      },
+      "revId": "28d8f1d4ac73be09983e9b95d6c78b724566e704",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5342d4_b03000a6",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 28
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-03-25T15:44:57Z",
+      "side": 1,
+      "message": "I think I addressed this in one of the other changesets, but yeah for each distro $D, doing a build of the distro named $D_qt will rebuild Qt for use in $D.  This is a bit quirky, and effectively doubles the number of our \"distros\" in the short term, but it\u0027s an \"implementation detail\" and the fastest way I could get this done.\n\nI would be open to packing the logic for building Qt into the same distro, adding an optional setting (like the \u0027Build OCI\u0027 checkbox on jenkins) for each distro, called \u0027Build Qt\u0027, that when specified would do a rebuild of Qt before building client-qt itself.",
+      "parentUuid": "b601de74_3d90f62d",
       "range": {
         "startLine": 98,
         "startChar": 4,
