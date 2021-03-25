@@ -46,6 +46,23 @@
       "revId": "973d909de0a97f281b3eab36fe30f6803a97d89e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039ea6c3_7be522dd",
+        "filename": "packaging/rules/fedora/jami-qt.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-03-25T15:42:24Z",
+      "side": 1,
+      "message": "This may not be required... Need to check with ldd.",
+      "revId": "973d909de0a97f281b3eab36fe30f6803a97d89e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
