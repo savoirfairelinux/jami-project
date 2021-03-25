@@ -22,6 +22,30 @@
       "revId": "973d909de0a97f281b3eab36fe30f6803a97d89e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e369e4d0_e1f5c87a",
+        "filename": "docker/Dockerfile_fedora_32",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-03-25T15:41:29Z",
+      "side": 1,
+      "message": "It\u0027s in preparation of the next modernization of our RPM builds.  It sets a chroot custom made based on the spec file; which allows catching missing Build-Requires directives.  I\u0027ve punted on that for now, so it\u0027s not used yet, although I\u0027d leave it in (it\u0027s small, and I\u0027ll keep experimenting with it).",
+      "parentUuid": "93b17bad_a9f0c026",
+      "range": {
+        "startLine": 6,
+        "startChar": 19,
+        "endLine": 6,
+        "endChar": 23
+      },
+      "revId": "973d909de0a97f281b3eab36fe30f6803a97d89e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
