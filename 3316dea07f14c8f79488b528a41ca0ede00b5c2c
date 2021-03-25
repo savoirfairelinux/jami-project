@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0e0dbcc_d52177c2",
+        "filename": "scripts/build-package-debian-qt.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-03-25T22:33:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81a67d31_94068a87",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 106
+      },
+      "revId": "3316dea07f14c8f79488b528a41ca0ede00b5c2c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a9af698_4cfec2cf",
         "filename": "scripts/deploy-packages.sh",
         "patchSetId": 31
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Yes!",
       "parentUuid": "fd6ede41_e46c8f0d",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 84
+      },
+      "revId": "3316dea07f14c8f79488b528a41ca0ede00b5c2c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac6d2d0a_d2deb452",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 31
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-03-25T22:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05efdd52_c9d81a37",
       "range": {
         "startLine": 46,
         "startChar": 10,
