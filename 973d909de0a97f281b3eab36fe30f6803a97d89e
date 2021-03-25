@@ -63,6 +63,24 @@
       "revId": "973d909de0a97f281b3eab36fe30f6803a97d89e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702f804d_94ef0075",
+        "filename": "packaging/rules/fedora/jami-qt.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-03-25T15:56:29Z",
+      "side": 1,
+      "message": "I just checked; seems safer to propagate them as they are dynamically loaded plugins and or QML sources.",
+      "parentUuid": "039ea6c3_7be522dd",
+      "revId": "973d909de0a97f281b3eab36fe30f6803a97d89e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
