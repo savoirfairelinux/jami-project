@@ -106,7 +106,7 @@ if [ "${global}" = "true" ]; then
 else
     ./configure $sharedLib "$CONFIGURE_FLAGS" --prefix="${INSTALL}/daemon"
 fi
-make -j"${proc}"
+make -j"${proc}" V=1
 make_install "${global}" "${priv_install}"
 
 # For the client-qt, verify system's version if no path provided
@@ -153,7 +153,7 @@ else
 fi
 echo "info: Configuring LRC with flags: ${lrc_cmake_flags[*]}"
 cmake .. "${lrc_cmake_flags[@]}"
-make -j"${proc}"
+make -j"${proc}" V=1
 make_install "${global}" "${priv_install}"
 
 # client
@@ -189,5 +189,5 @@ else
 fi
 echo "info: Configuring $client client with flags: ${client_cmake_flags[*]}"
 cmake .. "${client_cmake_flags[@]}"
-make -j"${proc}"
+make -j"${proc}" V=1
 make_install "${global}" "${priv_install}"
