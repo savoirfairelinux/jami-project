@@ -182,23 +182,22 @@ PACMAN_CLIENT_QT_DEPENDENCIES = [
 
 OSX_DEPENDENCIES = [
     'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt5',
-    'libtool', 'yasm', 'nasm', 'automake', 'libtasn'
+    'libtool', 'yasm', 'nasm', 'automake'
 ]
 
 OSX_DEPENDENCIES_UNLINK = [
     'autoconf*', 'cmake*', 'gettext*', 'pkg-config*', 'qt*', 'qt@5.*',
-    'libtool*', 'yasm*', 'nasm*', 'automake*', 'gnutls*', 'nettle*', 'msgpack*',
-    'libtasn'
+    'libtool*', 'yasm*', 'nasm*', 'automake*', 'gnutls*', 'nettle*', 'msgpack*'
 ]
 
 IOS_DEPENDENCIES = [
     'autoconf', 'automake', 'cmake', 'yasm', 'libtool',
-    'pkg-config', 'gettext', 'swiftlint', 'swiftgen', 'libtasn'
+    'pkg-config', 'gettext', 'swiftlint', 'swiftgen'
 ]
 
 IOS_DEPENDENCIES_UNLINK = [
     'autoconf*', 'automake*', 'cmake*', 'yasm*', 'libtool*',
-    'pkg-config*', 'gettext*', 'swiftlint*', 'swiftgen*', 'libtasn'
+    'pkg-config*', 'gettext*', 'swiftlint*', 'swiftgen*'
 ]
 
 UNINSTALL_DAEMON_SCRIPT = [
