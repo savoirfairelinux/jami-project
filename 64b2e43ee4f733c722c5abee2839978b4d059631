@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa1197d6_5bde7f38",
+        "filename": "packaging/rules/debian/control",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-03-29T13:17:29Z",
+      "side": 0,
+      "message": "removed?",
+      "range": {
+        "startLine": 62,
+        "startChar": 14,
+        "endLine": 93,
+        "endChar": 19
+      },
+      "revId": "64b2e43ee4f733c722c5abee2839978b4d059631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
