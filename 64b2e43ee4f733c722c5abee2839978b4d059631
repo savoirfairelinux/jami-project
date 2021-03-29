@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddd0a422_d5bc5a9e",
+        "filename": "Makefile",
+        "patchSetId": 33
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-03-29T13:14:44Z",
+      "side": 1,
+      "message": "In my opinion, we should use /usr/local/lib/qt-jami\nIf I follow https://www.pathname.com/fhs/pub/fhs-2.3.html#LIBESSENTIALSHAREDLIBRARIESANDKERN\n\n\u003e The /lib directory contains those shared library images needed (...) by binaries in /bin and /sbin.\n\nAnd we install jami-qt in /usr/local/bin\n\n/opt would be ok if we install jami in /opt/jami-qt/bin, but it\u0027s not the case here.",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 32
+      },
+      "revId": "64b2e43ee4f733c722c5abee2839978b4d059631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a6be651_be1c3089",
+        "filename": "packaging/rules/debian-qt/control",
+        "patchSetId": 33
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-03-29T13:14:44Z",
+      "side": 1,
+      "message": "If you do stuff while in SFL, use the SFL address",
+      "range": {
+        "startLine": 4,
+        "startChar": 25,
+        "endLine": 4,
+        "endChar": 42
+      },
+      "revId": "64b2e43ee4f733c722c5abee2839978b4d059631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a05da19_494fa9f9",
+        "filename": "packaging/rules/debian-qt/qt-jami-env.sh",
+        "patchSetId": 33
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-03-29T13:14:44Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 3,
+        "startChar": 11,
+        "endLine": 3,
+        "endChar": 24
+      },
+      "revId": "64b2e43ee4f733c722c5abee2839978b4d059631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a80452_839bd4e7",
+        "filename": "packaging/rules/debian-qt/qt-jami.install",
+        "patchSetId": 33
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-03-29T13:14:44Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "64b2e43ee4f733c722c5abee2839978b4d059631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
