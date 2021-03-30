@@ -61,7 +61,7 @@ mkdir -p /root/rpmbuild/BUILD/ring-project/packaging/rules/one-click-install/
 cp jami-all.postinst  /root/rpmbuild/BUILD/ring-project/packaging/rules/one-click-install/
 
 # build the package
-rpmbuild -ba jami-one-click.spec
+rpmbuild -ba jami-gnome.spec jami-qt.spec
 
 # move to output
 mkdir -p /opt/output/one-click-install

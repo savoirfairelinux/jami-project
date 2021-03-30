@@ -23,7 +23,7 @@ BuildRequires: qt5-qttools-devel
 
 # Build and runtime dependencies.
 BuildRequires: qrencode-devel
-BuildRequires: qt5-qtbase-devel
+# TODO BuildRequires: qt5-qtbase-devel
 BuildRequires: qt5-qtdeclarative-devel
 BuildRequires: qt5-qtmultimedia-devel
 BuildRequires: qt5-qtquickcontrols
