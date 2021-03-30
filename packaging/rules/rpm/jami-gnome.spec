@@ -21,15 +21,15 @@ BuildRequires: gettext-devel
 
 # Build and runtime dependencies.
 BuildRequires: glib2-devel
-BuildRequires: dbus-devel
-BuildRequires: libnotify-devel
+# TODO BuildRequires: dbus-devel
+# TODO BuildRequires: libnotify-devel
 BuildRequires: clutter-devel
 BuildRequires: clutter-gtk-devel
 BuildRequires: gtk3-devel
-BuildRequires: libappindicator-gtk3-devel
+# TODO BuildRequires: libappindicator-gtk3-devel
 BuildRequires: libcanberra-devel
 BuildRequires: qrencode-devel
-BuildRequires: webkitgtk4-devel
+# TODO BuildRequires: webkitgtk4-devel
 
 %description
 This package contains the GNOME desktop client of Jami. Jami is a free

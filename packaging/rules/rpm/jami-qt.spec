@@ -19,17 +19,17 @@ Obsoletes:     jami < %{version}-%{release}
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: make
-BuildRequires: qt5-qttools-devel
+# TODO BuildRequires: qt5-qttools-devel
 
 # Build and runtime dependencies.
 BuildRequires: qrencode-devel
-BuildRequires: qt5-qtbase-devel
-BuildRequires: qt5-qtdeclarative-devel
-BuildRequires: qt5-qtmultimedia-devel
-BuildRequires: qt5-qtquickcontrols
-BuildRequires: qt5-qtquickcontrols2-devel
-BuildRequires: qt5-qtsvg-devel
-BuildRequires: qt5-qtwebengine-devel
+# TODO BuildRequires: qt5-qtbase-devel
+# TODO BuildRequires: qt5-qtdeclarative-devel
+# TODO BuildRequires: qt5-qtmultimedia-devel
+# TODO BuildRequires: qt5-qtquickcontrols
+# TODO BuildRequires: qt5-qtquickcontrols2-devel
+# TODO BuildRequires: qt5-qtsvg-devel
+# TODO BuildRequires: qt5-qtwebengine-devel
 
 # Runtime dependencies not automatically registered by RPM.
 Requires: qt5-qtquickcontrols
