@@ -14,18 +14,17 @@ RUN apt-get update && \
 RUN sed -n '/^deb\s/s//deb-src /p' /etc/apt/sources.list > /etc/apt/sources.list.d/deb-src.list
 
 RUN apt-get clean && apt-get update
-RUN if [ -z "${OVERRIDE_PACKAGING_DIR}" ] && \
-       [ -f "/opt/ring-project-ro/${OVERRIDE_PACKAGING_DIR}/control" ]; then \
-           mk-build-deps \
-               --remove --install \
-               --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
-               "/opt/ring-project-ro/${OVERRIDE_PACKAGING_DIR}/control"; \
+RUN mkdir /tmp/depsinst; \
+    cd /tmp/depsinst; \
+    if [ -z "${OVERRIDE_PACKAGING_DIR}" ]; then \
+        cp -rp "/opt/ring-project-ro/packaging/rules/debian-qt" "debian"; \
     else \
-        mk-build-deps \
-            --remove --install \
-            --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
-            "/opt/ring-project-ro/packaging/rules/debian-qt/control"; \
-    fi
+        cp -rp "/opt/ring-project-ro/${OVERRIDE_PACKAGING_DIR}" "debian"; \
+    fi; \
+    mk-build-deps \
+        --remove --install \
+        --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
+        "debian/control"
 
 ADD scripts/build-package-debian-qt.sh /opt/build-package-debian-qt.sh
 
