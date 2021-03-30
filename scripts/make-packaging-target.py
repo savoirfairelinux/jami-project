@@ -61,6 +61,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
 
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(docker_image)s
 	docker build \\
+        -v $(CURDIR):/opt/ring-project-ro:ro \\
         -t $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME) \\
         -f docker/Dockerfile_%(docker_image)s %(docker_build_args)s \\
         $(CURDIR)
