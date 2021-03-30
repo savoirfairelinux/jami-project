@@ -14,13 +14,13 @@ Source:        jami_%{version}.tar.gz
 Requires:      jami-daemon = %{version}
 
 # Build dependencies
-BuildRequires: NetworkManager-libnm-devel
+# TODO BuildRequires: NetworkManager-libnm-devel
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: jami-daemon-devel = %{version}
 BuildRequires: make
-BuildRequires: qt5-qtbase-devel
-BuildRequires: qt5-qttools-devel
+# TODO BuildRequires: qt5-qtbase-devel
+# TODO BuildRequires: qt5-qttools-devel
 
 %description
 This package contains the client library of Jami, a free software for
