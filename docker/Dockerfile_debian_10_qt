@@ -14,18 +14,18 @@ RUN apt-get update && \
 RUN sed -n '/^deb\s/s//deb-src /p' /etc/apt/sources.list > /etc/apt/sources.list.d/deb-src.list
 
 RUN apt-get clean && apt-get update
-RUN if [ -z "${OVERRIDE_PACKAGING_DIR}" ] && \
-       [ -f "/opt/ring-project-ro/${OVERRIDE_PACKAGING_DIR}/control" ]; then \
-           mk-build-deps \
-               --remove --install \
-               --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
-               "/opt/ring-project-ro/${OVERRIDE_PACKAGING_DIR}/control"; \
-    else \
-        mk-build-deps \
-            --remove --install \
-            --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
-            "/opt/ring-project-ro/packaging/rules/debian-qt/control"; \
-    fi
+COPY packaging/rules/debian-qt/* ${OVERRIDE_PACKAGING_DIR} /tmp/builddeps/debian/
+RUN cd /tmp/builddeps/debian; \
+    if [ -d "$(basename ${OVERRIDE_PACKAGING_DIR})" ]; then \
+        mv "$(basename ${OVERRIDE_PACKAGING_DIR})"/* .; \
+        rm -r "$(basename ${OVERRIDE_PACKAGING_DIR})"; \
+    fi; \
+    cd ..; \
+    mk-build-deps \
+        --remove --install \
+        --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
+        "debian/control"; \
+    cd / && rm -rf /tmp/builddeps
 
 ADD scripts/build-package-debian-qt.sh /opt/build-package-debian-qt.sh
 
