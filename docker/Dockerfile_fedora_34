@@ -73,6 +73,6 @@ RUN dnf install -y \
         qt5-qtwebengine-devel \
         sqlite-devel
 
-ADD scripts/build-package-fedora.sh /opt/build-package-fedora.sh
+ADD scripts/build-package-rpm.sh /opt/build-package-rpm.sh
 
-CMD /opt/build-package-fedora.sh
+CMD /opt/build-package-rpm.sh
