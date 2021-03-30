@@ -19,12 +19,14 @@ RUN if [ -z "${OVERRIDE_PACKAGING_DIR}" ] && \
            mk-build-deps \
                --remove --install \
                --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
-               "/opt/ring-project-ro/${OVERRIDE_PACKAGING_DIR}/control"; \
+               "/opt/ring-project-ro/${OVERRIDE_PACKAGING_DIR}/control" \
+               qt-jami; \
     else \
         mk-build-deps \
             --remove --install \
             --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
-            "/opt/ring-project-ro/packaging/rules/debian-qt/control"; \
+            "/opt/ring-project-ro/packaging/rules/debian-qt/control" \
+            qt-jami; \
     fi
 
 ADD scripts/build-package-debian-qt.sh /opt/build-package-debian-qt.sh
