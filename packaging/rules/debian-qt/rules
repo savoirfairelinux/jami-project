@@ -23,3 +23,6 @@ override_dh_auto_configure:
 
 override_dh_auto_install:
 	dh_auto_install -Smakefile -- INSTALL_ROOT=$(CURDIR)/debian/tmp/
+	ls -la $(CURDIR)/debian/tmp/usr/local
+	ls -la $(CURDIR)/debian/tmp/usr/local/*
+	ls -la $(CURDIR)/debian/tmp/usr/local/*/*
