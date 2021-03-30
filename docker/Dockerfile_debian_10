@@ -15,23 +15,22 @@ RUN apt-get update && \
 
 RUN curl --retry 10 -s https://dl.jami.net/public-key.gpg | \
     tee /usr/share/keyrings/jami-archive-keyring.gpg > /dev/null
-RUN sh -c "echo 'deb [signed-by=/usr/share/keyrings/jami-archive-keyring.gpg] https://dl.jami.net/nightly/debian_10_qt/ jami main' > /etc/apt/sources.list.d/qt-jami.list"
+RUN sh -c "echo 'deb [signed-by=/usr/share/keyrings/jami-archive-keyring.gpg] https://dl.jami.net/internal/debian_10_qt/ jami main' > /etc/apt/sources.list.d/qt-jami.list"
 
 # add/enable src repos (needed for next step)
 RUN sed -n '/^deb\s/s//deb-src /p' /etc/apt/sources.list > /etc/apt/sources.list.d/deb-src.list
 
 RUN apt-get clean && apt-get update
-RUN if [ -z "${OVERRIDE_PACKAGING_DIR}" ] && \
-       [ -f "/opt/ring-project-ro/${OVERRIDE_PACKAGING_DIR}/control" ]; then \
-           mk-build-deps \
-               --remove --install \
-               --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
-               "/opt/ring-project-ro/${OVERRIDE_PACKAGING_DIR}/control"; \
-    else \
-        mk-build-deps \
+RUN if [ -z "${OVERRIDE_PACKAGING_DIR}" ]; then \
+        cd packaging/rules && mk-build-deps \
             --remove --install \
             --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
-            "/opt/ring-project-ro/packaging/rules/debian/control"; \
+            "debian/control"; \
+    else \
+        cd packaging/rules && mk-build-deps \
+            --remove --install \
+            --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
+            "${OVERRIDE_PACKAGING_DIR}/control"; \
     fi
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
