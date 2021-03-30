@@ -78,6 +78,6 @@ RUN zypper --non-interactive up -y && \
         libsndfile-devel \
         evolution-devel
 
-ADD scripts/build-package-opensuse-leap.sh  /opt/build-package-opensuse-leap.sh
+ADD scripts/build-package-rpm.sh  /opt/build-package-rpm.sh
 
-CMD /opt/build-package-opensuse-leap.sh
+CMD /opt/build-package-rpm.sh
