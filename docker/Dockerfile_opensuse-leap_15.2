@@ -29,7 +29,6 @@ RUN zypper --non-interactive up -y && \
         libQt5DBus-devel \
         pcre-devel \
         yaml-cpp-devel \
-        boost-devel \
         libdbus-c++-devel \
         libQt5DBus-devel \
         libXext-devel \
@@ -40,7 +39,6 @@ RUN zypper --non-interactive up -y && \
         chrpath \
         check \
         astyle \
-        uuid-devel \
         gettext-devel \
         gcc-c++ \
         which \
@@ -72,17 +70,27 @@ RUN zypper --non-interactive up -y && \
         sqlite-devel \
         libQt5Sql-devel \
         libQt5Gui-devel  \
+        libQt5Widgets-devel \
+        libqt5-qtdeclarative-devel \
+        libqt5-qtquickcontrols \
+        libQt5Concurrent-devel \
+        libQt5QuickControls2-devel \
+        libqt5-qtmultimedia-devel \
+        libqt5-qtsvg-devel \
+        libqt5-qtbase-devel \
+        libqt5-qttools \
+        libQt5Concurrent-devel \
+        libqt5-qtwebengine-devel \
         ffmpeg-4-libavutil-devel \
         gtk3-devel\
         qrencode-devel \
         python3-python-dateutil \
         libqt5-linguist-devel \
-        libsndfile-devel \
-        evolution-devel
+        libsndfile-devel
 
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
 
-ADD scripts/build-package-opensuse-leap.sh  /opt/build-package-opensuse-leap.sh
+ADD scripts/build-package-rpm.sh  /opt/build-package-rpm.sh
 
-CMD /opt/build-package-opensuse-leap.sh
+CMD /opt/build-package-rpm.sh

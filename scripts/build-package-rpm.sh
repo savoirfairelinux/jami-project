@@ -27,7 +27,7 @@ set -e
 # Import the spec file.
 mkdir -p /opt/ring-project
 cd /opt/ring-project
-cp /opt/ring-project-ro/packaging/rules/fedora/* .
+cp /opt/ring-project-ro/packaging/rules/rpm/* .
 
 # Prepare the build tree.
 rpmdev-setuptree
@@ -39,10 +39,6 @@ cp /opt/ring-project-ro/jami_*.tar.gz /root/rpmbuild/SOURCES
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" *.spec
 rpmdev-bumpspec --comment="Automatic nightly release" \
                 --userstring="Jenkins <jami@lists.savoirfairelinux.net>" *.spec
-
-# TODO: We could use mock to build Fedora/RHEL packages in minimal
-# chroots matching the environment defined in the spec files.  It also
-# has a --chain option to chain the build of dependent packages.
 
 # Build the daemon and install it.
 rpmbuild -ba jami-daemon.spec
@@ -66,3 +62,18 @@ chown -R ${CURRENT_UID}:${CURRENT_UID} /opt/output
 # jami-libclient and jami-daemon from the newly configured
 # repository).  See how Cisco OpenH264, Google Chrome, rpmfusion, COPR
 # do it for inspiration.
+
+## JAMI ONE CLICK INSTALL RPM
+
+#copy script jami-all.postinst which add repo
+mkdir -p /root/rpmbuild/BUILD/ring-project/packaging/rules/one-click-install/
+cp jami-all.postinst  /root/rpmbuild/BUILD/ring-project/packaging/rules/one-click-install/
+
+# build the package
+rpmbuild -ba jami-gnome.spec jami-qt.spec
+
+# move to output
+mkdir -p /opt/output/one-click-install
+mv /root/rpmbuild/RPMS/*/* /opt/output/one-click-install
+touch /opt/output/one-click-install/.packages-built
+chown -R ${CURRENT_UID}:${CURRENT_UID} /opt/output/one-click-install
