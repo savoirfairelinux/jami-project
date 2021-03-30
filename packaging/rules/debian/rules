@@ -253,6 +253,9 @@ override_dh_auto_install:
 
 	ln -sf /usr/bin/jami $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/bin/ring.cx
 
+override_dh_shlibdeps:
+	dh_shlibdeps -- -xjami-all
+
 tmpdir:= $(shell mktemp -d)
 workdir:= $(shell pwd)
 PKD := $(abspath $(dir $(MAKEFILE_LIST)))
