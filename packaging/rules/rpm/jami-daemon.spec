@@ -27,25 +27,29 @@ BuildRequires: yasm
 # Build and runtime dependencies.  Requires directives are
 # automatically made to linked shared libraries via RPM, so there's no
 # need to explicitly relist them.
+%if 0%{?fedora} >= 32
 BuildRequires: NetworkManager-libnm-devel
-BuildRequires: alsa-lib-devel
 BuildRequires: dbus-devel
 BuildRequires: expat-devel
+BuildRequires: opus-devel
+BuildRequires: pulseaudio-libs-devel
+%endif
+%if %{defined suse_version}
+BuildRequires: libdbus-c++-devel
+BuildRequires: libexpat-devel
+BuildRequires: libopus-devel
+BuildRequires: libpulse-devel
+%endif
+BuildRequires: alsa-lib-devel
 BuildRequires: gnutls-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: libXext-devel
 BuildRequires: libXfixes-devel
-BuildRequires: libupnp-devel
 BuildRequires: libuuid-devel
 BuildRequires: libva-devel
 BuildRequires: libvdpau-devel
-BuildRequires: nettle-devel
-BuildRequires: opus-devel
 BuildRequires: pcre-devel
-BuildRequires: pulseaudio-libs-devel
-BuildRequires: uuid-c++-devel
 BuildRequires: uuid-devel
-BuildRequires: webkitgtk4-devel
 BuildRequires: yaml-cpp-devel
 
 %description
