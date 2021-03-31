@@ -98,6 +98,8 @@ enabled=1'
         ENDTAG="fedora_32"
     elif [ "${PLATFORM_ID}" = "platform:f33" ] || [ "${ID}_${VERSION_ID}" = "fedora_33" ]; then
         ENDTAG="fedora_33"
+    elif [ "${PLATFORM_ID}" = "platform:f34" ] || [ "${ID}_${VERSION_ID}" = "fedora_34" ]; then
+        ENDTAG="fedora_34"
     else
         # Distribution is not supported. Don't provide automatic updates.
         CAN_ADD_YUM_SOURCE=false
