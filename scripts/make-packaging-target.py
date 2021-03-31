@@ -242,6 +242,12 @@ def run_generate_all(parsed_args):
             "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
         },
         {
+            "distribution": "fedora_34",
+            "debian_packaging_override": "",
+            "output_file": ".packages-built",
+            "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
+        },
+        {
             "distribution": "rhel_8",
             "output_file": ".packages-built",
             "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
