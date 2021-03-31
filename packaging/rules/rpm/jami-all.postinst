@@ -78,7 +78,7 @@ is_distribution_supported() {
     . /etc/os-release
 
     case ${ID}_${VERSION_ID%.*} in
-        rhel_8|fedora_32|fedora_33|opensuse-leap_15.2|opensuse-tumbleweed)
+        rhel_8|fedora_32|fedora_33|fedora_34|opensuse-leap_15.2|opensuse-tumbleweed)
             return 0
     esac
 
