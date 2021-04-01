@@ -26,11 +26,9 @@ RUN zypper --non-interactive up -y && \
         libcanberra-devel \
         libcurl-devel \
         libtool \
-        libQt5DBus-devel \
         pcre-devel \
         yaml-cpp-devel \
         libdbus-c++-devel \
-        libQt5DBus-devel \
         libXext-devel \
         libXfixes-devel \
         yasm \
@@ -61,32 +59,38 @@ RUN zypper --non-interactive up -y && \
         libnma-devel \
         libcryptopp-devel \
         libdbus-c++-devel \
-        libQt5DBus-devel \
         libexpat-devel \
         gnome-icon-theme-symbolic \
         libgsm-devel \
         gtk3-devel \
         libappindicator-devel \
         sqlite-devel \
-        libQt5Sql-devel \
-        libQt5Gui-devel  \
-        libQt5Widgets-devel \
-        libqt5-qtdeclarative-devel \
-        libqt5-qtquickcontrols \
-        libQt5Concurrent-devel \
-        libQt5QuickControls2-devel \
-        libqt5-qtmultimedia-devel \
-        libqt5-qtsvg-devel \
-        libqt5-qtbase-devel \
-        libqt5-qttools \
-        libQt5Concurrent-devel \
-        libqt5-qtwebengine-devel \
         ffmpeg-4-libavutil-devel \
         gtk3-devel\
         qrencode-devel \
         python3-python-dateutil \
-        libqt5-linguist-devel \
-        libsndfile-devel
+        libsndfile-devel \
+        libdrm \
+        gperf \
+        bison \
+        flex \
+        nodejs12 \
+        mozilla-nss-devel \
+        python-xml \
+        libxcb* \
+        libxkb* \
+        libX11-devel \
+        libXrender-devel \
+        libfreetype6 \
+        xcb-util-image-devel \
+        xcb-util-keysyms-devel \
+        xcb-util-renderutil-devel \
+        xcb-util-wm-devel \
+        xorg-x11-devel \
+        xz \
+        xkeyboard-config \
+        libnotify \
+        wget
 
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
