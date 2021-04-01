@@ -28,12 +28,55 @@ set -e
 mkdir -p /opt/ring-project
 cd /opt/ring-project
 cp /opt/ring-project-ro/packaging/rules/rpm/* .
+rm jami-libqt.spec
 
 # Prepare the build tree.
 rpmdev-setuptree
 
 # Copy the source tarball.
 cp /opt/ring-project-ro/jami_*.tar.gz /root/rpmbuild/SOURCES
+
+QT_JAMI_PREFIX="/usr/lib64/qt-jami"
+PATH="${QT_JAMI_PREFIX}/bin:${PATH}"
+LD_LIBRARY_PATH="${QT_JAMI_PREFIX}/lib:${LD_LIBRARY_PATH}"
+PKG_CONFIG_PATH="${QT_JAMI_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}"
+CMAKE_PREFIX_PATH="${QT_JAMI_PREFIX}/lib/cmake:${CMAKE_PREFIX_PATH}"
+QT_MAJOR=5
+QT_MINOR=15
+QT_PATCH=2
+
+if [[ "${DISTRIBUTION:0:4}" == "rhel" \
+   || "${DISTRIBUTION:0:13}" == "opensuse-leap" ]]; then
+
+    RPM_PATH=/opt/cache-packaging/${DISTRIBUTION}/jami-libqt-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}-1.x86_64.rpm
+
+    if [ ! -f "${RPM_PATH}" ]; then
+        mkdir /opt/qt-jami-build
+        cd /opt/qt-jami-build
+        cp /opt/ring-project-ro/packaging/rules/rpm/jami-libqt.spec .
+
+        QT_TARBALL_CHECKSUM="3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202240"
+        wget https://download.qt.io/archive/qt/${QT_MAJOR}.${QT_MINOR}/${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}/single/qt-everywhere-src-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}.tar.xz
+
+        if ! echo -n ${QT_TARBALL_CHECKSUM} qt-everywhere-src-*.tar.xz | sha256sum -c -
+        then
+            echo "qt tarball checksum mismatch; quitting"
+            exit 1
+        fi
+
+        mv qt-everywhere-src-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}.tar.xz /root/rpmbuild/SOURCES/jami-qtlib_${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}.tar.xz
+        sed -i "s/RELEASE_VERSION/${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}/g" jami-libqt.spec
+        rpmdev-bumpspec --comment="Automatic nightly release" \
+                        --userstring="Jenkins <jami@lists.savoirfairelinux.net>" jami-libqt.spec
+
+        rpmbuild -ba jami-libqt.spec
+        mkdir -p /opt/cache-packaging/${DISTRIBUTION}/
+        cp /root/rpmbuild/RPMS/x86_64/jami-libqt* ${RPM_PATH}
+    fi
+    rpm --install ${RPM_PATH}
+    cp ${RPM_PATH} /opt/output
+    cd /opt/ring-project
+fi
 
 # Set the version and associated comment.
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" *.spec
