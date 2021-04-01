@@ -86,7 +86,8 @@ RUN zypper --non-interactive up -y && \
         qrencode-devel \
         python3-python-dateutil \
         libqt5-linguist-devel \
-        libsndfile-devel
+        libsndfile-devel \
+        wget
 
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50

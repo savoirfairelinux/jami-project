@@ -35,10 +35,33 @@ rpmdev-setuptree
 # Copy the source tarball.
 cp /opt/ring-project-ro/jami_*.tar.gz /root/rpmbuild/SOURCES
 
+# TODO if distrib
+mkdir /opt/qt-jami-build
+cd /opt/qt-jami-build
+
+QT_MAJOR=5
+QT_MINOR=15
+QT_PATCH=0
+wget https://download.qt.io/archive/qt/${QT_MAJOR}.${QT_MINOR}/${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}/single/qt-everywhere-src-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}.tar.xz
+
+if ! echo -n ${QT_TARBALL_CHECKSUM} qt-everywhere-src-*.tar.xz | sha256sum -c -
+then
+    echo "qt tarball checksum mismatch; quitting"
+    exit 1
+fi
+
+mv qt-everywhere-src-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}.tar.xz /root/rpmbuild/SOURCES/jami-qtlib_${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}.tar.xz
+sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" jami-libqt.spec
+
 # Set the version and associated comment.
-sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" *.spec
+sed -i "s/RELEASE_VERSION/${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}/g" *.spec
 rpmdev-bumpspec --comment="Automatic nightly release" \
                 --userstring="Jenkins <jami@lists.savoirfairelinux.net>" *.spec
+
+
+rpmbuild -ba jami-qtlib.spec
+
+exit 0
 
 # Build the daemon and install it.
 rpmbuild -ba jami-daemon.spec
