@@ -84,6 +84,14 @@ RUN zypper --non-interactive up -y && \
         python3-python-dateutil \
         libqt5-linguist-devel \
         libsndfile-devel \
+        libxcb* \
+        libxkb* \
+        libxcd* \
+        libX11-devel \
+        libXrender-devel \
+        libfontconfig1 \
+        libfreetype6 \
+        libXext \
         evolution-devel
 
 ADD scripts/build-package-rpm.sh  /opt/build-package-rpm.sh
