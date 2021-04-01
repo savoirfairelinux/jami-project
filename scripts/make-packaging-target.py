@@ -57,6 +57,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -e DISTRIBUTION=%(distribution)s \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
+    -v /opt/cache-packaging:/opt/cache-packaging \\
     -t $(DOCKER_EXTRA_ARGS) %(options)s \\
     $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
