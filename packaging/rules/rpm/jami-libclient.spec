@@ -23,12 +23,6 @@ BuildRequires: NetworkManager-libnm-devel
 BuildRequires: qt5-qtbase-devel
 BuildRequires: qt5-qttools-devel
 %endif
-%if %{defined suse_version}
-BuildRequires: libQt5Sql-devel
-BuildRequires: libQt5Gui-devel
-BuildRequires: libqt5-qtbase-devel
-BuildRequires: libqt5-qttools
-%endif
 
 %description
 This package contains the client library of Jami, a free software for
