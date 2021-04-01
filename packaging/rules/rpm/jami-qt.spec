@@ -32,20 +32,6 @@ BuildRequires: qt5-qtquickcontrols2-devel
 BuildRequires: qt5-qtsvg-devel
 BuildRequires: qt5-qtwebengine-devel
 %endif
-%if %{defined suse_version}
-BuildRequires: libQt5Sql-devel
-BuildRequires: libQt5Gui-devel
-BuildRequires: libqt5-qtdeclarative-devel
-BuildRequires: libqt5-qtquickcontrols
-BuildRequires: libQt5Concurrent-devel
-BuildRequires: libQt5QuickControls2-devel
-BuildRequires: libqt5-qtmultimedia-devel
-BuildRequires: libqt5-qtsvg-devel
-BuildRequires: libqt5-qtbase-devel
-BuildRequires: libqt5-qttools
-BuildRequires: libQt5Concurrent-devel
-%endif
-
 
 # Runtime dependencies not automatically registered by RPM.
 Requires: qt5-qtquickcontrols
