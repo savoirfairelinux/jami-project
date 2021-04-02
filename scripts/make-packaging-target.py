@@ -197,10 +197,12 @@ def run_generate_all(parsed_args):
         {
             "distribution": "ubuntu_18.04",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX)",
         },
         {
             "distribution": "ubuntu_18.04_i386",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX)",
         },
         {
             "distribution": "ubuntu_18.04_qt",
@@ -231,7 +233,7 @@ def run_generate_all(parsed_args):
         {
             "distribution": "ubuntu_20.04",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
+            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
         },
         {
             "distribution": "ubuntu_20.04_qt",
@@ -249,7 +251,7 @@ def run_generate_all(parsed_args):
         {
             "distribution": "ubuntu_20.10",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
+            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
         },
         {
             "distribution": "ubuntu_20.10_qt",
