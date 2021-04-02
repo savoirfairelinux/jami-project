@@ -192,6 +192,18 @@ def run_generate_all(parsed_args):
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
+            "distribution": "ubuntu_18.04_qt",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) -e QT_MAJOR=$(QT_MAJOR) -e QT_MINOR=$(QT_MINOR) -e QT_PATCH=$(QT_PATCH) -e QT_TARBALL_CHECKSUM=$(QT_TARBALL_CHECKSUM) --privileged --security-opt apparmor=docker-default",
+            "version": "$(DEBIAN_QT_VERSION)",
+        },
+        {
+            "distribution": "ubuntu_18.04_qt_i386",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) -e QT_MAJOR=$(QT_MAJOR) -e QT_MINOR=$(QT_MINOR) -e QT_PATCH=$(QT_PATCH) -e QT_TARBALL_CHECKSUM=$(QT_TARBALL_CHECKSUM) --privileged --security-opt apparmor=docker-default",
+            "version": "$(DEBIAN_QT_VERSION)",
+        },
+        {
             "distribution": "ubuntu_18.04_oci",
             "docker_image": "ubuntu_18.04",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
