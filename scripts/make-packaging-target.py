@@ -100,7 +100,8 @@ DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT = (
     '--privileged --security-opt apparmor=docker-default')
 
 
-def generate_target(distribution, output_file, options='', docker_image='', version='', docker_build_args = ''):
+def generate_target(distribution, output_file, options='', docker_image='',
+                    version='', docker_build_args=''):
     if (docker_image == ''):
         docker_image = distribution
     if (version == ''):
@@ -203,6 +204,18 @@ def run_generate_all(parsed_args):
             "output_file": "$(DEBIAN_DSC_FILENAME)",
         },
         {
+            "distribution": "ubuntu_18.04_qt",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
+            "version": "$(DEBIAN_QT_VERSION)",
+        },
+        {
+            "distribution": "ubuntu_18.04_qt_i386",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
+            "version": "$(DEBIAN_QT_VERSION)",
+        },
+        {
             "distribution": "ubuntu_18.04_oci",
             "docker_image": "ubuntu_18.04",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
@@ -222,6 +235,12 @@ def run_generate_all(parsed_args):
             "options": "--privileged --security-opt apparmor=docker-default",
         },
         {
+            "distribution": "ubuntu_20.04_qt",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
+            "version": "$(DEBIAN_QT_VERSION)",
+        },
+        {
             "distribution": "ubuntu_20.04_oci",
             "docker_image": "ubuntu_20.04",
             "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
@@ -232,6 +251,12 @@ def run_generate_all(parsed_args):
             "distribution": "ubuntu_20.10",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default",
+        },
+        {
+            "distribution": "ubuntu_20.10_qt",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
+            "version": "$(DEBIAN_QT_VERSION)",
         },
         {
             "distribution": "ubuntu_20.10_oci",
