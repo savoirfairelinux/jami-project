@@ -22,6 +22,30 @@
       "revId": "00f04d99a32e9a4c64fb84b73a55782d8813628f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef8bb8f_83b933bf",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 43
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-04-02T21:28:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1eb4e4fe_cffc6b01",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 12
+      },
+      "revId": "00f04d99a32e9a4c64fb84b73a55782d8813628f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
