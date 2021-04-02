@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "51bac833_a47eec7d",
+        "filename": "docker/Dockerfile_debian_10_qt",
+        "patchSetId": 55
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-04-02T19:46:52Z",
+      "side": 1,
+      "message": "OK, yes, that\u0027s useful as the full dependency list is not otherwise listed.  And it should be safe as Docker compares the files with their checksum from its cached image, so if anything changes, it\u0027ll get recomputed.",
+      "parentUuid": "83fee27e_12fca53b",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "3b504413431351dbd8fcb9628cfc32a70a3984df",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3efe5f82_d1442818",
         "filename": "scripts/build-package-debian-qt.sh",
         "patchSetId": 55
