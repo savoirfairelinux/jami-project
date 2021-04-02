@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8223641_ce37aa29",
+        "filename": "scripts/build-package-debian.sh",
+        "patchSetId": 43
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-04-02T18:53:25Z",
+      "side": 0,
+      "message": "Well done!",
+      "revId": "3b504413431351dbd8fcb9628cfc32a70a3984df",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
