@@ -186,10 +186,12 @@ def run_generate_all(parsed_args):
         {
             "distribution": "ubuntu_18.04",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX)",
         },
         {
             "distribution": "ubuntu_18.04_i386",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX)",
         },
         {
             "distribution": "ubuntu_18.04_qt",
