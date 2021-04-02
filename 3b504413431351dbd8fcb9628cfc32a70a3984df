@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87fda23d_80cf0fbc",
+        "filename": "docker/Dockerfile_debian_10_qt",
+        "patchSetId": 55
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-04-02T19:24:02Z",
+      "side": 1,
+      "message": "why is nodejs needed?",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "3b504413431351dbd8fcb9628cfc32a70a3984df",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83fee27e_12fca53b",
+        "filename": "docker/Dockerfile_debian_10_qt",
+        "patchSetId": 55
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-04-02T19:24:02Z",
+      "side": 1,
+      "message": "Is it really useful to do this here?  I know I told you we could drop it from the build scripts, but what I was thinking was to drop it entirely rather than have it moved here.  It\u0027s nice to know if something is missing in the environment but this will run the first time the docker image built (after it\u0027ll be cached), so it\u0027s of very limited value for the added complexity.  I suggest to drop it entirely; if something is missing in the environment we will know at build time (CI).",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "3b504413431351dbd8fcb9628cfc32a70a3984df",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efe5f82_d1442818",
+        "filename": "scripts/build-package-debian-qt.sh",
+        "patchSetId": 55
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-04-02T19:24:02Z",
+      "side": 1,
+      "message": "nitpick: Could be nicer to rsync that tarball to /opt/ring-contrib and then reuse that every time (with its pre-computed sha256sum validated here).",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 166
+      },
+      "revId": "3b504413431351dbd8fcb9628cfc32a70a3984df",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
