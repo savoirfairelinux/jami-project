@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb4e4fe_cffc6b01",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 43
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-04-02T18:54:29Z",
+      "side": 1,
+      "message": "nitpick: I\u0027d use wget.  It\u0027s part of the base install of Debian, curl isn\u0027t. Also the instructions on our website don\u0027t mention to install curl but uses it (we could use wget there as well).",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 12
+      },
+      "revId": "00f04d99a32e9a4c64fb84b73a55782d8813628f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
