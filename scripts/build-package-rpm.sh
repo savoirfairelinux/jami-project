@@ -49,6 +49,9 @@ if [[ "${DISTRIBUTION:0:4}" == "rhel" \
    || "${DISTRIBUTION:0:13}" == "opensuse-leap" ]]; then
 
     RPM_PATH=/opt/cache-packaging/${DISTRIBUTION}/jami-libqt-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}-1.x86_64.rpm
+    if [[ "${DISTRIBUTION:0:4}" == "rhel" ]]; then
+        RPM_PATH=/opt/cache-packaging/${DISTRIBUTION}/jami-libqt-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}-1.el8.x86_64.rpm
+    fi
 
     if [ ! -f "${RPM_PATH}" ]; then
         mkdir /opt/qt-jami-build
@@ -71,7 +74,12 @@ if [[ "${DISTRIBUTION:0:4}" == "rhel" \
 
         rpmbuild -ba jami-libqt.spec
         mkdir -p /opt/cache-packaging/${DISTRIBUTION}/
-        cp /root/rpmbuild/RPMS/x86_64/jami-libqt* ${RPM_PATH}
+
+        if [[ "${DISTRIBUTION:0:4}" == "rhel" ]]; then
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}-1.el8.x86_64.rpm ${RPM_PATH}
+        else
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm ${RPM_PATH}
+        fi
     fi
     rpm --install ${RPM_PATH}
     cp ${RPM_PATH} /opt/output
@@ -98,13 +106,6 @@ rpmbuild -ba jami-gnome.spec jami-qt.spec
 mv /root/rpmbuild/RPMS/*/* /opt/output
 touch /opt/output/.packages-built
 chown -R ${CURRENT_UID}:${CURRENT_UID} /opt/output
-
-# TODO: One click install: create a package that only installs the
-# Jami RPM repo, the GPG key, then proceeds install the jami-qt
-# package (will should at this point pull its own dependencies such as
-# jami-libclient and jami-daemon from the newly configured
-# repository).  See how Cisco OpenH264, Google Chrome, rpmfusion, COPR
-# do it for inspiration.
 
 ## JAMI ONE CLICK INSTALL RPM
 
