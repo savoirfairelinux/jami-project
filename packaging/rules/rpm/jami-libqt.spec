@@ -19,8 +19,8 @@ BuildRequires: make
 BuildRequires: bison
 BuildRequires: gperf
 BuildRequires: flex
-BuildRequires: python-xml
 %if %{defined suse_version}
+BuildRequires: python-xml
 BuildRequires: mozilla-nss-devel
 %endif
 
@@ -37,7 +37,8 @@ This package contains Qt libraries for Jami.
 		-nomake examples \
 		-nomake tests \
 		-prefix "%{_libdir}/qt-jami"
-    make -j2 V=1
+	sed -i 's,bin/python,bin/env python3,g' qtbase/mkspecs/features/uikit/devices.py
+	make -j8 V=1
 
 %install
 make -j8 INSTALL_ROOT=%{buildroot} V=1 install
