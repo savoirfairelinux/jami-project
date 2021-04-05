@@ -8,70 +8,77 @@ RUN subscription-manager attach --auto
 RUN subscription-manager repos  --enable=codeready-builder-for-rhel-8-x86_64-rpms
 
 RUN dnf clean all
-RUN dnf install -y dnf-command\(builddep\) rpmdevtools
+RUN dnf install -y dnf-command\(builddep\) rpmdevtools  && \
+    dnf install -y mock
 
-RUN dnf clean all
-RUN dnf upgrade -y && \
-    dnf install -y mesa-dri-drivers && \
-    dnf install -y \
+RUN dnf install -y \
         git \
         rpm-build \
         tar \
         make \
         autoconf \
         automake \
-        cmake \
         nasm \
+        cmake \
+        speexdsp-devel \
         pulseaudio-libs-devel \
         libcanberra-devel \
         libcurl-devel \
         libtool \
+        mesa-libgbm-devel \
+        mesa-dri-drivers \
         dbus-devel \
         expat-devel \
         pcre-devel \
-        boost-devel \
+        yaml-cpp-devel \
+        dbus-c++-devel \
         dbus-devel \
         libXext-devel \
         libXfixes-devel \
+        yasm \
+        speex-devel \
+        gsm-devel \
         chrpath \
         check \
+        astyle \
         gettext-devel \
         gcc-c++ \
+        libstdc++-static \
         which \
         alsa-lib-devel \
         systemd-devel \
         libuuid-devel \
+        uuid-devel \
         gnutls-devel \
         nettle-devel \
+        opus-devel \
         patch \
+        jsoncpp-devel \
+        libnatpmp-devel \
         webkitgtk4-devel \
+        cryptopp-devel \
         libva-devel \
+        libvdpau-devel \
+        msgpack-devel \
+        NetworkManager-libnm-devel \
         openssl-devel \
-        qt5-devel \
-        clutter \
         clutter-devel \
         clutter-gtk-devel \
+        libappindicator-gtk3-devel \
+        libnotify-devel \
+        libupnp-devel \
         qrencode-devel \
-        yasm \
-        opus \
-        opus-devel \
-        libvdpau-devel \
-        libvdpau \
-        speexdsp \
-        speexdsp-devel \
-        cppunit-devel \
-        cppunit \
-        libsndfile \
-        libsndfile-devel \
-        gsm-devel \
-        evolution-data-server \
-        evolution-devel \
-	qt5-qtbase-5.11.1-7.el8.i686 \
-        dbus-c++ \
-        jsoncpp-devel
+        sqlite-devel \
+        libdrm \
+        gperf \
+        bison \
+        flex \
+        nodejs \
+        nss-devel \
+        kernel-headers \
+        python2 \
+        wget
 
-ADD scripts/build-package-rhel.sh  /opt/build-package-rhel.sh
+ADD scripts/build-package-rpm.sh /opt/build-package-rpm.sh
 
-CMD /opt/build-package-rhel.sh
-
-RUN subscription-manager unregister
+CMD /opt/build-package-rpm.sh
