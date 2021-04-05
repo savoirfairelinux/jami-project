@@ -71,7 +71,7 @@ if [[ "${DISTRIBUTION:0:4}" == "rhel" \
 
         rpmbuild -ba jami-libqt.spec
         mkdir -p /opt/cache-packaging/${DISTRIBUTION}/
-        cp /root/rpmbuild/RPMS/x86_64/jami-libqt* ${RPM_PATH}
+        cp /root/rpmbuild/RPMS/x86_64/jami-libqt-${QT_MAJOR}*.rpm ${RPM_PATH}
     fi
     rpm --install ${RPM_PATH}
     cp ${RPM_PATH} /opt/output
