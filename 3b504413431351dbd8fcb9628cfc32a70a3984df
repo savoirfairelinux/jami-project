@@ -164,6 +164,30 @@
       "revId": "3b504413431351dbd8fcb9628cfc32a70a3984df",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea6b78f_64558ce7",
+        "filename": "scripts/build-package-debian-qt.sh",
+        "patchSetId": 55
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-04-06T13:22:24Z",
+      "side": 1,
+      "message": "Done!  See the latest patch set.  A note of caution: it hasn\u0027t been tested (although we\u0027ll seen soon enough with the CI).",
+      "parentUuid": "9ccb710a_53dad5f8",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 166
+      },
+      "revId": "3b504413431351dbd8fcb9628cfc32a70a3984df",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
