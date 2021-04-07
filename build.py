@@ -473,7 +473,7 @@ def run_run(args):
         dring_log.write('=== Starting daemon (%s) ===' %
                         time.strftime("%d/%m/%Y %H:%M:%S"))
         dring_process = subprocess.Popen(
-            ["./install/daemon/lib/ring/dring", "-c", "-d"],
+            ["./install/daemon/bin/dring", "-c", "-d"],
             stdout=dring_log,
             stderr=dring_log
         )
@@ -501,7 +501,7 @@ def run_run(args):
             f.write(str(client_process.pid)+'\n')
 
         if args.debug:
-            subprocess.call(['gdb', './install/daemon/lib/ring/dring'])
+            subprocess.call(['gdb', './install/daemon/bin/dring'])
 
         if not args.background:
             dring_process.wait()
