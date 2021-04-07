@@ -102,7 +102,7 @@ rm -rfv %{buildroot}/%{_libdir}/*.la
 
 %files
 %defattr(-,root,root,-)
-%{_libdir}/ring/dring
+%{_bindir}/dring
 %{_datadir}/ring/ringtones
 %{_datadir}/dbus-1/services/*
 %{_datadir}/dbus-1/interfaces/*
