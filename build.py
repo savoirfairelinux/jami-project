@@ -473,7 +473,7 @@ def run_run(args):
         dring_log.write('=== Starting daemon (%s) ===' %
                         time.strftime("%d/%m/%Y %H:%M:%S"))
         dring_process = subprocess.Popen(
-            ["./install/daemon/libexec/dring", "-c", "-d"],
+            ["./install/daemon/libexec/jamid", "-c", "-d"],
             stdout=dring_log,
             stderr=dring_log
         )
@@ -501,7 +501,7 @@ def run_run(args):
             f.write(str(client_process.pid)+'\n')
 
         if args.debug:
-            subprocess.call(['gdb', './install/daemon/libexec/dring'])
+            subprocess.call(['gdb', './install/daemon/libexec/jamid'])
 
         if not args.background:
             dring_process.wait()
