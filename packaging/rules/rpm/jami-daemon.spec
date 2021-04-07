@@ -2,6 +2,11 @@
 %define version     RELEASE_VERSION
 %define release     0
 
+%if %{defined suse_version}
+# See https://en.opensuse.org/openSUSE:Specfile_guidelines.
+%define _libexecdir %_prefix/libexec
+%endif
+
 Name:          %{name}
 Version:       %{version}
 Release:       %{release}%{?dist}
