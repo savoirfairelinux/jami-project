@@ -189,13 +189,15 @@ else
     if [ "${global}" = "true" ]; then
         if [ "${prefix+set}" ]; then
             cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
+                     -DQT5_PATH="${qt5path}" \
                      -DCMAKE_INSTALL_PREFIX="${prefix}" $static
         else
-            cmake .. -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
+            cmake .. -DQT5_PATH="${qt5path}" -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" $static
         fi
     else
         cmake ..  -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}" \
                   -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}" \
+                  -DQT5_PATH="${qt5path}" \
                   -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones" \
                   -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient" $static
     fi
