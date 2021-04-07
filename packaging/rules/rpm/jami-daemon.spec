@@ -102,9 +102,9 @@ rm -rfv %{buildroot}/%{_libdir}/*.la
 
 %files
 %defattr(-,root,root,-)
-# XXX: Use %%{_libexecdir}/dring after there's no more OpenSUSE Leap
+# XXX: Use %%{_libexecdir}/jamid after there's no more OpenSUSE Leap
 # < 16 (see https://en.opensuse.org/openSUSE:Specfile_guidelines).
-/usr/libexec/dring
+/usr/libexec/jamid
 %{_datadir}/ring/ringtones
 %{_datadir}/dbus-1/services/*
 %{_datadir}/dbus-1/interfaces/*
