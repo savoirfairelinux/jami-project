@@ -78,7 +78,7 @@ $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 	rm -f "$@"
 	mkdir $(TMPDIR)/ring-project
 	git archive HEAD | tar xf - -C $(TMPDIR)/ring-project
-	for m in daemon lrc client-gnome; do \
+	for m in daemon lrc client-gnome client-qt; do \
 		(cd "$$m" && git archive --prefix "$$m/" HEAD \
 			| tar xf - -C $(TMPDIR)/ring-project); \
 	done
@@ -106,7 +106,7 @@ package-all: $(PACKAGE-TARGETS)
 
 .PHONY: list-package-targets
 list-package-targets:
-	$(foreach p,$(PACKAGE-TARGETS),\
+	@$(foreach p,$(PACKAGE-TARGETS),\
 		echo $(p);)
 
 docker/Dockerfile_snap: patches/docker-snap-build-scripts.patch
