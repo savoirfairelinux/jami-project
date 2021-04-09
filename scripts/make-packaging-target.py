@@ -266,6 +266,24 @@ def run_generate_all(parsed_args):
             "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
         },
+        {
+            "distribution": "ubuntu_21.04",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
+        },
+        {
+            "distribution": "ubuntu_21.04_qt",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
+            "version": "$(DEBIAN_QT_VERSION)",
+        },
+        {
+            "distribution": "ubuntu_21.04_oci",
+            "docker_image": "ubuntu_21.04",
+            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
+            "version": "$(DEBIAN_OCI_VERSION)",
+        },
 
         # Fedora
         {
