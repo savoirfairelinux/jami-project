@@ -182,15 +182,21 @@ def run_generate_all(parsed_args):
         },
         # Raspbian
         {
+            "distribution": "raspbian_10_qt_armhf",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
+            "version": "$(DEBIAN_QT_VERSION)",
+        },
+        {
             "distribution": "raspbian_10_armhf",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
+            "options": "--privileged --security-opt -e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) apparmor=docker-default",
         },
         {
             "distribution": "raspbian_10_armhf_oci",
             "docker_image": "raspbian_10_armhf",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
+            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt -e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) apparmor=docker-default",
             "version": "$(DEBIAN_OCI_VERSION)",
         },
         # Ubuntu
