@@ -9,21 +9,14 @@ RUN dpkg --add-architecture armhf
 RUN apt-get clean
 RUN apt-get update && \
     apt-get install -y -o Acquire::Retries=10 \
-        ca-certificates \
         devscripts \
-        dirmngr \
-        gnupg \
         wget
 
-RUN wget -O - https://dl.jami.net/public-key.gpg | \
-    tee /usr/share/keyrings/jami-archive-keyring.gpg > /dev/null
-RUN sh -c "echo 'deb [signed-by=/usr/share/keyrings/jami-archive-keyring.gpg] https://dl.jami.net/internal/raspbian_10_qt/ jami main' > /etc/apt/sources.list.d/libqt-jami.list"
-
-# add deb-src entries (needed for next step)
+# add/enable src repos (needed for next step)
 RUN sed -n '/^deb\s/s//deb-src /p' /etc/apt/sources.list > /etc/apt/sources.list.d/deb-src.list
-RUN apt-get clean && apt-get update
 
-COPY packaging/rules/debian/* ${OVERRIDE_PACKAGING_DIR} /tmp/builddeps/debian/
+RUN apt-get clean && apt-get update
+COPY packaging/rules/debian-qt/* ${OVERRIDE_PACKAGING_DIR} /tmp/builddeps/debian/
 RUN cd /tmp/builddeps/debian; \
     if [ -n "${OVERRIDE_PACKAGING_DIR}" ] && [ -d "$(basename ${OVERRIDE_PACKAGING_DIR})" ]; then \
         mv "$(basename ${OVERRIDE_PACKAGING_DIR})"/* .; \
@@ -37,6 +30,6 @@ RUN cd /tmp/builddeps/debian; \
         "debian/control"; \
     cd / && rm -rf /tmp/builddeps
 
-ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
+ADD scripts/build-package-debian-qt.sh /opt/build-package-debian-qt.sh
 
-CMD /opt/build-package-debian.sh
+CMD /opt/build-package-debian-qt.sh
