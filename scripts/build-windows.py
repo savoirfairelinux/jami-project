@@ -32,6 +32,7 @@ def build_client(parsed_args):
     execute_cmd('python make-client.py -d')
     execute_cmd('python make-client.py -b ' + '-t ' +
                 parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -q ' + parsed_args.qtver)
+    execute_cmd('python copy-runtime-files.py -m Release -q ' + parsed_args.qtver, True)
 
 
 def parse_args():
