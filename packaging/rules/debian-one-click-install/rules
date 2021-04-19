@@ -16,9 +16,10 @@ endif
 JAMI_ALL_IN_ONE_PKG_NAME="jami-all"
 
 # Bundled packages from contrib
+BUNDLED_PKGS=""
 ifeq (raspbian_10_armhf,$(findstring raspbian_10_armhf, $(DISTRIBUTION)))
 # Raspbian's yaml-cpp lib does not work properly
-BUNDLED_PKGS = "--enable-ffmpeg --enable-yaml-cpp"
+BUNDLED_PKGS="--enable-ffmpeg --enable-yaml-cpp"
 # Add host environment variables
 CMAKE_OPTIONS=-DCHOST=${HOST_ARCH} \
 		-DCMAKE_C_COMPILER=${HOST_ARCH}-gcc \
@@ -27,9 +28,7 @@ CMAKE_OPTIONS=-DCHOST=${HOST_ARCH} \
 		-DPKG_CONFIG_EXECUTABLE=/usr/bin/${HOST_ARCH}-pkg-config
 else
 ifneq (ubuntu_21.04,$(findstring ubuntu_21.04, $(DISTRIBUTION)))
-BUNDLED_PKGS = "--enable-ffmpeg" # For ubuntu 21.04 it seems there is massive issues with linking for swscale
-else
-BUNDLED_PKGS = ""
+BUNDLED_PKGS="--enable-ffmpeg" # For ubuntu 21.04 it seems there is massive issues with linking for swscale
 endif
 endif
 
@@ -50,7 +49,7 @@ override_dh_auto_configure:
 	done
 
 	###########################
-	## Ring Daemon configure ##
+	## Daemon configure      ##
 	###########################
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
@@ -66,12 +65,10 @@ override_dh_auto_configure:
 				--disable-sndfile \
 				--disable-gsm \
 				--disable-speexdsp \
-				--disable-natpmp \
-				$(BUNDLED_PKGS) \
-				--enable-gnutls && \
+				--disable-natpmp  \
+				--enable-gnutls $(BUNDLED_PKGS) && \
 		make list && \
-		make -j$(NO_CPUS) V=1 && \
-		make -j$(NO_CPUS) $(BUNDLED_PKGS) V=1
+		make -j$(NO_CPUS) V=1
 	cd daemon && \
 		./autogen.sh && \
 		./configure \
@@ -108,7 +105,7 @@ override_dh_auto_configure:
 
 override_dh_auto_build:
 	#######################
-	## Ring Daemon build ##
+	## Daemon build      ##
 	#######################
 	make -C daemon -j$(NO_CPUS) V=1
 	pod2man daemon/man/dring.pod > daemon/dring.1
@@ -130,7 +127,7 @@ override_dh_auto_clean:
 	rm -rfv daemon/contrib/tarballs
 
 	#######################
-	## Ring Daemon clean ##
+	## Daemon clean      ##
 	#######################
 	if [ -f daemon/contrib/native/Makefile ]; then make -C daemon/contrib/native distclean; fi
 	rm -rfv daemon/contrib/native
