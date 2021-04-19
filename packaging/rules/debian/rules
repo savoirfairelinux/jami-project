@@ -49,7 +49,7 @@ override_dh_auto_configure:
 		projectname=`basename $$i` && \
 		cd $$i && tar -caf ../../tarballs/$$projectname * && \
 		echo "Repacked $$projectname"; \
-	done
+	done || true
 
 	###########################
 	## Ring Daemon configure ##
