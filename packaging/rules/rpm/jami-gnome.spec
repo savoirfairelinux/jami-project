@@ -68,7 +68,7 @@ rm -rfv %{buildroot}/%{_bindir}/ring.cx
 %{_bindir}/jami-gnome
 %{_datadir}/applications/jami-gnome.desktop
 %{_datadir}/glib-2.0/schemas/net.jami.Jami.gschema.xml
-%{_datadir}/icons/hicolor/scalable/apps/jami.svg
+%{_datadir}/icons/hicolor/scalable/apps/jami-gnome.svg
 %{_datadir}/jami-gnome
 %{_datadir}/locale/*
 %{_datadir}/metainfo/jami-gnome.appdata.xml
