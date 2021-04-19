@@ -53,7 +53,7 @@ rpmdev-bumpspec --comment="Automatic nightly release" --userstring="Jenkins <rin
 dnf builddep -y jami.spec || echo "ignoring dnf builddep failure"
 
 # build the package
-QA_RPATHS=\$[ 0x0001|0x0002 ] rpmbuild -ba jami.spec
+QA_RPATHS=$(( 0x0001|0x0010 )) rpmbuild -ba jami.spec
 
 # move to output
 mv /root/rpmbuild/RPMS/*/* /opt/output
@@ -67,7 +67,7 @@ mkdir -p /root/rpmbuild/BUILD/ring-project/packaging/rules/one-click-install/
 cp jami-all.postinst  /root/rpmbuild/BUILD/ring-project/packaging/rules/one-click-install/
 
 # build the package
-QA_RPATHS=\$[ 0x0001|0x0002 ] rpmbuild -ba jami-one-click.spec
+QA_RPATHS=$(( 0x0001|0x0010 )) rpmbuild -ba jami-one-click.spec
 
 # move to output
 mkdir -p /opt/output/one-click-install
