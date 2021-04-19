@@ -18,16 +18,20 @@ JAMI_CLIENT_PKG_NAME="jami"
 JAMI_DAEMON_PKG_NAME="jami-daemon"
 
 # Bundled packages from contrib
-BUNDLED_PKGS = .ffmpeg
+BUNDLED_PKGS=""
 ifeq (raspbian_10_armhf,$(findstring raspbian_10_armhf, $(DISTRIBUTION)))
 # Raspbian's yaml-cpp lib does not work properly
-BUNDLED_PKGS += .yaml-cpp
+BUNDLED_PKGS="--enable-ffmpeg --enable-yaml-cpp"
 # Add host environment variables
 CMAKE_OPTIONS=-DCHOST=${HOST_ARCH} \
 		-DCMAKE_C_COMPILER=${HOST_ARCH}-gcc \
 		-DCMAKE_CXX_COMPILER=${HOST_ARCH}-g++ \
 		-DCMAKE_FIND_ROOT_PATH=/usr/${HOST_ARCH} \
 		-DPKG_CONFIG_EXECUTABLE=/usr/bin/${HOST_ARCH}-pkg-config
+else
+ifneq (ubuntu_21.04,$(findstring ubuntu_21.04, $(DISTRIBUTION)))
+BUNDLED_PKGS="--enable-ffmpeg" # For ubuntu 21.04 it seems there is massive issues with linking for swscale
+endif
 endif
 
 %:
@@ -47,7 +51,7 @@ override_dh_auto_configure:
 	done
 
 	###########################
-	## Ring Daemon configure ##
+	## Daemon configure      ##
 	###########################
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
@@ -63,11 +67,10 @@ override_dh_auto_configure:
 				--disable-sndfile \
 				--disable-gsm \
 				--disable-speexdsp \
-				--disable-natpmp \
-				--enable-gnutls && \
+				--disable-natpmp  \
+				--enable-gnutls $(BUNDLED_PKGS) && \
 		make list && \
-		make -j$(NO_CPUS) V=1 && \
-		make -j$(NO_CPUS) $(BUNDLED_PKGS) V=1
+		make -j$(NO_CPUS) V=1
 	cd daemon && \
 		./autogen.sh && \
 		./configure \
@@ -84,7 +87,6 @@ override_dh_auto_configure:
 		cmake  \
 			-DRING_BUILD_DIR=$(CURDIR)/daemon/src \
 			-DCMAKE_INSTALL_PREFIX=/usr \
-			-DCMAKE_BUILD_TYPE=Debug \
 			$(CMAKE_OPTIONS) \
 			..
 
@@ -105,7 +107,7 @@ override_dh_auto_configure:
 
 override_dh_auto_build:
 	#######################
-	## Ring Daemon build ##
+	## Daemon build      ##
 	#######################
 	make -C daemon -j$(NO_CPUS) V=1
 	pod2man daemon/man/dring.pod > daemon/dring.1
@@ -127,7 +129,7 @@ override_dh_auto_clean:
 	rm -rfv daemon/contrib/tarballs
 
 	#######################
-	## Ring Daemon clean ##
+	## Daemon clean      ##
 	#######################
 	if [ -f daemon/contrib/native/Makefile ]; then make -C daemon/contrib/native distclean; fi
 	rm -rfv daemon/contrib/native
@@ -155,7 +157,7 @@ override_dh_clean:
 
 override_dh_auto_install:
 	#########################
-	## Ring daemon install ##
+	## Daemon install 	   ##
 	#########################
 
 	cd daemon && make DESTDIR=$(CURDIR)/debian/$(JAMI_DAEMON_PKG_NAME) install
