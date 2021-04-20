@@ -3,6 +3,12 @@
 
 # export DH_VERBOSE = 1
 
+ifeq (raspbian_10_qt_armhf,$(findstring raspbian_10_qt_armhf, $(DISTRIBUTION)))
+# Add host environment variables
+CONFIGURE_OPTIONS=-xplatform linux-arm-gnueabi-g++
+endif
+
+
 %:
 	dh $@
 
@@ -12,6 +18,7 @@ override_dh_auto_configure:
 		-confirm-license \
 		-nomake examples \
 		-nomake tests \
+		$(CONFIGURE_OPTIONS) \
 		-prefix "${QT_JAMI_PREFIX}"
 
 override_dh_auto_install:
