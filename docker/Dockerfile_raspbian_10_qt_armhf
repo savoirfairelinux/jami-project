@@ -1,0 +1,164 @@
+FROM debian:buster
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Add armhf dpkg architecture and add cross-compiling toolchain and
+# tools
+RUN dpkg --add-architecture armhf
+
+RUN apt-get clean
+RUN apt-get update && \
+    apt-get install -y -o Acquire::Retries=10 \
+        devscripts \
+        wget \
+        gcc-8-arm-linux-gnueabihf-base \
+        gcc-arm-linux-gnueabihf \
+        binutils-arm-linux-gnueabihf \
+        g++-arm-linux-gnueabihf \
+        cpp-arm-linux-gnueabihf \
+        binutils-arm-linux-gnueabihf-dbg \
+        crossbuild-essential-armhf \
+        build-essential && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y -o Acquire::Retries=10 \
+    default-libmysqlclient-dev \
+    dh-exec \
+    firebird-dev \
+    freetds-dev \
+    libasound2-dev \
+    libatspi2.0-dev \
+    libcups2-dev \
+    libdbus-1-dev \
+    libdouble-conversion-dev \
+    libdrm-dev \
+    libfontconfig1-dev \
+    libfreetype6-dev \
+    libgbm-dev \
+    libgl-dev \
+    libglib2.0-dev \
+    libgtk-3-dev \
+    libharfbuzz-dev \
+    libicu-dev \
+    libinput-dev \
+    libjpeg-dev \
+    libkrb5-dev \
+    libmtdev-dev \
+    libpcre2-dev \
+    libpng-dev \
+    libpq-dev \
+    libproxy-dev \
+    libpulse-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libudev-dev \
+    libvulkan-dev \
+    libx11-dev \
+    libx11-xcb-dev \
+    libxcb-glx0-dev \
+    libxcb-icccm4-dev \
+    libxcb-image0-dev \
+    libxcb-keysyms1-dev \
+    libxcb-randr0-dev \
+    libxcb-render-util0-dev \
+    libxcb-render0-dev \
+    libxcb-shape0-dev \
+    libxcb-shm0-dev \
+    libxcb-sync-dev \
+    libxcb-util0-dev \
+    libxcb-xfixes0-dev \
+    libxcb-xinerama0-dev \
+    libxcb-xinput-dev \
+    libxcb-xkb-dev \
+    libxcb1-dev \
+    libxext-dev \
+    libxi-dev \
+    libxkbcommon-dev \
+    libxkbcommon-x11-dev \
+    libxrender-dev \
+    libzstd-dev \
+    pkg-config \
+    unixodbc-dev \
+    zlib1g-dev \
+    libgl1-mesa-dri \
+    xvfb \
+    libgstreamer-plugins-base1.0-dev \
+    libgstreamer1.0-dev \
+    libopenal-dev \
+    libboost-dev \
+    libprotozero-dev \
+    rapidjson-dev \
+    dbus \
+    libclang-dev \
+    llvm-dev \
+    libegl1-mesa-dev \
+    libwayland-dev \
+    libwayland-egl1-mesa \
+    libxcomposite-dev \
+    binutils \
+    bison \
+    chrpath \
+    flex \
+    gperf \
+    khronos-api \
+    libavcodec-dev \
+    libavformat-dev \
+    libavutil-dev \
+    libcap-dev \
+    libevent-dev \
+    libflac-dev \
+    libjsoncpp-dev \
+    liblcms2-dev \
+    libminizip-dev \
+    libnss3-dev \
+    libopus-dev \
+    libpci-dev \
+    libprotobuf-dev \
+    libre2-dev \
+    libsnappy-dev \
+    libusb-1.0-0-dev \
+    libvpx-dev \
+    libwebp-dev \
+    libxcb-dri3-dev \
+    libxcursor-dev \
+    libxdamage-dev \
+    libxml2-dev \
+    libxnvctrl-dev \
+    libxrandr-dev \
+    libxslt1-dev \
+    libxss-dev \
+    libxtst-dev \
+    mesa-common-dev \
+    ninja-build \
+    protobuf-compiler \
+    python2 \
+    re2c \
+    ruby \
+    yui-compressor \
+    cmake \
+    libgles2-mesa-dev \
+    libhyphen-dev \
+    libwoff-dev
+
+# add/enable src repos (needed for next step)
+RUN sed -n '/^deb\s/s//deb-src /p' /etc/apt/sources.list > /etc/apt/sources.list.d/deb-src.list
+
+RUN apt-get clean && apt-get update
+COPY packaging/rules/debian-qt/* ${OVERRIDE_PACKAGING_DIR} /tmp/builddeps/debian/
+RUN cd /tmp/builddeps/debian; \
+    if [ -n "${OVERRIDE_PACKAGING_DIR}" ] && [ -d "$(basename ${OVERRIDE_PACKAGING_DIR})" ]; then \
+        mv "$(basename ${OVERRIDE_PACKAGING_DIR})"/* .; \
+        rm -r "$(basename ${OVERRIDE_PACKAGING_DIR})"; \
+    fi; \
+    cd ..; \
+    apt-get update; \
+    mk-build-deps \
+        --host-arch armhf \
+        --remove --install \
+        --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
+        "debian/control"; \
+    cd / && rm -rf /tmp/builddeps
+
+ADD scripts/build-package-debian-qt.sh /opt/build-package-debian-qt.sh
+
+CMD /opt/build-package-debian-qt.sh
