@@ -61,6 +61,10 @@ tar xvf libqt-jami_${qt_version}.orig.tar.xz
 mv qt-everywhere-src-${qt_version} libqt-jami-${qt_version}
 cd libqt-jami-${qt_version}
 
+# gnueabi -> gnueabihf
+cp --verbose -r qtbase/mkspecs/linux-arm-gnueabi-g++ qtbase/mkspecs/linux-arm-gnueabihf-g++
+sed -i -e 's/arm-linux-gnueabi-/arm-linux-gnueabihf-/g' qtbase/mkspecs/linux-arm-gnueabihf-g++/qmake.conf
+
 # import the debian folder
 cp --verbose -r /opt/ring-project-ro/${PKG_DIR} debian
 
@@ -74,6 +78,7 @@ DPKG_BUILD_OPTIONS=""
 if grep -q "raspbian_10_qt_armhf" <<< "${DISTRIBUTION}"; then
     echo "Adding armhf as the host architecture."
     export HOST_ARCH=arm-linux-gnueabihf
+    dpkg --add-architecture armhf
     DPKG_BUILD_OPTIONS="${DPKG_BUILD_OPTIONS} -a armhf"
 fi
 
