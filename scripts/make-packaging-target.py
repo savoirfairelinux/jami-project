@@ -187,6 +187,12 @@ def run_generate_all(parsed_args):
             "options": "--privileged --security-opt apparmor=docker-default",
         },
         {
+            "distribution": "raspbian_10_qt_armhf",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
+            "version": "$(DEBIAN_QT_VERSION)",
+        },
+        {
             "distribution": "raspbian_10_armhf_oci",
             "docker_image": "raspbian_10_armhf",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
