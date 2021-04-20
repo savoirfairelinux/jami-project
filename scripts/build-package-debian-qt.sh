@@ -74,7 +74,9 @@ DPKG_BUILD_OPTIONS=""
 if grep -q "raspbian_10_qt_armhf" <<< "${DISTRIBUTION}"; then
     echo "Adding armhf as the host architecture."
     export HOST_ARCH=arm-linux-gnueabihf
-    DPKG_BUILD_OPTIONS="${DPKG_BUILD_OPTIONS} -a armhf"
+    export DEB_BUILD_OPTIONS=nocheck
+    dpkg --add-architecture armhf
+    DPKG_BUILD_OPTIONS="${DPKG_BUILD_OPTIONS} -aarmhf -d -Pcross,nocheck"
 fi
 
 # build and package qt
