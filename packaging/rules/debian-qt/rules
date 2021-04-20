@@ -3,15 +3,33 @@
 
 # export DH_VERBOSE = 1
 
+ifeq (raspbian_10_qt_armhf,$(findstring raspbian_10_qt_armhf, $(DISTRIBUTION)))
+# Add host environment variables
+CONFIGURE_OPTIONS=-xplatform linux-arm-gnueabihf-g++ \
+		-opengl es2 \
+		-eglfs \
+		-no-use-gold-linker
+endif
+
+
 %:
 	dh $@
 
 override_dh_auto_configure:
+ifeq (raspbian_10_qt_armhf,$(findstring raspbian_10_qt_armhf, $(DISTRIBUTION)))
+	touch .qmake.conf
+	echo "QMAKE_CXXFLAGS += --param ggc-min-expand=20" >> .qmake.conf
+	echo "QMAKE_CFLAGS += --param ggc-min-expand=20" >> .qmake.conf
+	echo "QMAKE_LFLAGS -= Wl,--gc-sections" >> .qmake.conf
+	echo "QMAKE_LFLAGS -= -fuse-ld=gold" >> .qmake.conf
+	echo "QMAKE_LFLAGS += -fuse-ld=bfd" >> .qmake.conf
+endif
 	./configure \
 		-opensource \
 		-confirm-license \
 		-nomake examples \
 		-nomake tests \
+		$(CONFIGURE_OPTIONS) \
 		-prefix "${QT_JAMI_PREFIX}"
 
 override_dh_auto_install:
