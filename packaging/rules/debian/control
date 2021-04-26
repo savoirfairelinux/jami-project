@@ -62,6 +62,13 @@ Homepage: https://jami.net
 Vcs-Git: https://git.jami.net/savoirfairelinux/ring-project.git
 Vcs-Browser: https://git.jami.net/savoirfairelinux/ring-project
 
+# The jami-all package is used as the "one-click install" package
+# offered on the Jami website.  The following relationships ensure
+# that installing the jami-all package replaces version of the other
+# individual Jami packages.  This is so that users can fix any
+# installation problem on their side by simply reinstalling as per the
+# website instructions.
+#
 Package: jami-all
 Architecture: any
 Depends: gnupg,
@@ -87,8 +94,11 @@ Package: jami
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         jami-libclient (=${binary:Version})
+         jami-libclient (=${binary:Version}),
+         libqt-jami
 Provides: jami-qt
+Replaces: jami-all
+Conflicts: jami-all
 Description: Secure and distributed voice, video and chat platform - desktop client
  Jami (jami.net) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy
