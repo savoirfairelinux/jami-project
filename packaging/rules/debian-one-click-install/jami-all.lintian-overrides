@@ -1,3 +1,0 @@
-# We are shipping a .so, but this isn't a library package
-package-name-doesnt-match-sonames
-no-symbols-control-file
