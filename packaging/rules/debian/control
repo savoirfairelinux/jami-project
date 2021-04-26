@@ -64,10 +64,13 @@ Vcs-Browser: https://git.jami.net/savoirfairelinux/ring-project
 
 # The jami-all package is used as the "one-click install" package
 # offered on the Jami website.  The following relationships ensure
-# that installing the jami-all package replaces version of the other
+# that nstalling the jami-all package replaces version of the other
 # individual Jami packages.  This is so that users can fix any
 # installation problem on their side by simply reinstalling as per the
-# website instructions.
+# website instructions.  Because of this, the 'jami-all' must *not* be
+# distributed via the apt repository, otherwise it would conflict with
+# the 'jami' package.  It is solely intended as the OCI package to
+# make available for download via the website.
 #
 Package: jami-all
 Architecture: any

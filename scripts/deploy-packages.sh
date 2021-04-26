@@ -112,6 +112,12 @@ EOF
         package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
         package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
 
+        # Do not include the 'jami-all' package in the repository, as
+        # it (intentionally) conflicts with the 'jami' package.  It is
+        # meant to be used as a 'bootstrap' package downloadable from
+        # the Jami web site.
+        test "$package_name" = "jami-all" && continue
+
         if [ ${package_arch} = "all" ]; then
             # Removing to avoid the error of adding the same deb twice.
             # This happens with arch all packages, which are generated in amd64 and i386.
