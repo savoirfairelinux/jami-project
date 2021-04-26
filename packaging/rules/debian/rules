@@ -43,6 +43,8 @@ export LD_LIBRARY_PATH := $(QT_JAMI_PREFIX)/lib:${LD_LIBRARY_PATH}
 export PKG_CONFIG_PATH := $(QT_JAMI_PREFIX)/lib/pkgconfig:${PKG_CONFIG_PATH}
 export CMAKE_PREFIX_PATH := $(QT_JAMI_PREFIX)/lib/cmake:${CMAKE_PREFIX_PATH}
 
+# Installation directories.
+OCI_INSTALL_DIR = $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)
 
 %:
 	dh $@
@@ -214,16 +216,19 @@ override_dh_auto_install:
 	# cmake files
 	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME)/usr/lib/cmake
 
-        ## GNOME client
-	cd client-gnome/build && \
-		make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME) install
-	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME)/usr/bin/jami
-
 	## Qt client
 	cd client-qt/build && \
 		make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME) install
 
 	ln -sf /usr/bin/jami $(CURDIR)/debian/jami/usr/bin/ring.cx
+
+	## Custom Qt package for Jami (libqt-jami)
+	## Copy our own Qt library package content into the OCI package.
+	for file_name in $$(dpkg-query -L libqt-jami); do 	\
+	  mkdir -p "$(OCI_INSTALL_DIR)$$(dirname $$file_name)"; \
+	  test -d "$$file_name" && continue;  			\
+	  cp "$$file_name" "$(OCI_INSTALL_DIR)$$file_name";	\
+	done
 
 	######################
 	## Jami AiO install ##

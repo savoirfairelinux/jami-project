@@ -109,6 +109,7 @@ EOF
         echo "## including ${package} ##"
         package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
         package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
+
         if [ ${package_arch} = "all" ]; then
             # Removing to avoid the error of adding the same deb twice.
             # This happens with arch all packages, which are generated in amd64 and i386.
@@ -134,21 +135,17 @@ EOF
     #######################################
     ## create the manual download folder ##
     #######################################
-    if ls packages/${DISTRIBUTION}*_oci &> /dev/null; then
-      DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
-      mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-      NAME_PATTERN=jami-all_????????.*\~dfsg*.deb
-      cp packages/${DISTRIBUTION}*_oci/${NAME_PATTERN} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
-      for package in ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${NAME_PATTERN} ; do
-          package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
-          package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
-          package_shortname=${package_name}_${package_arch}.deb
-          rm -f ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_shortname}
-          cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_shortname}
-      done
-    else
-      echo "WARNING: OCI packages directory not found"
-    fi
+    DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
+    mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+    NAME_PATTERN=jami-all_????????.*\~dfsg*.deb
+    cp packages/${DISTRIBUTION}/${NAME_PATTERN} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
+    for package in ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${NAME_PATTERN} ; do
+        package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
+        package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
+        package_shortname=${package_name}_${package_arch}.deb
+        rm -f ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_shortname}
+        cp ${package} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${package_shortname}
+    done
 }
 
 
