@@ -153,46 +153,11 @@ def run_generate_all(parsed_args):
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
             "version": "$(DEBIAN_QT_VERSION)",
         },
-        {
-            "distribution": "debian_10_oci",
-            "docker_image": "debian_10",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) -e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
-            "distribution": "debian_10_i386_oci",
-            "docker_image": "debian_10_i386",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
-            "distribution": "debian_10_armhf_oci",
-            "docker_image": "debian_10_armhf",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)"
-        },
-        {
-            "distribution": "debian_10_arm64_oci",
-            "docker_image": "debian_10_arm64",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)"
-        },
         # Raspbian
         {
             "distribution": "raspbian_10_armhf",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default",
-        },
-        {
-            "distribution": "raspbian_10_armhf_oci",
-            "docker_image": "raspbian_10_armhf",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
         },
         # Ubuntu
         {
@@ -218,20 +183,6 @@ def run_generate_all(parsed_args):
             "version": "$(DEBIAN_QT_VERSION)",
         },
         {
-            "distribution": "ubuntu_18.04_oci",
-            "docker_image": "ubuntu_18.04",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) -e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX)",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
-            "distribution": "ubuntu_18.04_i386_oci",
-            "docker_image": "ubuntu_18.04_i386",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) -e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX)",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
             "distribution": "ubuntu_20.04",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
@@ -241,13 +192,6 @@ def run_generate_all(parsed_args):
             "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
             "version": "$(DEBIAN_QT_VERSION)",
-        },
-        {
-            "distribution": "ubuntu_20.04_oci",
-            "docker_image": "ubuntu_20.04",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) -e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
         },
         {
             "distribution": "ubuntu_20.10",
@@ -261,25 +205,10 @@ def run_generate_all(parsed_args):
             "version": "$(DEBIAN_QT_VERSION)",
         },
         {
-            "distribution": "ubuntu_20.10_oci",
-            "docker_image": "ubuntu_20.10",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) -e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-        {
             "distribution": "ubuntu_21.04",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default",
         },
-        {
-            "distribution": "ubuntu_21.04_oci",
-            "docker_image": "ubuntu_21.04",
-            "output_file": "$(DEBIAN_OCI_DSC_FILENAME)",
-            "options": "-e OVERRIDE_PACKAGING_DIR=$(DEBIAN_OCI_PKG_DIR) --privileged --security-opt apparmor=docker-default",
-            "version": "$(DEBIAN_OCI_VERSION)",
-        },
-
         # Fedora
         {
             "distribution": "fedora_32",
