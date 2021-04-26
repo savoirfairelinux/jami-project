@@ -1,3 +1,0 @@
-version=3
-opts=dversionmangle=s/\~dfsg\d*$// \
-https://dl.jami.net/release/tarballs/ jami_(\d\S*)\.tar\.gz
