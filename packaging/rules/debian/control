@@ -10,23 +10,6 @@ Build-Depends: debhelper (>= 9),
                autotools-dev,
 # qt client
                libqt-jami,
-#               libqt5svg5-dev,
-#               qml-module-qt-labs-platform,
-#               qml-module-qtquick-controls,
-#               qml-module-qtquick-controls2,
-#               qml-module-qtquick-dialogs,
-#               qml-module-qtquick-layouts,
-#               qml-module-qtquick-privatewidgets,
-#               qml-module-qtquick-shapes,
-#               qml-module-qtquick-templates2,
-#               qml-module-qtquick-window2,
-#               qml-module-qtquick2,
-#               qml-module-qtwebchannel,
-#               qml-module-qtwebengine | qml-module-qtwebkit,
-#               qtdeclarative5-dev,
-#               qtmultimedia5-dev,
-#               qtquickcontrols2-5-dev,
-#               qtwebengine5-dev | libqtwebkit-dev,
 # both qt client and gnome client
                libnm-dev,
                libnotify-dev,
@@ -37,9 +20,6 @@ Build-Depends: debhelper (>= 9),
                libclutter-1.0-dev,
                libglib2.0-dev,
                libgtk-3-dev,
-#               qtbase5-dev,
-#               qttools5-dev,
-#               qttools5-dev-tools,
                gettext,
                libqrencode-dev,
                libayatana-appindicator3-dev | libappindicator3-dev,
@@ -85,23 +65,17 @@ Vcs-Browser: https://git.jami.net/savoirfairelinux/ring-project
 Package: jami-all
 Architecture: any
 Depends: gnupg,
-#         libqt5sql5-sqlite,
          ${shlibs:Depends},
          ${misc:Depends}
 Replaces: jami,
           jami-libclient,
           jami-daemon,
-          ring,
-          ring-all,
-          ring-daemon
+          libqt-jami,
 Conflicts: jami,
            jami-libclient,
            jami-daemon,
            jami-gnome,
-           ring,
-           ring-all,
-           ring-gnome,
-           ring-daemon
+           libqt-jami
 Description: Secure and distributed voice, video and chat platform - all in one package
  Jami (jami.net) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy
@@ -109,17 +83,10 @@ Description: Secure and distributed voice, video and chat platform - all in one 
  .
  This package contains the GNOME desktop client and dring, the Jami daemon.
 
-Package: ring-all
-Depends: jami-all, ${misc:Depends}
-Architecture: all
-Description: transitional package for jami-all
- This is a transitional package. It can safely be removed.
-
 Package: jami
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-#         libqt5sql5-sqlite,
          jami-libclient (=${binary:Version})
 Provides: jami-qt
 Description: Secure and distributed voice, video and chat platform - desktop client
@@ -129,20 +96,11 @@ Description: Secure and distributed voice, video and chat platform - desktop cli
  .
  This package contains the jami-qt desktop client.
 
-Package: ring
-Depends: jami, ${misc:Depends}
-Architecture: all
-Description: transitional package for jami
- This is a transitional package. It can safely be removed.
-
 Package: jami-gnome
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-#         libqt5sql5-sqlite,
          jami-libclient (=${binary:Version})
-Replaces: ring-gnome
-Conflicts: ring-gnome
 Description: Secure and distributed voice, video and chat platform - desktop client
  Jami (jami.net) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy
@@ -166,17 +124,9 @@ Package: jami-daemon
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends}
-Replaces: ring-daemon
-Conflicts: ring-daemon
 Description: Secure and distributed voice, video and chat platform - daemon
  Jami (jami.net) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy
  in the hands of the user.
  .
  This package contains the Jami daemon: dring.
-
-Package: ring-daemon
-Depends: jami-daemon, ${misc:Depends}
-Architecture: all
-Description: transitional package for jami-daemon
- This is a transitional package. It can safely be removed.
