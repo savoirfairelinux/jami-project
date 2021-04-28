@@ -48,6 +48,7 @@ name: jami
 version: "RELEASE_VERSION"
 adopt-info: jami
 icon: ../common/icons/jami.svg
+license: GPL-3.0-or-later
 summary: 'Jami: secure, distributed communication software & SIP client'
 description: >
   Jami is free software which allows its users to communicate in multiple ways.
