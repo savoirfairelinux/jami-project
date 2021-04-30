@@ -96,9 +96,12 @@ EOF
     ## Add packages to the repository ##
     ####################################
     packages="packages/${DISTRIBUTION}*/*.deb"
-    if [[ $DISTRIBUTION =~ _qt$ ]]; then
-        packages+=" ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/*.deb"
-    fi
+    case "${DISTRIBUTION}" in
+        *_qt) ;;
+        *)
+            packages="${packages} ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/*.deb"
+            ;;
+    esac
 
     for package in ${packages}; do
         # Sign the deb
