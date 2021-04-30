@@ -207,7 +207,7 @@ def run_generate_all(parsed_args):
         {
             "distribution": "ubuntu_21.04",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
+            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
         },
         {
             "distribution": "ubuntu_21.04_qt",
