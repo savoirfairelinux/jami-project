@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
@@ -21,7 +21,7 @@
 
 #
 # This script syncs and deploys packages from packages/distro.
-# It should be ran from the project root directory.
+# It should be run from the project root directory.
 #
 
 # Exit immediately if a command exits with a non-zero status
@@ -47,6 +47,11 @@ function fetch_qt_deb()
           ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/
 }
 
+# True if $DISTRIBUTION ends by _qt
+is_distribution_qt() {
+    [[ $DISTRIBUTION =~ _qt$ ]]
+}
+
 function package_deb()
 {
     DISTRIBUTION_REPOSITORY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
@@ -56,12 +61,9 @@ function package_deb()
     ###########################################################
     ## fetch qt deb (if not currently building a qt package) ##
     ###########################################################
-    case "${DISTRIBUTION}" in
-        *_qt) ;;
-        *)
-            fetch_qt_deb
-            ;;
-    esac
+    if ! is_distribution_qt; then
+        fetch_qt_deb
+    fi
 
     ##################################################
     ## Create local repository for the given distro ##
@@ -96,12 +98,10 @@ EOF
     ## Add packages to the repository ##
     ####################################
     packages="packages/${DISTRIBUTION}*/*.deb"
-    case "${DISTRIBUTION}" in
-        *_qt) ;;
-        *)
-            packages="${packages} ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/*.deb"
-            ;;
-    esac
+    if ! is_distribution_qt; then
+        packages+=" ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/*.deb"
+    fi
+
     for package in ${packages}; do
         # Sign the deb
         echo "## signing: ${package} ##"
