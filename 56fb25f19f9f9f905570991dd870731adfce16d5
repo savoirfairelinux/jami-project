@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68f6c62b_b60430a9",
+        "filename": "docker/Dockerfile_ubuntu_21.04_qt",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-04-30T17:34:55Z",
+      "side": 1,
+      "message": "Could someone explain to me why that is needed? We run it at the beginning of the Dockerfile; should be enough, no? @abandali?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 35
+      },
+      "revId": "56fb25f19f9f9f905570991dd870731adfce16d5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
