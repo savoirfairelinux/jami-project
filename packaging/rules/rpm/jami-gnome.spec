@@ -31,6 +31,10 @@ BuildRequires: webkitgtk4-devel
 BuildRequires: libdbus-c++-devel
 BuildRequires: libappindicator-devel
 BuildRequires: webkit2gtk3-devel
+BuildRequires: libQt5Sql-devel
+BuildRequires: libQt5Gui-devel
+BuildRequires: libqt5-qtbase-devel
+BuildRequires: libqt5-qttools
 %endif
 BuildRequires: clutter-devel
 BuildRequires: clutter-gtk-devel
