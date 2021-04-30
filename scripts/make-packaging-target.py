@@ -209,6 +209,12 @@ def run_generate_all(parsed_args):
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": "--privileged --security-opt apparmor=docker-default",
         },
+        {
+            "distribution": "ubuntu_21.04_qt",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
+            "version": "$(DEBIAN_QT_VERSION)",
+        },
         # Fedora
         {
             "distribution": "fedora_32",
