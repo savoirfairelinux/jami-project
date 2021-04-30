@@ -44,14 +44,14 @@ function fetch_qt_deb()
     echo "Using RSYNC_RSH='${RSYNC_RSH}'"
     rsync --archive --verbose \
           ${REMOTE_REPOSITORY_LOCATION}/${DISTRIBUTION}_qt/pool/main/libq/libqt-jami/*.deb \
-          ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt/
+          ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/
 }
 
 function package_deb()
 {
-    DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
-    mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
-    mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt
+    DISTRIBUTION_REPOSITORY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
+    mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
+    mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}_qt
 
     ###########################################################
     ## fetch qt deb (if not currently building a qt package) ##
@@ -70,10 +70,10 @@ function package_deb()
     echo "## Creating repository ##"
     echo "#########################"
 
-    mkdir ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf
+    mkdir ${DISTRIBUTION_REPOSITORY_FOLDER}/conf
 
     # Distributions file
-    cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/conf/distributions
+    cat << EOF > ${DISTRIBUTION_REPOSITORY_FOLDER}/conf/distributions
 Origin: jami
 Label: Jami ${DISTRIBUTION} Repository
 Codename: jami
@@ -99,7 +99,7 @@ EOF
     case "${DISTRIBUTION}" in
         *_qt) ;;
         *)
-            packages="${packages} ${DISTRIBUTION_REPOSITOIRY_FOLDER}_qt/*.deb"
+            packages="${packages} ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/*.deb"
             ;;
     esac
     for package in ${packages}; do
@@ -114,24 +114,24 @@ EOF
         if [ ${package_arch} = "all" ]; then
             # Removing to avoid the error of adding the same deb twice.
             # This happens with arch all packages, which are generated in amd64 and i386.
-            reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} remove jami ${package_name}
+            reprepro --verbose --basedir ${DISTRIBUTION_REPOSITORY_FOLDER} remove jami ${package_name}
             # TODO: Remove when April 2024 comes.
-            reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} remove ring ${package_name}
+            reprepro --verbose --basedir ${DISTRIBUTION_REPOSITORY_FOLDER} remove ring ${package_name}
         fi
-        reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} includedeb jami ${package}
+        reprepro --verbose --basedir ${DISTRIBUTION_REPOSITORY_FOLDER} includedeb jami ${package}
         # TODO: Remove when April 2024 comes.
-        reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} includedeb ring ${package}
+        reprepro --verbose --basedir ${DISTRIBUTION_REPOSITORY_FOLDER} includedeb ring ${package}
     done
 
     # Rebuild the index
-    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} export jami
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITORY_FOLDER} export jami
     # TODO: Remove when April 2024 comes.
-    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} export ring
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITORY_FOLDER} export ring
 
     # Show the contents
-    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list jami
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITORY_FOLDER} list jami
     # TODO: Remove when April 2024 comes.
-    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITOIRY_FOLDER} list ring
+    reprepro --verbose --basedir ${DISTRIBUTION_REPOSITORY_FOLDER} list ring
 
     #######################################
     ## create the manual download folder ##
@@ -170,8 +170,8 @@ function package_rpm()
     local name
     local baseurl
 
-    DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
-    mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+    DISTRIBUTION_REPOSITORY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
+    mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
 
     # .repo file
     if [ "${DISTRIBUTION:0:19}" == "opensuse-tumbleweed" ]; then
@@ -182,7 +182,7 @@ function package_rpm()
         baseurl="https://dl.jami.net/nightly/${DISTRIBUTION%_*}_\$releasever"
     fi
 
-    cat << EOF > ${DISTRIBUTION_REPOSITOIRY_FOLDER}/jami-nightly.repo
+    cat << EOF > ${DISTRIBUTION_REPOSITORY_FOLDER}/jami-nightly.repo
 [jami]
 name=$name
 baseurl=$baseurl
@@ -209,11 +209,11 @@ EOF
 
     for package in packages/${DISTRIBUTION}*/*.rpm; do
         rpmsign --resign --key-id=${KEYID} ${package}
-        cp ${package} ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+        cp ${package} ${DISTRIBUTION_REPOSITORY_FOLDER}
     done
 
     # Create the repo
-    createrepo --update ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+    createrepo --update ${DISTRIBUTION_REPOSITORY_FOLDER}
 
     #######################################
     ## create the manual download folder ##
@@ -249,9 +249,9 @@ function package_snap()
     echo "####################"
 
     if [[ "${CHANNEL:0:19}" == "internal_experiment" ]]; then
-        DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
-        mkdir -p ${DISTRIBUTION_REPOSITOIRY_FOLDER}
-        cp packages/${DISTRIBUTION}*/*.snap ${DISTRIBUTION_REPOSITOIRY_FOLDER}/
+        DISTRIBUTION_REPOSITORY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
+        mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
+        cp packages/${DISTRIBUTION}*/*.snap ${DISTRIBUTION_REPOSITORY_FOLDER}/
     elif [[ "${CHANNEL:0:7}" == "nightly" ]]; then
         snapcraft login --with ${SNAPCRAFT_LOGIN}
         snapcraft push packages/${DISTRIBUTION}*/*.snap --release edge
@@ -278,7 +278,7 @@ function deploy()
     echo "##########################"
     echo "Using RSYNC_RSH='${RSYNC_RSH}'"
     rsync --archive --recursive --verbose \
-          --delete ${DISTRIBUTION_REPOSITOIRY_FOLDER} \
+          --delete ${DISTRIBUTION_REPOSITORY_FOLDER} \
           ${REMOTE_REPOSITORY_LOCATION}
 
     echo "#####################################"
@@ -317,7 +317,7 @@ function remove-deployed-files()
     # remove deployed files
     rm -rf manual-download
     rm -rf repositories
-    rm -rf ${DISTRIBUTION_REPOSITOIRY_FOLDER}
+    rm -rf ${DISTRIBUTION_REPOSITORY_FOLDER}
 }
 
 for i in "$@"
@@ -357,7 +357,7 @@ done
 
 if [ -z "${KEYID}" ];
 then
-    DISTRIBUTION_REPOSITOIRY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
+    DISTRIBUTION_REPOSITORY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
     DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
     deploy
     remove-deployed-files
