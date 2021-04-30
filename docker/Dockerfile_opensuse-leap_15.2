@@ -90,6 +90,10 @@ RUN zypper --non-interactive up -y && \
         xz \
         xkeyboard-config \
         libnotify \
+        libQt5Sql-devel \
+        libQt5Gui-devel \
+        libqt5-qtbase-devel \
+        libqt5-qttools \
         wget
 
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
