@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
@@ -21,7 +21,7 @@
 
 #
 # This script syncs and deploys packages from packages/distro.
-# It should be ran from the project root directory.
+# It should be run from the project root directory.
 #
 
 # Exit immediately if a command exits with a non-zero status
@@ -96,12 +96,10 @@ EOF
     ## Add packages to the repository ##
     ####################################
     packages="packages/${DISTRIBUTION}*/*.deb"
-    case "${DISTRIBUTION}" in
-        *_qt) ;;
-        *)
-            packages="${packages} ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/*.deb"
-            ;;
-    esac
+    if [[ $DISTRIBUTION =~ _qt$ ]]; then
+        packages+=" ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/*.deb"
+    fi
+
     for package in ${packages}; do
         # Sign the deb
         echo "## signing: ${package} ##"
