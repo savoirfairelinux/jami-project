@@ -24,10 +24,6 @@
 set -e
 
 PKG_DIR="packaging/rules/debian-qt"
-if [ -n "${OVERRIDE_PACKAGING_DIR}" ]; then
-    echo "Using OVERRIDE_PACKAGING_DIR: $OVERRIDE_PACKAGING_DIR"
-    PKG_DIR="${OVERRIDE_PACKAGING_DIR}"
-fi
 
 cache_dir=/opt/ring-contrib
 temp_dir=$(mktemp -d)
