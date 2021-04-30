@@ -42,6 +42,7 @@ export PATH := $(QT_JAMI_PREFIX)/bin:${PATH}
 export LD_LIBRARY_PATH := $(QT_JAMI_PREFIX)/lib:${LD_LIBRARY_PATH}
 export PKG_CONFIG_PATH := $(QT_JAMI_PREFIX)/lib/pkgconfig:${PKG_CONFIG_PATH}
 export CMAKE_PREFIX_PATH := $(QT_JAMI_PREFIX)/lib/cmake:${CMAKE_PREFIX_PATH}
+TEMP=$(CMAKE_PREFIX_PATH)
 
 # Installation directories.
 OCI_INSTALL_DIR = $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)
@@ -99,7 +100,9 @@ override_dh_auto_configure:
 		cmake  \
 			-DRING_BUILD_DIR=$(CURDIR)/daemon/src \
 			-DCMAKE_INSTALL_PREFIX=/usr \
-			$(CMAKE_OPTIONS) \
+			-DCMAKE_INSTALL_LIBDIR=lib \
+			-DCMAKE_PREFIX_PATH=$(TEMP) \
+			$(CMAKE_OPTIONS) $(QT_OPTIONS) \
 			..
 
 	############################
@@ -110,6 +113,7 @@ override_dh_auto_configure:
 		cd build && \
 		cmake \
 			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DCMAKE_INSTALL_LIBDIR=lib \
 			-DLibRingClient_PROJECT_DIR=/$(CURDIR)/lrc \
 			-DGSETTINGS_LOCALCOMPILE=OFF \
 			$(CMAKE_OPTIONS) \
