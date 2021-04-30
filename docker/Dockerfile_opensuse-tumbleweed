@@ -94,6 +94,10 @@ RUN zypper --non-interactive up -y && \
         xcb-util-renderutil-devel \
         xcb-util-wm-devel \
         xorg-x11-devel \
+        libQt5Sql-devel \
+        libQt5Gui-devel \
+        libqt5-qtbase-devel \
+        libqt5-qttools \
         xz \
         libnotify \
         xkeyboard-config \
