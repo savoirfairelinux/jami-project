@@ -13,13 +13,8 @@ RUN apt-get update && \
 RUN sed -n '/^deb\s/s//deb-src /p' /etc/apt/sources.list > /etc/apt/sources.list.d/deb-src.list
 
 RUN apt-get clean && apt-get update
-COPY packaging/rules/debian-qt/* ${OVERRIDE_PACKAGING_DIR} /tmp/builddeps/debian/
-RUN cd /tmp/builddeps/debian; \
-    if [ -n "${OVERRIDE_PACKAGING_DIR}" ] && [ -d "$(basename ${OVERRIDE_PACKAGING_DIR})" ]; then \
-        mv "$(basename ${OVERRIDE_PACKAGING_DIR})"/* .; \
-        rm -r "$(basename ${OVERRIDE_PACKAGING_DIR})"; \
-    fi; \
-    cd ..; \
+COPY packaging/rules/debian-qt/* /tmp/builddeps/debian/
+RUN cd /tmp/builddeps && \
     apt-get update; \
     mk-build-deps \
         --remove --install \

@@ -27,11 +27,6 @@ cp -r /opt/ring-project-ro /opt/ring-project
 cd /opt/ring-project
 
 PKG_DIR="packaging/rules/debian"
-if [ -z "${OVERRIDE_PACKAGING_DIR}" ]; then
-    echo "OVERRIDE_PACKAGING_DIR not set."
-else
-    PKG_DIR="${OVERRIDE_PACKAGING_DIR}"
-fi
 
 # import the debian folder and override files if needed
 cp -r ${PKG_DIR} debian
