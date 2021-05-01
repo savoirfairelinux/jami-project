@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52eb4f5e_289cb279",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-05-01T12:40:46Z",
+      "side": 1,
+      "message": "Should not be done if jami-all not built:\n\n+ export RSYNC_RSH\u003dssh -i /var/lib/jenkins/.ssh/gplpriv\n+ scripts/deploy-packages.sh --distribution\u003dubuntu_21.04_qt --keyid\u003dA295D773307D25A33AE72F2F64CD5FA175348F84 --snapcraft-login\u003d/var/lib/jenkins/.snap/key --remote-repository-location\u003dsshadmin@ring-repovm-01.mtl.sfl:/srv/repository/ring/ring-internal --remote-manual-download-location\u003dsshadmin@ring-repovm-01.mtl.sfl:/srv/repository/ring/ring-manual-internal\n#########################\n## Creating repository ##\n#########################\n## signing: packages/ubuntu_21.04_qt/libqt-jami_5.15.2-1_amd64.deb ##\nProcessing packages/ubuntu_21.04_qt/libqt-jami_5.15.2-1_amd64.deb...\ngpg: using \"A295D773307D25A33AE72F2F64CD5FA175348F84\" as default secret key for signing\nSigned deb packages/ubuntu_21.04_qt/libqt-jami_5.15.2-1_amd64.deb\n## including packages/ubuntu_21.04_qt/libqt-jami_5.15.2-1_amd64.deb ##\npackages/ubuntu_21.04_qt/libqt-jami_5.15.2-1_amd64.deb: component guessed as \u0027main\u0027\nExporting indices...\npackages/ubuntu_21.04_qt/libqt-jami_5.15.2-1_amd64.deb: component guessed as \u0027main\u0027\nExporting indices...\nExporting jami...\nExporting ring...\njami|main|amd64: libqt-jami 5.15.2-1\nring|main|amd64: libqt-jami 5.15.2-1\ncp: cannot stat \u0027packages/ubuntu_21.04_qt/jami-all_????????.*~dfsg*.deb\u0027: No such file or directory",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 8
+      },
+      "revId": "ab3288ce9c762040dee09b6d7a2438722dc12395",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
