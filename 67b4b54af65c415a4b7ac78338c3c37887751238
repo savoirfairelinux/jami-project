@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d71b1136_15e2f216",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-05-01T01:12:27Z",
+      "side": 0,
+      "message": "break deploy step for _qt*",
+      "range": {
+        "startLine": 100,
+        "startChar": 6,
+        "endLine": 100,
+        "endChar": 16
+      },
+      "revId": "67b4b54af65c415a4b7ac78338c3c37887751238",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
