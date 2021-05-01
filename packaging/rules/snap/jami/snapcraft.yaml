@@ -48,6 +48,7 @@ name: jami
 version: "RELEASE_VERSION"
 adopt-info: jami
 icon: ../common/icons/jami.svg
+license: GPL-3.0-or-later
 summary: 'Jami: secure, distributed communication software & SIP client'
 description: >
   Jami is free software which allows its users to communicate in multiple ways.
@@ -128,6 +129,7 @@ apps:
     - network-manager
     - opengl
     - removable-media
+    - screen-inhibit-control
     - system-observe
     - unity7
     - wayland
@@ -366,6 +368,7 @@ parts:
     - qt515quickcontrols2
     - qt515svg
     - qt515tools
+    - qt515wayland
     - qt515webchannel
     - qt515webengine
     - va-driver-all
