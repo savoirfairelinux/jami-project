@@ -46,6 +46,30 @@
       "revId": "98af7ea4100a0a4d58b24492cbe1e288674e251c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4a9ce52_cf4f781c",
+        "filename": "packaging/rules/debian-qt/control",
+        "patchSetId": 22
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-05-04T14:14:55Z",
+      "side": 1,
+      "message": "Ugh. Alright.",
+      "parentUuid": "772fadb3_d6b4ef78",
+      "range": {
+        "startLine": 315,
+        "startChar": 15,
+        "endLine": 315,
+        "endChar": 22
+      },
+      "revId": "98af7ea4100a0a4d58b24492cbe1e288674e251c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
