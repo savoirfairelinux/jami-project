@@ -22,6 +22,30 @@
       "revId": "98af7ea4100a0a4d58b24492cbe1e288674e251c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772fadb3_d6b4ef78",
+        "filename": "packaging/rules/debian-qt/control",
+        "patchSetId": 22
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-05-04T13:55:36Z",
+      "side": 1,
+      "message": "we can try, but i don\u0027t think so; it\u0027s a dependency of qt webengine. we can drop it when we drop webengine ;-)",
+      "parentUuid": "18b30cee_8123f13c",
+      "range": {
+        "startLine": 315,
+        "startChar": 15,
+        "endLine": 315,
+        "endChar": 22
+      },
+      "revId": "98af7ea4100a0a4d58b24492cbe1e288674e251c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
