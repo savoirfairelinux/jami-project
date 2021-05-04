@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b30cee_8123f13c",
+        "filename": "packaging/rules/debian-qt/control",
+        "patchSetId": 22
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-05-04T13:49:14Z",
+      "side": 1,
+      "message": "can\u0027t we just drop python2?  It\u0027s dead.",
+      "range": {
+        "startLine": 315,
+        "startChar": 15,
+        "endLine": 315,
+        "endChar": 22
+      },
+      "revId": "98af7ea4100a0a4d58b24492cbe1e288674e251c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
