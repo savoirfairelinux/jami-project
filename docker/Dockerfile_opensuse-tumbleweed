@@ -27,7 +27,6 @@ RUN zypper --non-interactive up -y && \
         libQt5DBus-devel \
         pcre-devel \
         yaml-cpp-devel \
-        boost-devel \
         libdbus-c++-devel \
         libQt5DBus-devel \
         libXext-devel \
@@ -70,14 +69,36 @@ RUN zypper --non-interactive up -y && \
         sqlite-devel \
         libQt5Sql-devel \
         libQt5Gui-devel  \
+        libqt5-qtdeclarative-devel \
+        libqt5-qtquickcontrols \
+        libQt5Concurrent-devel \
+        libQt5QuickControls2-devel \
+        libqt5-qtmultimedia-devel \
+        libqt5-qtsvg-devel \
+        libqt5-qtwebengine-devel \
+        libQt5Sql-devel \
+        libQt5Gui-devel  \
         ffmpeg-4-libavutil-devel \
         gtk3-devel\
         qrencode-devel \
         python3-python-dateutil \
         libqt5-linguist-devel \
         libsndfile-devel \
-        evolution-devel
+        libxcb* \
+        libxkb* \
+        libX11-devel \
+        libXrender-devel \
+        libfreetype6 \
+        xcb-util-image-devel \
+        xcb-util-keysyms-devel \
+        xcb-util-renderutil-devel \
+        xcb-util-wm-devel \
+        xorg-x11-devel \
+        xz \
+        libnotify \
+        xkeyboard-config \
+        wget
 
-ADD scripts/build-package-opensuse-leap.sh  /opt/build-package-opensuse-leap.sh
+ADD scripts/build-package-rpm.sh  /opt/build-package-rpm.sh
 
-CMD /opt/build-package-opensuse-leap.sh
+CMD /opt/build-package-rpm.sh
