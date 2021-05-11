@@ -71,6 +71,7 @@ RUN dnf install -y \
         qt5-qtmultimedia-devel \
         qt5-qtsvg-devel \
         qt5-qtwebengine-devel \
+        libargon2-devel \
         sqlite-devel
 
 ADD scripts/build-package-rpm.sh /opt/build-package-rpm.sh
