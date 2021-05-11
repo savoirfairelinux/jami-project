@@ -61,6 +61,7 @@ function package_deb()
     ###########################################################
     ## fetch qt deb (if not currently building a qt package) ##
     ###########################################################
+    echo "@@@@@!-1"
     if ! is_distribution_qt; then
         fetch_qt_deb
     fi
@@ -72,6 +73,7 @@ function package_deb()
     echo "## Creating repository ##"
     echo "#########################"
 
+    echo "@@@@@!0"
     mkdir ${DISTRIBUTION_REPOSITORY_FOLDER}/conf
 
     # Distributions file
@@ -93,6 +95,8 @@ Components: main
 Description: This repository contains Ring ${DISTRIBUTION} packages
 SignWith: ${KEYID}
 EOF
+
+    echo "@@@@@!1"
 
     ####################################
     ## Add packages to the repository ##
@@ -134,15 +138,18 @@ EOF
     # TODO: Remove when April 2024 comes.
     reprepro --verbose --basedir ${DISTRIBUTION_REPOSITORY_FOLDER} list ring
 
+    echo "@@@@@!2"
     #######################################
     ## create the manual download folder ##
     #######################################
     NAME_PATTERN=jami-all_????????.*\~dfsg*.deb
     if ls packages/${DISTRIBUTION}/${NAME_PATTERN}i &> /dev/null; then
+        echo "@@@@@!3"
         DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
         mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
         cp packages/${DISTRIBUTION}/${NAME_PATTERN} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
         for package in ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}/${NAME_PATTERN} ; do
+            echo "@@@@@!4"
             package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
             package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
             package_shortname=${package_name}_${package_arch}.deb
