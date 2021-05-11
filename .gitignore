@@ -9,6 +9,7 @@ jami_*.tar.gz
 Makefile.packaging.distro_targets
 repositories
 tarballs.manifest
+.git-status.manifest
 manual-download
 .docker-image-*
 

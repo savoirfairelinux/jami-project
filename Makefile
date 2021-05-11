@@ -80,31 +80,43 @@ tarballs.manifest: daemon/contrib/native/Makefile
 	fi
 	@rm -f "$(CURDIR)/$@.tmp"
 
+.PHONY: .git-status.manifest
+.git-status.manifest:
+	@git submodule status > "$@.tmp" && \
+	git describe --always >> "$@.tmp" && \
+	if ! diff -q "$@" "$@.tmp" 2> /dev/null; then \
+	  mv "$@.tmp" "$@" && \
+	  echo .git-status.manifest changed; \
+	fi
+	@rm -f "$@.tmp"
+
 # Generate the release tarball.  Note: to avoid building 1+ GiB
 # tarball containing all the bundled libraries, only the required
 # tarballs are included.  This means the resulting release tarball
 # content depends on what libraries the host has installed.  To build
 # a single release tarball that can be used for any GNU/Linux machine,
 # it should be built in a minimal container.)
-$(RELEASE_TARBALL_FILENAME): tarballs.manifest
+$(RELEASE_TARBALL_FILENAME): tarballs.manifest .git-status.manifest
 # Prepare the sources of the top repository and relevant submodules.
-	rm -f "$@"
-	mkdir $(TMPDIR)/ring-project
-	git archive HEAD | tar xf - -C $(TMPDIR)/ring-project
-	for m in daemon lrc client-gnome client-qt; do \
-		(cd "$$m" && git archive --prefix "$$m/" HEAD \
-			| tar xf - -C $(TMPDIR)/ring-project); \
-	done
-# Create the base archive.
-	tar --create --file $(TMPDIR)/ring-project.tar $(TMPDIR)/ring-project \
-		--transform 's,.*/ring-project,ring-project,'
-# Append the cached tarballs listed in the manifest.
-	tar --append --file $(TMPDIR)/ring-project.tar \
-		--files-from $< \
-		--transform 's,^.*/,ring-project/daemon/contrib/tarballs/,'
-	gzip $(TMPDIR)/ring-project.tar
-	mv $(TMPDIR)/ring-project.tar.gz "$@"
-	rm -rf $(TMPDIR)
+	@if [ tarballs.manifest -nt "$@" ] || \
+	   [ .git-status.manifest -nt "$@" ]; then\
+	  rm -f "$@" && \
+	  mkdir $(TMPDIR)/ring-project && \
+	  git archive HEAD | tar xf - -C $(TMPDIR)/ring-project && \
+	  for m in daemon lrc client-gnome client-qt; do \
+	    (cd "$$m" && git archive --prefix "$$m/" HEAD \
+	      | tar xf - -C $(TMPDIR)/ring-project); \
+	  done && \
+	  tar --create --file $(TMPDIR)/ring-project.tar $(TMPDIR)/ring-project \
+	      --transform 's,.*/ring-project,ring-project,' && \
+	  tar --append --file $(TMPDIR)/ring-project.tar \
+	      --files-from $< \
+	      --transform 's,^.*/,ring-project/daemon/contrib/tarballs/,' && \
+	  gzip $(TMPDIR)/ring-project.tar && \
+	  mv $(TMPDIR)/ring-project.tar.gz "$@" && \
+	  rm -rf $(TMPDIR) && \
+	  echo created $@; \
+	fi
 
 #######################
 ## Packaging targets ##
