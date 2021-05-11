@@ -138,7 +138,7 @@ EOF
     ## create the manual download folder ##
     #######################################
     NAME_PATTERN=jami-all_????????.*\~dfsg*.deb
-    if ls packages/${DISTRIBUTION}/${NAME_PATTERN}i &> /dev/null; then
+    if ls packages/${DISTRIBUTION}/${NAME_PATTERN} &> /dev/null; then
         DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER=$(realpath manual-download)/${DISTRIBUTION}
         mkdir -p ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
         cp packages/${DISTRIBUTION}/${NAME_PATTERN} ${DISTRIBUTION_MANUAL_DOWNLOAD_FOLDER}
