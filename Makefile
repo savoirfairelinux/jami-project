@@ -60,18 +60,25 @@ CURRENT_GID:=$(shell id -g)
 .PHONY: release-tarball
 release-tarball: $(RELEASE_TARBALL_FILENAME)
 
+daemon/contrib/native/Makefile:
+	mkdir -p daemon/contrib/native && \
+	cd daemon/contrib/native && \
+	../bootstrap
+
 # Fetch the required contrib sources and copy them to
 # daemon/contrib/tarballs.  To use a custom tarballs cache directory,
 # export the TARBALLS environment variable.
-tarballs.manifest:
-	rm -rf daemon/contrib/native
-	mkdir -p daemon/contrib/native && \
-	cd daemon/contrib/native && \
-	../bootstrap && \
-        $(MAKE) list && \
-        $(MAKE) fetch -j && \
-	$(MAKE) --silent list-tarballs > $(CURDIR)/$@
-	rm -rf daemon/contrib/native
+.PHONY: tarballs.manifest
+tarballs.manifest: daemon/contrib/native/Makefile
+	@cd daemon/contrib/native && \
+	$(MAKE) --silent list-tarballs > "$(CURDIR)/$@.tmp" && \
+	if ! diff -q "$(CURDIR)/$@" "$(CURDIR)/$@.tmp" 2> /dev/null; then \
+	  $(MAKE) list && \
+	  $(MAKE) fetch -j && \
+	  mv "$(CURDIR)/$@.tmp" "$(CURDIR)/$@" && \
+	  echo tarballs.manifest changed; \
+	fi
+	@rm -f "$(CURDIR)/$@.tmp"
 
 # Generate the release tarball.  Note: to avoid building 1+ GiB
 # tarball containing all the bundled libraries, only the required
