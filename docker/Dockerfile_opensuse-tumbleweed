@@ -101,6 +101,7 @@ RUN zypper --non-interactive up -y && \
         xz \
         libnotify \
         xkeyboard-config \
+        argon2-devel \
         wget
 
 ADD scripts/build-package-rpm.sh  /opt/build-package-rpm.sh
