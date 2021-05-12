@@ -285,6 +285,7 @@ parts:
     - g++-8
     - gettext
     - gzip
+    - libargon2-dev
     - libasound2-dev
     - libavcodec-dev
     - libavdevice-dev
