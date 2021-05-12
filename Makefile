@@ -60,6 +60,23 @@ CURRENT_GID:=$(shell id -g)
 .PHONY: release-tarball
 release-tarball: $(RELEASE_TARBALL_FILENAME)
 
+# The bundled tarballs included in the release tarball depend on what
+# is available on the host.  To ensure it can be shared across all
+# different GNU/Linux distributions, generate it in a minimal
+# container.  Wget uses GnuTLS, which looks up its certs from
+# /etc/ssl/certs.
+guix-share-tarball-arg = $${TARBALLS:+"--share=$$TARBALLS"}
+.PHONY: portable-release-tarball
+portable-release-tarball:
+	command -v guix > /dev/null 2>&1 || \
+	  (echo 'guix' is required to build the '$@' target && exit 1) && \
+	guix environment --container --network \
+          --preserve=TARBALLS $(guix-share-tarball-arg) \
+          --expose=/usr/bin/env \
+          --expose=$$SSL_CERT_FILE \
+          --manifest=$(CURDIR)/guix/minimal-manifest.scm \
+          -- $(MAKE) release-tarball
+
 daemon/contrib/native/Makefile:
 	mkdir -p daemon/contrib/native && \
 	cd daemon/contrib/native && \
@@ -74,12 +91,8 @@ tarballs.manifest: daemon/contrib/native/Makefile
 	$(MAKE) fetch -j && \
 	$(MAKE) --silent list-tarballs > "$(CURDIR)/$@"
 
-# Generate the release tarball.  Note: to avoid building 1+ GiB
-# tarball containing all the bundled libraries, only the required
-# tarballs are included.  This means the resulting release tarball
-# content depends on what libraries the host has installed.  To build
-# a single release tarball that can be used for any GNU/Linux machine,
-# it should be built in a minimal container.)
+# Generate the release tarball.  To regenerate a fresh tarball
+# manually clear the tarballs.manifest file.
 $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 # Prepare the sources of the top repository and relevant submodules.
 	rm -f "$@"
