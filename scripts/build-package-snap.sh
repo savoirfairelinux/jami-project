@@ -24,7 +24,7 @@
 set -e
 
 cp -rp /opt/ring-project-ro /opt/ring-project
-cd /opt/ring-project/packaging/rules/snap/jami/
+cd /opt/ring-project/packaging/rules/snap/${SNAP_PKG_NAME}/
 
 # set the version and tarball filename
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" snapcraft.yaml
