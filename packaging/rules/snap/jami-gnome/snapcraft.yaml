@@ -44,7 +44,7 @@
 # SOFTWARE.
 
 
-name: jami
+name: jami-gnome
 version: "RELEASE_VERSION"
 adopt-info: jami
 icon: ../common/icons/jami.svg
@@ -134,6 +134,8 @@ apps:
     - network-bind
     - opengl
     - removable-media
+    - screen-inhibit-control
+    - system-observe
     - unity7
     - wayland
     - x11
@@ -268,6 +270,7 @@ parts:
     - gettext
     - gnome-icon-theme-symbolic
     - gzip
+    - libargon2-0-dev
     - libappindicator3-dev
     - libayatana-appindicator3-dev
     - libasound2-dev
