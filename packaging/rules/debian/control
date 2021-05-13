@@ -54,7 +54,7 @@ Build-Depends: debhelper (>= 9),
                libcrypto++-dev,
                libvdpau-dev,
                libssl-dev,
-               libargon2-dev,
+               libargon2-dev | libargon2-0-dev,
 # other
                nasm,
                yasm,
