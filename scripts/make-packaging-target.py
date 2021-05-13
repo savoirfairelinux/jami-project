@@ -263,6 +263,7 @@ def run_generate_all(parsed_args):
         {
             "distribution": "snap",
             "output_file": ".packages-built",
+            "options": "-e SNAP_PKG_NAME=${SNAP_PKG_NAME}",
         },
 
     ]
