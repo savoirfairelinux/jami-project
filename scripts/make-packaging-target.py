@@ -54,6 +54,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -e CURRENT_UID=$(CURRENT_UID) \\
     -e CURRENT_GID=$(CURRENT_GID) \\
     -e DISTRIBUTION=%(distribution)s \\
+    -v $(CURDIR)/$(RELEASE_TARBALL_FILENAME):/src/$(RELEASE_TARBALL_FILENAME) \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
     -v /opt/cache-packaging:/opt/cache-packaging \\
