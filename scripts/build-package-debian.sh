@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (C) 2016-2019 Savoir-faire Linux Inc.
+# Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
 # Author: Alexandre Viau <alexandre.viau@savoirfairelinux.com>
 #
@@ -20,16 +20,7 @@
 # This script is used in the packaging containers to build packages on
 # debian-based distros.
 #
-
 set -e
-
-cp -r /opt/ring-project-ro /opt/ring-project
-cd /opt/ring-project
-
-PKG_DIR="packaging/rules/debian"
-
-# import the debian folder and override files if needed
-cp -r ${PKG_DIR} debian
 
 DPKG_BUILD_OPTIONS=""
 # Set the host architecture as armhf and add some specific architecture
@@ -40,36 +31,27 @@ if grep -q "raspbian_10_armhf" <<< "${DISTRIBUTION}"; then
     DPKG_BUILD_OPTIONS="${DPKG_BUILD_OPTIONS} -a armhf"
 fi
 
-# create changelog file
-DEBEMAIL="The Jami project <jami@gnu.org>" dch --create --package jami --newversion ${DEBIAN_VERSION} "Automatic nightly release"
-DEBEMAIL="The Jami project <jami@gnu.org>" dch --release --distribution "unstable" debian/changelog
+# Setup work directory.
+mkdir -p /jami/work && cd /jami/work
 
-# create orig tarball
-mk-origtargz --compression gzip ${RELEASE_TARBALL_FILENAME}
-rm --verbose ${RELEASE_TARBALL_FILENAME}
+# Create a changelog file, required by dpkg-buildpackage.
+mkdir debian
+DEBEMAIL="The Jami project <jami@gnu.org>" dch --create --package jami \
+        --newversion ${DEBIAN_VERSION} "Automatic nightly release"
+DEBEMAIL="The Jami project <jami@gnu.org>" dch --release \
+        --distribution "unstable" debian/changelog
 
-GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL=$(readlink -f ../jami_*.orig.tar.gz) debian/rules get-orig-source
+# Unpack the source tarball.
+tar -xvf /src/"$RELEASE_TARBALL_FILENAME" --strip-components=1
 
-# move the tarball to the work directory
-mkdir -p /opt/jami-packaging
-mv jami_*.orig.tar.gz /opt/jami-packaging
+# Expose the debian directory from here, augmented with the changelog.
+cp debian/changelog packaging/rules/debian
+rm -r debian
+ln -s packaging/rules/debian .
 
-# move to work directory
-cd /opt/jami-packaging
+# Create the binary packages.
+dpkg-buildpackage -b -uc -us ${DPKG_BUILD_OPTIONS}
 
-# unpack the orig tarball
-tar -xvf /opt/jami-packaging/jami_*.orig.tar.gz
-
-# move to ring-project dir
-cd ring-project
-
-# import debian folder into ring-packaging directory
-cp --verbose -r /opt/ring-project/debian .
-
-# create the package
-dpkg-buildpackage -uc -us ${DPKG_BUILD_OPTIONS}
-
-# move the artifacts to output
-cd ..
-mv *.orig.tar* *.debian.tar* *deb *changes *dsc /opt/output
+# Move the artifacts to the output.
+mv ../*.deb /opt/output
 chown -R ${CURRENT_UID}:${CURRENT_UID} /opt/output
