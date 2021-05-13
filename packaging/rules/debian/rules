@@ -50,18 +50,6 @@ OCI_INSTALL_DIR = $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)
 	dh $@
 
 override_dh_auto_configure:
-	###############################################
-	## Re-create tarballs from tarballs-unpacked ##
-	###############################################
-	mkdir -p daemon/contrib/tarballs
-
-	# Create tarballs
-	for i in $(CURDIR)/daemon/contrib/tarballs-unpacked/*; do \
-		projectname=`basename $$i` && \
-		cd $$i && tar -caf ../../tarballs/$$projectname * && \
-		echo "Repacked $$projectname"; \
-	done
-
 	###########################
 	## Daemon configure      ##
 	###########################
@@ -155,11 +143,6 @@ override_dh_auto_build:
 	make -C client-qt/build -j$(NO_CPUS) V=1
 
 override_dh_auto_clean:
-	################################
-	## Generated contrib tarballs ##
-	################################
-	rm -rfv daemon/contrib/tarballs
-
 	#######################
 	## Daemon clean      ##
 	#######################
@@ -187,12 +170,6 @@ override_dh_auto_clean:
 	# CMake build system has no distclean target, so use clean.
 	if [ -f client-qt/build/Makefile ]; then make -C client-qt/build clean; fi
 	rm -rfv client-qt/build
-
-override_dh_clean:
-	# GNUTLS contains:
-	# ring-project/daemon/contrib/tarballs-unpacked/gnutls-3.5.10.tar.xz/gnutls-3.5.10/src/certtool-args.c.bak
-	# ring-project/daemon/contrib/tarballs-unpacked/gnutls-3.5.10.tar.xz/gnutls-3.5.10/doc/doxygen/Doxyfile.orig
-	dh_clean -X.bak -X.orig
 
 override_dh_auto_install:
 	#########################
@@ -273,56 +250,9 @@ version_to_download := $(shell dpkg-parsechangelog -ldebian/changelog | perl -ne
 
 # Repacks the tarball with contrib tarballs unpacked.
 get-orig-source:
-	# Download jami tarball
+# Download jami tarball
 	if [ -n "$$GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL" ]; then \
-	    mv $$GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL ${tmpdir}; \
+	    mv $$GET_ORIG_SOURCE_OVERRIDE_USCAN_TARBALL ${workdir}; \
 	else \
-	    uscan --rename --destdir=${tmpdir} --download-version ${version_to_download} ;\
+	    uscan --rename --destdir=${workdir} --download-version ${version_to_download};\
 	fi
-
-	# Unpack jami tarball
-	tar -C ${tmpdir} -xf ${tmpdir}/*.tar.gz
-
-	# Remove original tarball
-	rm ${tmpdir}/*.tar.gz
-
-	# Unpack all of the orig tarballs into tarballs-unpacked
-	if [ -d "${tmpdir}/jami/" ]; then \
-		mv ${tmpdir}/jami/ ${tmpdir}/ring-project/; \
-	fi
-	mkdir ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked
-	for i in `find ${tmpdir}/ring-project/daemon/contrib/tarballs/ -name "*.tar.*"`; do \
-		projectname=`basename $$i` && \
-		mkdir ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/$$projectname && \
-		tar -C ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/$$projectname -xf $$i && \
-		echo "Unpacked $$projectname"; \
-    done
-
-	###################
-	## Exclude files ##
-	###################
-	# This does not exclude everything that we need to exclude.
-	# debian/copyright's File-Excluded section also excludes files.
-
-    ## pjproject
-	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/g7221 # non-distributable (requires a license from Polycom)
-	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/ilbc # non distributable (the version included with pjproject)
-	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/milenage # non distributable
-	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/BaseClasses # non distributable (?)
-	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/portaudio # not needed
-	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/speex # not needed
-	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/mp3 # not needed
-	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/gsm # not needed
-	rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/bdsound # not needed
-	#rm -rf  ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/third_party/srtp # not needed
-	rm -f ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/pjmedia/src/pjmedia-audiodev/s60_g729_bitstream.h # non distributable
-	rm -rf ${tmpdir}/ring-project/daemon/contrib/tarballs-unpacked/pjproject-*/pjproject-*/build/vs # not needed, VisualStudio files.
-
-	# Remove all contrib tarballs
-	rm -rf ${tmpdir}/ring-project/daemon/contrib/tarballs
-
-	# Create the new tarball
-	cd ${tmpdir} && tar -czf ${workdir}/jami_${version_to_download}~dfsg1.orig.tar.gz ring-project
-
-	# Clear the temp dir
-	rm -rf ${tmpdir}
