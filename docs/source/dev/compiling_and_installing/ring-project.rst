@@ -11,7 +11,7 @@ Initialize the repositories
 
 .. code-block:: bash
 
-    ./make-ring.py --init
+    ./build.py --init
 
 It initializes and updates the submodules to set them at the top of their master branch. This
 is ideal to have the latest development version.
@@ -29,7 +29,7 @@ On Linux
 
 .. code-block:: bash
 
-    ./make-ring.py --dependencies
+    ./build.py --dependencies
 
 Your distribution's package manager will be used.
 
@@ -37,13 +37,13 @@ Your distribution's package manager will be used.
 
 .. code-block:: bash
 
-    ./make-ring.py --install
+    ./build.py --install
 
 3. Run daemon and client that were installed locally:
 
 .. code-block:: bash
 
-	./make-ring.py --run
+	./build.py --run
 
 You can then stop the processes with CTRL-C.
 
@@ -54,7 +54,7 @@ Install globally for all users instead
 
 .. code-block:: bash
 
-    ./make-ring.py --install --global-install
+    ./build.py --install --global-install
 
 Run global install:
 
@@ -68,7 +68,7 @@ Uninstall the global install:
 
 .. code-block:: bash
 
-    ./make-ring.py --uninstall
+    ./build.py --uninstall
 
 On OSX
 ######
@@ -79,14 +79,14 @@ Build and install all the dependencies:
 
 .. code-block:: bash
 
-    ./make-ring.py --dependencies
+    ./build.py --dependencies
 
 
 Build and install locally under this repository:
 
 .. code-block:: bash
 
-    ./make-ring.py --install
+    ./build.py --install
 
 Output
 ------
@@ -102,7 +102,7 @@ Build and install locally under this repository:
 
 .. code-block:: bash
 
-    ./make-ring.py --install --distribution=Android
+    ./build.py --install --distribution=Android
 
 Output
 ------
