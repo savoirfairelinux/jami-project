@@ -89,6 +89,10 @@ RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS = (
     '--security-opt seccomp=./docker/profile-seccomp-fedora_28.json '
     '--privileged')
 
+DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS = (
+    '-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) '
+    '--security-opt apparmor=docker-default'
+    '--privileged ')
 
 DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT = (
     '-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) '
@@ -130,22 +134,7 @@ def run_generate_all(parsed_args):
         {
             "distribution": "debian_10",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
-        },
-        {
-            "distribution": "debian_10_i386",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
-        },
-        {
-            "distribution": "debian_10_armhf",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default",
-        },
-        {
-            "distribution": "debian_10_arm64",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "--privileged --security-opt apparmor=docker-default"
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
         },
         {
             "distribution": "debian_10_qt",
@@ -156,7 +145,7 @@ def run_generate_all(parsed_args):
         {
             "distribution": "debian_testing",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
         },
         {
             "distribution": "debian_testing_qt",
@@ -177,18 +166,7 @@ def run_generate_all(parsed_args):
             "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX)",
         },
         {
-            "distribution": "ubuntu_18.04_i386",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX)",
-        },
-        {
             "distribution": "ubuntu_18.04_qt",
-            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
-            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
-            "version": "$(DEBIAN_QT_VERSION)",
-        },
-        {
-            "distribution": "ubuntu_18.04_qt_i386",
             "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
             "version": "$(DEBIAN_QT_VERSION)",
@@ -196,7 +174,7 @@ def run_generate_all(parsed_args):
         {
             "distribution": "ubuntu_20.04",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
         },
         {
             "distribution": "ubuntu_20.04_qt",
@@ -207,7 +185,7 @@ def run_generate_all(parsed_args):
         {
             "distribution": "ubuntu_20.10",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
         },
         {
             "distribution": "ubuntu_20.10_qt",
@@ -218,7 +196,7 @@ def run_generate_all(parsed_args):
         {
             "distribution": "ubuntu_21.04",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) --privileged --security-opt apparmor=docker-default",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
         },
         {
             "distribution": "ubuntu_21.04_qt",
