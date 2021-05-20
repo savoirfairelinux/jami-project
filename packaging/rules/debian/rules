@@ -15,7 +15,7 @@ endif
 # Binary package names
 JAMI_ALL_IN_ONE_PKG_NAME="jami-all"
 JAMI_CLIENT_PKG_NAME="jami"
-JAMI_CLIENT_GNOME_PKG_NAME="jami-gnome"
+#JAMI_CLIENT_GNOME_PKG_NAME="jami-gnome"
 JAMI_LIB_CLIENT_PKG_NAME="jami-libclient"
 JAMI_DAEMON_PKG_NAME="jami-daemon"
 
@@ -106,16 +106,16 @@ override_dh_auto_configure:
 	############################
 	## gnome client configure ##
 	############################
-	cd client-gnome && \
-		mkdir build && \
-		cd build && \
-		cmake \
-			-DCMAKE_INSTALL_PREFIX=/usr \
-			-DCMAKE_INSTALL_LIBDIR=lib \
-			-DLibRingClient_PROJECT_DIR=/$(CURDIR)/lrc \
-			-DGSETTINGS_LOCALCOMPILE=OFF \
-			$(CMAKE_OPTIONS) \
-			..
+	#cd client-gnome && \
+	#	mkdir build && \
+	#	cd build && \
+	#	cmake \
+	#		-DCMAKE_INSTALL_PREFIX=/usr \
+	#		-DCMAKE_INSTALL_LIBDIR=lib \
+	#		-DLibRingClient_PROJECT_DIR=/$(CURDIR)/lrc \
+	#		-DGSETTINGS_LOCALCOMPILE=OFF \
+	#		$(CMAKE_OPTIONS) \
+	#		..
 
 	#########################
 	## qt client configure ##
@@ -139,7 +139,7 @@ override_dh_auto_build:
 	########################
 	## gnome client build ##
 	########################
-	make -C client-gnome/build LDFLAGS="-lpthread" -j$(NO_CPUS) V=1
+	#make -C client-gnome/build LDFLAGS="-lpthread" -j$(NO_CPUS) V=1
 
 	###################################
 	## qt client configure and build ##
@@ -178,8 +178,8 @@ override_dh_auto_clean:
 	## gnome client clean ##
 	########################
 	# CMake build system has no distclean target, so use clean.
-	if [ -f client-gnome/build/Makefile ]; then make -C client-gnome/build clean; fi
-	rm -rfv client-gnome/build
+	#if [ -f client-gnome/build/Makefile ]; then make -C client-gnome/build clean; fi
+	#rm -rfv client-gnome/build
 
 	#####################
 	## qt client clean ##
@@ -219,9 +219,9 @@ override_dh_auto_install:
 	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME)/usr/lib/cmake
 
         ## GNOME client
-	cd client-gnome/build && \
-		make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME) install
-	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME)/usr/bin/jami
+	#cd client-gnome/build && \
+	#	make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME) install
+	#rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME)/usr/bin/jami
 
 	## Qt client
 	cd client-qt/build && \
