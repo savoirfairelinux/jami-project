@@ -15,7 +15,7 @@ endif
 # Binary package names
 JAMI_ALL_IN_ONE_PKG_NAME="jami-all"
 JAMI_CLIENT_PKG_NAME="jami"
-JAMI_CLIENT_GNOME_PKG_NAME="jami-gnome"
+#JAMI_CLIENT_GNOME_PKG_NAME="jami-gnome"
 JAMI_LIB_CLIENT_PKG_NAME="jami-libclient"
 JAMI_DAEMON_PKG_NAME="jami-daemon"
 
