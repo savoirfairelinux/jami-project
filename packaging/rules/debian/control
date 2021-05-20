@@ -105,18 +105,6 @@ Description: Secure and distributed voice, video and chat platform - desktop cli
  .
  This package contains the jami-qt desktop client.
 
-Package: jami-gnome
-Architecture: any
-Depends: ${shlibs:Depends},
-         ${misc:Depends},
-         jami-libclient (=${binary:Version})
-Description: Secure and distributed voice, video and chat platform - desktop client
- Jami (jami.net) is a secure and distributed voice, video and chat communication
- platform that requires no centralized server and leaves the power of privacy
- in the hands of the user.
- .
- This package contains the older jami-gnome desktop client.
-
 Package: jami-libclient
 Architecture: any
 Depends: ${shlibs:Depends},
