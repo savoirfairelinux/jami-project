@@ -15,7 +15,7 @@ endif
 # Binary package names
 JAMI_ALL_IN_ONE_PKG_NAME="jami-all"
 JAMI_CLIENT_PKG_NAME="jami"
-JAMI_CLIENT_GNOME_PKG_NAME="jami-gnome"
+#JAMI_CLIENT_GNOME_PKG_NAME="jami-gnome"
 JAMI_LIB_CLIENT_PKG_NAME="jami-libclient"
 JAMI_DAEMON_PKG_NAME="jami-daemon"
 
@@ -219,9 +219,9 @@ override_dh_auto_install:
 	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME)/usr/lib/cmake
 
         ## GNOME client
-	cd client-gnome/build && \
-		make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME) install
-	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME)/usr/bin/jami
+	#cd client-gnome/build && \
+	#	make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME) install
+	#rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME)/usr/bin/jami
 
 	## Qt client
 	cd client-qt/build && \
