@@ -11,6 +11,7 @@ repositories
 tarballs.manifest
 manual-download
 .docker-image-*
+.tarball-version
 
 # QtCreator
 /build-*
