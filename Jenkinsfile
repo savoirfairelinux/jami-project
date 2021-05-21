@@ -8,6 +8,16 @@ pipeline {
         label 'guix'
     }
 
+    parameters {
+        string(name: 'GERRIT_REFSPEC',
+               defaultValue: 'refs/heads/master',
+               description: 'The Gerrit refspec to fetch.')
+
+        booleanParam(name: 'BUILD_OWN_QT',
+                     defaultValue: false,
+                     description: 'Whether to build our own Qt packages.')
+    }
+
     environment {
         TARBALLS = '/opt/ring-contrib' // set the cache directory
     }
@@ -64,6 +74,12 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                     def stages = [:]
 
                     targets.each { target ->
+                        // Allow skipping the custom Qt packages, as
+                        // they take about 1 hour to build each.
+                        if (${params.BUILD_OWN_QT} && target.endsWith('_qt')) {
+                            echo "skipping target ${target}"
+                            continue
+                        }
                         // Note: The stage calls are wrapped in closures, to
                         // delay their execution.
                         stages["${target}"] =  {
