@@ -23,6 +23,7 @@ pipeline {
 
     environment {
         TARBALLS = '/opt/ring-contrib' // set the cache directory
+        RELEASE_VERSION = 'unknown'
     }
 
     options {
@@ -52,9 +53,14 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                 // environment variables used by Guix.
                 sh '''#!/usr/bin/env bash
                    test -f $HOME/.bashrc && . $HOME/.bashrc
-                   make purge-release-tarballs
                    make portable-release-tarball .tarball-version
+                   ls -al
                    '''
+                // script {
+                //     env.RELEASE_VERSION = sh(
+                //         script: 'cat .tarball-version 2> /dev/null',
+                //         returnStdout: true)
+                // }
                 stash(includes: '*.tar.gz, .tarball-version',
                       name: 'release-tarball')
             }
@@ -89,7 +95,9 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                                 node('linux-builder') {
                                     unstash 'release-tarball'
                                     sh """
+                                       ls -al
                                        tar xf *.tar.gz --strip-components=1
+                                       exit 1
                                        make ${target}
                                        """
                                 }
