@@ -19,6 +19,9 @@
 ##############################
 ## Version number variables ##
 ##############################
+TARBALL_VERSION := $(shell cat $(CURDIR)/.tarball-version 2> /dev/null)
+
+ifeq ($(TARBALL_VERSION),)
 # YYYY-MM-DD
 LAST_COMMIT_DATE:=$(shell git log -1 --format=%cd --date=short)
 
@@ -32,6 +35,10 @@ LAST_COMMIT_DATE_SHORT:=$(shell echo $(LAST_COMMIT_DATE) | sed -s 's/-//g')
 COMMIT_ID:=$(shell git rev-parse --short HEAD)
 
 RELEASE_VERSION:=$(LAST_COMMIT_DATE_SHORT).$(NUMBER_OF_COMMITS).$(COMMIT_ID)
+else
+$(info Using version from the .tarball-version file: $(TARBALL_VERSION))
+RELEASE_VERSION:=$(TARBALL_VERSION)
+endif
 RELEASE_TARBALL_FILENAME:=jami_$(RELEASE_VERSION).tar.gz
 
 # Debian versions
@@ -58,6 +65,12 @@ CURRENT_GID:=$(shell id -g)
 ## Release tarball targets ##
 #############################
 .PHONY: release-tarball purge-release-tarballs portable-release-tarball
+
+# This file can be used when not wanting to invoke the tarball
+# producing machinery (which depends on the Git checkout), nor its
+# prerequisites.  It is used to set the TARBALL_VERSION Make variable.
+.tarball-version:
+	echo $(RELEASE_VERSION) > $@
 
 purge-release-tarballs:
 	rm -f jami_*.tar.* tarballs.manifest
@@ -96,6 +109,7 @@ tarballs.manifest: daemon/contrib/native/Makefile
 	$(MAKE) fetch -j && \
 	$(MAKE) --no-print-directory --silent list-tarballs > "$(CURDIR)/$@"
 
+ifeq ($(TARBALL_VERSION),)
 # Generate the release tarball.  To regenerate a fresh tarball
 # manually clear the tarballs.manifest file.
 $(RELEASE_TARBALL_FILENAME): tarballs.manifest
@@ -117,6 +131,11 @@ $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 	gzip $(TMPDIR)/ring-project.tar
 	mv $(TMPDIR)/ring-project.tar.gz "$@"
 	rm -rf $(TMPDIR)
+else
+# If TARBALL_VERSION is defined, assume it's already been generated,
+# without doing any checks, which would require Git.
+$(RELEASE_TARBALL_FILENAME):
+endif
 
 #######################
 ## Packaging targets ##
