@@ -8,6 +8,19 @@ pipeline {
         label 'guix'
     }
 
+    parameters {
+        string(name: 'GERRIT_REFSPEC',
+               defaultValue: 'refs/heads/master',
+               description: 'The Gerrit refspec to fetch.')
+
+        booleanParam(name: 'BUILD_OWN_QT',
+                     defaultValue: false,
+                     description: 'Whether to build our own Qt packages.')
+        booleanParam(name: 'BUILD_ARM',
+                     defaultValue: false,
+                     description: 'Whether to build ARM packages.')
+    }
+
     environment {
         TARBALLS = '/opt/ring-contrib' // set the cache directory
     }
@@ -28,7 +41,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
         stage('Fetch submodules') {
             steps {
                 echo 'Updating relevant submodules to their latest commit'
-                sh 'git submodule update --init --recursive --remote' +
+                sh 'git submodule update --init --recursive --remote ' +
                    'daemon lrc client-gnome client-qt'
             }
         }
@@ -53,8 +66,15 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
             }
             steps {
                 script {
-                    def targetsText = sh script: 'make -s list-package-targets', returnStdout: true
+                    def targetsText = sh(script: 'make -s list-package-targets',
+                                         returnStdout: true)
                     def targets = targetsText.split('\n')
+                    if (!params.BUILD_OWN_QT) {
+                        targets = targets.findAll { !it.endsWith('_qt') }
+                    }
+                    if (!params.BUILD_ARM) {
+                        targets = targets.findAll { !(it =~ /_(armhf|arm64)$/) }
+                    }
                     def stages = [:]
 
                     targets.each { target ->
