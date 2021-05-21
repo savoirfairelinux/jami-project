@@ -50,11 +50,13 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
             steps {
                 // Note: sourcing .bashrc is necessary to setup the
                 // environment variables used by Guix.
-                sh '''
-                   #!/usr/bin/env bash
+                sh '''#!/usr/bin/env bash
                    test -f $HOME/.bashrc && . $HOME/.bashrc
-                   make portable-release-tarball
+                   make purge-release-tarballs
+                   make portable-release-tarball .tarball-version
                    '''
+                stash(includes: '*.tar.gz, .tarball-version',
+                      name: 'release-tarball')
             }
         }
 
@@ -82,8 +84,15 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                         // Note: The stage calls are wrapped in closures, to
                         // delay their execution.
                         stages["${target}"] =  {
-                            stage("stage: ${target}") {
-                                sh "make ${target}"
+                            stage("${target}") {
+                                // Offload builds to different agents.
+                                node('linux-builder') {
+                                    unstash 'release-tarball'
+                                    sh """
+                                       tar xf *.tar.gz --strip-components=1
+                                       make ${target}
+                                       """
+                                }
                             }
                         }
                     }
