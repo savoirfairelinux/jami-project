@@ -53,8 +53,10 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                 sh '''
                    #!/usr/bin/env bash
                    test -f $HOME/.bashrc && . $HOME/.bashrc
-                   make portable-release-tarball
+                   make portable-release-tarball .tarball-version
                    '''
+                stash(includes: '*.tar.gz, .tarball-version',
+                      name: 'release-tarball')
             }
         }
 
@@ -82,8 +84,20 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                         // Note: The stage calls are wrapped in closures, to
                         // delay their execution.
                         stages["${target}"] =  {
-                            stage("stage: ${target}") {
-                                sh "make ${target}"
+                            stage("${target}") {
+                                // Offload builds to different agents.
+                                agent {
+                                    label 'linux-builder'
+                                }
+
+                                unstash 'release-tarball'
+
+                                sh """
+                                   #!/usr/bin/env bash
+                                   tar xf *.tar.gz ring-project/{Makefile,scripts/,docker/} \
+                                       --strip-components=1
+                                   make ${target}
+                                   """
                             }
                         }
                     }
