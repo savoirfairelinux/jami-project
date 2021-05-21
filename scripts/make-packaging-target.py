@@ -225,7 +225,7 @@ def run_generate_all(parsed_args):
             "distribution": "rhel_8",
             "output_file": ".packages-built",
             "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
-            "docker_build_args": "--build-arg PASS=${PASS}"
+            "docker_build_args": "--build-arg PASS=$${PASS}"
         },
         # OpenSUSE
         {
