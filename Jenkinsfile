@@ -12,7 +12,10 @@ pipeline {
         string(name: 'GERRIT_REFSPEC',
                defaultValue: 'refs/heads/master',
                description: 'The Gerrit refspec to fetch.')
-
+        string(name: 'PACKAGING_TARGETS',
+               defaultValue: '',
+               description: 'Packaging targets, one per line.  When left ' +
+                            'unspecified, all the packaging targets are built.')
         booleanParam(name: 'BUILD_OWN_QT',
                      defaultValue: false,
                      description: 'Whether to build our own Qt packages.')
@@ -68,8 +71,12 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
             }
             steps {
                 script {
-                    def targetsText = sh(script: 'make -s list-package-targets',
-                                         returnStdout: true)
+                    def targetsText = params.PACKAGING_TARGETS.trim()
+                    if (!targetsText) {
+                       targetsText = sh(script: 'make -s list-package-targets',
+                                        returnStdout: true).trim()
+                    }
+
                     def targets = targetsText.split('\n')
                     if (!params.BUILD_OWN_QT) {
                         targets = targets.findAll { !it.endsWith('_qt') }
@@ -77,6 +84,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                     if (!params.BUILD_ARM) {
                         targets = targets.findAll { !(it =~ /_(armhf|arm64)$/) }
                     }
+
                     def stages = [:]
 
                     targets.each { target ->
