@@ -10,6 +10,12 @@
 
 // Configuration globals.
 def SUBMODULES = ['daemon', 'lrc', 'client-gnome', 'client-qt']
+def TARGETS = [:]
+def SSH_PRIVATE_KEY = '/var/lib/jenkins/.ssh/gplpriv'
+def REMOTE_HOST = env.SSH_HOST_DL_RING_CX
+def REMOTE_BASE_DIR = '/srv/repository/ring'
+def RING_PUBLIC_KEY_FINGERPRINT = 'A295D773307D25A33AE72F2F64CD5FA175348F84'
+def SNAPCRAFT_KEY = '/var/lib/jenkins/.snap/key'
 
 properties(
     [
@@ -59,12 +65,18 @@ pipeline {
         booleanParam(name: 'BUILD_ARM',
                      defaultValue: false,
                      description: 'Whether to build ARM packages.')
+        booleanParam(name: 'DEPLOY',
+                     defaultValue: false,
+                     description: 'Whether and where to deploy packages.')
+        choice(name: 'CHANNEL',
+               choices: 'internal\nnightly\nstable',
+               description: 'The repository channel to deploy to. ' +
+               'Defaults to "internal".')
         string(name: 'PACKAGING_TARGETS',
                defaultValue: '',
                description: 'A whitespace-separated list of packaging ' +
                'targets, e.g. "package-debian_10 package-snap". ' +
                'When left unspecified, all the packaging targets are built.')
-
     }
 
     environment {
@@ -146,11 +158,42 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                                        tar xf *.tar.gz --strip-components=1
                                        make ${target}
                                        """
+                                    stash(includes: 'packages/**',
+                                          name: target)
                                 }
                             }
                         }
                     }
                     parallel stages
+                }
+            }
+        }
+        stage('Sign & deploy packages') {
+            agent {
+                label 'ring-buildmachine-02.mtl.sfl'
+            }
+
+            when {
+                expression {
+                    params.DEPLOY
+                }
+            }
+
+            steps {
+                script {
+                    TARGETS.each { target ->
+                        unstash target
+                        def distribution = target - ~/^package-/
+                        echo "Deploying packages for ${distribution}..."
+                        sh """scripts/deploy-packages.sh \
+  --distribution=${distribution} \
+  --keyid="${RING_PUBLIC_KEY_FINGERPRINT}" \
+  --snapcraft-login="${SNAPCRAFT_KEY}" \
+  --remote-ssh-identity-file="${SSH_PRIVATE_KEY}" \
+  --remote-repository-location="${REMOTE_HOST}:${REMOTE_BASE_DIR}/${params.CHANNEL}" \
+  --remote-manual-download-location="${REMOTE_HOST}:${REMOTE_BASE_DIR}/manual-${params.CHANNEL}"
+"""
+                    }
                 }
             }
         }
