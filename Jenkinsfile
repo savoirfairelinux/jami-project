@@ -8,6 +8,8 @@
 // 1. gerrit-trigger plugin
 // 2. ws-cleanup plugin
 
+def submodules = ['daemon', 'lrc', 'client-gnome', 'client-qt']
+
 properties(
     [
         [
@@ -46,6 +48,10 @@ pipeline {
         string(name: 'GERRIT_REFSPEC',
                defaultValue: 'refs/heads/master',
                description: 'The Gerrit refspec to fetch.')
+        booleanParam(name: 'UPDATE_SUBMODULES',
+                     defaultValue: true,
+                     description: 'Update the ' + submodules.join(', ') +
+                     'submodules to their latest commit.')
         booleanParam(name: 'BUILD_OWN_QT',
                      defaultValue: false,
                      description: 'Whether to build our own Qt packages.')
@@ -79,9 +85,11 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
 
         stage('Fetch submodules') {
             steps {
-                echo 'Updating relevant submodules to their latest commit'
-                sh 'git submodule update --init --recursive --remote ' +
-                   'daemon lrc client-gnome client-qt'
+                echo 'Initializing submodules ' + submodules.join(', ') +
+                    (params.UPDATE_SUBMODULES ? ' to their latest commit.' : '.')
+                sh 'git submodule update --init --recursive' +
+                    (params.UPDATE_SUBMODULES ? ' --remote ' : ' ') +
+                    submodules.join(' ')
             }
         }
 
