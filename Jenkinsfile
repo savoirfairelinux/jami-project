@@ -144,12 +144,26 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                                        tar xf *.tar.gz --strip-components=1
                                        make ${target}
                                        """
+                                    stash(includes: 'packages/**',
+                                          name: 'built-packages')
                                 }
                             }
                         }
                     }
                     parallel stages
                 }
+            }
+        }
+        stage('Deploy packages') {
+            agent {
+                label: 'ring-buildmachine-02.mtl.sfl'
+            }
+
+            steps {
+                //cleanWs()
+                unstash 'built-packages'
+                echo "built-packages unstashed:"
+                sh 'find'
             }
         }
     }
