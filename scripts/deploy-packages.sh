@@ -35,7 +35,7 @@ function fetch_qt_deb()
 {
     if [ -f "${SSH_IDENTITY_FILE}" ];
     then
-        RSYNC_RSH="ssh -i ${SSH_IDENTITY_FILE}"
+        export RSYNC_RSH="ssh -i ${SSH_IDENTITY_FILE}"
     fi
 
     echo "#####################"
@@ -269,7 +269,7 @@ function deploy()
 {
     if [ -f "${SSH_IDENTITY_FILE}" ];
     then
-        RSYNC_RSH="ssh -i ${SSH_IDENTITY_FILE}"
+        export RSYNC_RSH="ssh -i ${SSH_IDENTITY_FILE}"
     fi
 
     echo "##########################"
