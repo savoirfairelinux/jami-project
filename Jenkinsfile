@@ -3,6 +3,40 @@
 // Note: To work on this script without having to push a commit each
 // time, use the jenkins-cli command (see:
 // https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Usage_CLI_de_Jenkins).
+//
+// Requirements:
+// 1. gerrit-trigger plugin
+// 2. ws-cleanup plugin
+
+properties(
+    [
+        [
+            $class: 'BuildDiscarderProperty',
+            strategy: [$class: 'LogRotator', numToKeepStr: '30']
+        ],
+        pipelineTriggers([
+                [
+                    $class: 'GerritTrigger', gerritProjects: [
+                        [
+                            $class: "GerritProject",
+                            pattern: "ring-project",
+                            branches: [
+                                [$class: "Branch", pattern: "master"]
+                            ]
+                        ]
+                    ],
+                    triggerOnEvents: [
+                        [$class: "PluginRefUpdatedEvent"],
+                        [
+                            $class: "PluginCommentAddedContainsEvent",
+                            commentAddedCommentContains: '!build'
+                        ]
+                    ]
+                ]
+            ])
+    ]
+)
+
 pipeline {
     agent {
         label 'guix'
