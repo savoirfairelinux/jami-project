@@ -33,9 +33,9 @@ set -e
 
 function fetch_qt_deb()
 {
-    if [ -f "${SSH_IDENTIY_FILE}" ];
+    if [ -f "${SSH_IDENTITY_FILE}" ];
     then
-        RSYNC_RSH="ssh -i ${SSH_IDENTIY_FILE}"
+        RSYNC_RSH="ssh -i ${SSH_IDENTITY_FILE}"
     fi
 
     echo "#####################"
@@ -267,9 +267,9 @@ function package_snap()
 
 function deploy()
 {
-    if [ -f "${SSH_IDENTIY_FILE}" ];
+    if [ -f "${SSH_IDENTITY_FILE}" ];
     then
-        RSYNC_RSH="ssh -i ${SSH_IDENTIY_FILE}"
+        RSYNC_RSH="ssh -i ${SSH_IDENTITY_FILE}"
     fi
 
     echo "##########################"
@@ -339,7 +339,7 @@ case $i in
     shift
     ;;
     --remote-ssh-identity-file=*)
-    SSH_IDENTIY_FILE="${i#*=}"
+    SSH_IDENTITY_FILE="${i#*=}"
     shift
     ;;
     --snapcraft-login=*)
