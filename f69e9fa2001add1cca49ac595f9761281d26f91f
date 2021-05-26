@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9c727d5_6566cfd3",
+        "filename": "build.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-05-26T13:53:36Z",
+      "side": 1,
+      "message": "ideally we should check if the python provided by ubuntu 18.04 supports f-strings",
+      "range": {
+        "startLine": 537,
+        "startChar": 14,
+        "endLine": 537,
+        "endChar": 18
+      },
+      "revId": "f69e9fa2001add1cca49ac595f9761281d26f91f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb2c6a7_d47433bd",
+        "filename": "scripts/install.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-05-26T13:53:36Z",
+      "side": 1,
+      "message": "why this note? a question? or a doc? should be removed",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "f69e9fa2001add1cca49ac595f9761281d26f91f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
