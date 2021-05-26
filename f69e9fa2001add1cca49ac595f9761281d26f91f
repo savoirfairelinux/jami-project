@@ -45,6 +45,30 @@
       "revId": "f69e9fa2001add1cca49ac595f9761281d26f91f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01afb505_bc7b2465",
+        "filename": "scripts/install.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-05-26T14:05:36Z",
+      "side": 1,
+      "message": "ah, it was to denote these are \"predicates\", or booleans (ON/OFF).  It\u0027s doc.",
+      "parentUuid": "2eb2c6a7_d47433bd",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "f69e9fa2001add1cca49ac595f9761281d26f91f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
