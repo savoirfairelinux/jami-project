@@ -17,6 +17,41 @@ def REMOTE_BASE_DIR = '/srv/repository/ring'
 def RING_PUBLIC_KEY_FINGERPRINT = 'A295D773307D25A33AE72F2F64CD5FA175348F84'
 def SNAPCRAFT_KEY = '/var/lib/jenkins/.snap/key'
 
+properties(
+    [
+        [
+            $class: 'BuildDiscarderProperty',
+            strategy: [$class: 'LogRotator', numToKeepStr: '30']
+        ],
+        pipelineTriggers([
+                [
+                    $class: 'GerritTrigger',
+                    gerritProjects: [
+                        [
+                            $class: "GerritProject",
+                            pattern: "ring-project",
+                            branches: [
+                                [$class: "Branch", pattern: "master"]
+                            ]
+                        ]
+                    ],
+                    triggerOnEvents: [
+                        [
+                            $class: "PluginPatchsetCreatedEvent",
+                            excludeDrafts: true,
+                            excludeTrivialRebase: true,
+                            excludeNocodeChange: true
+                        ],
+                        [
+                            $class: "PluginCommentAddedContainsEvent",
+                            commentAddedCommentContains: '!build'
+                        ]
+                    ]
+                ]
+            ])
+    ]
+)
+
 pipeline {
     agent {
         label 'guix'
