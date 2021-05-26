@@ -8,6 +8,9 @@
 // 1. gerrit-trigger plugin
 // 2. ws-cleanup plugin
 
+// Configuration globals.
+def SUBMODULES = ['daemon', 'lrc', 'client-gnome', 'client-qt']
+
 properties(
     [
         [
@@ -46,6 +49,10 @@ pipeline {
         string(name: 'GERRIT_REFSPEC',
                defaultValue: 'refs/heads/master',
                description: 'The Gerrit refspec to fetch.')
+        booleanParam(name: 'UPDATE_SUBMODULES',
+                     defaultValue: true,
+                     description: 'Update the ' + SUBMODULES.join(', ') +
+                     'submodules to their latest commit.')
         booleanParam(name: 'BUILD_OWN_QT',
                      defaultValue: false,
                      description: 'Whether to build our own Qt packages.')
@@ -79,9 +86,11 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
 
         stage('Fetch submodules') {
             steps {
-                echo 'Updating relevant submodules to their latest commit'
-                sh 'git submodule update --init --recursive --remote ' +
-                   'daemon lrc client-gnome client-qt'
+                echo 'Initializing submodules ' + SUBMODULES.join(', ') +
+                    (params.UPDATE_SUBMODULES ? ' to their latest commit.' : '.')
+                sh 'git submodule update --init --recursive' +
+                    (params.UPDATE_SUBMODULES ? ' --remote ' : ' ') +
+                    SUBMODULES.join(' ')
             }
         }
 
@@ -113,21 +122,22 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                                          returnStdout: true).trim()
                     }
 
-                    def targets = targetsText.split(/\s/)
+                    TARGETS = targetsText.split(/\s/)
                     if (!params.BUILD_OWN_QT) {
-                        targets = targets.findAll { !it.endsWith('_qt') }
+                        TARGETS = TARGETS.findAll { !it.endsWith('_qt') }
                     }
                     if (!params.BUILD_ARM) {
-                        targets = targets.findAll { !(it =~ /_(armhf|arm64)$/) }
+                        TARGETS = TARGETS.findAll { !(it =~ /_(armhf|arm64)$/) }
                     }
+
 
                     def stages = [:]
 
-                    targets.each { target ->
+                    TARGETS.each { target ->
                         // Note: The stage calls are wrapped in closures, to
                         // delay their execution.
-                        stages["${target}"] =  {
-                            stage("${target}") {
+                        stages[target] =  {
+                            stage(target) {
                                 // Offload builds to different agents.
                                 node('linux-builder') {
                                     cleanWs()
