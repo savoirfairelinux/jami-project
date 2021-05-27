@@ -1,16 +1,10 @@
 FROM opensuse/leap:15.2
-RUN zypper --non-interactive install  dnf
-RUN dnf clean all
-RUN zypper --non-interactive lr
-RUN zypper --non-interactive  --gpg-auto-import-keys refresh
-RUN zypper --non-interactive lr
-RUN zypper --non-interactive  install -y dnf-command\(builddep\) rpmdevtools
 
-RUN zypper --non-interactive clean
-RUN zypper --non-interactive up -y && \
-    zypper --non-interactive install -y  Mesa-dri-devel Mesa-dri && \
-    zypper --non-interactive install -y libinput-devel && \
-    zypper --non-interactive install -y \
+RUN zypper --non-interactive install -y \
+        dnf \
+        dnf-command\(builddep\) \
+        rpmdevtools \
+        Mesa-dri-devel Mesa-dri \
         git \
         gcc8 \
         gcc8-c++ \
