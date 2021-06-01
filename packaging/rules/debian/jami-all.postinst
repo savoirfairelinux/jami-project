@@ -106,8 +106,15 @@ if [ -f /etc/os-release ]; then
         ENDTAG="ubuntu_20.10"
     elif [ "${UBUNTU_CODENAME}" = "hirsute" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_21.04" ]; then
         ENDTAG="ubuntu_21.04"
-    elif [ "${ID}" = "debian" ] && [ "$(command -v lsb_release)" ] && [ "$(lsb_release -rs)" = "testing" ]; then
+    elif [ "${ID}" = "debian" ] && \
+             [ "$(command -v lsb_release)" ] && \
+             [ "$(lsb_release -rs)" = "testing" ]; then
         ENDTAG="debian_testing"
+    elif [ "${ID}" = "debian" ] && \
+             [ "$(command -v apt-cache)" ] && \
+             [ "$(command -v grep)" ] && \
+             apt-cache policy | grep -q "a=unstable" -; then
+        ENDTAG="debian_unstable"
     else
         # Distribution is not supported. Don't provide automatic updates.
         CAN_ADD_DEB_SOURCE=false

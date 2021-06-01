@@ -154,6 +154,17 @@ def run_generate_all(parsed_args):
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
             "version": "$(DEBIAN_QT_VERSION)",
         },
+        {
+            "distribution": "debian_unstable",
+            "output_file": "$(DEBIAN_DSC_FILENAME)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
+        },
+        {
+            "distribution": "debian_unstable_qt",
+            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
+            "version": "$(DEBIAN_QT_VERSION)",
+        },
         # Raspbian
         {
             "distribution": "raspbian_10_armhf",
