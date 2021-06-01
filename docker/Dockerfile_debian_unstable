@@ -13,7 +13,7 @@ RUN apt-get update && \
 
 RUN wget -O - https://dl.jami.net/public-key.gpg | \
     tee /usr/share/keyrings/jami-archive-keyring.gpg > /dev/null
-RUN sh -c "echo 'deb [signed-by=/usr/share/keyrings/jami-archive-keyring.gpg] https://dl.jami.net/nightly/debian_unstable_qt/ jami main' > /etc/apt/sources.list.d/libqt-jami.list"
+RUN sh -c "echo 'deb [signed-by=/usr/share/keyrings/jami-archive-keyring.gpg] https://dl.jami.net/internal/debian_unstable_qt/ jami main' > /etc/apt/sources.list.d/libqt-jami.list"
 
 # add deb-src entries (needed for next step)
 RUN sed -n '/^deb\s/s//deb-src /p' /etc/apt/sources.list > /etc/apt/sources.list.d/deb-src.list
