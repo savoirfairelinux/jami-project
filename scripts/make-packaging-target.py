@@ -206,6 +206,11 @@ def run_generate_all(parsed_args):
             "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
         },
         {
+            "distribution": "opensuse-leap_15.3",
+            "output_file": ".packages-built",
+            "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
+        },
+        {
             "distribution": "opensuse-tumbleweed",
             "output_file": ".packages-built",
             "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
