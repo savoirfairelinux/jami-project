@@ -34,6 +34,7 @@ users.
 cd %{_builddir}/ring-project/lrc && \
     mkdir build && cd build && \
     cmake -DRING_BUILD_DIR=%{_builddir}/ring-project/daemon/src \
+          -DENABLE_LIBWRAP=true \
           -DCMAKE_INSTALL_PREFIX=%{_prefix} \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
           -DCMAKE_BUILD_TYPE=Debug \
