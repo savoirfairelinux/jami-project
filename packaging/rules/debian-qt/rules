@@ -3,16 +3,23 @@
 
 # export DH_VERBOSE = 1
 
+# Number of CPUS
+NO_CPUS=$(shell nproc)
+ifeq ($(NO_CPUS),0)
+NO_CPUS=1
+endif
+
 %:
 	dh $@
 
 override_dh_auto_configure:
-	./configure \
-		-opensource \
-		-confirm-license \
-		-nomake examples \
-		-nomake tests \
-		-prefix "${QT_JAMI_PREFIX}"
+	MAKEFLAGS="-j$(NO_CPUS) V=1" \
+		./configure \
+			-opensource \
+			-confirm-license \
+			-nomake examples \
+			-nomake tests \
+			-prefix "${QT_JAMI_PREFIX}"
 
 override_dh_auto_install:
 	dh_auto_install -Smakefile -- INSTALL_ROOT=$(CURDIR)/debian/tmp/
