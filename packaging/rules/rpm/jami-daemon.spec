@@ -59,6 +59,7 @@ users.
 
 %prep
 %setup -n ring-project
+%debug_package
 
 %build
 # Configure the Jami bundled libraries (ffmpeg & pjproject).
@@ -85,8 +86,7 @@ cd %{_builddir}/ring-project/daemon && \
     ./autogen.sh && \
     ./configure \
         --prefix=%{_prefix} \
-        --libdir=%{_libdir} \
-        --disable-shared
+        --libdir=%{_libdir}
 
 # Build the daemon.
 make -C %{_builddir}/ring-project/daemon %{_smp_mflags} V=1
@@ -102,7 +102,8 @@ rm -rfv %{buildroot}/%{_libdir}/*.la
 
 %files
 %defattr(-,root,root,-)
-%{_libdir}/ring/dring
+%{_libdir}/libring.so*
+%{_libexecdir}/jamid
 %{_datadir}/ring/ringtones
 %{_datadir}/dbus-1/services/*
 %{_datadir}/dbus-1/interfaces/*
