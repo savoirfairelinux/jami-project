@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # Build and install to a local prefix under this repository.
-export OSTYPE
 
 # Flags:
 
@@ -81,7 +80,7 @@ else
     BUILDDIR="build-local"
 fi
 
-# dring
+# jamid
 DAEMON=${TOP}/daemon
 cd "$DAEMON"
 
@@ -96,15 +95,10 @@ mkdir -p contrib/native
 # Build the daemon itself.
 test -f configure || ./autogen.sh
 
-if [[ "$OSTYPE" != "darwin"* ]]; then
-    # Keep the shared libaries on MAC OSX.
-    sharedLib="--disable-shared"
-fi
-
 if [ "${global}" = "true" ]; then
-    ./configure $sharedLib "$CONFIGURE_FLAGS" ${prefix:+"--prefix=$prefix"}
+    ./configure "$CONFIGURE_FLAGS" ${prefix:+"--prefix=$prefix"}
 else
-    ./configure $sharedLib "$CONFIGURE_FLAGS" --prefix="${INSTALL}/daemon"
+    ./configure "$CONFIGURE_FLAGS" --prefix="${INSTALL}/daemon"
 fi
 make -j"${proc}" V=1
 make_install "${global}" "${priv_install}"
@@ -144,6 +138,7 @@ lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}"
                  -DCMAKE_BUILD_TYPE=Debug
                  -DQT5_VER="${qt5ver}"
                  -DQT5_PATH="${qt5path}"
+                 -DENABLE_LIBWRAP=true
                  $static)
 if [ "${global}" = "true" ]; then
     lrc_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"})
