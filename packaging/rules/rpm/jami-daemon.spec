@@ -85,8 +85,7 @@ cd %{_builddir}/ring-project/daemon && \
     ./autogen.sh && \
     ./configure \
         --prefix=%{_prefix} \
-        --libdir=%{_libdir} \
-        --disable-shared
+        --libdir=%{_libdir}
 
 # Build the daemon.
 make -C %{_builddir}/ring-project/daemon %{_smp_mflags} V=1
