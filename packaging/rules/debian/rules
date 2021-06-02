@@ -86,6 +86,7 @@ override_dh_auto_configure:
 		cd build && \
 		cmake  \
 			-DRING_BUILD_DIR=$(CURDIR)/daemon/src \
+			-DENABLE_LIBWRAP=true \
 			-DCMAKE_INSTALL_PREFIX=/usr \
 			-DCMAKE_INSTALL_LIBDIR=lib \
 			$(CMAKE_OPTIONS) \
