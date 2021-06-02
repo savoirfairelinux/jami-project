@@ -31,9 +31,12 @@ CMAKE_OPTIONS=-DCHOST=${HOST_ARCH} \
   -DCMAKE_FIND_ROOT_PATH=/usr/${HOST_ARCH} \
   -DPKG_CONFIG_EXECUTABLE=/usr/bin/${HOST_ARCH}-pkg-config
 else
-ifneq (ubuntu_21.04,$(findstring ubuntu_21.04, $(DISTRIBUTION)))
-BUNDLED_PKGS="--enable-ffmpeg" # For ubuntu 21.04 it seems there is massive issues with linking for swscale
-endif
+# The FFmpeg static libraries on Debian are not compiled with PIC
+# (-fPIC) nor the '-Wl,Bsymbolic' linker option, which makes them
+# unsuitable to be linked into our shared library (see:
+# https://ffmpeg.org/platform.html#toc-Advanced-linking-configuration).
+# Work around it by forcing our own build of FFmpeg.
+BUNDLED_PKGS="--enable-ffmpeg"
 endif
 
 # Qt-related variables
@@ -74,7 +77,6 @@ override_dh_auto_configure:
 	cd daemon && \
 	./autogen.sh && \
 	./configure \
-          --disable-shared \
 	  --prefix=/usr \
 	  --host=${HOST_ARCH}
 
@@ -86,7 +88,7 @@ override_dh_auto_configure:
 	cd build && \
 	cmake  \
 	  -DRING_BUILD_DIR=$(CURDIR)/daemon/src \
-	  -DENABLE_LIBWRAP=false \
+	  -DENABLE_LIBWRAP=true \
 	  -DCMAKE_INSTALL_PREFIX=/usr \
 	  -DCMAKE_INSTALL_LIBDIR=lib \
 	  $(CMAKE_OPTIONS) ..
