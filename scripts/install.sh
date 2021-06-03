@@ -89,7 +89,7 @@ cd "$DAEMON"
 mkdir -p contrib/native
 (
     cd contrib/native
-    ../bootstrap ${prefix:+"--prefix=$prefix"} ${debug:+"--enable-debug"}
+    ../bootstrap ${prefix:+"--prefix=$prefix"}
     make -j"${proc}"
 )
 
