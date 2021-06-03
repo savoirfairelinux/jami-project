@@ -3,6 +3,7 @@
 # Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
 # Author: Alexandre Viau <alexandre.viau@savoirfairelinux.com>
+# Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +32,126 @@ if grep -q "raspbian_10_armhf" <<< "${DISTRIBUTION}"; then
     DPKG_BUILD_OPTIONS="${DPKG_BUILD_OPTIONS} -a armhf"
 fi
 
-# Setup work directory.
+install_deps()
+{
+    apt-get update
+    mk-build-deps \
+        --remove --install \
+        --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
+        "debian/control"
+}
+
+install_dummy()
+{
+    printf "\
+Package: libqt-jami\n\
+Version: 1.0\n\
+Maintainer: The Jami project <jami@gnu.org>\n\
+Architecture: all\n\
+Description: Dummy libqt-jami package\n" >> dummy-libqt-jami.equivs
+    equivs-build dummy-libqt-jami.equivs
+    dpkg -i libqt-jami_1.0_all.deb
+}
+
+remove_dummy()
+{
+    dpkg -r libqt-jami
+}
+
+case "$1" in
+    qt-deps)
+        (
+            cd /tmp/builddeps
+            install_deps
+            dpkg -r libqt-jami-build-deps
+        )
+        rm -rf /tmp/builddeps
+        exit 0
+        ;;
+    jami-deps)
+        (
+            cd /tmp/builddeps
+            install_dummy
+            install_deps
+            dpkg -r jami-build-deps
+            remove_dummy
+        )
+        rm -rf /tmp/builddeps
+        exit 0
+        ;;
+    "")
+        ;;
+    *)
+        printf "Usage: %s [qt-deps|jami-deps]\n" "$0"
+        exit 1
+        ;;
+esac
+
+cache_packaging=/opt/cache-packaging/${DISTRIBUTION}
+deb_arch=$(dpkg --print-architecture)
+qt_deb_name=libqt-jami_${DEBIAN_QT_VERSION}_${deb_arch}.deb
+qt_deb_path=${cache_packaging}/${qt_deb_name}
+
+if [ ! -f "${qt_deb_path}" ] || [ "${FORCE_REBUILD_QT}" = "true" ]; then
+    # we need to build Qt
+
+    cache_dir=/opt/ring-contrib
+    temp_dir=$(mktemp -d)
+
+    mkdir /opt/libqt-jami-build
+    cd /opt/libqt-jami-build
+
+    qt_version=${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}
+    tarball_name=qt-everywhere-src-${qt_version}.tar.xz
+    cached_tarball="${cache_dir}/${tarball_name}"
+    qt_base_url=https://download.qt.io/archive/qt/${QT_MAJOR}.${QT_MINOR}/${qt_version}/single
+
+    if [ ! -d "${cache_dir}" ] || [ ! -w "${cache_dir}" ]; then
+        echo "error: $cache_dir does not exist or is not writable"
+        exit 1
+    fi
+
+    if [ ! -f "${cached_tarball}" ]; then
+        (
+            cd "${temp_dir}"
+            wget "${qt_base_url}/${tarball_name}"
+            echo -n "${QT_TARBALL_CHECKSUM}  ${tarball_name}" | sha256sum -c - || \
+                (echo "Qt tarball checksum mismatch; quitting" && exit 1)
+            flock "${cached_tarball}.lock" mv "${tarball_name}" "${cached_tarball}"
+        )
+        rm -rf "${temp_dir}"
+    fi
+
+    cp "${cached_tarball}" libqt-jami_${qt_version}.orig.tar.xz
+    tar xvf libqt-jami_${qt_version}.orig.tar.xz
+    mv qt-everywhere-src-${qt_version} libqt-jami-${qt_version}
+    cd libqt-jami-${qt_version}
+
+    # import the debian folder
+    cp --verbose -r /opt/ring-project-ro/packaging/rules/debian-qt debian
+
+    # create changelog file
+    DEBEMAIL="The Jami project <jami@gnu.org>" dch --create \
+            --package libqt-jami \
+            --newversion ${DEBIAN_QT_VERSION} "New libqt-jami release"
+    DEBEMAIL="The Jami project <jami@gnu.org>" dch --release \
+            --distribution "unstable" debian/changelog
+
+    # build and package qt
+    dpkg-buildpackage -uc -us ${DPKG_BUILD_OPTIONS}
+
+    # copy the built deb to cache
+    mkdir -p ${cache_packaging}/
+    cp ../${qt_deb_name} ${qt_deb_path}
+fi
+
+# install libqt-jami from cache
+apt-get install -y ${qt_deb_path}
+
+# copy libqt-jami to output
+cp ${qt_deb_path} /opt/output/
+
+# Set up work directory.
 mkdir -p /jami/work && cd /jami/work
 
 # Create a changelog file, required by dpkg-buildpackage.
