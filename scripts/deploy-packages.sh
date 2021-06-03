@@ -31,39 +31,10 @@ set -e
 ## Debian / Ubuntu packaging ##
 ###############################
 
-function fetch_qt_deb()
-{
-    if [ -f "${SSH_IDENTITY_FILE}" ];
-    then
-        export RSYNC_RSH="ssh -i ${SSH_IDENTITY_FILE}"
-    fi
-
-    echo "#####################"
-    echo "## fetching qt deb ##"
-    echo "#####################"
-    echo "Using RSYNC_RSH='${RSYNC_RSH}'"
-    rsync --archive --verbose \
-          ${REMOTE_REPOSITORY_LOCATION}/${DISTRIBUTION}_qt/pool/main/libq/libqt-jami/*.deb \
-          ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/
-}
-
-# True if $DISTRIBUTION ends by _qt
-is_distribution_qt() {
-    [[ $DISTRIBUTION =~ _qt$ ]]
-}
-
 function package_deb()
 {
     DISTRIBUTION_REPOSITORY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
     mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
-    mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}_qt
-
-    ###########################################################
-    ## fetch qt deb (if not currently building a qt package) ##
-    ###########################################################
-    if ! is_distribution_qt; then
-        fetch_qt_deb
-    fi
 
     ##################################################
     ## Create local repository for the given distro ##
@@ -98,9 +69,6 @@ EOF
     ## Add packages to the repository ##
     ####################################
     packages="packages/${DISTRIBUTION}*/*.deb"
-    if ! is_distribution_qt; then
-        packages+=" ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/*.deb"
-    fi
 
     for package in ${packages}; do
         # Sign the deb
