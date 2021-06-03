@@ -5,22 +5,15 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get clean
 RUN apt-get update && \
     apt-get install -y -o Acquire::Retries=10 \
-        ca-certificates \
         devscripts \
-        dirmngr \
         equivs \
-        gnupg \
         wget
-
-RUN wget -O - https://dl.jami.net/public-key.gpg | \
-    tee /usr/share/keyrings/jami-archive-keyring.gpg > /dev/null
-RUN sh -c "echo 'deb [signed-by=/usr/share/keyrings/jami-archive-keyring.gpg] https://dl.jami.net/nightly/ubuntu_21.04_qt/ jami main' > /etc/apt/sources.list.d/libqt-jami.list"
 
 # add deb-src entries (needed for next step)
 RUN sed -n '/^deb\s/s//deb-src /p' /etc/apt/sources.list > /etc/apt/sources.list.d/deb-src.list
 RUN apt-get clean && apt-get update
 
-COPY packaging/rules/debian/* /tmp/builddeps/debian/
+COPY packaging/rules/debian-qt/* /tmp/builddeps/debian/
 RUN cd /tmp/builddeps && \
     apt-get update; \
     mk-build-deps \
@@ -29,6 +22,14 @@ RUN cd /tmp/builddeps && \
         "debian/control"; \
     cd / && rm -rf /tmp/builddeps
 
-ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
+COPY packaging/rules/debian/* /tmp/builddeps/debian/
+RUN cd /tmp/builddeps && \
+    apt-get update; \
+    mk-build-deps \
+        --remove --install \
+        --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10 -o DPkg::Options::=--ignore-depends=libqt-jami" \
+        "debian/control"; \
+    cd / && rm -rf /tmp/builddeps
 
+ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 CMD /opt/build-package-debian.sh
