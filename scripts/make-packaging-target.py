@@ -51,6 +51,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -e RELEASE_VERSION=$(RELEASE_VERSION) \\
     -e RELEASE_TARBALL_FILENAME=$(RELEASE_TARBALL_FILENAME) \\
     -e DEBIAN_VERSION=%(version)s \\
+    -e DEBIAN_QT_VERSION=%(version_qt)s \\
     -e CURRENT_UID=$(CURRENT_UID) \\
     -e CURRENT_GID=$(CURRENT_GID) \\
     -e DISTRIBUTION=%(distribution)s \\
@@ -92,31 +93,31 @@ RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS = (
 
 DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS = (
     '-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) '
-    '--privileged '
-    '--security-opt apparmor=docker-default ')
-
-DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT = (
-    '-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX) '
     '-e QT_MAJOR=$(QT_MAJOR) '
     '-e QT_MINOR=$(QT_MINOR) '
     '-e QT_PATCH=$(QT_PATCH) '
     '-e QT_TARBALL_CHECKSUM=$(QT_TARBALL_CHECKSUM) '
+    '-e FORCE_REBUILD_QT=$(FORCE_REBUILD_QT) '
     '-v /opt/ring-contrib:/opt/ring-contrib '
-    '--privileged --security-opt apparmor=docker-default')
+    '--privileged '
+    '--security-opt apparmor=docker-default ')
 
 
 def generate_target(distribution, output_file, options='', docker_image='',
-                    version='', docker_build_args=''):
+                    version='', version_qt='', docker_build_args=''):
     if (docker_image == ''):
         docker_image = distribution
     if (version == ''):
         version = "$(DEBIAN_VERSION)"
+    if (version_qt == ''):
+        version_qt = "$(DEBIAN_QT_VERSION)"
     return target_template % {
         "distribution": distribution,
         "docker_image": docker_image,
         "output_file": output_file,
         "options": options,
         "version": version,
+        "version_qt": version_qt,
         "docker_build_args": docker_build_args,
     }
 
@@ -126,7 +127,8 @@ def run_generate(parsed_args):
                           parsed_args.output_file,
                           parsed_args.options,
                           parsed_args.docker_image,
-                          parsed_args.version))
+                          parsed_args.version,
+                          parsed_args.version_qt))
 
 
 def run_generate_all(parsed_args):
@@ -138,32 +140,14 @@ def run_generate_all(parsed_args):
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
         },
         {
-            "distribution": "debian_10_qt",
-            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
-            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
-            "version": "$(DEBIAN_QT_VERSION)",
-        },
-        {
             "distribution": "debian_testing",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
         },
         {
-            "distribution": "debian_testing_qt",
-            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
-            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
-            "version": "$(DEBIAN_QT_VERSION)",
-        },
-        {
             "distribution": "debian_unstable",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
-        },
-        {
-            "distribution": "debian_unstable_qt",
-            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
-            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
-            "version": "$(DEBIAN_QT_VERSION)",
         },
         # Raspbian
         {
@@ -175,13 +159,7 @@ def run_generate_all(parsed_args):
         {
             "distribution": "ubuntu_18.04",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": "-e QT_JAMI_PREFIX=$(QT_JAMI_PREFIX)",
-        },
-        {
-            "distribution": "ubuntu_18.04_qt",
-            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
-            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
-            "version": "$(DEBIAN_QT_VERSION)",
+            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
         },
         {
             "distribution": "ubuntu_20.04",
@@ -189,32 +167,14 @@ def run_generate_all(parsed_args):
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
         },
         {
-            "distribution": "ubuntu_20.04_qt",
-            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
-            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
-            "version": "$(DEBIAN_QT_VERSION)",
-        },
-        {
             "distribution": "ubuntu_20.10",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
         },
         {
-            "distribution": "ubuntu_20.10_qt",
-            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
-            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
-            "version": "$(DEBIAN_QT_VERSION)",
-        },
-        {
             "distribution": "ubuntu_21.04",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
-        },
-        {
-            "distribution": "ubuntu_21.04_qt",
-            "output_file": "$(DEBIAN_QT_DSC_FILENAME)",
-            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS_QT,
-            "version": "$(DEBIAN_QT_VERSION)",
         },
         # Fedora
         {
@@ -284,6 +244,7 @@ def parse_args():
     ap.add_argument('--options', default='')
     ap.add_argument('--docker_image', default='')
     ap.add_argument('--version', default='')
+    ap.add_argument('--version_qt', default='')
 
     parsed_args = ap.parse_args()
 
