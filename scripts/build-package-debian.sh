@@ -52,6 +52,8 @@ if [ "$1" = "qt" ] && [ ! -f "${qt_deb_path}" ] || [ ! -z "${FORCE_REBUILD_QT}" 
     qt_base_url=https://download.qt.io/archive/qt/${QT_MAJOR}.${QT_MINOR}/${qt_version}/single
 
     if [ ! -d "${cache_dir}" ] || [ ! -w "${cache_dir}" ]; then
+        ls -la "${cache_dir}"
+        ls -la "${cache_dir}"/..
         echo "error: $cache_dir does not exist or is not writable"
         exit 1
     fi
