@@ -46,6 +46,76 @@
       "revId": "95a344f3e387b98da6b3ce0720f9515b34d9d56e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61eaa00_7c48732d",
+        "filename": "scripts/build-package-debian.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-06-08T12:39:50Z",
+      "side": 1,
+      "message": "We\u0027d have to benchmark, but to get a hang of things, you could clear a cached Docker image and rebuild it from scratch with the current Dockerfiles.  I think I get builds twice as long sometimes (26 minutes instead of like 13) when the Docker image is not in the cache.\n\nEDIT: I just tried it, with something like:\n\n$ time docker build --no-cache -f docker/Dockerfile_ubuntu_20.04_qt .\n\nAnd it came out at 5m41.017s wall time.  That\u0027s on a very fast machine with solid state storage.  IIUC, this bit is now moved to this script here (the mk-build-deps call), incurring this cost repeatedly at run time (outside of the caching facility of Docker).",
+      "parentUuid": "a594fcaa_0518f4e0",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 1
+      },
+      "revId": "95a344f3e387b98da6b3ce0720f9515b34d9d56e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c402e4b4_cb9fa550",
+        "filename": "scripts/build-package-debian.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-06-08T12:39:50Z",
+      "side": 1,
+      "message": "\u0027echo\u0027 would be fine here, and you can drop the \\n\\.  Alternatively, a \"here document\".  Search for \"Here Documents\" under info \"(bash)Redirections\"  (it\u0027s valid for any POSIX shell AFAICT).",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "95a344f3e387b98da6b3ce0720f9515b34d9d56e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79ca8a0_d3918059",
+        "filename": "scripts/build-package-debian.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-06-08T12:39:50Z",
+      "side": 1,
+      "message": "I think keeping concerns separate might make things cleaner and easier to follow (e.g., there\u0027d be a build-package-debian.sh and a separate build-qt-debian.sh script).  I see that\u0027s how it currently is.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 4
+      },
+      "revId": "95a344f3e387b98da6b3ce0720f9515b34d9d56e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
