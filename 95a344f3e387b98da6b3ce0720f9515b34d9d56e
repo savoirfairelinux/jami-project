@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "230446c0_a0f044b3",
+        "filename": "docker/Dockerfile_ubuntu_20.10",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-06-08T13:22:38Z",
+      "side": 1,
+      "message": "It should indeed be cached, it just moves the code",
+      "parentUuid": "339dd93d_37e435ad",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 40
+      },
+      "revId": "95a344f3e387b98da6b3ce0720f9515b34d9d56e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79415226_b3582f4f",
         "filename": "scripts/build-package-debian.sh",
         "patchSetId": 15
