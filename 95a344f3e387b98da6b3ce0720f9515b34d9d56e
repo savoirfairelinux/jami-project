@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79415226_b3582f4f",
+        "filename": "scripts/build-package-debian.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-06-08T12:11:33Z",
+      "side": 1,
+      "message": "This will pull and install a ton of deps from the network every time the builds are done, slowing the builds dramatically (as it used to be).  It\u0027s better to have all the deps cached at the Docker image level.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 1
+      },
+      "revId": "95a344f3e387b98da6b3ce0720f9515b34d9d56e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
