@@ -76,4 +76,4 @@ RUN dnf install -y \
 
 ADD scripts/build-package-rpm.sh /opt/build-package-rpm.sh
 
-CMD /opt/build-package-rpm.sh
+CMD ["/opt/build-package-rpm.sh"]
