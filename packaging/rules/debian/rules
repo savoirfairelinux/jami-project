@@ -203,8 +203,6 @@ override_dh_auto_install:
 	cd client-qt/build && \
 		make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME) install
 
-	ln -sf /usr/bin/jami $(CURDIR)/debian/jami/usr/bin/ring.cx
-
 	## Custom Qt package for Jami (libqt-jami)
 	## Copy our own Qt library package content into the OCI package.
 	for file_name in $$(dpkg-query -L libqt-jami); do 	\
@@ -236,8 +234,6 @@ override_dh_auto_install:
 	## Qt client
 	cd client-qt/build && \
 		make DESTDIR=$(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME) install
-
-	ln -sf /usr/bin/jami $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/bin/ring.cx
 
 override_dh_shlibdeps:
 	dh_shlibdeps -- -x$(JAMI_ALL_IN_ONE_PKG_NAME)
