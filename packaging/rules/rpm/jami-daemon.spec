@@ -90,13 +90,13 @@ cd %{_builddir}/ring-project/daemon && \
 
 # Build the daemon.
 make -C %{_builddir}/ring-project/daemon %{_smp_mflags} V=1
-pod2man %{_builddir}/ring-project/daemon/man/dring.pod \
-        > %{_builddir}/ring-project/daemon/dring.1
+pod2man %{_builddir}/ring-project/daemon/man/jamid.pod \
+        > %{_builddir}/ring-project/daemon/jamid.1
 
 %install
 DESTDIR=%{buildroot} make -C daemon install
-cp %{_builddir}/ring-project/daemon/dring.1 \
-   %{buildroot}/%{_mandir}/man1/dring.1
+cp %{_builddir}/ring-project/daemon/jamid.1 \
+   %{buildroot}/%{_mandir}/man1/jamid.1
 rm -rfv %{buildroot}/%{_libdir}/*.a
 rm -rfv %{buildroot}/%{_libdir}/*.la
 
@@ -108,7 +108,7 @@ rm -rfv %{buildroot}/%{_libdir}/*.la
 %{_datadir}/jami/ringtones
 %{_datadir}/dbus-1/services/*
 %{_datadir}/dbus-1/interfaces/*
-%doc %{_mandir}/man1/dring*
+%doc %{_mandir}/man1/jamid*
 
 %package devel
 Summary: Development files of the Jami daemon
@@ -117,7 +117,7 @@ Summary: Development files of the Jami daemon
 This package contains the header files for using the Jami daemon as a library.
 
 %files devel
-%{_includedir}/dring
+%{_includedir}/jamid
 %{_includedir}/jami_contact.h
 
 %post
