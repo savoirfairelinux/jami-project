@@ -68,14 +68,17 @@ EOF
     ####################################
     ## Add packages to the repository ##
     ####################################
-    packages="packages/${DISTRIBUTION}*/*.deb"
+    # Note: reprepro currently only accepts .deb files as input, but
+    # Ubuntu generates their debug symbol packages as .ddeb (see:
+    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=730572).  As
+    # these are just regular Debian packages, simply append the .deb
+    # extension to their file name to work around this.
+    find ./packages -type f -name '*.ddeb' -print0 | xargs -0 -I{} mv {} {}.deb
 
-    for package in ${packages}; do
-        # Sign the deb
+    for package in packages/${DISTRIBUTION}*/*.deb; do
         echo "## signing: ${package} ##"
         dpkg-sig -k ${KEYID} --sign builder ${package}
 
-        # Include the deb
         echo "## including ${package} ##"
         package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
         package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
