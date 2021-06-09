@@ -68,14 +68,12 @@ EOF
     ####################################
     ## Add packages to the repository ##
     ####################################
-    packages="packages/${DISTRIBUTION}*/*.deb"
-
-    for package in ${packages}; do
-        # Sign the deb
+    # Note: Both the binary (.deb) packages and the debug symbol
+    # (.ddeb) packages are deployed.
+    for package in packages/${DISTRIBUTION}*/*deb; do
         echo "## signing: ${package} ##"
         dpkg-sig -k ${KEYID} --sign builder ${package}
 
-        # Include the deb
         echo "## including ${package} ##"
         package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
         package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
