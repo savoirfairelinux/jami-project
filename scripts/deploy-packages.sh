@@ -68,7 +68,12 @@ EOF
     ####################################
     ## Add packages to the repository ##
     ####################################
-    packages="packages/${DISTRIBUTION}*/*.deb"
+    # Note: Both the binary (.deb) packages and the debug symbol
+    # (.ddeb) packages are deployed.
+    packages="packages/${DISTRIBUTION}*/*deb"
+    if ! is_distribution_qt; then
+        packages+=" ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/*.deb"
+    fi
 
     for package in ${packages}; do
         # Sign the deb
