@@ -143,6 +143,13 @@ endif
 
 # Append the output of make-packaging-target to this Makefile
 # see Makefile.packaging.distro_targets
+IS_SHELL_INTERACTIVE = $(shell test -n "$$PS1" && echo yes)
+$(error IS_SHELL_INTERACTIVE=$(and $(IS_SHELL_INTERACTIVE), -i))
+
+# The following Make variable can be used to provide extra arguments
+# used with the 'docker run' commands invoked to build the packages.
+DOCKER_RUN_EXTRA_ARGS =
+
 $(shell scripts/make-packaging-target.py --generate-all > Makefile.packaging.distro_targets)
 include Makefile.packaging.distro_targets
 

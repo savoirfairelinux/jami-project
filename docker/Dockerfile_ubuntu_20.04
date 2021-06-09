@@ -22,4 +22,4 @@ COPY packaging/rules/debian/* /tmp/builddeps/debian/
 RUN /opt/prebuild-package-debian.sh jami-deps
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
-CMD /opt/build-package-debian.sh
+CMD ["/opt/build-package-debian.sh"]
