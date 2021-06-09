@@ -27,4 +27,4 @@ RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
-CMD /opt/build-package-debian.sh
+CMD ["/opt/build-package-debian.sh"]
