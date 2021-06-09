@@ -81,7 +81,7 @@ else
     BUILDDIR="build-local"
 fi
 
-# dring
+# jamid
 DAEMON=${TOP}/daemon
 cd "$DAEMON"
 
