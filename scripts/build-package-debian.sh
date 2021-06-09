@@ -84,7 +84,7 @@ if [ ! -f "${qt_deb_path}" ] || [ "${FORCE_REBUILD_QT}" = "true" ]; then
             --distribution "unstable" debian/changelog
 
     # build and package qt
-    dpkg-buildpackage -uc -us ${DPKG_BUILD_OPTIONS}
+    dpkg-buildpackage -uc -us ${DPKG_BUILD_OPTIONS} --jobs=3
 
     # copy the built deb to cache
     mkdir -p ${cache_packaging}/
