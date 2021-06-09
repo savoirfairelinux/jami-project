@@ -65,7 +65,6 @@ make -C %{_builddir}/ring-project/client-gnome/build \
 DESTDIR=%{buildroot} make -C %{_builddir}/ring-project/client-gnome/build install
 # Only keep /bin/jami-gnome for the GNOME client.
 rm -rfv %{buildroot}/%{_bindir}/jami
-rm -rfv %{buildroot}/%{_bindir}/ring.cx
 
 %files
 %defattr(-,root,root,-)
