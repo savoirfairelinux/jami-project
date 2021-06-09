@@ -47,7 +47,7 @@ DOCKER_EXTRA_ARGS =
 
 
 PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
-    --rm \\
+    --rm  \\
     -e RELEASE_VERSION=$(RELEASE_VERSION) \\
     -e RELEASE_TARBALL_FILENAME=$(RELEASE_TARBALL_FILENAME) \\
     -e DEBIAN_VERSION=%(version)s \\
@@ -59,7 +59,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
     -v /opt/cache-packaging:/opt/cache-packaging \\
-    -t $(DOCKER_EXTRA_ARGS) %(options)s \\
+    -it $(DOCKER_EXTRA_ARGS) %(options)s \\
     $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(docker_image)s
