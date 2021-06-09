@@ -43,8 +43,6 @@ target_template = """\
 
 PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME:=jami-packaging-%(distribution)s$(RING_PACKAGING_IMAGE_SUFFIX)
 PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE:=.docker-image-$(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
-DOCKER_EXTRA_ARGS =
-
 
 PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     --rm \\
@@ -59,8 +57,9 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
     -v /opt/cache-packaging:/opt/cache-packaging \\
-    -t $(DOCKER_EXTRA_ARGS) %(options)s \\
     -v /opt/ring-contrib:/opt/ring-contrib \\
+    -t $(and $(IS_SHELL_INTERACTIVE),-i) %(options)s \\
+    $(DOCKER_RUN_EXTRA_ARGS) \\
     $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(docker_image)s
@@ -82,7 +81,6 @@ package-%(distribution)s: packages/%(distribution)s/%(output_file)s
 PACKAGE-TARGETS += package-%(distribution)s
 
 .PHONY: package-%(distribution)s-interactive
-package-%(distribution)s-interactive: DOCKER_EXTRA_ARGS = -i
 package-%(distribution)s-interactive: $(RELEASE_TARBALL_FILENAME) packages/%(distribution)s $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE)
 	$(PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND) bash
 """
