@@ -196,9 +196,10 @@ override_dh_auto_install:
 	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME)/usr/lib/cmake
 
         ## GNOME client
-	cd client-gnome/build && \
-		make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME) install
-	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME)/usr/bin/jami
+	# Temporarily disabled as a result of being broken by recent swarm changes.
+	# cd client-gnome/build && \
+	# make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME) install
+	# rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME)/usr/bin/jami
 
 	## Qt client
 	cd client-qt/build && \
