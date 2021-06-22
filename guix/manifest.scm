@@ -69,6 +69,7 @@
   "http-parser"
   "jsoncpp"
   "libarchive"
+  "libgit2"
   "libnatpmp"
   "libupnp"
   "libsecp256k1"
