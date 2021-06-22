@@ -1,6 +1,8 @@
 # -*- mode: makefile; -*-
 # Copyright (C) 2016-2021 Savoir-faire Linux Inc.
 #
+# Author: Maxim Cournoyer <maxim.cournoyer@savoirfairelinux.com>
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -42,7 +44,11 @@ else
 $(warning Using version from the .tarball-version file: $(TARBALL_VERSION))
 RELEASE_VERSION:=$(TARBALL_VERSION)
 endif
-RELEASE_TARBALL_FILENAME:=jami_$(RELEASE_VERSION).tar.gz
+RELEASE_TARBALL_FILENAME := jami_$(RELEASE_VERSION).tar.gz
+
+# Export for consumption in child processes.
+export RELEASE_VERSION
+export RELEASE_TARBALL_FILENAME
 
 # Debian versions
 DEBIAN_VERSION:=$(RELEASE_VERSION)~dfsg1-1
@@ -88,15 +94,18 @@ release-tarball:
 	rm -f "$(RELEASE_TARBALL_FILENAME)" tarballs.manifest
 	$(MAKE) "$(RELEASE_TARBALL_FILENAME)"
 
+# Predicate to check if the 'guix' command is available.
+has-guix-p:
+	command -v guix > /dev/null 2>&1 || \
+	  (echo 'guix' is required to build the '$@' target && exit 1)
+
 # The bundled tarballs included in the release tarball depend on what
 # is available on the host.  To ensure it can be shared across all
 # different GNU/Linux distributions, generate it in a minimal
 # container.  Wget uses GnuTLS, which looks up its certs from
 # /etc/ssl/certs.
 guix-share-tarball-arg = $${TARBALLS:+"--share=$$TARBALLS"}
-portable-release-tarball:
-	command -v guix > /dev/null 2>&1 || \
-	  (echo 'guix' is required to build the '$@' target && exit 1) && \
+portable-release-tarball: has-guix-p
 	guix environment --container --network \
           --preserve=TARBALLS $(guix-share-tarball-arg) \
           --expose=/usr/bin/env \
@@ -233,6 +242,40 @@ endef
 
 $(foreach target,$(DISTRIBUTIONS),\
 	$(eval $(call make-docker-package-target,$(target))))
+
+#
+# Guix-generated Debian packages (deb packs) targets.
+#
+SUPPORTED_GNU_ARCHS = x86_64 i686
+DEB_PACK_TARGETS =
+
+define guix-pack-command
+guix pack -C xz -f deb -m $(CURDIR)/guix/guix-pack-manifest.scm -v3 \
+  -S /usr/bin/jami-qt=bin/jami-qt \
+  -S /usr/share/applications/jami-qt.desktop=share/applications/jami-qt.desktop \
+  -S /usr/share/icons/hicolor/scalable/apps/jami.svg=share/icons/hicolor/scalable/apps/jami.svg \
+  -S /usr/share/icons/hicolor/48x48/apps/jami.png=share/icons/hicolor/48x48/apps/jami.png \
+  -S /usr/share/metainfo/jami-qt.appdata.xml=share/metainfo/jami-qt.appdata.xml \
+  --postinst-file=$(CURDIR)/guix/guix-pack-deb.postinst
+endef
+
+# Arg1: the GNU architecture type (e.g., x86_64, i686, powerpcle, etc.)
+define define-deb-pack-rule
+deb-file-name := packages/guix-deb-pack/jami-$(RELEASE_VERSION)-$(1).deb
+DEB_PACK_TARGETS += deb-pack-$(subst _,-,$(1))
+.PHONY: deb-pack-$(subst _,-,$(1))
+deb-pack-$(subst _,-,$(1)): $$(deb-file-name)
+$$(deb-file-name): has-guix-p $(RELEASE_TARBALL_FILENAME)
+	output=$$$$($(guix-pack-command) --system=$(1)-linux $$(GUIX_PACK_ARGS)) && \
+	mkdir -p "$$$$(dirname "$$@")" && \
+	cp --reflink=auto "$$$$output" "$$@"
+	chmod +w "$$@"
+endef
+
+$(foreach arch,$(SUPPORTED_GNU_ARCHS),\
+	$(eval $(call define-deb-pack-rule,$(arch))))
+
+PACKAGE-TARGETS += $(DEB_PACK_TARGETS)
 
 package-all: $(PACKAGE-TARGETS)
 
