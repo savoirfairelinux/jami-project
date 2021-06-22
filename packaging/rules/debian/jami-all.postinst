@@ -70,9 +70,6 @@ HUFCGSHO3/kzxSlkE1PBUX3IZ8PSFijyopBnWUhlSXuyRjte8OR7Fl/Rlf0IaOD1
 -----END PGP PUBLIC KEY BLOCK-----"
 
 # System paths and generated variables
-# In general: you will not need to modify these variables.
-# WARNING: When modifying the paths, keep in mind that the corresponding
-# postrm paths should be modified as well
 APT_FILE="/etc/apt/sources.list.d/jami-main.list"
 UPDATE_MANAGER_PATH="/etc/update-manager/release-upgrades.d/"
 JAMI_UPDATE_MANAGER_ID="jami-main"
@@ -153,10 +150,9 @@ EOF
 
             # Additionally, if update manager is installed we inform it about
             # the repository so it doesn't get scrapped after system updates
-            if [ -d /etc/update-manager -a ! -f $UPDATE_MANAGER_CFG_PATH ]
+            if [ -d /etc/update-manager ]
             then
                 mkdir -p $UPDATE_MANAGER_PATH
-		# FIXME As soon as we change the repo name use jami (this line +5)
                 cat > $UPDATE_MANAGER_CFG_PATH <<EOF
 # Added by Jami to prevent disabling of Jami repository sources on
 # distribution release upgrade.
