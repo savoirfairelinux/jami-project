@@ -39,7 +39,11 @@ else
 $(warning Using version from the .tarball-version file: $(TARBALL_VERSION))
 RELEASE_VERSION:=$(TARBALL_VERSION)
 endif
-RELEASE_TARBALL_FILENAME:=jami_$(RELEASE_VERSION).tar.gz
+RELEASE_TARBALL_FILENAME := jami_$(RELEASE_VERSION).tar.gz
+
+# Export for consumption in child processes.
+export RELEASE_VERSION
+export RELEASE_TARBALL_FILENAME
 
 # Debian versions
 DEBIAN_VERSION:=$(RELEASE_VERSION)~dfsg1-1
@@ -79,15 +83,18 @@ release-tarball:
 	rm -f "$(RELEASE_TARBALL_FILENAME)" tarballs.manifest
 	$(MAKE) "$(RELEASE_TARBALL_FILENAME)"
 
+# Predicate to check if the 'guix' command is available.
+has-guix-p:
+	command -v guix > /dev/null 2>&1 || \
+	  (echo 'guix' is required to build the '$@' target && exit 1)
+
 # The bundled tarballs included in the release tarball depend on what
 # is available on the host.  To ensure it can be shared across all
 # different GNU/Linux distributions, generate it in a minimal
 # container.  Wget uses GnuTLS, which looks up its certs from
 # /etc/ssl/certs.
 guix-share-tarball-arg = $${TARBALLS:+"--share=$$TARBALLS"}
-portable-release-tarball:
-	command -v guix > /dev/null 2>&1 || \
-	  (echo 'guix' is required to build the '$@' target && exit 1) && \
+portable-release-tarball: has-guix-p
 	guix environment --container --network \
           --preserve=TARBALLS $(guix-share-tarball-arg) \
           --expose=/usr/bin/env \
@@ -151,6 +158,20 @@ DOCKER_RUN_EXTRA_ARGS =
 # see Makefile.packaging.distro_targets
 $(shell scripts/make-packaging-target.py --generate-all > Makefile.packaging.distro_targets)
 include Makefile.packaging.distro_targets
+
+# This uses Guix to generate a Debian archive (.deb) that can run on
+# any Debian-based GNU/Linux distribution.
+deb-pack: has-guix-p $(RELEASE_TARBALL_FILENAME)
+	guix time-machine --url=https://gitlab.com/Apteryks/guix.git \
+	  --branch=add-deb-pack-format -- \
+	  pack -C xz -f deb -m guix/guix-pack-manifest.scm -v3 \
+	  -S /usr/bin/jami-qt=bin/jami-qt \
+	  -S /usr/share/applications/jami-qt.desktop=share/applications/jami-qt.desktop \
+	  -S /usr/share/icons/hicolor/scalable/apps/jami.svg=share/icons/hicolor/scalable/apps/jami.svg \
+	  -S /usr/share/metainfo/jami-qt.appdata.xml=share/metainfo/jami-qt.appdata.xml \
+          $(GUIX_PACK_ARGS)
+
+PACKAGE-TARGETS += deb-pack
 
 package-all: $(PACKAGE-TARGETS)
 
