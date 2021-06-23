@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12fd46a0_91a3daa7",
+        "filename": "Jenkinsfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-06-23T13:17:21Z",
+      "side": 1,
+      "message": "I think USE_LATEST_MASTER is better. Generally on internal we can generate older packages in some cases (even if we use it generally for testing new features, it can be useful do check an oldest version or with some patches reverted), so in this case it\u0027s not an update but a downgrade",
+      "range": {
+        "startLine": 63,
+        "startChar": 28,
+        "endLine": 63,
+        "endChar": 45
+      },
+      "revId": "49e1e4a9298e1d44177b2c7bb808f2d21c3b2d0d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
