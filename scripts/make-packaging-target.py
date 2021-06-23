@@ -60,6 +60,7 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
     -v /opt/cache-packaging:/opt/cache-packaging \\
     -t $(DOCKER_EXTRA_ARGS) %(options)s \\
+    -v /opt/ring-contrib:/opt/ring-contrib \\
     $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
 
 $(PACKAGE_%(distribution)s_DOCKER_IMAGE_FILE): docker/Dockerfile_%(docker_image)s
