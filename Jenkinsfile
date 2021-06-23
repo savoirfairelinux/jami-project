@@ -67,9 +67,6 @@ pipeline {
                      ' submodules at their Git-recorded commit.  When left ' +
                      'unticked (the default), checkout the submodules at ' +
                      'their latest commit from their main remote branch.')
-        booleanParam(name: 'BUILD_OWN_QT',
-                     defaultValue: false,
-                     description: 'Whether to build our own Qt packages.')
         booleanParam(name: 'BUILD_ARM',
                      defaultValue: false,
                      description: 'Whether to build ARM packages.')
@@ -143,13 +140,9 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                     }
 
                     TARGETS = targetsText.split(/\s/)
-                    if (!params.BUILD_OWN_QT) {
-                        TARGETS = TARGETS.findAll { !it.endsWith('_qt') }
-                    }
                     if (!params.BUILD_ARM) {
                         TARGETS = TARGETS.findAll { !(it =~ /_(armhf|arm64)$/) }
                     }
-
 
                     def stages = [:]
 
@@ -162,12 +155,15 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                                 node('linux-builder') {
                                     cleanWs()
                                     unstash 'release-tarball'
-                                    sh """
-                                       tar xf *.tar.gz --strip-components=1
-                                       make ${target}
-                                       """
-                                    stash(includes: 'packages/**',
-                                          name: target)
+                                    catchError(buildResult: 'SUCCESS',
+                                               stageResult: 'FAILURE') {
+                                        sh """
+                                           tar xf *.tar.gz --strip-components=1
+                                           make ${target}
+                                           """
+                                        stash(includes: 'packages/**',
+                                              name: target)
+                                    }
                                 }
                             }
                         }
