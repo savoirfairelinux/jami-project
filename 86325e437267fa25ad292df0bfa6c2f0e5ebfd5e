@@ -22,6 +22,30 @@
       "revId": "86325e437267fa25ad292df0bfa6c2f0e5ebfd5e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2393c7_5d9073f8",
+        "filename": "Jenkinsfile",
+        "patchSetId": 17
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-06-23T14:36:48Z",
+      "side": 1,
+      "message": "It\u0027s to avoid using 200 columns.",
+      "parentUuid": "d5159400_eee177a6",
+      "range": {
+        "startLine": 160,
+        "startChar": 1,
+        "endLine": 166,
+        "endChar": 3
+      },
+      "revId": "86325e437267fa25ad292df0bfa6c2f0e5ebfd5e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
