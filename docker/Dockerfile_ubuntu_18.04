@@ -17,10 +17,10 @@ RUN apt-get clean && apt-get update
 
 ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh
 
-COPY packaging/rules/debian-qt/* /tmp/builddeps/debian/
+COPY packaging/rules/debian-qt/control /tmp/builddeps/debian/control
 RUN /opt/prebuild-package-debian.sh qt-deps
 
-COPY packaging/rules/debian/* /tmp/builddeps/debian/
+COPY packaging/rules/debian/control /tmp/builddeps/debian/control
 RUN /opt/prebuild-package-debian.sh jami-deps
 
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
