@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23f0e3d9_6d3cab73",
+        "filename": "scripts/deploy-packages.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-06-23T13:13:08Z",
+      "side": 1,
+      "message": "break deploy, cf https://jenkins.jami.net/job/packaging-deploy-gnulinux-generic/4239/console",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 6
+      },
+      "revId": "1dfb2c4cbb1a23614ed2649c3084155d7d79e52d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
