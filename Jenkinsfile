@@ -64,10 +64,7 @@ pipeline {
         booleanParam(name: 'WITH_LATEST_SUBMODULES',
                      defaultValue: true,
                      description: 'Update the ' + SUBMODULES.join(', ') +
-                     'submodules to their latest commit.')
-        booleanParam(name: 'BUILD_OWN_QT',
-                     defaultValue: false,
-                     description: 'Whether to build our own Qt packages.')
+                     ' submodules to their latest commit.')
         booleanParam(name: 'BUILD_ARM',
                      defaultValue: false,
                      description: 'Whether to build ARM packages.')
@@ -141,13 +138,9 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                     }
 
                     TARGETS = targetsText.split(/\s/)
-                    if (!params.BUILD_OWN_QT) {
-                        TARGETS = TARGETS.findAll { !it.endsWith('_qt') }
-                    }
                     if (!params.BUILD_ARM) {
                         TARGETS = TARGETS.findAll { !(it =~ /_(armhf|arm64)$/) }
                     }
-
 
                     def stages = [:]
 
@@ -160,12 +153,15 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                                 node('linux-builder') {
                                     cleanWs()
                                     unstash 'release-tarball'
-                                    sh """
-                                       tar xf *.tar.gz --strip-components=1
-                                       make ${target}
-                                       """
-                                    stash(includes: 'packages/**',
-                                          name: target)
+                                    catchError(buildResult: 'SUCCESS',
+                                               stageResult: 'FAILURE') {
+                                        sh """
+                                           tar xf *.tar.gz --strip-components=1
+                                           make ${target}
+                                           """
+                                        stash(includes: 'packages/**',
+                                              name: target)
+                                    }
                                 }
                             }
                         }
