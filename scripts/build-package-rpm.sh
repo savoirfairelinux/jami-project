@@ -45,12 +45,22 @@ QT_MAJOR=5
 QT_MINOR=15
 QT_PATCH=2
 
+QT_MAJOR_MINOR=${QT_MAJOR}.${QT_MINOR}
+QT_MAJOR_MINOR_PATCH=${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}
+
+QT_TARBALL_URL=https://download.qt.io/archive/qt/$QT_MAJOR_MINOR/\
+$QT_MAJOR_MINOR_PATCH/single/qt-everywhere-src-$QT_MAJOR_MINOR_PATCH.tar.xz
+
+QT_TARBALL_SHA256="3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202240"
+QT_TARBALL_FILE_NAME=$(basename "$QT_TARBALL_URL")
+CACHED_QT_TARBALL=/opt/ring-contrib/$QT_TARBALL_FILE_NAME
+
 if [[ "${DISTRIBUTION:0:4}" == "rhel" \
    || "${DISTRIBUTION:0:13}" == "opensuse-leap" ]]; then
 
-    RPM_PATH=/opt/cache-packaging/${DISTRIBUTION}/jami-libqt-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}-1.x86_64.rpm
+    RPM_PATH=/opt/cache-packaging/${DISTRIBUTION}/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.x86_64.rpm
     if [[ "${DISTRIBUTION:0:4}" == "rhel" ]]; then
-        RPM_PATH=/opt/cache-packaging/${DISTRIBUTION}/jami-libqt-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}-1.el8.x86_64.rpm
+        RPM_PATH=/opt/cache-packaging/${DISTRIBUTION}/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.el8.x86_64.rpm
     fi
 
     if [ ! -f "${RPM_PATH}" ]; then
@@ -58,17 +68,19 @@ if [[ "${DISTRIBUTION:0:4}" == "rhel" \
         cd /opt/qt-jami-build
         cp /opt/ring-project-ro/packaging/rules/rpm/jami-libqt.spec .
 
-        QT_TARBALL_CHECKSUM="3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202240"
-        wget https://download.qt.io/archive/qt/${QT_MAJOR}.${QT_MINOR}/${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}/single/qt-everywhere-src-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}.tar.xz
-
-        if ! echo -n ${QT_TARBALL_CHECKSUM} qt-everywhere-src-*.tar.xz | sha256sum -c -
-        then
-            echo "qt tarball checksum mismatch; quitting"
-            exit 1
+        # Fetch and cache the tarball, if not already available.
+        if [ ! -f "$CACHED_QT_TARBALL" ]; then
+            wget "$QT_TARBALL_URL"
+            if ! echo -n ${QT_TARBALL_SHA256} "$QT_TARBALL_FILE_NAME" | sha256sum -c -
+            then
+                echo "qt tarball checksum mismatch; quitting"
+                exit 1
+            fi
+            flock "$CACHED_QT_TARBALL" mv "$QT_TARBALL_FILE_NAME" "$CACHED_QT_TARBALL"
         fi
 
-        mv qt-everywhere-src-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}.tar.xz /root/rpmbuild/SOURCES/jami-qtlib_${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}.tar.xz
-        sed -i "s/RELEASE_VERSION/${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}/g" jami-libqt.spec
+        cp "$CACHED_QT_TARBALL" "/root/rpmbuild/SOURCES/jami-qtlib_$QT_MAJOR_MINOR_PATCH.tar.xz"
+        sed -i "s/RELEASE_VERSION/$QT_MAJOR_MINOR_PATCH/g" jami-libqt.spec
         rpmdev-bumpspec --comment="Automatic nightly release" \
                         --userstring="Jenkins <jami@lists.savoirfairelinux.net>" jami-libqt.spec
 
@@ -76,13 +88,13 @@ if [[ "${DISTRIBUTION:0:4}" == "rhel" \
         mkdir -p /opt/cache-packaging/${DISTRIBUTION}/
 
         if [[ "${DISTRIBUTION:0:4}" == "rhel" ]]; then
-            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}-1.el8.x86_64.rpm ${RPM_PATH}
+            cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.el8.x86_64.rpm" "${RPM_PATH}"
         else
-            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm ${RPM_PATH}
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm "${RPM_PATH}"
         fi
     fi
-    rpm --install ${RPM_PATH}
-    cp ${RPM_PATH} /opt/output
+    rpm --install "${RPM_PATH}"
+    cp "${RPM_PATH}" /opt/output
     cd /opt/ring-project
 fi
 
