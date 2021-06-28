@@ -186,7 +186,12 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
             steps {
                 script {
                     TARGETS.each { target ->
-                        unstash target
+                        try {
+                            unstash target
+                        } catch (err) {
+                            echo "Failed to unstash ${target}, skipping..."
+                            return
+                        }
                         def distribution = target - ~/^package-/
                         echo "Deploying packages for ${distribution}..."
                         sh """scripts/deploy-packages.sh \
