@@ -183,7 +183,7 @@ else
     else
         client_cmake_flags+=(
             -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}"
-            -DRINGTONE_DIR="${INSTALL}/daemon/share/ring/ringtones"
+            -DRINGTONE_DIR="${INSTALL}/daemon/share/jami/ringtones"
             -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient")
     fi
 fi

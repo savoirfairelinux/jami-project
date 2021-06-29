@@ -105,7 +105,7 @@ rm -rfv %{buildroot}/%{_libdir}/*.la
 # XXX: Use %%{_libexecdir}/jamid after there's no more OpenSUSE Leap
 # < 16 (see https://en.opensuse.org/openSUSE:Specfile_guidelines).
 /usr/libexec/jamid
-%{_datadir}/ring/ringtones
+%{_datadir}/jami/ringtones
 %{_datadir}/dbus-1/services/*
 %{_datadir}/dbus-1/interfaces/*
 %doc %{_mandir}/man1/dring*
