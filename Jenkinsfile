@@ -7,6 +7,7 @@
 // Requirements:
 // 1. gerrit-trigger plugin
 // 2. ws-cleanup plugin
+// 3. ansicolor plugin
 
 // Configuration globals.
 def SUBMODULES = ['daemon', 'lrc', 'client-gnome', 'client-qt']
@@ -17,44 +18,26 @@ def REMOTE_BASE_DIR = '/srv/repository/ring'
 def RING_PUBLIC_KEY_FINGERPRINT = 'A295D773307D25A33AE72F2F64CD5FA175348F84'
 def SNAPCRAFT_KEY = '/var/lib/jenkins/.snap/key'
 
-properties(
-    [
-        [
-            $class: 'BuildDiscarderProperty',
-            strategy: [$class: 'LogRotator', numToKeepStr: '30']
-        ],
-        pipelineTriggers([
-                [
-                    $class: 'GerritTrigger',
-                    gerritProjects: [
-                        [
-                            $class: "GerritProject",
-                            pattern: "ring-project",
-                            branches: [
-                                [$class: "Branch", pattern: "master"]
-                            ]
-                        ]
-                    ],
-                    triggerOnEvents: [
-                        [
-                            $class: "PluginPatchsetCreatedEvent",
-                            excludeDrafts: true,
-                            excludeTrivialRebase: true,
-                            excludeNoCodeChange: true
-                        ],
-                        [
-                            $class: "PluginCommentAddedContainsEvent",
-                            commentAddedCommentContains: '!build'
-                        ]
-                    ]
-                ]
-            ])
-    ]
-)
-
 pipeline {
     agent {
         label 'guix'
+    }
+
+    triggers {
+        gerrit customUrl: '',
+        gerritProjects: [
+            [branches: [[compareType: 'PLAIN', pattern: 'master']],
+             compareType: 'PLAIN',
+             disableStrictForbiddenFileVerification: false,
+             pattern: 'ring-project']],
+        triggerOnEvents: [
+            commentAddedContains('!build'),
+            patchsetCreated(excludeDrafts: true, excludeNoCodeChange: true,
+                            excludeTrivialRebase: true)]
+    }
+
+    options {
+        ansiColor('xterm')
     }
 
     parameters {
@@ -86,10 +69,6 @@ pipeline {
 
     environment {
         TARBALLS = '/opt/ring-contrib' // set the cache directory
-    }
-
-    options {
-        ansiColor('xterm')
     }
 
     stages {
