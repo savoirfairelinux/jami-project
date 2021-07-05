@@ -65,6 +65,12 @@ CURRENT_GID:=$(shell id -g)
 ## Release tarball targets ##
 #############################
 .PHONY: release-tarball purge-release-tarballs portable-release-tarball
+# See: https://reproducible-builds.org/docs/archives/
+TAR_REPRODUCIBILITY_OPTIONS = \
+	--format=gnu \
+	--mtime=@1 \
+	--owner=root:0 \
+	--group=root:0
 
 # This file can be used when not wanting to invoke the tarball
 # producing machinery (which depends on the Git checkout), nor its
@@ -122,13 +128,15 @@ $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 			| tar xf - -C $(TMPDIR)/ring-project); \
 	done
 # Create the base archive.
-	tar --create --file $(TMPDIR)/ring-project.tar $(TMPDIR)/ring-project \
-		--transform 's,.*/ring-project,ring-project,'
+	tar -cf $(TMPDIR)/ring-project.tar $(TMPDIR)/ring-project \
+	  --transform 's,.*/ring-project,ring-project,' \
+	  $(TAR_REPRODUCIBILITY_OPTIONS)
 # Append the cached tarballs listed in the manifest.
 	tar --append --file $(TMPDIR)/ring-project.tar \
-		--files-from $< \
-		--transform 's,^.*/,ring-project/daemon/contrib/tarballs/,'
-	gzip $(TMPDIR)/ring-project.tar
+	  --files-from $< \
+	  --transform 's,^.*/,ring-project/daemon/contrib/tarballs/,' \
+          $(TAR_REPRODUCIBILITY_OPTIONS)
+	gzip --no-name $(TMPDIR)/ring-project.tar
 	mv $(TMPDIR)/ring-project.tar.gz "$@"
 	rm -rf $(TMPDIR)
 else
