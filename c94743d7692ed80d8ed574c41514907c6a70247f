@@ -33,6 +33,46 @@
       "message": "!build",
       "revId": "c94743d7692ed80d8ed574c41514907c6a70247f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6458a3e_738d046a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 38
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-07-12T14:04:58Z",
+      "side": 1,
+      "message": "otherwise +1 from me",
+      "revId": "c94743d7692ed80d8ed574c41514907c6a70247f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38905014_e8fcc260",
+        "filename": "guix/guix-pack-deb.postinst",
+        "patchSetId": 38
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-07-12T14:04:58Z",
+      "side": 1,
+      "message": "what do you think about adding file license headers to postinst files, starting with this one?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 6
+      },
+      "revId": "c94743d7692ed80d8ed574c41514907c6a70247f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
