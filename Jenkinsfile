@@ -134,7 +134,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
                                 node('linux-builder') {
                                     cleanWs()
                                     unstash 'release-tarball'
-                                    catchError(buildResult: 'SUCCESS',
+                                    catchError(buildResult: 'FAILURE',
                                                stageResult: 'FAILURE') {
                                         sh """
                                            tar xf *.tar.gz --strip-components=1
