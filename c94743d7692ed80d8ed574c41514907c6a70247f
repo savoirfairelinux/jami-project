@@ -73,6 +73,30 @@
       },
       "revId": "c94743d7692ed80d8ed574c41514907c6a70247f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed2e0fc6_1f310d23",
+        "filename": "guix/guix-pack-deb.postinst",
+        "patchSetId": 38
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-07-14T15:19:55Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "38905014_e8fcc260",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 6
+      },
+      "revId": "c94743d7692ed80d8ed574c41514907c6a70247f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
