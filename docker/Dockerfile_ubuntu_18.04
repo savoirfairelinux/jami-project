@@ -20,8 +20,8 @@ ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh
 COPY packaging/rules/debian-qt/control /tmp/builddeps/debian/control
 RUN /opt/prebuild-package-debian.sh qt-deps
 
-COPY packaging/rules/debian/control /tmp/builddeps/debian/control
-RUN /opt/prebuild-package-debian.sh jami-deps
+#COPY packaging/rules/debian/control /tmp/builddeps/debian/control
+#RUN /opt/prebuild-package-debian.sh jami-deps
 
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
