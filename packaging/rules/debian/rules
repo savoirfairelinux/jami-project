@@ -75,6 +75,7 @@ override_dh_auto_configure:
 	./autogen.sh && \
 	./configure \
 	  --prefix=/usr \
+	  --disable-shared \
 	  --host=${HOST_ARCH}
 
 	#############################
