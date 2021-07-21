@@ -27,14 +27,17 @@ set -e
 # Import the spec file.
 mkdir -p /opt/ring-project
 cd /opt/ring-project
-cp /opt/ring-project-ro/packaging/rules/rpm/* .
+
+tar xf "/src/$RELEASE_TARBALL_FILENAME" ring-project/packaging/rules/rpm \
+    --strip-components=3 && mv rpm/* . && rmdir rpm
+
 rm jami-libqt.spec
 
 # Prepare the build tree.
 rpmdev-setuptree
 
 # Copy the source tarball.
-cp /opt/ring-project-ro/jami_*.tar.gz /root/rpmbuild/SOURCES
+cp --reflink=auto "/src/$RELEASE_TARBALL_FILENAME" /root/rpmbuild/SOURCES
 
 QT_JAMI_PREFIX="/usr/lib64/qt-jami"
 PATH="${QT_JAMI_PREFIX}/bin:${PATH}"
@@ -66,7 +69,9 @@ if [[ "${DISTRIBUTION:0:4}" == "rhel" \
     if [ ! -f "${RPM_PATH}" ]; then
         mkdir /opt/qt-jami-build
         cd /opt/qt-jami-build
-        cp /opt/ring-project-ro/packaging/rules/rpm/jami-libqt.spec .
+        tar xf "/src/$RELEASE_TARBALL_FILENAME" \
+            ring-project/packaging/rules/rpm/jami-libqt.spec \
+            --strip-components=4 .
 
         # Fetch and cache the tarball, if not already available.
         if [ ! -f "$CACHED_QT_TARBALL" ]; then
