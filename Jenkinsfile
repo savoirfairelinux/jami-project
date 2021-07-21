@@ -63,7 +63,7 @@ pipeline {
         string(name: 'PACKAGING_TARGETS',
                defaultValue: '',
                description: 'A whitespace-separated list of packaging ' +
-               'targets, e.g. "package-debian_10 package-snap". ' +
+               'targets, e.g. "debian-10 snap". ' +
                'When left unspecified, all the packaging targets are built.')
     }
 
@@ -116,9 +116,6 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
         stage('Build packages') {
             environment {
                 DISABLE_CONTRIB_DOWNLOADS = 'TRUE'
-                // The following password is used to register with the
-                // RHEL subscription-manager tool, required to build on RHEL.
-                PASS = credentials('developers-redhat-com')
             }
             steps {
                 script {
