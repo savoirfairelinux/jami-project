@@ -73,8 +73,9 @@ if [ ! -f "${qt_deb_path}" ] || [ "${FORCE_REBUILD_QT}" = "true" ]; then
     mv qt-everywhere-src-${qt_version} libqt-jami-${qt_version}
     cd libqt-jami-${qt_version}
 
-    # import the debian folder
-    cp --verbose -r /opt/ring-project-ro/packaging/rules/debian-qt debian
+    # Extract the debian folder
+    tar xf $RELEASE_TARBALL_FILENAME ring-project/packaging/rules/debian-qt \
+        --strip-components=3 && mv debian-qt debian
 
     # create changelog file
     DEBEMAIL="The Jami project <jami@gnu.org>" dch --create \
