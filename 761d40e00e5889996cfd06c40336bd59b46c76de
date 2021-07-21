@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "537b647e_0812f1f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-07-21T16:59:36Z",
+      "side": 1,
+      "message": "See: https://jenkins.jami.net/blue/organizations/jenkins/packaging-gnu-linux/detail/packaging-gnu-linux/404/pipeline for how it now looks.",
+      "revId": "761d40e00e5889996cfd06c40336bd59b46c76de",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
