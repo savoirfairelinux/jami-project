@@ -73,10 +73,13 @@ pipeline {
 
     stages {
         stage('Check configuration') {
-            when { not { expression { fileExists TARBALLS } } }
             steps {
-                error "The ${TARBALLS} directory does not exist. \
+                script {
+                    if (!fileExists(TARBALLS)) {
+                        error "The ${TARBALLS} directory does not exist. \
 See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
+                    }
+                }
             }
         }
 
@@ -120,7 +123,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
 
                     TARGETS = targetsText.split(/\s/)
                     if (!params.BUILD_ARM) {
-                        TARGETS = TARGETS.findAll { !(it =~ /_(armhf|arm64)$/) }
+                        TARGETS = TARGETS.findAll { !(it =~ /-(armhf|arm64)$/) }
                     }
 
                     def stages = [:]
