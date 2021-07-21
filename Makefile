@@ -49,13 +49,13 @@ DEBIAN_VERSION:=$(RELEASE_VERSION)~dfsg1-1
 DEBIAN_DSC_FILENAME:=jami_$(DEBIAN_VERSION).dsc
 
 # Qt versions
-QT_MAJOR:=5
-QT_MINOR:=15
-QT_PATCH:=2
-QT_TARBALL_CHECKSUM:="3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202240"
-DEBIAN_QT_VERSION:=$(QT_MAJOR).$(QT_MINOR).$(QT_PATCH)-1
-DEBIAN_QT_DSC_FILENAME:=libqt-jami_$(DEBIAN_QT_VERSION).dsc
-QT_JAMI_PREFIX:="/usr/lib/libqt-jami"
+QT_MAJOR := 5
+QT_MINOR := 15
+QT_PATCH := 2
+QT_TARBALL_CHECKSUM := 3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202240
+DEBIAN_QT_VERSION := $(QT_MAJOR).$(QT_MINOR).$(QT_PATCH)-1
+DEBIAN_QT_DSC_FILENAME := libqt-jami_$(DEBIAN_QT_VERSION).dsc
+QT_JAMI_PREFIX := /usr/lib/libqt-jami
 
 #####################
 ## Other variables ##
@@ -152,16 +152,87 @@ endif
 ## Packaging targets ##
 #######################
 
+
+#
+# Traditionally built packages (in Docker containers).
+#
+DISTRIBUTIONS := \
+	debian_10 \
+	debian_11 \
+	debian_testing \
+	debian_unstable \
+	raspbian_10_armhf \
+	ubuntu_18.04 \
+	ubuntu_20.04 \
+	ubuntu_21.04 \
+	fedora_33 \
+	fedora_34 \
+	opensuse-leap_15.2 \
+	opensuse-leap_15.3 \
+	opensuse-tumbleweed \
+	snap
+
 IS_SHELL_INTERACTIVE := $(shell [ -t 0 ] && echo yes)
 
 # The following Make variable can be used to provide extra arguments
 # used with the 'docker run' commands invoked to build the packages.
 DOCKER_RUN_EXTRA_ARGS =
 
-# Append the output of make-packaging-target to this Makefile
-# see Makefile.packaging.distro_targets
-$(shell scripts/make-packaging-target.py --generate-all > Makefile.packaging.distro_targets)
-include Makefile.packaging.distro_targets
+# This function is used to produce the rules of the packaging targets
+# that rely on Docker.
+# Arg1: The name-version string of the distribution (e.g., ubuntu-18.04).
+# Arg2: Extra arguments to pass to 'docker build'.
+# Arg3: Extra arguments to pass to 'docker run'.
+define make-docker-package-target
+$(1)-docker-image-name := jami-packaging-$(1)
+$(1)-docker-image-file := .docker-image-$$($(1)-docker-image-name)
+$(1)-docker-run-command := docker run \
+  --rm --privileged --security-opt apparmor=docker-default \
+  -e RELEASE_VERSION="$(RELEASE_VERSION)" \
+  -e RELEASE_TARBALL_FILENAME="$(RELEASE_TARBALL_FILENAME)" \
+  -e DEBIAN_VERSION="$(DEBIAN_VERSION)" \
+  -e DEBIAN_QT_VERSION="$(DEBIAN_QT_VERSION)" \
+  -e CURRENT_UID="$(CURRENT_UID)" \
+  -e CURRENT_GID="$(CURRENT_GID)" \
+  -e DISTRIBUTION="$(1)" \
+  -e QT_JAMI_PREFIX="$(QT_JAMI_PREFIX)" \
+  -e QT_MAJOR="$(QT_MAJOR)" \
+  -e QT_MINOR="$(QT_MINOR)" \
+  -e QT_PATCH="$(QT_PATCH)" \
+  -e QT_TARBALL_CHECKSUM="$(QT_TARBALL_CHECKSUM)" \
+  -e FORCE_REBUILD_QT="$(FORCE_REBUILD_QT)" \
+  -e SNAP_PKG_NAME="$(or $(SNAP_PKG_NAME),jami)" \
+  -e TARBALLS="$(TARBALLS)" \
+  -v '$(TARBALLS)':'$(TARBALLS)' \
+  -v '$(CURDIR)/$(RELEASE_TARBALL_FILENAME)':'/src/$(RELEASE_TARBALL_FILENAME)' \
+  -v '$(CURDIR)/packages/$(1)':/opt/output \
+  -t $(and $(IS_SHELL_INTERACTIVE),-i) \
+  $(3) \
+  "$$($(1)-docker-image-name)"
+
+$$($(1)-docker-image-file): docker/Dockerfile_$(1)
+	docker build \
+	  -t $$($(1)-docker-image-name) \
+	  -f docker/Dockerfile_$(1) $(2) $(CURDIR) && \
+	touch "$$@"
+
+packages/$(1)/.packages-built: $(RELEASE_TARBALL_FILENAME) $$($(1)-docker-image-file)
+	mkdir -p "$$$$(dirname "$$@")" && \
+	$$($(1)-docker-run-command) && \
+	touch "$$@"
+
+.PHONY: $(1)
+$(1): packages/$(1)/.packages-built
+PACKAGE-TARGETS += $(1)
+
+.PHONY: $(1)-interactive
+$(1)-interactive: $(RELEASE_TARBALL_FILENAME) $$($(1)-docker-image-file)
+	$$($(1)-docker-run-command) bash
+
+endef
+
+$(foreach target,$(DISTRIBUTIONS),\
+	$(eval $(call make-docker-package-target,$(target))))
 
 package-all: $(PACKAGE-TARGETS)
 
