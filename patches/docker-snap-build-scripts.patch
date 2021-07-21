@@ -3,8 +3,8 @@ Description: add and run our build script
  libayatana-appindicator3-dev.
 Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
 
---- ../docker/Dockerfile_snap.original	2020-11-23 15:51:17.211591055 -0500
-+++ ../docker/Dockerfile_snap	2020-11-23 15:52:29.247759416 -0500
+--- ../docker/Dockerfile-snap.original	2020-11-23 15:51:17.211591055 -0500
++++ ../docker/Dockerfile-snap	2020-11-23 15:52:29.247759416 -0500
 @@ -1,4 +1,4 @@
 -FROM ubuntu:xenial as builder
 +FROM ubuntu:bionic as builder

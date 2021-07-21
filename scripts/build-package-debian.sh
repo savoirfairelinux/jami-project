@@ -81,8 +81,9 @@ ${QT_MAJOR}.${QT_MINOR}/${qt_version}/single
         mv "qt-everywhere-src-${qt_version}" "libqt-jami-${qt_version}"
         cd "libqt-jami-${qt_version}"
 
-        # Import the debian folder.
-        cp --verbose -r /opt/ring-project-ro/packaging/rules/debian-qt debian
+        # Extract the debian folder
+        tar xf "/src/$RELEASE_TARBALL_FILENAME" ring-project/packaging/rules/debian-qt \
+            --strip-components=3 && mv debian-qt debian
 
         # Create the changelog file.
         DEBEMAIL="The Jami project <jami@gnu.org>" dch --create \
