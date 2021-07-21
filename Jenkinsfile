@@ -73,10 +73,13 @@ pipeline {
 
     stages {
         stage('Check configuration') {
-            when { not { expression { fileExists TARBALLS } } }
             steps {
-                error "The ${TARBALLS} directory does not exist. \
+                script {
+                    if (!fileExists(TARBALLS)) {
+                        error "The ${TARBALLS} directory does not exist. \
 See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
+                    }
+                }
             }
         }
 
