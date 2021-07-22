@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "765abb54_26e927ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 45
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-07-22T04:17:18Z",
+      "side": 1,
+      "message": "I\u0027ve reworked this so that running the same target twice with the same input (tarball release) will not rebuild the same thing (that\u0027s done by providing the computed hash of the tarball input, which has been made reproducible in a previous commit).\n",
+      "revId": "12280cda64b4f4ac1ece5c1817bf56e7dc1eb7d5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
