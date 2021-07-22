@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32287630_f2a194b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-07-22T04:19:55Z",
+      "side": 1,
+      "message": "This will make the next thing on my todo easier (re-adding individual qt packaging targets) and is a cleanup I meant to do for a while.",
+      "revId": "d4d30f00c9a5e99c82bc29e17e0afed1c5e92855",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
