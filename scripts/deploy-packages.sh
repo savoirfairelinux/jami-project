@@ -23,6 +23,13 @@
 # This script syncs and deploys packages from packages/distro.
 # It should be run from the project root directory.
 #
+# Requirements
+# - createrepo-c
+# - dpkg
+# - reprepro
+# - rpm
+# - rsync
+# - snapcraft
 
 # Exit immediately if a command exits with a non-zero status
 set -e
@@ -183,7 +190,7 @@ EOF
     done
 
     # Create the repo
-    createrepo --update ${DISTRIBUTION_REPOSITORY_FOLDER}
+    createrepo_c --update ${DISTRIBUTION_REPOSITORY_FOLDER}
 
     #######################################
     ## create the manual download folder ##
