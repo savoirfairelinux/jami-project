@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9699495b_ed638ac4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-07-30T12:33:39Z",
+      "side": 1,
+      "message": "Build made with this commit: https://jenkins.jami.net/blue/organizations/jenkins/packaging-gnu-linux/detail/packaging-gnu-linux/437/pipeline/70",
+      "revId": "c2194e4cbc7e18f79284f48abe3da7f57b1b6c0f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
