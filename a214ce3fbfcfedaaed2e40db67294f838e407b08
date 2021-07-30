@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9160cc95_116c521e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-07-30T02:47:46Z",
+      "side": 1,
+      "message": "For the documentation bit, see: https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#ring-buildmachine-02.mtl.sfl.",
+      "revId": "a214ce3fbfcfedaaed2e40db67294f838e407b08",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
