@@ -21,5 +21,6 @@
   "python"
   "sed"
   "tar"
+  "util-linux"
   "wget"
   "xz"))
