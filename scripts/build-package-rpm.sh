@@ -53,45 +53,57 @@ $QT_MAJOR_MINOR_PATCH/single/qt-everywhere-src-$QT_MAJOR_MINOR_PATCH.tar.xz
 
 QT_TARBALL_SHA256="3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202240"
 QT_TARBALL_FILE_NAME=$(basename "$QT_TARBALL_URL")
-CACHED_QT_TARBALL=/opt/ring-contrib/$QT_TARBALL_FILE_NAME
+CACHED_QT_TARBALL=$TARBALLS/$QT_TARBALL_FILE_NAME
 
 if [[ "${DISTRIBUTION:0:4}" == "rhel" \
    || "${DISTRIBUTION:0:13}" == "opensuse-leap" ]]; then
 
-    RPM_PATH=/opt/cache-packaging/${DISTRIBUTION}/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.x86_64.rpm
+    RPM_PATH=$TARBALLS/$DISTRIBUTION/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.x86_64.rpm
     if [[ "${DISTRIBUTION:0:4}" == "rhel" ]]; then
-        RPM_PATH=/opt/cache-packaging/${DISTRIBUTION}/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.el8.x86_64.rpm
+        RPM_PATH=$TARBALLS/${DISTRIBUTION}/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.el8.x86_64.rpm
     fi
 
     if [ ! -f "${RPM_PATH}" ]; then
-        mkdir /opt/qt-jami-build
-        cd /opt/qt-jami-build
-        cp /opt/ring-project-ro/packaging/rules/rpm/jami-libqt.spec .
+        # The following block will only run on one build machine at a
+        # time, thanks to flock.
+        (
+            flock 9             # block until the lock file is gone
+            test -f "$RPM_PATH" && return 0 # check again
 
-        # Fetch and cache the tarball, if not already available.
-        if [ ! -f "$CACHED_QT_TARBALL" ]; then
-            wget "$QT_TARBALL_URL"
-            if ! echo -n ${QT_TARBALL_SHA256} "$QT_TARBALL_FILE_NAME" | sha256sum -c -
-            then
-                echo "qt tarball checksum mismatch; quitting"
-                exit 1
+            mkdir /opt/qt-jami-build
+            cd /opt/qt-jami-build
+            cp /opt/ring-project-ro/packaging/rules/rpm/jami-libqt.spec .
+
+            # Fetch and cache the tarball, if not already available.
+            if [ ! -f "$CACHED_QT_TARBALL" ]; then
+                (
+                    flock 8     # block until the lock file is gone
+                    test -f "$CACHED_QT_TARBALL" && exit 0 # check again
+
+                    wget "$QT_TARBALL_URL"
+                    if ! echo -n ${QT_TARBALL_SHA256} "$QT_TARBALL_FILE_NAME" | sha256sum -c -
+                    then
+                        echo "qt tarball checksum mismatch; quitting"
+                        exit 1
+                    fi
+                    mv "$QT_TARBALL_FILE_NAME" "$CACHED_QT_TARBALL"
+                ) 8>"${CACHED_QT_TARBALL}.lock"
             fi
-            flock "$CACHED_QT_TARBALL" mv "$QT_TARBALL_FILE_NAME" "$CACHED_QT_TARBALL"
-        fi
 
-        cp "$CACHED_QT_TARBALL" "/root/rpmbuild/SOURCES/jami-qtlib_$QT_MAJOR_MINOR_PATCH.tar.xz"
-        sed -i "s/RELEASE_VERSION/$QT_MAJOR_MINOR_PATCH/g" jami-libqt.spec
-        rpmdev-bumpspec --comment="Automatic nightly release" \
-                        --userstring="Jenkins <jami@lists.savoirfairelinux.net>" jami-libqt.spec
+            cp "$CACHED_QT_TARBALL" "/root/rpmbuild/SOURCES/jami-qtlib_$QT_MAJOR_MINOR_PATCH.tar.xz"
+            sed -i "s/RELEASE_VERSION/$QT_MAJOR_MINOR_PATCH/g" jami-libqt.spec
+            rpmdev-bumpspec --comment="Automatic nightly release" \
+                            --userstring="Jenkins <jami@lists.savoirfairelinux.net>" jami-libqt.spec
 
-        rpmbuild -ba jami-libqt.spec
-        mkdir -p /opt/cache-packaging/${DISTRIBUTION}/
+            rpmbuild -ba jami-libqt.spec
+            mkdir -p "$TARBALLS/${DISTRIBUTION}"
 
-        if [[ "${DISTRIBUTION:0:4}" == "rhel" ]]; then
-            cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.el8.x86_64.rpm" "${RPM_PATH}"
-        else
-            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm "${RPM_PATH}"
-        fi
+            if [[ "${DISTRIBUTION:0:4}" == "rhel" ]]; then
+                cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.el8.x86_64.rpm" "${RPM_PATH}"
+            else
+                cp /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm "${RPM_PATH}"
+            fi
+        ) 9>"${RPM_PATH}.lock"
     fi
     rpm --install "${RPM_PATH}"
     cp "${RPM_PATH}" /opt/output
@@ -99,9 +111,9 @@ if [[ "${DISTRIBUTION:0:4}" == "rhel" \
 fi
 
 # Set the version and associated comment.
-sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" *.spec
+sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" ./*.spec
 rpmdev-bumpspec --comment="Automatic nightly release" \
-                --userstring="Jenkins <jami@lists.savoirfairelinux.net>" *.spec
+                --userstring="Jenkins <jami@lists.savoirfairelinux.net>" ./*.spec
 
 # Build the daemon and install it.
 rpmbuild -ba jami-daemon.spec
@@ -117,7 +129,7 @@ rpmbuild -ba jami-gnome.spec jami-qt.spec
 # Move the built packages to the output directory.
 mv /root/rpmbuild/RPMS/*/* /opt/output
 touch /opt/output/.packages-built
-chown -R ${CURRENT_UID}:${CURRENT_UID} /opt/output
+chown -R "$CURRENT_UID:$CURRENT_UID" /opt/output
 
 # TODO: One click install: create a package that combines the already
 # built package into one.
