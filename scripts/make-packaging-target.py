@@ -53,11 +53,11 @@ PACKAGE_%(distribution)s_DOCKER_RUN_COMMAND = docker run \\
     -e CURRENT_UID=$(CURRENT_UID) \\
     -e CURRENT_GID=$(CURRENT_GID) \\
     -e DISTRIBUTION=%(distribution)s \\
+    -e TARBALLS=$(TARBALLS)
     -v $(CURDIR)/$(RELEASE_TARBALL_FILENAME):/src/$(RELEASE_TARBALL_FILENAME) \\
     -v $(CURDIR):/opt/ring-project-ro:ro \\
     -v $(CURDIR)/packages/%(distribution)s:/opt/output \\
-    -v /opt/cache-packaging:/opt/cache-packaging \\
-    -v /opt/ring-contrib:/opt/ring-contrib \\
+    -v $(TARBALLS):$(TARBALLS) \\
     -t $(and $(IS_SHELL_INTERACTIVE),-i) %(options)s \\
     $(DOCKER_RUN_EXTRA_ARGS) \\
     $(PACKAGE_%(distribution)s_DOCKER_IMAGE_NAME)
@@ -97,7 +97,8 @@ DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS = (
     '-e QT_PATCH=$(QT_PATCH) '
     '-e QT_TARBALL_CHECKSUM=$(QT_TARBALL_CHECKSUM) '
     '-e FORCE_REBUILD_QT=$(FORCE_REBUILD_QT) '
-    '-v /opt/ring-contrib:/opt/ring-contrib '
+    '-e $(TARBALLS)=$(TARBALLS) '
+    '-v $(TARBALLS):$(TARBALLS) '
     '--privileged '
     '--security-opt apparmor=docker-default ')
 
