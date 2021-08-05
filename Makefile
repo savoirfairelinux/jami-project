@@ -16,6 +16,9 @@
 #
 .DEFAULT_GOAL := package-all
 
+# Default caching directory
+TARBALLS ?= /var/cache/jami
+
 ##############################
 ## Version number variables ##
 ##############################
