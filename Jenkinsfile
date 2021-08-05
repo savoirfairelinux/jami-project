@@ -68,7 +68,7 @@ pipeline {
     }
 
     environment {
-        TARBALLS = '/opt/ring-contrib' // set the cache directory
+        TARBALLS = '/var/cache/jami' // set the cache directory
     }
 
     stages {
@@ -78,6 +78,13 @@ pipeline {
                     if (!fileExists(TARBALLS)) {
                         error "The ${TARBALLS} directory does not exist. \
 See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration"
+                    }
+
+                    mountType = sh(script: "findmnt ${TARBALLS} -o fstype -n",
+                                   returnStdout: true)
+                    if (!(mountType =~ /^nfs/)) {
+                        error "The ${TARBALLS} directory is not mounted on NFS storage. \
+See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client_NFS"
                     }
                 }
             }

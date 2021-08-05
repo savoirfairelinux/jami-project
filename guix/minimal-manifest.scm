@@ -10,6 +10,7 @@
 
 (specifications->manifest
  (list
+  "bash"
   "coreutils"
   "gcc-toolchain"
   "git-minimal"
@@ -21,5 +22,6 @@
   "python"
   "sed"
   "tar"
+  "util-linux"
   "wget"
   "xz"))
