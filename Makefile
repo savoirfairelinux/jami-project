@@ -96,8 +96,9 @@ portable-release-tarball:
 	  (echo 'guix' is required to build the '$@' target && exit 1) && \
 	guix environment --container --network \
           --preserve=TARBALLS $(guix-share-tarball-arg) \
+	  --preserve=SSL_CERT \
           --expose=/usr/bin/env \
-          --expose=$$SSL_CERT_FILE \
+          --expose=$$SSL_CERT_DIR=/etc/ssl/certs \
           --manifest=$(CURDIR)/guix/minimal-manifest.scm \
           -- $(MAKE) release-tarball
 
