@@ -97,7 +97,7 @@ portable-release-tarball:
 	guix environment --container --network \
           --preserve=TARBALLS $(guix-share-tarball-arg) \
           --expose=/usr/bin/env \
-          --expose=$$SSL_CERT_FILE \
+          --expose=$$SSL_CERT_DIR=/etc/ssl/certs \
           --manifest=$(CURDIR)/guix/minimal-manifest.scm \
           -- $(MAKE) release-tarball
 
