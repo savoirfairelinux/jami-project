@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da0db57b_d2ac1465",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-08-07T17:08:03Z",
+      "side": 1,
+      "message": "This has been tested manually (because it relies on the change on the daemon side):\n\n- Empty NFS cache: https://jenkins.jami.net/blue/organizations/jenkins/packaging-gnu-linux/detail/packaging-gnu-linux/461/pipeline (3 h 40)\n\n- Populated NFS cache: https://jenkins.jami.net/blue/organizations/jenkins/packaging-gnu-linux/detail/packaging-gnu-linux/462/pipeline (29 m)",
+      "revId": "3ce1f553be203eeeed138c7cc5e3a770945230e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
