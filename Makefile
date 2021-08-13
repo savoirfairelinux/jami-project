@@ -158,13 +158,21 @@ endif
 #
 DISTRIBUTIONS := \
 	debian_10 \
+	debian_10_qt \
 	debian_11 \
+	debian_11_qt \
 	debian_testing \
+	debian_testing_qt \
 	debian_unstable \
+	debian_unstable_qt \
 	raspbian_10_armhf \
+	raspbian_10_armhf_qt \
 	ubuntu_18.04 \
+	ubuntu_18.04_qt \
 	ubuntu_20.04 \
+	ubuntu_20.04_qt \
 	ubuntu_21.04 \
+	ubuntu_21.04_qt \
 	fedora_33 \
 	fedora_34 \
 	opensuse-leap_15.2 \
@@ -233,6 +241,11 @@ endef
 
 $(foreach target,$(DISTRIBUTIONS),\
 	$(eval $(call make-docker-package-target,$(target))))
+
+# Ensure all the base distribution packages depend on their custom Qt
+# package, where applicable.
+$(foreach target,$(filter %_qt,$(DISTRIBUTIONS)),\
+	$(eval $(target:_qt=): $(target)))
 
 package-all: $(PACKAGE-TARGETS)
 

@@ -119,20 +119,27 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             }
             steps {
                 script {
-                    def targetsText = params.PACKAGING_TARGETS.trim()
-                    if (!targetsText) {
-                        targetsText = sh(script: 'make -s list-package-targets',
-                                         returnStdout: true).trim()
+                    def targets = params.PACKAGING_TARGETS.trim().split(/\s/)
+                    if (!targets) {
+                        targets = sh(script: 'make -s list-package-targets',
+                                     returnStdout: true).trim().split(/\s/)
+                        // Mask Qt targets, which packages already
+                        // depend on at the Make level.
+                        targets = targets.findAll { !(it =~ /_qt$/) }
                     }
 
-                    TARGETS = targetsText.split(/\s/)
                     if (!params.BUILD_ARM) {
-                        TARGETS = TARGETS.findAll { !(it =~ /_(armhf|arm64)$/) }
+                        targets = targets.findAll { !(it =~ /_(armhf|arm64)$/) }
                     }
+
+                    TARGETS = targets //required for some reason
 
                     def stages = [:]
 
-                    TARGETS.each { target ->
+                    // TODO: Show the implicit Qt targets in their own
+                    // stage, to better communicate why some jobs may
+                    // take hours instead of minutes.
+                    targets.each { target ->
                         // Note: The stage calls are wrapped in closures, to
                         // delay their execution.
                         stages[target] =  {
