@@ -120,12 +120,22 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             steps {
                 script {
                     def targetsText = params.PACKAGING_TARGETS.trim()
+                    def autoTargets = false
+
                     if (!targetsText) {
                         targetsText = sh(script: 'make -s list-package-targets',
                                          returnStdout: true).trim()
+                        autoTargets = true
                     }
 
                     TARGETS = targetsText.split(/\s/)
+
+                    if (autoTargets) {
+                        // Mask Qt targets, which packages already
+                        // depend on at the Make level.
+                        TARGETS = TARGETS.findAll { !(it =~ /_qt$/) }
+                    }
+
                     if (!params.BUILD_ARM) {
                         TARGETS = TARGETS.findAll { !(it =~ /_(armhf|arm64)$/) }
                     }
