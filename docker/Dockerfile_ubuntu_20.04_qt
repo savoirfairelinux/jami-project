@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -11,8 +11,8 @@ RUN apt-get update && \
 
 ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh
 
-COPY packaging/rules/debian/control /tmp/builddeps/debian/control
-RUN /opt/prebuild-package-debian.sh jami-deps
+COPY packaging/rules/debian-qt/control /tmp/builddeps/debian/control
+RUN /opt/prebuild-package-debian.sh qt-deps
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
-CMD ["/opt/build-package-debian.sh"]
+CMD ["/opt/build-qt-debian.sh"]

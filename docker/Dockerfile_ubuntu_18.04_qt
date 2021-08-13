@@ -1,4 +1,4 @@
-FROM debian:unstable
+FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -7,6 +7,8 @@ RUN apt-get update && \
     apt-get install -y -o Acquire::Retries=10 \
         devscripts \
         equivs \
+        gcc-8 \
+        g++-8 \
         wget
 
 ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh
@@ -14,5 +16,8 @@ ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh
 COPY packaging/rules/debian-qt/control /tmp/builddeps/debian/control
 RUN /opt/prebuild-package-debian.sh qt-deps
 
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
+
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
-CMD ["/opt/build-package-debian.sh"]
+CMD ["/opt/build-qt-debian.sh"]

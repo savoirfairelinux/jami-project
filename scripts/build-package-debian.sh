@@ -40,72 +40,12 @@ deb_arch=$(dpkg --print-architecture)
 qt_deb_name=libqt-jami_${DEBIAN_QT_VERSION}_${deb_arch}.deb
 qt_deb_path=${cache_packaging}/${qt_deb_name}
 
-if [ ! -f "${qt_deb_path}" ] || [ "${FORCE_REBUILD_QT}" = "true" ]; then
-    (
-        flock 9                 # block until the lock file is gone
-        test -f "${qt_deb_path}" && exit 0 # check again
-
-        # Build Qt.
-        mkdir /opt/libqt-jami-build
-        cd /opt/libqt-jami-build
-
-        qt_version=${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}
-        tarball_name=qt-everywhere-src-${qt_version}.tar.xz
-        cached_tarball=$TARBALLS/$tarball_name
-        qt_base_url=https://download.qt.io/archive/qt/\
-${QT_MAJOR}.${QT_MINOR}/${qt_version}/single
-
-        if [ ! -d "${TARBALLS}" ] || [ ! -w "${TARBALLS}" ]; then
-            echo "error: $TARBALLS does not exist or is not writable"
-            exit 1
-        fi
-
-        if [ ! -f "${cached_tarball}" ]; then
-            (
-                flock 8         # block until the lock file is gone
-                test -f "${cached_tarball}" && exit 0 # check again
-
-                temp_dir=$(mktemp -d)
-                cd "${temp_dir}"
-                wget "${qt_base_url}/${tarball_name}"
-                echo -n "${QT_TARBALL_CHECKSUM}  ${tarball_name}" | sha256sum -c - || \
-                    (echo "Qt tarball checksum mismatch; quitting" && exit 1)
-                mv "${tarball_name}" "${cached_tarball}"
-                rm -rf "${temp_dir}"
-            ) 8>"${cached_tarball}.lock"
-
-        fi
-
-        cp "${cached_tarball}" "libqt-jami_${qt_version}.orig.tar.xz"
-        tar xvf "libqt-jami_${qt_version}.orig.tar.xz"
-        mv "qt-everywhere-src-${qt_version}" "libqt-jami-${qt_version}"
-        cd "libqt-jami-${qt_version}"
-
-        # Extract the debian folder
-        tar xf "/src/$RELEASE_TARBALL_FILENAME" ring-project/packaging/rules/debian-qt \
-            --strip-components=3 && mv debian-qt debian
-
-        # Create the changelog file.
-        DEBEMAIL="The Jami project <jami@gnu.org>" dch --create \
-                --package libqt-jami \
-                --newversion "${DEBIAN_QT_VERSION}" "New libqt-jami release"
-        DEBEMAIL="The Jami project <jami@gnu.org>" dch --release \
-                --distribution "unstable" debian/changelog
-
-        # Build and package Qt.
-        dpkg-buildpackage -uc -us ${DPKG_BUILD_OPTIONS}
-
-        # Cache the built .deb.
-        mv "../${qt_deb_name}" "${qt_deb_path}"
-
-    ) 9>"${qt_deb_path}.lock"
+if [ ! -f "${qt_deb_path}" ]; then
+    echo "error: missing Qt dependency file $qt_deb_path" >& 2
 fi
 
 # install libqt-jami from cache
 apt-get install -y "${qt_deb_path}"
-
-# copy libqt-jami to output
-cp "${qt_deb_path}" /opt/output/
 
 # Set up work directory.
 mkdir -p /jami/work && cd /jami/work
