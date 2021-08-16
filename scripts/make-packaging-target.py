@@ -177,11 +177,6 @@ def run_generate_all(parsed_args):
         },
         # Fedora
         {
-            "distribution": "fedora_32",
-            "output_file": ".packages-built",
-            "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
-        },
-        {
             "distribution": "fedora_33",
             "output_file": ".packages-built",
             "options": RPM_BASED_SYSTEMS_DOCKER_RUN_OPTIONS
