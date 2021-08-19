@@ -54,6 +54,8 @@ echo "Building Qt using %{job_count} parallel jobs"
   -nomake tests \
   -prefix "%{_libdir}/qt-jami"
 sed -i 's,bin/python,bin/env python3,g' qtbase/mkspecs/features/uikit/devices.py
+# https://bugreports.qt.io/browse/QTBUG-93452 (Qt 5.15)
+sed -i 's,#  include <utility>,#  include <utility>\n#  include <limits>,g' qtbase/src/corelib/global/qglobal.h
 # Chromium is built using Ninja, which doesn't honor MAKEFLAGS.
 make -j%{job_count} V=1 NINJAFLAGS="-j%{job_count}"
 
