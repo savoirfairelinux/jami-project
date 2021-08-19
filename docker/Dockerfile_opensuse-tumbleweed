@@ -93,6 +93,21 @@ RUN zypper --non-interactive install -y \
         libQt5Gui-devel \
         libqt5-qtbase-devel \
         libqt5-qttools \
+        bison \
+        flex \
+        nodejs12 \
+        mozilla-nss-devel \
+        python-xml \
+        libxcb* \
+        libxkb* \
+        libX11-devel \
+        libXrender-devel \
+        libfreetype6 \
+        xcb-util-image-devel \
+        xcb-util-keysyms-devel \
+        xcb-util-renderutil-devel \
+        xcb-util-wm-devel \
+        xorg-x11-devel \
         xz \
         libnotify \
         xkeyboard-config \
