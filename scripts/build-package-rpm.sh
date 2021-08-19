@@ -55,8 +55,7 @@ QT_TARBALL_SHA256="3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202
 QT_TARBALL_FILE_NAME=$(basename "$QT_TARBALL_URL")
 CACHED_QT_TARBALL=$TARBALLS/$QT_TARBALL_FILE_NAME
 
-if [[ "${DISTRIBUTION:0:4}" == "rhel" \
-   || "${DISTRIBUTION:0:13}" == "opensuse-leap" ]]; then
+if [[ "${DISTRIBUTION}" != "opensuse-tumbleweed" ]]; then
 
     mkdir -p "$TARBALLS/$DISTRIBUTION"
     RPM_PATH=$TARBALLS/$DISTRIBUTION/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.x86_64.rpm
@@ -103,9 +102,13 @@ if [[ "${DISTRIBUTION:0:4}" == "rhel" \
 
             # Cache the built Qt RPM package.
             if [[ "${DISTRIBUTION:0:4}" == "rhel" ]]; then
-                mv "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.el8.x86_64.rpm" "${RPM_PATH}"
+                cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.el8.x86_64.rpm" "${RPM_PATH}"
+            elif [[ "${DISTRIBUTION}" == "fedora_33" ]]; then
+                cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.fc33.x86_64.rpm" "${RPM_PATH}"
+            elif [[ "${DISTRIBUTION}" == "fedora_34" ]]; then
+                cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.fc34.x86_64.rpm" "${RPM_PATH}"
             else
-                mv /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm "${RPM_PATH}"
+                cp /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm "${RPM_PATH}"
             fi
         ) 9>"${RPM_PATH}.lock"
     fi
