@@ -12,6 +12,7 @@ Vendor:        Savoir-faire Linux
 URL:           https://jami.net/
 Source:        jami_%{version}.tar.gz
 Requires:      jami-libclient = %{version}
+Requires:      jami-libqt
 Provides:      jami
 Obsoletes:     jami < %{version}-%{release}
 
@@ -22,19 +23,6 @@ BuildRequires: make
 
 # Build and runtime dependencies.
 BuildRequires: qrencode-devel
-%if 0%{?fedora} >= 32
-BuildRequires: qt5-qttools-devel
-BuildRequires: qt5-qtbase-devel
-BuildRequires: qt5-qtdeclarative-devel
-BuildRequires: qt5-qtmultimedia-devel
-BuildRequires: qt5-qtquickcontrols
-BuildRequires: qt5-qtquickcontrols2-devel
-BuildRequires: qt5-qtsvg-devel
-BuildRequires: qt5-qtwebengine-devel
-# Runtime dependencies not automatically registered by RPM.
-Requires: qt5-qtquickcontrols
-Requires: qt5-qtgraphicaleffects
-%endif
 
 %description
 This package contains the Qt desktop client of Jami. Jami is a free

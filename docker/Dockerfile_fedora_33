@@ -63,15 +63,25 @@ RUN dnf install -y \
         libnotify-devel \
         libupnp-devel \
         qrencode-devel \
-        qt5-qtbase-devel \
-        qt5-qttools-devel \
-        qt5-qtdeclarative-devel \
-        qt5-qtquickcontrols \
-        qt5-qtquickcontrols2-devel \
-        qt5-qtmultimedia-devel \
-        qt5-qtsvg-devel \
-        qt5-qtwebengine-devel \
         libargon2-devel \
+        libsndfile-devel \
+        libdrm \
+        gperf \
+        bison \
+        flex \
+        nss-devel \
+        libxcb* \
+        libxkb* \
+        libX11-devel \
+        libXrender-devel \
+        xcb-util-image-devel \
+        xcb-util-keysyms-devel \
+        xcb-util-renderutil-devel \
+        xcb-util-wm-devel \
+        xz \
+        xkeyboard-config \
+        libnotify \
+        wget \
         sqlite-devel
 
 ADD scripts/build-package-rpm.sh /opt/build-package-rpm.sh
