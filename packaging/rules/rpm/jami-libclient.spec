@@ -20,8 +20,6 @@ BuildRequires: jami-daemon-devel = %{version}
 BuildRequires: make
 %if 0%{?fedora} >= 32
 BuildRequires: NetworkManager-libnm-devel
-BuildRequires: qt5-qtbase-devel
-BuildRequires: qt5-qttools-devel
 %endif
 
 %description
