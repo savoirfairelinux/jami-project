@@ -171,11 +171,6 @@ def run_generate_all(parsed_args):
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
         },
         {
-            "distribution": "ubuntu_20.10",
-            "output_file": "$(DEBIAN_DSC_FILENAME)",
-            "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,
-        },
-        {
             "distribution": "ubuntu_21.04",
             "output_file": "$(DEBIAN_DSC_FILENAME)",
             "options": DPKG_BASED_SYSTEMS_DOCKER_RUN_OPTIONS,

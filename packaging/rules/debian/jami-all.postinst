@@ -104,8 +104,6 @@ if [ -f /etc/os-release ]; then
         ENDTAG="ubuntu_18.04"
     elif [ "${UBUNTU_CODENAME}" = "focal" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_20.04" ]; then
         ENDTAG="ubuntu_20.04"
-    elif [ "${UBUNTU_CODENAME}" = "groovy" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_20.10" ]; then
-        ENDTAG="ubuntu_20.10"
     elif [ "${UBUNTU_CODENAME}" = "hirsute" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_21.04" ]; then
         ENDTAG="ubuntu_21.04"
     elif [ "${ID}" = "debian" ] && \
