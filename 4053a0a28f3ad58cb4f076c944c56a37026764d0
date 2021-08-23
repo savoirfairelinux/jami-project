@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab33a305_a48ab645",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2021-08-23T18:43:37Z",
+      "side": 1,
+      "message": "+2 otherwise",
+      "revId": "4053a0a28f3ad58cb4f076c944c56a37026764d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "450b2b4e_408c1576",
+        "filename": "docker/Dockerfile_fedora_33",
+        "patchSetId": 17
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2021-08-23T18:43:37Z",
+      "side": 1,
+      "message": "ws",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 28
+      },
+      "revId": "4053a0a28f3ad58cb4f076c944c56a37026764d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
