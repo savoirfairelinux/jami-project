@@ -12,6 +12,9 @@ Vendor:        Savoir-faire Linux
 URL:           https://jami.net/
 Source:        jami_%{version}.tar.gz
 Requires:      jami-libclient = %{version}
+%if 0%{?fedora} >= 32
+Requires:      jami-libqt
+%endif
 Provides:      jami
 Obsoletes:     jami < %{version}-%{release}
 
