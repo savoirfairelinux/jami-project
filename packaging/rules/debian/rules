@@ -6,6 +6,15 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
+# Ubuntu defaults to use -Bsymbolic-functions, which breaks linking
+# shared objects with static FFmpeg archives (see:
+# https://bugs.launchpad.net/ubuntu/+source/ffmpeg/+bug/1942352).
+ifeq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes),yes)
+ifneq (,$(LDFLAGS))
+  LDFLAGS := $(filter-out %-Bsymbolic-functions,$(LDFLAGS))
+endif
+endif
+
 # Number of CPUS
 NO_CPUS=$(shell nproc)
 ifeq ($(NO_CPUS),0)
@@ -30,10 +39,6 @@ CMAKE_OPTIONS=-DCHOST=${HOST_ARCH} \
   -DCMAKE_CXX_COMPILER=${HOST_ARCH}-g++ \
   -DCMAKE_FIND_ROOT_PATH=/usr/${HOST_ARCH} \
   -DPKG_CONFIG_EXECUTABLE=/usr/bin/${HOST_ARCH}-pkg-config
-else
-ifneq (ubuntu_21.04,$(findstring ubuntu_21.04, $(DISTRIBUTION)))
-BUNDLED_PKGS="--enable-ffmpeg" # For ubuntu 21.04 it seems there is massive issues with linking for swscale
-endif
 endif
 
 # Qt-related variables
