@@ -3,7 +3,7 @@ FROM debian:testing
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get clean
-RUN apt-get update && \
+RUN apt-get update --allow-releaseinfo-change && \
     apt-get install -y -o Acquire::Retries=10 \
         devscripts \
         equivs \
