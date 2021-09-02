@@ -16,6 +16,23 @@
       "message": "!build",
       "revId": "c2cdb19c9ff0ab3a10f2a1b43efbc799b29ad6df",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68de7c27_e333603c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 47
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-09-02T12:45:04Z",
+      "side": 1,
+      "message": "There\u0027s a build failure that needs to be investigated.",
+      "revId": "c2cdb19c9ff0ab3a10f2a1b43efbc799b29ad6df",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
