@@ -46,6 +46,30 @@
       },
       "revId": "5cff07edcd4ecdd9a2e0556d12031e28b9fe4ec3",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea8048cd_756c4664",
+        "filename": "docker/Dockerfile_debian_testing",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-09-10T19:01:12Z",
+      "side": 1,
+      "message": "But I mean, the docker image should be different no?",
+      "parentUuid": "a4eabae9_775adbc7",
+      "range": {
+        "startLine": 6,
+        "startChar": 19,
+        "endLine": 6,
+        "endChar": 45
+      },
+      "revId": "5cff07edcd4ecdd9a2e0556d12031e28b9fe4ec3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
