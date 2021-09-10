@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d909b838_5de8a47f",
+        "filename": "docker/Dockerfile_debian_testing",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-09-10T18:08:30Z",
+      "side": 1,
+      "message": "The docker should not be regenerated in fact? debian:testing should be the current testing.",
+      "range": {
+        "startLine": 6,
+        "startChar": 19,
+        "endLine": 6,
+        "endChar": 45
+      },
+      "revId": "5cff07edcd4ecdd9a2e0556d12031e28b9fe4ec3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
