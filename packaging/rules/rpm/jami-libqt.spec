@@ -2,6 +2,21 @@
 %define version     RELEASE_VERSION
 %define release     0
 
+# qtwebengine (aka chromium) takes a ton of memory per build process,
+# up to 2.3 GiB.  Cap the number of jobs based on the amount of
+# available memory to try to guard against OOM build failures.
+%define min(a,b) %(echo $(( %1 < %2 ? %1 : %2 )))
+%define max(a,b) %(echo $(( %1 > %2 ? %1 : %2 )))
+
+%define cpu_count %max %(nproc) 1
+%define available_memory %(free -g | grep -E '^Mem:' | awk '{print $7}')
+# Required memory in GiB.
+%define max_parallel_builds 4
+%define memory_required_per_core 2
+%define computed_job_count_ %(echo $(( %available_memory / %memory_required_per_core / %max_parallel_builds )))
+%define computed_job_count %max %computed_job_count_ 1
+%define job_count %min %cpu_count %computed_job_count
+
 Name:          %{name}
 Version:       %{version}
 Release:       %{release}%{?dist}
@@ -31,17 +46,29 @@ This package contains Qt libraries for Jami.
 %setup -n qt-everywhere-src-%{version}
 
 %build
-	./configure \
-		-opensource \
-		-confirm-license \
-		-nomake examples \
-		-nomake tests \
-		-prefix "%{_libdir}/qt-jami"
-	sed -i 's,bin/python,bin/env python3,g' qtbase/mkspecs/features/uikit/devices.py
-	make -j8 V=1
+echo "Building Qt using %{job_count} parallel jobs"
+# https://bugs.gentoo.org/768261 (Qt 5.15)
+sed -i 's,#include "absl/base/internal/spinlock.h"1,#include "absl/base/internal/spinlock.h"1\n#include <limits>,g' qtwebengine/src/3rdparty/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc
+sed -i 's,#include <stdint.h>,#include <stdint.h>\n#include <limits>,g' qtwebengine/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/containers/string_pool.h
+# https://bugreports.qt.io/browse/QTBUG-93452 (Qt 5.15)
+sed -i 's,#  include <utility>,#  include <utility>\n#  include <limits>,g' qtbase/src/corelib/global/qglobal.h
+sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/src/corelib/global/qendian.h
+cat qtbase/src/corelib/global/qendian.h
+sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/src/corelib/global/qfloat16.h
+sed -i 's,#include <QtCore/qbytearray.h>,#include <QtCore/qbytearray.h>\n#include <limits>,g' qtbase/src/corelib/text/qbytearraymatcher.h
+./configure \
+  -opensource \
+  -confirm-license \
+  -nomake examples \
+  -nomake tests \
+  -prefix "%{_libdir}/qt-jami"
+sed -i 's,bin/python,bin/env python3,g' qtbase/mkspecs/features/uikit/devices.py
+
+# Chromium is built using Ninja, which doesn't honor MAKEFLAGS.
+make -j%{job_count} V=1 NINJAFLAGS="-j%{job_count}"
 
 %install
-make -j8 INSTALL_ROOT=%{buildroot} V=1 install
+make -j%{job_count} INSTALL_ROOT=%{buildroot} V=1 install
 
 %files
 %defattr(-,root,root,-)

@@ -469,17 +469,17 @@ def run_run(args):
         'LD_LIBRARY_PATH', '') + ":install/lrc/lib"
 
     try:
-        dring_log = open("daemon.log", 'a')
-        dring_log.write('=== Starting daemon (%s) ===' %
+        jamid_log = open("daemon.log", 'a')
+        jamid_log.write('=== Starting daemon (%s) ===' %
                         time.strftime("%d/%m/%Y %H:%M:%S"))
-        dring_process = subprocess.Popen(
-            ["./install/daemon/lib/ring/dring", "-c", "-d"],
-            stdout=dring_log,
-            stderr=dring_log
+        jamid_process = subprocess.Popen(
+            ["./install/daemon/libexec/jamid", "-c", "-d"],
+            stdout=jamid_log,
+            stderr=jamid_log
         )
 
         with open('daemon.pid', 'w') as f:
-            f.write(str(dring_process.pid)+'\n')
+            f.write(str(jamid_process.pid)+'\n')
 
         client_suffix = ""
         if args.qt is not None:
@@ -501,10 +501,10 @@ def run_run(args):
             f.write(str(client_process.pid)+'\n')
 
         if args.debug:
-            subprocess.call(['gdb', './install/daemon/lib/ring/dring'])
+            subprocess.call(['gdb', './install/daemon/libexec/jamid'])
 
         if not args.background:
-            dring_process.wait()
+            jamid_process.wait()
             client_process.wait()
 
     except KeyboardInterrupt:
@@ -516,9 +516,9 @@ def run_run(args):
                 # Only kill the processes if they are running, as they could
                 # have been closed by the user.
                 print("Killing processes...")
-                dring_log.close()
-                if dring_process.poll() is None:
-                    dring_process.kill()
+                jamid_log.close()
+                if jamid_process.poll() is None:
+                    jamid_process.kill()
                 client_log.close()
                 if client_process.poll() is None:
                     client_process.kill()

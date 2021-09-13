@@ -73,8 +73,8 @@ Copyright: 2008 Benjamin Kosnik <bkoz@redhat.com>
            2007-2010 Josh Triplett <josh@joshtriplett.org>
 License: GNUAllPermissive
 
-Files: daemon/tools/dringctrl/sippwrap.py
-       daemon/tools/dringctrl/test_dring_dbus_interface.py
+Files: daemon/tools/jamidctrl/sippwrap.py
+       daemon/tools/jamidctrl/test_jamid_dbus_interface.py
 Copyright: 2012 Free Software Foundation, Inc.
 License: GPL-2+
 

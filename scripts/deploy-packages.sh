@@ -23,6 +23,13 @@
 # This script syncs and deploys packages from packages/distro.
 # It should be run from the project root directory.
 #
+# Requirements
+# - createrepo-c
+# - dpkg
+# - reprepro
+# - rpm
+# - rsync
+# - snapcraft
 
 # Exit immediately if a command exits with a non-zero status
 set -e
@@ -31,39 +38,10 @@ set -e
 ## Debian / Ubuntu packaging ##
 ###############################
 
-function fetch_qt_deb()
-{
-    if [ -f "${SSH_IDENTITY_FILE}" ];
-    then
-        export RSYNC_RSH="ssh -i ${SSH_IDENTITY_FILE}"
-    fi
-
-    echo "#####################"
-    echo "## fetching qt deb ##"
-    echo "#####################"
-    echo "Using RSYNC_RSH='${RSYNC_RSH}'"
-    rsync --archive --verbose \
-          ${REMOTE_REPOSITORY_LOCATION}/${DISTRIBUTION}_qt/pool/main/libq/libqt-jami/*.deb \
-          ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/
-}
-
-# True if $DISTRIBUTION ends by _qt
-is_distribution_qt() {
-    [[ $DISTRIBUTION =~ _qt$ ]]
-}
-
 function package_deb()
 {
     DISTRIBUTION_REPOSITORY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
     mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
-    mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}_qt
-
-    ###########################################################
-    ## fetch qt deb (if not currently building a qt package) ##
-    ###########################################################
-    if ! is_distribution_qt; then
-        fetch_qt_deb
-    fi
 
     ##################################################
     ## Create local repository for the given distro ##
@@ -97,17 +75,17 @@ EOF
     ####################################
     ## Add packages to the repository ##
     ####################################
-    packages="packages/${DISTRIBUTION}*/*.deb"
-    if ! is_distribution_qt; then
-        packages+=" ${DISTRIBUTION_REPOSITORY_FOLDER}_qt/*.deb"
-    fi
+    # Note: reprepro currently only accepts .deb files as input, but
+    # Ubuntu generates their debug symbol packages as .ddeb (see:
+    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=730572).  As
+    # these are just regular Debian packages, simply append the .deb
+    # extension to their file name to work around this.
+    find ./packages -type f -name '*.ddeb' -print0 | xargs -0 -I{} mv {} {}.deb
 
-    for package in ${packages}; do
-        # Sign the deb
+    for package in packages/${DISTRIBUTION}*/*.deb; do
         echo "## signing: ${package} ##"
         dpkg-sig -k ${KEYID} --sign builder ${package}
 
-        # Include the deb
         echo "## including ${package} ##"
         package_name=$(dpkg -I ${package} | grep -m 1 Package: | awk '{print $2}')
         package_arch=$(dpkg -I ${package} | grep -m 1 Architecture: | awk '{print $2}')
@@ -212,7 +190,7 @@ EOF
     done
 
     # Create the repo
-    createrepo --update ${DISTRIBUTION_REPOSITORY_FOLDER}
+    createrepo_c --update ${DISTRIBUTION_REPOSITORY_FOLDER}
 
     #######################################
     ## create the manual download folder ##

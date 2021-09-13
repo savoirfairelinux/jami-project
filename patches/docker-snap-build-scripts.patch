@@ -27,4 +27,4 @@ Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
 +
 +ADD scripts/build-package-snap.sh /opt/build-package-snap.sh
 +
-+CMD /opt/build-package-snap.sh
++CMD ["/opt/build-package-snap.sh"]

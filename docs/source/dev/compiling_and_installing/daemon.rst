@@ -15,7 +15,7 @@ Linux
     ../bootstrap
     make
 
-2. Compiling dring
+2. Compiling jamid
 ------------------
 
 .. code-block:: bash
@@ -25,7 +25,7 @@ Linux
     ./configure
     make
 
-3. Installing dring
+3. Installing jamid
 -------------------
 
 .. code-block:: bash
@@ -96,7 +96,7 @@ Run: ``brew link --force gettext`` to fix it.
 Clang compatibility (developers only)
 -------------------------------------
 
-It is possible to compile dring with Clang by setting CC and CXX variables
+It is possible to compile jamid with Clang by setting CC and CXX variables
 to 'clang' and 'clang++' respectively when calling ./configure.
 
 Currently it is not possible to use the DBus interface mechanism, and the

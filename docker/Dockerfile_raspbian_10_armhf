@@ -79,4 +79,4 @@ RUN apt update && \
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 
-CMD /opt/build-package-debian.sh
+CMD ["/opt/build-package-debian.sh"]

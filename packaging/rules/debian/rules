@@ -6,6 +6,15 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
+# Ubuntu defaults to use -Bsymbolic-functions, which breaks linking
+# shared objects with static FFmpeg archives (see:
+# https://bugs.launchpad.net/ubuntu/+source/ffmpeg/+bug/1942352).
+ifeq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes),yes)
+ifneq (,$(LDFLAGS))
+  LDFLAGS := $(filter-out %-Bsymbolic-functions,$(LDFLAGS))
+endif
+endif
+
 # Number of CPUS
 NO_CPUS=$(shell nproc)
 ifeq ($(NO_CPUS),0)
@@ -26,14 +35,10 @@ ifeq (raspbian_10_armhf,$(findstring raspbian_10_armhf, $(DISTRIBUTION)))
 BUNDLED_PKGS="--enable-ffmpeg --enable-yaml-cpp"
 # Add host environment variables
 CMAKE_OPTIONS=-DCHOST=${HOST_ARCH} \
-		-DCMAKE_C_COMPILER=${HOST_ARCH}-gcc \
-		-DCMAKE_CXX_COMPILER=${HOST_ARCH}-g++ \
-		-DCMAKE_FIND_ROOT_PATH=/usr/${HOST_ARCH} \
-		-DPKG_CONFIG_EXECUTABLE=/usr/bin/${HOST_ARCH}-pkg-config
-else
-ifneq (ubuntu_21.04,$(findstring ubuntu_21.04, $(DISTRIBUTION)))
-BUNDLED_PKGS="--enable-ffmpeg" # For ubuntu 21.04 it seems there is massive issues with linking for swscale
-endif
+  -DCMAKE_C_COMPILER=${HOST_ARCH}-gcc \
+  -DCMAKE_CXX_COMPILER=${HOST_ARCH}-g++ \
+  -DCMAKE_FIND_ROOT_PATH=/usr/${HOST_ARCH} \
+  -DPKG_CONFIG_EXECUTABLE=/usr/bin/${HOST_ARCH}-pkg-config
 endif
 
 # Qt-related variables
@@ -56,40 +61,40 @@ override_dh_auto_configure:
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
         ../bootstrap \
-				--host=${HOST_ARCH} \
-				--disable-downloads \
-				--no-checksums \
-				--disable-ogg \
-				--disable-flac \
-				--disable-vorbis \
-				--disable-vorbisenc \
-				--disable-speex \
-				--disable-sndfile \
-				--disable-gsm \
-				--disable-speexdsp \
-				--disable-natpmp  \
-				--enable-gnutls $(BUNDLED_PKGS) && \
-		make list && \
-		make -j$(NO_CPUS) V=1
+	  --host=${HOST_ARCH} \
+	  --disable-downloads \
+	  --no-checksums \
+	  --disable-ogg \
+	  --disable-flac \
+	  --disable-vorbis \
+	  --disable-vorbisenc \
+	  --disable-speex \
+	  --disable-sndfile \
+	  --disable-gsm \
+	  --disable-speexdsp \
+	  --disable-natpmp  \
+	  --enable-gnutls $(BUNDLED_PKGS) && \
+	make list && \
+	make -j$(NO_CPUS) V=1
 	cd daemon && \
-		./autogen.sh && \
-		./configure \
-				--prefix=/usr \
-				--disable-shared \
-				--host=${HOST_ARCH}
+	./autogen.sh && \
+	./configure \
+          --disable-shared \
+	  --prefix=/usr \
+	  --host=${HOST_ARCH}
 
 	#############################
 	## libringclient configure ##
 	#############################
 	cd lrc && \
-		mkdir build && \
-		cd build && \
-		cmake  \
-			-DRING_BUILD_DIR=$(CURDIR)/daemon/src \
-			-DCMAKE_INSTALL_PREFIX=/usr \
-			-DCMAKE_INSTALL_LIBDIR=lib \
-			$(CMAKE_OPTIONS) \
-			..
+	mkdir build && \
+	cd build && \
+	cmake  \
+	  -DRING_BUILD_DIR=$(CURDIR)/daemon/src \
+	  -DENABLE_LIBWRAP=false \
+	  -DCMAKE_INSTALL_PREFIX=/usr \
+	  -DCMAKE_INSTALL_LIBDIR=lib \
+	  $(CMAKE_OPTIONS) ..
 
 	############################
 	## gnome client configure ##
@@ -117,7 +122,7 @@ override_dh_auto_build:
 	## Daemon build      ##
 	#######################
 	make -C daemon -j$(NO_CPUS) V=1
-	pod2man daemon/man/dring.pod > daemon/dring.1
+	pod2man daemon/man/jamid.pod > daemon/jamid.1
 
 	#########################
 	## libringclient build ##
@@ -133,49 +138,49 @@ override_dh_auto_build:
 	## qt client configure and build ##
 	###################################
 	cd client-qt && \
-		mkdir build && \
-		cd build && \
-		cmake \
-			-DCMAKE_INSTALL_PREFIX=/usr \
-			-DLRC=$(CURDIR)/lrc \
-			$(CMAKE_OPTIONS) \
-			..
+	mkdir build && \
+	cd build && \
+	cmake \
+	  -DCMAKE_INSTALL_PREFIX=/usr \
+	  -DLRC=$(CURDIR)/lrc \
+	  $(CMAKE_OPTIONS) ..
 	make -C client-qt/build -j$(NO_CPUS) V=1
 
 override_dh_auto_clean:
 	#######################
 	## Daemon clean      ##
 	#######################
-	if [ -f daemon/contrib/native/Makefile ]; then make -C daemon/contrib/native distclean; fi
+	[ -f daemon/contrib/native/Makefile ] && \
+	  make -C daemon/contrib/native distclean || true
 	rm -rfv daemon/contrib/native
-	rm -rfv daemon/dring.1
+	rm -rfv daemon/jamid.1
 
 	#########################
 	## libringclient clean ##
 	#########################
 	# CMake build system has no distclean target, so use clean.
-	if [ -f lrc/build/Makefile ]; then make -C lrc/build clean; fi
+	[ -f lrc/build/Makefile ] && make -C lrc/build clean || true
 	rm -rfv lrc/build
 
 	########################
 	## gnome client clean ##
 	########################
 	# CMake build system has no distclean target, so use clean.
-	if [ -f client-gnome/build/Makefile ]; then make -C client-gnome/build clean; fi
+	[ -f client-gnome/build/Makefile ] && \
+	  make -C client-gnome/build clean || true
 	rm -rfv client-gnome/build
 
 	#####################
 	## qt client clean ##
 	#####################
 	# CMake build system has no distclean target, so use clean.
-	if [ -f client-qt/build/Makefile ]; then make -C client-qt/build clean; fi
+	[ -f client-qt/build/Makefile ] && make -C client-qt/build clean || true
 	rm -rfv client-qt/build
 
 override_dh_auto_install:
 	#########################
 	## Daemon install      ##
 	#########################
-
 	cd daemon && make DESTDIR=$(CURDIR)/debian/$(JAMI_DAEMON_PKG_NAME) install
 	rm -rfv $(CURDIR)/debian/$(JAMI_DAEMON_PKG_NAME)/usr/include
 	rm -rfv $(CURDIR)/debian/$(JAMI_DAEMON_PKG_NAME)/usr/lib/*.a
@@ -184,7 +189,6 @@ override_dh_auto_install:
 	#########################
 	## Jami client install ##
 	#########################
-
         ## LibRingClient
 	cd lrc/build && make DESTDIR=$(CURDIR)/debian/$(JAMI_LIB_CLIENT_PKG_NAME) install
 	rm -rfv $(CURDIR)/debian/$(JAMI_LIB_CLIENT_PKG_NAME)/usr/include
@@ -202,9 +206,7 @@ override_dh_auto_install:
 
 	## Qt client
 	cd client-qt/build && \
-		make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME) install
-
-	ln -sf /usr/bin/jami $(CURDIR)/debian/jami/usr/bin/ring.cx
+	make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME) install
 
 	## Custom Qt package for Jami (libqt-jami)
 	## Copy our own Qt library package content into the OCI package.
@@ -217,7 +219,6 @@ override_dh_auto_install:
 	######################
 	## Jami AiO install ##
 	######################
-
         ## daemon
 	cd daemon && make DESTDIR=$(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME) install
 	rm -rfv $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/include
@@ -236,9 +237,7 @@ override_dh_auto_install:
 
 	## Qt client
 	cd client-qt/build && \
-		make DESTDIR=$(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME) install
-
-	ln -sf /usr/bin/jami $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)/usr/bin/ring.cx
+	make DESTDIR=$(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME) install
 
 override_dh_shlibdeps:
 	dh_shlibdeps -- -x$(JAMI_ALL_IN_ONE_PKG_NAME)

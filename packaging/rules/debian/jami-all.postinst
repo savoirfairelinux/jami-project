@@ -94,16 +94,16 @@ if [ -f /etc/os-release ]; then
     . /etc/os-release
 
     # Set-up Jami repository end tag
-    if [ "${DEBIAN_CODENAME}" = "buster" ] || [ "${ID}_${VERSION_ID}" = "debian_10" ]; then
+    if [ "${VERSION_CODENAME}" = "buster" ] || [ "${ID}_${VERSION_ID}" = "debian_10" ]; then
         ENDTAG="debian_10"
+    elif [ "${VERSION_CODENAME}" = "bullseye" ] || [ "${ID}_${VERSION_ID}" = "debian_11" ]; then
+        ENDTAG="debian_11"
     elif [ "${ID}_${VERSION_ID}" = "trisquel_9.0" ]; then
         ENDTAG="ubuntu_18.04"
     elif [ "${UBUNTU_CODENAME}" = "bionic" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_18.04" ]; then
         ENDTAG="ubuntu_18.04"
     elif [ "${UBUNTU_CODENAME}" = "focal" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_20.04" ]; then
         ENDTAG="ubuntu_20.04"
-    elif [ "${UBUNTU_CODENAME}" = "groovy" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_20.10" ]; then
-        ENDTAG="ubuntu_20.10"
     elif [ "${UBUNTU_CODENAME}" = "hirsute" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_21.04" ]; then
         ENDTAG="ubuntu_21.04"
     elif [ "${ID}" = "debian" ] && \

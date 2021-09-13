@@ -1,12 +1,13 @@
-FROM opensuse/tumbleweed
+FROM opensuse/leap:15.3
 
 RUN zypper --non-interactive install -y \
         dnf \
         dnf-command\(builddep\) \
         rpmdevtools \
         Mesa-dri-devel Mesa-dri \
-        libinput-devel \
         git \
+        gcc8 \
+        gcc8-c++ \
         rpm-build \
         tar \
         make \
@@ -19,11 +20,9 @@ RUN zypper --non-interactive install -y \
         libcanberra-devel \
         libcurl-devel \
         libtool \
-        libQt5DBus-devel \
         pcre-devel \
         yaml-cpp-devel \
         libdbus-c++-devel \
-        libQt5DBus-devel \
         libXext-devel \
         libXfixes-devel \
         yasm \
@@ -32,7 +31,6 @@ RUN zypper --non-interactive install -y \
         chrpath \
         check \
         astyle \
-        uuid-devel \
         gettext-devel \
         gcc-c++ \
         which \
@@ -55,30 +53,24 @@ RUN zypper --non-interactive install -y \
         libnma-devel \
         libcryptopp-devel \
         libdbus-c++-devel \
-        libQt5DBus-devel \
         libexpat-devel \
         gnome-icon-theme-symbolic \
         libgsm-devel \
         gtk3-devel \
         libappindicator-devel \
         sqlite-devel \
-        libQt5Sql-devel \
-        libQt5Gui-devel  \
-        libqt5-qtdeclarative-devel \
-        libqt5-qtquickcontrols \
-        libQt5Concurrent-devel \
-        libQt5QuickControls2-devel \
-        libqt5-qtmultimedia-devel \
-        libqt5-qtsvg-devel \
-        libqt5-qtwebengine-devel \
-        libQt5Sql-devel \
-        libQt5Gui-devel  \
         ffmpeg-4-libavutil-devel \
         gtk3-devel\
         qrencode-devel \
         python3-python-dateutil \
-        libqt5-linguist-devel \
         libsndfile-devel \
+        libdrm \
+        gperf \
+        bison \
+        flex \
+        nodejs12 \
+        mozilla-nss-devel \
+        python-xml \
         libxcb* \
         libxkb* \
         libX11-devel \
@@ -89,15 +81,18 @@ RUN zypper --non-interactive install -y \
         xcb-util-renderutil-devel \
         xcb-util-wm-devel \
         xorg-x11-devel \
+        xz \
+        xkeyboard-config \
+        libnotify \
         libQt5Sql-devel \
         libQt5Gui-devel \
         libqt5-qtbase-devel \
         libqt5-qttools \
-        xz \
-        libnotify \
-        xkeyboard-config \
         argon2-devel \
         wget
+
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
 
 ADD scripts/build-package-rpm.sh  /opt/build-package-rpm.sh
 

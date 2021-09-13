@@ -3,23 +3,43 @@
 
 # export DH_VERBOSE = 1
 
-# Number of CPUS
-NO_CPUS=$(shell nproc)
-ifeq ($(NO_CPUS),0)
-NO_CPUS=1
-endif
+# Return the minimum value of two integer arguments.
+min = $(shell echo $$(( $(1) < $(2) ? $(1) : $(2) )))
+max = $(shell echo $$(( $(1) > $(2) ? $(1) : $(2) )))
+
+# Number of CPUs to build Qt.
+NO_CPUS := $(call max,$(shell nproc),1)
+
+# There can be multiple builds of Qt in parallel.  The following
+# should match the maximum number of per-machine workers used in the
+# CI.
+MAX_PARALLEL_BUILDS := 4
+
+# qtwebengine (aka chromium) takes a ton of memory per build process,
+# up to 2.3 GiB.  Cap the number of jobs based on the amount of
+# available memory to try to guard against OOM build failures.
+AVAILABLE_MEMORY := $(shell free -g | grep -E '^Mem:' | awk '{print $$7}')
+MEMORY_REQUIRED_PER_CORE := 2	# in GiB
+COMPUTED_JOB_COUNT := \
+  $(call max,$(shell echo $$(( $(AVAILABLE_MEMORY) \
+                               / $(MEMORY_REQUIRED_PER_CORE) \
+                               / $(MAX_PARALLEL_BUILDS) ))),1)
+JOB_COUNT = $(call min,$(NO_CPUS),$(COMPUTED_JOB_COUNT))
 
 %:
 	dh $@
 
 override_dh_auto_configure:
-	MAKEFLAGS="-j$(NO_CPUS) V=1" \
-		./configure \
-			-opensource \
-			-confirm-license \
-			-nomake examples \
-			-nomake tests \
-			-prefix "${QT_JAMI_PREFIX}"
+	./configure \
+	  -opensource \
+	  -confirm-license \
+	  -nomake examples \
+	  -nomake tests \
+	  -prefix "${QT_JAMI_PREFIX}"
+
+override_dh_auto_build:
+	@echo Building Qt using $(JOB_COUNT) parallel jobs
+	$(MAKE) -j$(JOB_COUNT) V=1 NINJAFLAGS="-j$(JOB_COUNT)"
 
 override_dh_auto_install:
 	dh_auto_install -Smakefile -- INSTALL_ROOT=$(CURDIR)/debian/tmp/

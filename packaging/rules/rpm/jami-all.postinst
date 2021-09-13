@@ -77,11 +77,23 @@ is_distribution_supported() {
     # This defines variables such as NAME, ID, VERSION_ID, etc.
     . /etc/os-release
 
-    case ${ID}_${VERSION_ID%.*} in
-        rhel_8|fedora_32|fedora_33|fedora_34|opensuse-leap_15.2|opensuse-tumbleweed)
+    case ${ID} in
+        rhel*|fedora*|opensuse*)
             return 0
     esac
 
+    return 1
+}
+
+has_rpm() {
+    command -v rpm > /dev/null
+}
+
+is_opensuse() {
+    case ${ID} in
+        opensuse*)
+            return 0
+    esac
     return 1
 }
 
@@ -89,56 +101,38 @@ is_distribution_supported() {
 # [3] Maintainer script main switch                                           #
 ###############################################################################
 
-if is_distribution_supported; then
-    CAN_ADD_REPO_SOURCE=true
-else
-    CAN_ADD_REPO_SOURCE=false
+# Exit unless the following conditions are met.
+is_distribution_supported && has_rpm || exit 0
+
+# Note: the NAME and ID variables are set as a side-effect of sourcing
+# the /etc/os-release file in the above is_distribution_supported
+# call.
+
+# SUSE specifics.
+if is_opensuse; then
+    REPO_FILE=/etc/zypp/repos.d/jami-main.repo
+    GPG_FILE="/tmp/RPM-GPG-KEY-JAMI"
 fi
 
-if command -v rpm > /dev/null; then
-    # RPM is required to add the key.
-    CAN_ADD_REPO_SOURCE=false
+# Add the key to the trusted keyring.
+echo "$JAMI_KEY" > "$GPG_FILE"
+rm -f /var/lib/rpm/.rpm.lock > /dev/null 2>&1
+rpm --import "$GPG_FILE"  > /dev/null 2>&1
+
+jami_repo_name="$NAME \$releasever - \$basearch - Jami"
+jami_repo_base_url="$JAMI_REPO_BASE/$ID_\$releasever"
+# Remove releasever for tumbleweed as it's a rolling release.
+if [ "$ID" = "opensuse-tumbleweed" ]; then
+    jami_repo_name="$NAME \$basearch - Jami"
+    jami_repo_base_url=$JAMI_REPO_BASE/$ID
 fi
 
-JAMI_REPO='
+# Add an entry for the package repository to the trusted package.
+cat > "$REPO_FILE" <<EOF
 [jami]
-name='"${NAME}"' $releasever - $basearch - Jami
-baseurl='"${JAMI_REPO_BASE}"/"${ID}"'_$releasever
+name=$jami_repo_name
+baseurl=$jami_repo_base_url
 gpgcheck=1
 gpgkey=https://dl.jami.net/jami.pub.key
-enabled=1'
-
-# Set-up Jami repository end tag
-if [ "${PLATFORM_ID}" = "opensuse-leap:15.2" ]; then
-    ENDTAG="opensuse-leap_15.2"
-    REPO_FILE="/etc/zypp/repos.d/jami-main.repo"
-    GPG_FILE="/tmp/RPM-GPG-KEY-JAMI"
-elif [ "${PLATFORM_ID}" = "opensuse-tumbleweed" ]; then
-    ENDTAG="opensuse-tumbleweed"
-    REPO_FILE="/etc/zypp/repos.d/jami-main.repo"
-    GPG_FILE="/tmp/RPM-GPG-KEY-JAMI"
-    # Remove releasever for tumbleweed as it's a rolling release
-    JAMI_REPO='
-[jami]
-name='"${NAME}"' $basearch - Jami
-baseurl='"${JAMI_REPO_BASE}"/"${ID}"'
-gpgcheck=1
-gpgkey=https://dl.jami.net/jami.pub.key
-enabled=1'
-fi
-
-if [ "${CAN_ADD_REPO_SOURCE}" = "true" ]; then
-    # Add the key to the trusted keyring.
-    echo "$JAMI_KEY" > "$GPG_FILE"
-
-    rm -f /var/lib/rpm/.rpm.lock > /dev/null 2>&1
-    rpm --import "$GPG_FILE"  > /dev/null 2>&1
-
-    # Add an entry for the package repository to the trusted package.
-    # XXX: The NAME and ID variables are set as a side-effect of
-    # sourcing the /etc/os-release file in the above
-    # is_distribution_supported call.
-    cat > $REPO_FILE <<EOF
-$JAMI_REPO
+enabled=1
 EOF
-fi

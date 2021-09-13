@@ -96,4 +96,4 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
 
 ADD scripts/build-package-rpm.sh  /opt/build-package-rpm.sh
 
-CMD /opt/build-package-rpm.sh
+CMD ["/opt/build-package-rpm.sh"]

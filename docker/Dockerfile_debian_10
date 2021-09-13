@@ -5,29 +5,17 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get clean
 RUN apt-get update && \
     apt-get install -y -o Acquire::Retries=10 \
-        ca-certificates \
         devscripts \
-        dirmngr \
-        gnupg \
+        equivs \
         wget
 
-RUN wget -O - https://dl.jami.net/public-key.gpg | \
-    tee /usr/share/keyrings/jami-archive-keyring.gpg > /dev/null
-RUN sh -c "echo 'deb [signed-by=/usr/share/keyrings/jami-archive-keyring.gpg] https://dl.jami.net/nightly/debian_10_qt/ jami main' > /etc/apt/sources.list.d/libqt-jami.list"
+ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh
 
-# add deb-src entries (needed for next step)
-RUN sed -n '/^deb\s/s//deb-src /p' /etc/apt/sources.list > /etc/apt/sources.list.d/deb-src.list
-RUN apt-get clean && apt-get update
+COPY packaging/rules/debian-qt/control /tmp/builddeps/debian/control
+RUN /opt/prebuild-package-debian.sh qt-deps
 
-COPY packaging/rules/debian/* /tmp/builddeps/debian/
-RUN cd /tmp/builddeps && \
-    apt-get update; \
-    mk-build-deps \
-        --remove --install \
-        --tool "apt-get -y --no-install-recommends -o Acquire::Retries=10" \
-        "debian/control"; \
-    cd / && rm -rf /tmp/builddeps
+COPY packaging/rules/debian/control /tmp/builddeps/debian/control
+RUN /opt/prebuild-package-debian.sh jami-deps
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
-
-CMD /opt/build-package-debian.sh
+CMD ["/opt/build-package-debian.sh"]
