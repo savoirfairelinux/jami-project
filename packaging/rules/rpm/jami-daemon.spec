@@ -118,7 +118,6 @@ This package contains the header files for using the Jami daemon as a library.
 
 %files devel
 %{_includedir}/jami
-%{_includedir}/jami_contact.h
 
 %post
 /sbin/ldconfig
