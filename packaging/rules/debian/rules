@@ -75,7 +75,7 @@ override_dh_auto_configure:
 	  --disable-natpmp  \
 	  --enable-gnutls $(BUNDLED_PKGS) && \
 	make list && \
-	GTKDOCIZE=true make -j$(NO_CPUS) V=1
+	make -j$(NO_CPUS) V=1
 	cd daemon && \
 	./autogen.sh && \
 	./configure \
