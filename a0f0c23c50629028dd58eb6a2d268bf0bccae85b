@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee04358c_6650c640",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-09-16T20:05:04Z",
+      "side": 1,
+      "message": "This should only be merged *after* https://review.jami.net/c/ring-daemon/+/19288 is merged.",
+      "revId": "a0f0c23c50629028dd58eb6a2d268bf0bccae85b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
