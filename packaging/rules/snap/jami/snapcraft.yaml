@@ -72,7 +72,7 @@ description: >
 
 confinement: strict
 grade: stable
-base: core18
+base: core20
 
 plugs:
   gnome-3-28-1804:
