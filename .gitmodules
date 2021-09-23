@@ -1,24 +1,24 @@
 [submodule "client-android"]
 	path = client-android
-	url = https://review.jami.net/ring-client-android
+	url = https://review.jami.net/jami-client-android
 [submodule "client-gnome"]
 	path = client-gnome
-	url = https://review.jami.net/ring-client-gnome
+	url = https://review.jami.net/jami-client-gnome
 [submodule "daemon"]
 	path = daemon
-	url = https://review.jami.net/ring-daemon
+	url = https://review.jami.net/jami-daemon
 [submodule "lrc"]
 	path = lrc
-	url = https://review.jami.net/ring-lrc
+	url = https://review.jami.net/jami-libclient
 [submodule "client-macosx"]
 	path = client-macosx
-	url = https://review.jami.net/ring-client-macosx
+	url = https://review.jami.net/jami-client-macos
 [submodule "client-ios"]
 	path = client-ios
-	url = https://review.jami.net/ring-client-ios
+	url = https://review.jami.net/jami-client-ios
 [submodule "client-uwp"]
 	path = client-uwp
-	url = https://review.jami.net/ring-client-uwp
+	url = https://review.jami.net/jami-client-uwp
 [submodule "client-qt"]
 	path = client-qt
 	url = https://review.jami.net/jami-client-qt
