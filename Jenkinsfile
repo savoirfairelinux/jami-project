@@ -29,7 +29,7 @@ pipeline {
             [branches: [[compareType: 'PLAIN', pattern: 'master']],
              compareType: 'PLAIN',
              disableStrictForbiddenFileVerification: false,
-             pattern: 'ring-project']],
+             pattern: 'jami-project']],
         triggerOnEvents: [
             commentAddedContains('!build'),
             patchsetCreated(excludeDrafts: true, excludeNoCodeChange: true,
