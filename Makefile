@@ -165,6 +165,7 @@ DISTRIBUTIONS := \
 	ubuntu_18.04 \
 	ubuntu_20.04 \
 	ubuntu_21.04 \
+	ubuntu_21.10 \
 	fedora_33 \
 	fedora_34 \
 	opensuse-leap_15.2 \
