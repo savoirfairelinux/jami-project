@@ -1,4 +1,4 @@
-FROM ubuntu:21.04
+FROM ubuntu:21.10
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -15,7 +15,7 @@ COPY packaging/rules/debian-qt/control /tmp/builddeps/debian/control
 RUN /opt/prebuild-package-debian.sh qt-deps
 
 COPY packaging/rules/debian/control /tmp/builddeps/debian/control
-RUN /opt/prebuild-package-debian.sh jami-deps || true #  Problem executing scripts APT::Update::Post-Invoke 'rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true'
+RUN /opt/prebuild-package-debian.sh jami-deps
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 CMD ["/opt/build-package-debian.sh"]
