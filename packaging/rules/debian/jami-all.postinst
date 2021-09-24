@@ -106,6 +106,8 @@ if [ -f /etc/os-release ]; then
         ENDTAG="ubuntu_20.04"
     elif [ "${UBUNTU_CODENAME}" = "hirsute" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_21.04" ]; then
         ENDTAG="ubuntu_21.04"
+    elif [ "${UBUNTU_CODENAME}" = "impish" ] || [ "${ID}_${VERSION_ID}" = "ubuntu_21.10" ]; then
+        ENDTAG="ubuntu_21.10"
     elif [ "${ID}" = "debian" ] && \
              [ "$(command -v lsb_release)" ] && \
              [ "$(lsb_release -rs)" = "testing" ]; then
