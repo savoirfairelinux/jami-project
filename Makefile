@@ -51,7 +51,7 @@ DEBIAN_DSC_FILENAME:=jami_$(DEBIAN_VERSION).dsc
 # Qt versions
 QT_MAJOR := 5
 QT_MINOR := 15
-QT_PATCH := 2
+QT_PATCH := 5
 QT_TARBALL_CHECKSUM := 3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202240
 DEBIAN_QT_VERSION := $(QT_MAJOR).$(QT_MINOR).$(QT_PATCH)-1
 DEBIAN_QT_DSC_FILENAME := libqt-jami_$(DEBIAN_QT_VERSION).dsc
@@ -165,6 +165,7 @@ DISTRIBUTIONS := \
 	ubuntu_18.04 \
 	ubuntu_20.04 \
 	ubuntu_21.04 \
+	ubuntu_21.10 \
 	fedora_33 \
 	fedora_34 \
 	opensuse-leap_15.2 \
