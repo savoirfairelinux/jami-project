@@ -1,6 +1,6 @@
 [gerrit]
 host=review.jami.net
 port=29420
-project=ring-project
+project=jami-project
 defaultremote=origin
 defaultbranch=master
