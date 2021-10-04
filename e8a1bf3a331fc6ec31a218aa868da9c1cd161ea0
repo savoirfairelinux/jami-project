@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5484ac67_c270c71b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-04T21:02:51Z",
+      "side": 1,
+      "message": "Make sure the CI passes; it should.  Else we have something to fix.",
+      "revId": "e8a1bf3a331fc6ec31a218aa868da9c1cd161ea0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
