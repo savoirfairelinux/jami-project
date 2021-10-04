@@ -158,11 +158,14 @@ endif
 #
 DISTRIBUTIONS := \
 	debian_10 \
+	debian_10_i386 \
 	debian_11 \
+	debian_11_i386 \
 	debian_testing \
 	debian_unstable \
 	raspbian_10_armhf \
 	ubuntu_18.04 \
+	ubuntu_18.04_i386 \
 	ubuntu_20.04 \
 	ubuntu_21.04 \
 	ubuntu_21.10 \
