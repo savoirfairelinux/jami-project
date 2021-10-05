@@ -1,9 +1,9 @@
-FROM debian:testing
+FROM ubuntu:21.10
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get clean
-RUN apt-get update --allow-releaseinfo-change && \
+RUN apt-get update && \
     apt-get install -y -o Acquire::Retries=10 \
         devscripts \
         equivs \

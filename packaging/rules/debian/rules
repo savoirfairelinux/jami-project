@@ -55,9 +55,9 @@ OCI_INSTALL_DIR = $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)
 	dh $@
 
 override_dh_auto_configure:
-	###########################
-	## Daemon configure      ##
-	###########################
+
+override_dh_auto_build:
+	# Daemon contribs build + configure
 	mkdir -p daemon/contrib/native
 	cd daemon/contrib/native && \
         ../bootstrap \
@@ -75,68 +75,45 @@ override_dh_auto_configure:
 	  --disable-natpmp  \
 	  --enable-gnutls $(BUNDLED_PKGS) && \
 	make list && \
-	GTKDOCIZE=true make -j$(NO_CPUS) V=1
+	make -j$(NO_CPUS) V=1
 	cd daemon && \
 	./autogen.sh && \
 	./configure \
-          --disable-shared \
 	  --prefix=/usr \
 	  --host=${HOST_ARCH}
 
-	#############################
-	## libringclient configure ##
-	#############################
+	# Daemon build
+	make -C daemon -j$(NO_CPUS) V=1
+	pod2man daemon/man/jamid.pod > daemon/jamid.1
+
+	# Libringclient configure
 	cd lrc && \
 	mkdir build && \
 	cd build && \
 	cmake  \
 	  -DRING_BUILD_DIR=$(CURDIR)/daemon/src \
-	  -DENABLE_LIBWRAP=false \
+	  -DENABLE_LIBWRAP=true \
 	  -DCMAKE_INSTALL_PREFIX=/usr \
 	  -DCMAKE_INSTALL_LIBDIR=lib \
 	  $(CMAKE_OPTIONS) ..
 
-	############################
-	## gnome client configure ##
-	############################
-	cd client-gnome && \
-		mkdir build && \
-		cd build && \
-		cmake \
-			-DCMAKE_INSTALL_PREFIX=/usr \
-			-DCMAKE_INSTALL_LIBDIR=lib \
-			-DLibRingClient_PROJECT_DIR=/$(CURDIR)/lrc \
-			-DGSETTINGS_LOCALCOMPILE=OFF \
-			$(CMAKE_OPTIONS) \
-			..
-
-	#########################
-	## qt client configure ##
-	#########################
-	# needs to be done after lrc is built; see below
-
-	dh_auto_configure
-
-override_dh_auto_build:
-	#######################
-	## Daemon build      ##
-	#######################
-	make -C daemon -j$(NO_CPUS) V=1
-	pod2man daemon/man/jamid.pod > daemon/jamid.1
-
-	#########################
-	## libringclient build ##
-	#########################
+	# libringclient build
 	make -C lrc/build -j$(NO_CPUS) V=1
 
-	########################
-	## gnome client build ##
-	########################
+	# GNOME client configure
+	cd client-gnome && \
+	  mkdir build && \
+	  cd build && \
+	  cmake -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DLibRingClient_PROJECT_DIR=/$(CURDIR)/lrc \
+		-DGSETTINGS_LOCALCOMPILE=OFF \
+		$(CMAKE_OPTIONS) ..
+
+	# GNOME client build
 	make -C client-gnome/build LDFLAGS="-lpthread" -j$(NO_CPUS) V=1
 
-	###################################
-	## qt client configure and build ##
-	###################################
+	# Qt client configure and build
 	cd client-qt && \
 	mkdir build && \
 	cd build && \
