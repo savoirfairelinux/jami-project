@@ -23,6 +23,9 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: make
 
+# For generating resources.qrc in build time.
+BuildRequires: python3
+
 # Build and runtime dependencies.
 BuildRequires: qrencode-devel
 
