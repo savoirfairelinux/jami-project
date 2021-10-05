@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "284dfd9a_5fa1475a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-10-05T15:28:22Z",
+      "side": 1,
+      "message": "i was hoping this would fix the build on 18.04, but it doesn\u0027t:\nhttps://jenkins.jami.net/blue/organizations/jenkins/packaging-gnu-linux/detail/packaging-gnu-linux/692/pipeline/63\n\nmaxim?",
+      "revId": "08c2295738affb08f8dc398fa5ff62e5e52e2ae6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
