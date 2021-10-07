@@ -52,6 +52,24 @@
       "parentUuid": "4882f449_aad510b3",
       "revId": "08c2295738affb08f8dc398fa5ff62e5e52e2ae6",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8772580_4d7a07e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-07T14:21:36Z",
+      "side": 1,
+      "message": "Yes, -1 meaning \u0027something needs fixing before this is merged\u0027 :-)",
+      "parentUuid": "3848752c_3fa80d25",
+      "revId": "08c2295738affb08f8dc398fa5ff62e5e52e2ae6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
