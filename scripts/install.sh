@@ -130,6 +130,8 @@ if [ "${client}" = "client-qt" ] && [ -z "$qt6path" ]; then
         sys_qt6ver=$(qmake -v)
     elif command -v qmake-qt6 &> /dev/null; then
         sys_qt6ver=$(qmake-qt6 -v)   # Fedora
+    elif command -v qmake6 &> /dev/null; then
+        sys_qt6ver=$(qmake6 -v) # macOS
     else
         echo "No valid Qt found"; exit 1;
     fi
