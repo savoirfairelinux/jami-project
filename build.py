@@ -392,7 +392,12 @@ def run_install(args):
 
         environ['CMAKE_PREFIX_PATH'] = proc.stdout.rstrip("\n")
         environ['CONFIGURE_FLAGS'] = '--without-dbus'
-        install_args += ("-c", "client-macosx")
+        if args.qt is None:
+            install_args += ("-c", "client-macosx")
+        else:
+            install_args += ("-c", "client-qt")
+            install_args += ("-q", args.qtver)
+            install_args += ("-Q", args.qt)
     else:
         if args.distribution in ZYPPER_BASED_DISTROS:
             # fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
@@ -590,6 +595,7 @@ def validate_args(parsed_args):
     if parsed_args.qt is not None:
         supported_qt_distros = [
             'guix',
+            OSX_DISTRIBUTION_NAME,
             WIN32_DISTRIBUTION_NAME
         ] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS
 
