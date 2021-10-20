@@ -16,6 +16,108 @@
       "message": "!build",
       "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66797384_a55fb671",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 50
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-10-20T14:43:15Z",
+      "side": 1,
+      "message": "thanks for this, Maxim :) sorry it\u0027s taken a hot minute to get to.\n\nmain comments below, on their respective line.\n\ntangential: what do you think about updating the comments in your\npatch so that either they start with a lowercase letter and don\u0027t have\na period at the end; or if they\u0027re more sentence form, do start with a\ncapital letter *and* have a period at the end of the sentence?\ni think GNU generally prefers the latter (e.g. as seen in Emacs).",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba8cc9ba_fb234262",
+        "filename": "Jenkinsfile",
+        "patchSetId": 50
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-10-20T14:43:15Z",
+      "side": 1,
+      "message": "comment needs updating now that ~/.bashrc isn\u0027t explicitly mentioned",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b560a6a_c8e965bd",
+        "filename": "guix/guix-pack-deb.postinst",
+        "patchSetId": 50
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-10-20T14:43:15Z",
+      "side": 1,
+      "message": "i don\u0027t see a \u0027postrm\u0027 file in this patch (should there be one?)",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "755de5a3_0b6dfded",
+        "filename": "guix/guix-pack-deb.postinst",
+        "patchSetId": 50
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-10-20T14:43:15Z",
+      "side": 1,
+      "message": "i think we should handle the case where the user had already\ninstalled jami, from regular deb files, in which case i think\nit would be reasonable to update their repo url to $jami_repo_url\ndefined above",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "140127a6_41cf534a",
+        "filename": "guix/guix-pack-manifest.scm",
+        "patchSetId": 50
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-10-20T14:43:15Z",
+      "side": 1,
+      "message": "hence \u0027why\u0027",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5523bcb0_96cf3c2c",
+        "filename": "guix/guix-pack-manifest.scm",
+        "patchSetId": 50
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-10-20T14:43:15Z",
+      "side": 1,
+      "message": "i think it would be nice to package client-gnome as well, in addition\nto clien-qt.  if so, what do you think about including the certs along\nwith the daemon rather than the client(s)?",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
