@@ -244,6 +244,24 @@
       "parentUuid": "5523bcb0_96cf3c2c",
       "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21828b5b_0e497f06",
+        "filename": "guix/guix-pack-manifest.scm",
+        "patchSetId": 50
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-21T13:30:00Z",
+      "side": 1,
+      "message": "I\u0027ve just checked: 1755 Mib without jami-gnome, 2134 MiB with.",
+      "parentUuid": "dbacfd63_e0eafd6c",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
