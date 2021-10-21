@@ -262,6 +262,24 @@
       "parentUuid": "dbacfd63_e0eafd6c",
       "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fa89d12_423f70f5",
+        "filename": "guix/guix-pack-manifest.scm",
+        "patchSetId": 50
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-10-21T15:24:56Z",
+      "side": 1,
+      "message": "i see.  i suppose it\u0027s not quite as bad as i thought, but still it\u0027s\n~400 M which is by no means small/trivial.  as such, let\u0027s leave\njami-gnome out -- at least for starters -- and if it turns out people\nreally want it then we could look into it.",
+      "parentUuid": "21828b5b_0e497f06",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }

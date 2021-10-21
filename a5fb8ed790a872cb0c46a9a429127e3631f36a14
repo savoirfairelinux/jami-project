@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e395c07_d51b8eee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 51
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2021-10-21T15:24:56Z",
+      "side": 1,
+      "message": "as for comments, yeah that does make sense.\ni think the inconsistencies i\u0027d seen were with missing full-stops at\nthe end of sentences all older ones carried over from other files,\nwhich i think you removed them all in the latest patchset.\n\ni\u0027ll try to give this another round of review and hopefully merge it\ntoday or tomorrow.",
+      "revId": "a5fb8ed790a872cb0c46a9a429127e3631f36a14",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
