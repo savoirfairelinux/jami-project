@@ -52,6 +52,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "098e621f_8761e29e",
+        "filename": "Jenkinsfile",
+        "patchSetId": 50
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-21T13:13:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8cc9ba_fb234262",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b560a6a_c8e965bd",
@@ -65,6 +83,24 @@
       "writtenOn": "2021-10-20T14:43:15Z",
       "side": 1,
       "message": "i don\u0027t see a \u0027postrm\u0027 file in this patch (should there be one?)",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbacb92a_ccc83084",
+        "filename": "guix/guix-pack-deb.postinst",
+        "patchSetId": 50
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-21T13:13:40Z",
+      "side": 1,
+      "message": "I think that\u0027s cruft inherited from the postinst I\u0027ve started from (the one used for the regular debian package).  The same cruft is found there (and there is no postrm either).  I\u0027ll delete it.",
+      "parentUuid": "0b560a6a_c8e965bd",
       "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
@@ -86,6 +122,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8f152e2_987f3a64",
+        "filename": "guix/guix-pack-deb.postinst",
+        "patchSetId": 50
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-21T13:13:40Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "755de5a3_0b6dfded",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "140127a6_41cf534a",
@@ -103,6 +157,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7c7da1d_e8679c10",
+        "filename": "guix/guix-pack-manifest.scm",
+        "patchSetId": 50
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-21T13:13:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "140127a6_41cf534a",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5523bcb0_96cf3c2c",
@@ -116,6 +188,24 @@
       "writtenOn": "2021-10-20T14:43:15Z",
       "side": 1,
       "message": "i think it would be nice to package client-gnome as well, in addition\nto clien-qt.  if so, what do you think about including the certs along\nwith the daemon rather than the client(s)?",
+      "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbacfd63_e0eafd6c",
+        "filename": "guix/guix-pack-manifest.scm",
+        "patchSetId": 50
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-21T13:13:40Z",
+      "side": 1,
+      "message": "It\u0027s trivial to add more packages to the deb-pack, as it\u0027s a bundle.   The only concern is size.  It\u0027s already quite large (2 GiB uncompressed, ~500 MiB compressed) so I\u0027m reluctant to add more weight to it.  I\u0027ll make the experiment and measure.",
+      "parentUuid": "5523bcb0_96cf3c2c",
       "revId": "22bde7c3f56cddb5ee50f45b9e573ecd1dedde58",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
