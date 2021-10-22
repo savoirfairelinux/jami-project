@@ -196,7 +196,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                     }
 
                     def distributionsText = sh(
-                        script: 'find packages/* -maxdepth 1 -type d -print0' +
+                        script: 'find packages/* -maxdepth 1 -type d -print0 ' +
                             '| xargs -0 -n1 basename -z',
                         returnStdout: true).trim()
                     def distributions = distributionsText.split("\0")
@@ -204,7 +204,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                     distributions.each { distribution ->
                         echo "Deploying ${distribution} packages..."
                         sh """scripts/deploy-packages.sh \
-  --distribution=${target} \
+  --distribution=${distribution} \
   --keyid="${RING_PUBLIC_KEY_FINGERPRINT}" \
   --snapcraft-login="${SNAPCRAFT_KEY}" \
   --remote-ssh-identity-file="${SSH_PRIVATE_KEY}" \
