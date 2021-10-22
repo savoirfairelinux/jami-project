@@ -55,7 +55,7 @@ QT_TARBALL_SHA256="3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202
 QT_TARBALL_FILE_NAME=$(basename "$QT_TARBALL_URL")
 CACHED_QT_TARBALL=$TARBALLS/$QT_TARBALL_FILE_NAME
 
-if [[ "${DISTRIBUTION}" != "opensuse-tumbleweed" ]]; then
+#if [[ "${DISTRIBUTION}" != "opensuse-tumbleweed" ]]; then
 
     mkdir -p "$TARBALLS/$DISTRIBUTION"
     RPM_PATH=$TARBALLS/$DISTRIBUTION/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.x86_64.rpm
@@ -115,7 +115,7 @@ if [[ "${DISTRIBUTION}" != "opensuse-tumbleweed" ]]; then
     rpm --install "${RPM_PATH}"
     cp "${RPM_PATH}" /opt/output
     cd /opt/ring-project
-fi
+#fi
 
 # Set the version and associated comment.
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" ./*.spec
