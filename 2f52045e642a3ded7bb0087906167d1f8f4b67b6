@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ae5f128_904127e4",
+        "filename": "scripts/install.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-10-27T20:28:54Z",
+      "side": 1,
+      "message": "cf https://review.jami.net/c/jami-project/+/18389/52/scripts/install.sh\n\nif [[ \"$OSTYPE\" !\u003d \"darwin\"* ]]; then\n    # Keep the shared libaries on MAC OSX.\n    sharedLib\u003d\"--disable-shared\"\nfi\n\nTo get previous behaviour (cc kkostiuk)",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 2
+      },
+      "revId": "2f52045e642a3ded7bb0087906167d1f8f4b67b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
