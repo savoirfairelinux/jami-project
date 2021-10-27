@@ -3,6 +3,98 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "99affc3d_139f96a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-27T16:05:53Z",
+      "side": 1,
+      "message": "probably want to start this commit message with \"build.py: \" so we know easily which part is touched.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "e13569a14f5aa914c9e557b066094daed6118c32",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd56a84b_bf2ecab7",
+        "filename": "scripts/install.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-27T16:05:53Z",
+      "side": 1,
+      "message": "missing documentation for new -w flag",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 55
+      },
+      "revId": "e13569a14f5aa914c9e557b066094daed6118c32",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c64535a6_dcd91129",
+        "filename": "scripts/install.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-27T16:05:53Z",
+      "side": 1,
+      "message": "if you have it take an argument it could be removed here.  FWIW, I\u0027d more naturally understand \u0027-w\u0027 as a boolean flag  meaning \"wrap\", not \"no-wrap\" :-).  -W could be used for the inverse meaning (not wrap boolean).  Up to you.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "e13569a14f5aa914c9e557b066094daed6118c32",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "457d8333_675dece6",
+        "filename": "scripts/install.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-10-27T16:05:53Z",
+      "side": 1,
+      "message": "perhaps w should be a colon following w (w:); so that we could use -w false or -w true.",
+      "range": {
+        "startLine": 28,
+        "startChar": 29,
+        "endLine": 28,
+        "endChar": 30
+      },
+      "revId": "e13569a14f5aa914c9e557b066094daed6118c32",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dac6fdb1_6053550d",
         "filename": "scripts/install.sh",
         "patchSetId": 1
