@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dac6fdb1_6053550d",
+        "filename": "scripts/install.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-10-27T15:10:56Z",
+      "side": 1,
+      "message": "you probably want --disable-shared if no libwrap",
+      "range": {
+        "startLine": 146,
+        "startChar": 51,
+        "endLine": 146,
+        "endChar": 53
+      },
+      "revId": "e13569a14f5aa914c9e557b066094daed6118c32",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
