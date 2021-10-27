@@ -23,7 +23,9 @@ qt5ver=''
 qt5path=''
 proc='1'
 priv_install=true
-while getopts gsc:dq:Q:P:p:u OPT; do
+enable_libwrap=true
+
+while getopts gsc:dq:Q:P:p:u:W OPT; do
   case "$OPT" in
     g)
       global='true'
@@ -51,6 +53,9 @@ while getopts gsc:dq:Q:P:p:u OPT; do
     ;;
     u)
       priv_install='false'
+    ;;
+    W)
+      enable_libwrap='false'
     ;;
     \?)
       exit 1
@@ -91,6 +96,10 @@ mkdir -p contrib/native
     ../bootstrap ${prefix:+"--prefix=$prefix"}
     make -j"${proc}"
 )
+# Disable shared if requested
+if [ "${enable_libwrap}" == "false" ]; then
+    CONFIGURE_FLAGS+=( --disable-shared)
+fi
 
 # Build the daemon itself.
 test -f configure || ./autogen.sh
@@ -138,7 +147,7 @@ lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}"
                  -DCMAKE_BUILD_TYPE=Debug
                  -DQT5_VER="${qt5ver}"
                  -DQT5_PATH="${qt5path}"
-                 -DENABLE_LIBWRAP=true
+                 -DENABLE_LIBWRAP="${enable_libwrap}"
                  $static)
 if [ "${global}" = "true" ]; then
     lrc_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"})
