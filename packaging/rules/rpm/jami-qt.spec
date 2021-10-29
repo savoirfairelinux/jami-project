@@ -12,8 +12,20 @@ Vendor:        Savoir-faire Linux
 URL:           https://jami.net/
 Source:        jami_%{version}.tar.gz
 Requires:      jami-libclient = %{version}
-%if 0%{?fedora} >= 32
+%if 0%{?fedora} < 35
 Requires:      jami-libqt
+%endif
+%if 0%{?fedora} >= 35
+BuildRequires: qt6-qttools-devel
+BuildRequires: qt6-qtbase-devel
+BuildRequires: qt6-qtdeclarative-devel
+BuildRequires: qt6-qtmultimedia-devel
+BuildRequires: qt6-qtquickcontrols2
+BuildRequires: qt6-qtquickcontrols2-devel
+BuildRequires: qt6-qtsvg-devel
+BuildRequires: qt6-qtwebengine-devel
+# Runtime dependencies not automatically registered by RPM.
+Requires: qt6-qtquickcontrols2
 %endif
 Provides:      jami
 Obsoletes:     jami < %{version}-%{release}
@@ -38,11 +50,13 @@ privacy of its users.
 %setup -n ring-project
 
 %build
+
+# Qt-related variables
 cd %{_builddir}/ring-project/client-qt && \
     mkdir build && cd build && \
     cmake -DCMAKE_INSTALL_PREFIX=%{_prefix} \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
-          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_BUILD_TYPE=Release \
           ..
 
 make -C %{_builddir}/ring-project/client-qt/build %{_smp_mflags} V=1
