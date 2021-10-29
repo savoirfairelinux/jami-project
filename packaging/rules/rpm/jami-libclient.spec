@@ -17,6 +17,7 @@ Requires:      jami-daemon = %{version}
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: jami-daemon-devel = %{version}
+Requires:      jami-libqt
 BuildRequires: make
 %if 0%{?fedora} >= 32
 BuildRequires: NetworkManager-libnm-devel
