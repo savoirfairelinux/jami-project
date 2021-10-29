@@ -17,5 +17,29 @@ RUN /opt/prebuild-package-debian.sh qt-deps
 COPY packaging/rules/debian/control /tmp/builddeps/debian/control
 RUN /opt/prebuild-package-debian.sh jami-deps
 
+RUN apt-get remove cmake cmake-data -y
+
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.19.8/cmake-3.19.8-Linux-x86_64.sh \
+      -q -O /tmp/cmake-install.sh \
+      && chmod u+x /tmp/cmake-install.sh \
+      && mkdir /usr/bin/cmake \
+      && /tmp/cmake-install.sh --skip-license --prefix=/usr/bin/cmake \
+      && rm /tmp/cmake-install.sh
+
+ENV PATH="/usr/bin/cmake/bin:${PATH}"
+
+RUN wget http://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-9.3.0/gcc-9.3.0.tar.gz \
+      -q -O /tmp/gcc-9.3.0.tar.gz \
+      && tar -xvzf /tmp/gcc-9.3.0.tar.gz -C /tmp \
+      && cd /tmp/gcc-9.3.0 \
+      && ./contrib/download_prerequisites \
+      && ./configure --disable-multilib --prefix=/usr/bin \
+      && make -j4 && make install \
+      && cd .. && rm /tmp/gcc-9.3.0.tar.gz && rm -rf /tmp/gcc-9.3.0
+
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/bin/gcc 60 --slave /usr/bin/g++ g++ /usr/bin/bin/ g++
+RUN gcc --version
+RUN g++ --version
+
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 CMD ["/opt/build-package-debian.sh"]
