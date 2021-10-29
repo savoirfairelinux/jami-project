@@ -63,7 +63,7 @@ case "$1" in
         (
             cd /tmp/builddeps
             install_deps
-            dpkg -r libqt-jami-build-deps
+            dpkg -r libqt-jami-build-deps || true
         )
         rm -rf /tmp/builddeps
         exit 0
@@ -73,7 +73,7 @@ case "$1" in
             cd /tmp/builddeps
             install_dummy
             install_deps
-            dpkg -r jami-build-deps
+            dpkg -r jami-build-deps || true
             remove_dummy
         )
         rm -rf /tmp/builddeps
