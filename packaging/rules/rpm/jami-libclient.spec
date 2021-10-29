@@ -17,6 +17,7 @@ Requires:      jami-daemon = %{version}
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: jami-daemon-devel = %{version}
+Requires:      jami-libqt
 BuildRequires: make
 %if 0%{?fedora} >= 32
 BuildRequires: NetworkManager-libnm-devel
@@ -31,13 +32,20 @@ users.
 %setup -n ring-project
 
 %build
+
+# Qt-related variables
+export PATH="$(QT_JAMI_PREFIX)/bin:${PATH}"
+export LD_LIBRARY_PATH="$(QT_JAMI_PREFIX)/lib:${LD_LIBRARY_PATH}"
+export PKG_CONFIG_PATH="$(QT_JAMI_PREFIX)/lib/pkgconfig:${PKG_CONFIG_PATH}"
+export CMAKE_PREFIX_PATH="$(QT_JAMI_PREFIX)/lib/cmake:${CMAKE_PREFIX_PATH}"
+
 cd %{_builddir}/ring-project/lrc && \
     mkdir build && cd build && \
     cmake -DRING_BUILD_DIR=%{_builddir}/ring-project/daemon/src \
           -DENABLE_LIBWRAP=true \
           -DCMAKE_INSTALL_PREFIX=%{_prefix} \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
-          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_BUILD_TYPE=Release \
           ..
 
 make -C %{_builddir}/ring-project/lrc/build %{_smp_mflags} V=1

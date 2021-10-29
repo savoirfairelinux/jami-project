@@ -38,11 +38,18 @@ privacy of its users.
 %setup -n ring-project
 
 %build
+
+# Qt-related variables
+export PATH="$(QT_JAMI_PREFIX)/bin:${PATH}"
+export LD_LIBRARY_PATH="$(QT_JAMI_PREFIX)/lib:${LD_LIBRARY_PATH}"
+export PKG_CONFIG_PATH="$(QT_JAMI_PREFIX)/lib/pkgconfig:${PKG_CONFIG_PATH}"
+export CMAKE_PREFIX_PATH="$(QT_JAMI_PREFIX)/lib/cmake:${CMAKE_PREFIX_PATH}"
+
 cd %{_builddir}/ring-project/client-qt && \
     mkdir build && cd build && \
     cmake -DCMAKE_INSTALL_PREFIX=%{_prefix} \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
-          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_BUILD_TYPE=Release \
           ..
 
 make -C %{_builddir}/ring-project/client-qt/build %{_smp_mflags} V=1
