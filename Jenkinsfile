@@ -37,7 +37,7 @@ def SNAPCRAFT_KEY = '/var/lib/jenkins/.snap/key'
 
 pipeline {
     agent {
-        label 'guix'
+        label 'jami-buildmachine-04.mtl.sfl'
     }
 
     triggers {
