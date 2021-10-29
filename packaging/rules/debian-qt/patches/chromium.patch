@@ -1,0 +1,226 @@
+diff --git a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_display_util.cc b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_display_util.cc
+index b6bfd2d..f5d93cf 100644
+--- a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_display_util.cc
++++ b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_display_util.cc
+
+@@ -137,11 +137,10 @@
+ // Get the EDID data from the |output| and stores to |edid|.
+ std::vector<uint8_t> GetEDIDProperty(x11::RandR* randr,
+                                      x11::RandR::Output output) {
+-  auto future = randr->GetOutputProperty({
++  auto future = randr->GetOutputProperty(x11::RandR::GetOutputPropertyRequest{
+       .output = output,
+       .property = gfx::GetAtom(kRandrEdidProperty),
+-      .long_length = 128,
+-  });
++      .long_length = 128});
+   auto response = future.Sync();
+   std::vector<uint8_t> edid;
+   if (response && response->format == 8 && response->type != x11::Atom::None)
+
+diff --git a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_software_bitmap_presenter.cc b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_software_bitmap_presenter.cc
+index 473aa9a..2c0a8bf8 100644
+--- a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_software_bitmap_presenter.cc
++++ b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_software_bitmap_presenter.cc
+
+@@ -76,11 +76,11 @@
+     connection->CreatePixmap({depth, pixmap_id, widget, width, height});
+     ScopedPixmap pixmap(connection, pixmap_id);
+ 
+-    connection->ChangeGC(
+-        {.gc = gc, .subwindow_mode = x11::SubwindowMode::IncludeInferiors});
++    connection->ChangeGC(x11::ChangeGCRequest{
++        .gc = gc, .subwindow_mode = x11::SubwindowMode::IncludeInferiors});
+     connection->CopyArea({widget, pixmap_id, gc, x, y, 0, 0, width, height});
+-    connection->ChangeGC(
+-        {.gc = gc, .subwindow_mode = x11::SubwindowMode::ClipByChildren});
++    connection->ChangeGC(x11::ChangeGCRequest{
++        .gc = gc, .subwindow_mode = x11::SubwindowMode::ClipByChildren});
+ 
+     auto req = connection->GetImage({x11::ImageFormat::ZPixmap, pixmap_id, 0, 0,
+                                      width, height, kAllPlanes});
+
+diff --git a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_util.cc b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_util.cc
+index 247d833..80f2903 100644
+--- a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_util.cc
++++ b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_util.cc
+
+@@ -220,13 +220,13 @@
+ }
+ 
+ void RaiseWindow(x11::Window window) {
+-  x11::Connection::Get()->ConfigureWindow(
+-      {.window = window, .stack_mode = x11::StackMode::Above});
++  x11::Connection::Get()->ConfigureWindow(x11::ConfigureWindowRequest{
++      .window = window, .stack_mode = x11::StackMode::Above});
+ }
+ 
+ void LowerWindow(x11::Window window) {
+-  x11::Connection::Get()->ConfigureWindow(
+-      {.window = window, .stack_mode = x11::StackMode::Below});
++  x11::Connection::Get()->ConfigureWindow(x11::ConfigureWindowRequest{
++      .window = window, .stack_mode = x11::StackMode::Below});
+ }
+ 
+ void DefineCursor(x11::Window window, x11::Cursor cursor) {
+@@ -235,14 +235,15 @@
+   // timing on BookmarkBarViewTest8.DNDBackToOriginatingMenu on
+   // linux-chromeos-rel, causing it to flake.
+   x11::Connection::Get()
+-      ->ChangeWindowAttributes({.window = window, .cursor = cursor})
++      ->ChangeWindowAttributes(x11::ChangeWindowAttributesRequest{
++          .window = window, .cursor = cursor})
+       .Sync();
+ }
+ 
+ x11::Window CreateDummyWindow(const std::string& name) {
+   auto* connection = x11::Connection::Get();
+   auto window = connection->GenerateId<x11::Window>();
+-  connection->CreateWindow({
++  connection->CreateWindow(x11::CreateWindowRequest{
+       .wid = window,
+       .parent = connection->default_root(),
+       .x = -100,
+@@ -560,7 +561,7 @@
+ 
+ bool PropertyExists(x11::Window window, const std::string& property_name) {
+   auto response = x11::Connection::Get()
+-                      ->GetProperty({
++                      ->GetProperty(x11::GetPropertyRequest{
+                           .window = static_cast<x11::Window>(window),
+                           .property = gfx::GetAtom(property_name),
+                           .long_length = 1,
+@@ -573,7 +574,7 @@
+                            x11::Atom property,
+                            scoped_refptr<base::RefCountedMemory>* out_data,
+                            x11::Atom* out_type) {
+-  auto future = x11::Connection::Get()->GetProperty({
++  auto future = x11::Connection::Get()->GetProperty(x11::GetPropertyRequest{
+       .window = static_cast<x11::Window>(window),
+       .property = property,
+       // Don't limit the amount of returned data.
+
+diff --git a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_util.h b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_util.h
+index b5f74bb..f3f4b48 100644
+--- a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_util.h
++++ b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_util.h
+
+@@ -143,11 +143,11 @@
+   using lentype = decltype(x11::GetPropertyRequest::long_length);
+   auto response =
+       x11::Connection::Get()
+-          ->GetProperty(
+-              {.window = static_cast<x11::Window>(window),
+-               .property = name,
+-               .long_length =
+-                   amount ? length : std::numeric_limits<lentype>::max()})
++          ->GetProperty(x11::GetPropertyRequest{
++              .window = static_cast<x11::Window>(window),
++              .property = name,
++              .long_length =
++                  amount ? length : std::numeric_limits<lentype>::max()})
+           .Sync();
+   if (!response || response->format != CHAR_BIT * sizeof(T))
+     return false;
+@@ -178,13 +178,13 @@
+   static_assert(sizeof(T) == 1 || sizeof(T) == 2 || sizeof(T) == 4, "");
+   std::vector<uint8_t> data(sizeof(T) * values.size());
+   memcpy(data.data(), values.data(), sizeof(T) * values.size());
+-  x11::Connection::Get()->ChangeProperty(
+-      {.window = static_cast<x11::Window>(window),
+-       .property = name,
+-       .type = type,
+-       .format = CHAR_BIT * sizeof(T),
+-       .data_len = values.size(),
+-       .data = base::RefCountedBytes::TakeVector(&data)});
++  x11::Connection::Get()->ChangeProperty(x11::ChangePropertyRequest{
++      .window = static_cast<x11::Window>(window),
++      .property = name,
++      .type = type,
++      .format = CHAR_BIT * sizeof(T),
++      .data_len = values.size(),
++      .data = base::RefCountedBytes::TakeVector(&data)});
+ }
+ 
+ template <typename T>
+
+diff --git a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_whole_screen_move_loop.cc b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_whole_screen_move_loop.cc
+index 1b8bc9f..09a0c5a 100644
+--- a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_whole_screen_move_loop.cc
++++ b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_whole_screen_move_loop.cc
+
+@@ -263,7 +263,7 @@
+ void X11WholeScreenMoveLoop::CreateDragInputWindow(
+     x11::Connection* connection) {
+   grab_input_window_ = connection->GenerateId<x11::Window>();
+-  connection->CreateWindow({
++  connection->CreateWindow(x11::CreateWindowRequest{
+       .wid = grab_input_window_,
+       .parent = connection->default_root(),
+       .x = -100,
+
+diff --git a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_window.cc b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_window.cc
+index ca2f12f..988ffa9 100644
+--- a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_window.cc
++++ b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_window.cc
+
+@@ -718,7 +718,7 @@
+ 
+   if (it_below_window != window_below_parents.rend() &&
+       it_above_window != window_above_parents.rend()) {
+-    connection_->ConfigureWindow({
++    connection_->ConfigureWindow(x11::ConfigureWindowRequest{
+         .window = *it_above_window,
+         .sibling = *it_below_window,
+         .stack_mode = x11::StackMode::Above,
+@@ -837,7 +837,7 @@
+ }
+ 
+ void XWindow::MoveCursorTo(const gfx::Point& location_in_pixels) {
+-  connection_->WarpPointer({
++  connection_->WarpPointer(x11::WarpPointerRequest{
+       .dst_window = x_root_window_,
+       .dst_x = bounds_in_pixels_.x() + location_in_pixels.x(),
+       .dst_y = bounds_in_pixels_.y() + location_in_pixels.y(),
+@@ -1424,7 +1424,7 @@
+   bool remap = window_mapped_in_client_;
+   if (remap)
+     Hide();
+-  connection_->ChangeWindowAttributes({
++  connection_->ChangeWindowAttributes(x11::ChangeWindowAttributesRequest{
+       .window = xwindow_,
+       .override_redirect = x11::Bool32(override_redirect),
+   });
+@@ -1487,7 +1487,7 @@
+ void XWindow::UpdateWindowRegion(
+     std::unique_ptr<std::vector<x11::Rectangle>> region) {
+   auto set_shape = [&](const std::vector<x11::Rectangle>& rectangles) {
+-    connection_->shape().Rectangles({
++    connection_->shape().Rectangles(x11::Shape::RectanglesRequest{
+         .operation = x11::Shape::So::Set,
+         .destination_kind = x11::Shape::Sk::Bounding,
+         .ordering = x11::ClipOrdering::YXBanded,
+@@ -1515,7 +1515,7 @@
+     // If the window has system borders, the mask must be set to null (not a
+     // rectangle), because several window managers (eg, KDE, XFCE, XMonad) will
+     // not put borders on a window with a custom shape.
+-    connection_->shape().Mask({
++    connection_->shape().Mask(x11::Shape::MaskRequest{
+         .operation = x11::Shape::So::Set,
+         .destination_kind = x11::Shape::Sk::Bounding,
+         .destination_window = xwindow_,
+
+diff --git a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_workspace_handler.cc b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_workspace_handler.cc
+index 65a7b17..84ae470 100644
+--- a/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_workspace_handler.cc
++++ b/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_workspace_handler.cc
+
+@@ -17,7 +17,7 @@
+ 
+ x11::Future<x11::GetPropertyReply> GetWorkspace() {
+   auto* connection = x11::Connection::Get();
+-  return connection->GetProperty({
++  return connection->GetProperty(x11::GetPropertyRequest{
+       .window = connection->default_screen().root,
+       .property = static_cast<x11::Atom>(gfx::GetAtom("_NET_CURRENT_DESKTOP")),
+       .type = static_cast<x11::Atom>(gfx::GetAtom("CARDINAL")),
