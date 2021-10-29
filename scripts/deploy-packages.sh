@@ -225,9 +225,10 @@ function package_snap()
     echo "## deploying snap ##"
     echo "####################"
 
-    if [[ "${CHANNEL:0:19}" == "internal_experiment" ]]; then
+    if [[ "${CHANNEL:0:8}" == "internal" ]]; then
         DISTRIBUTION_REPOSITORY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
         mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
+        ls packages/${DISTRIBUTION}*
         cp packages/${DISTRIBUTION}*/*.snap ${DISTRIBUTION_REPOSITORY_FOLDER}/
     elif [[ "${CHANNEL:0:7}" == "nightly" ]]; then
         snapcraft login --with ${SNAPCRAFT_LOGIN}

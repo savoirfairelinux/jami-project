@@ -18,7 +18,7 @@ Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
 -FROM ubuntu:xenial
 +FROM ubuntu:bionic
  COPY --from=builder /snap/core /snap/core
- COPY --from=builder /snap/core18 /snap/core18
+ COPY --from=builder /snap/core20 /snap/core20
  COPY --from=builder /snap/snapcraft /snap/snapcraft
 @@ -53,3 +53,7 @@
  ENV SNAP="/snap/snapcraft/current"
