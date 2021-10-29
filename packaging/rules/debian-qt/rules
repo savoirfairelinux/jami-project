@@ -41,6 +41,9 @@ override_dh_auto_configure:
 	cat qtbase/src/corelib/global/qendian.h
 	sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/src/corelib/global/qfloat16.h
 	sed -i 's,#include <QtCore/qbytearray.h>,#include <QtCore/qbytearray.h>\n#include <limits>,g' qtbase/src/corelib/text/qbytearraymatcher.h
+	# Qt 6.2 build for gcc 8
+	sed -i 's,->GetProperty({,->GetProperty(GetPropertyRequest{,g' qtwebengine/src/3rdparty/chromium/ui/gfx/x/property_cache.cc
+	sed -i 's/max(),/max()/g' qtwebengine/src/3rdparty/chromium/ui/gfx/x/property_cache.cc
 	./configure \
 	  -opensource \
 	  -confirm-license \
@@ -51,7 +54,7 @@ override_dh_auto_configure:
 
 override_dh_auto_build:
 	@echo Building Qt using $(JOB_COUNT) parallel jobs
-	$(MAKE) -j$(JOB_COUNT) V=1 NINJAFLAGS="-j$(JOB_COUNT)"
+	cmake --build . --parallel
 
 override_dh_auto_install:
-	dh_auto_install -Smakefile -- INSTALL_ROOT=$(CURDIR)/debian/tmp/
+	cmake --install . --prefix $(CURDIR)/debian/tmp/${QT_JAMI_PREFIX}

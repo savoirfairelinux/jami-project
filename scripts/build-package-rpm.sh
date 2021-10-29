@@ -41,9 +41,9 @@ PATH="${QT_JAMI_PREFIX}/bin:${PATH}"
 LD_LIBRARY_PATH="${QT_JAMI_PREFIX}/lib:${LD_LIBRARY_PATH}"
 PKG_CONFIG_PATH="${QT_JAMI_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}"
 CMAKE_PREFIX_PATH="${QT_JAMI_PREFIX}/lib/cmake:${CMAKE_PREFIX_PATH}"
-QT_MAJOR=5
-QT_MINOR=15
-QT_PATCH=2
+QT_MAJOR=6
+QT_MINOR=2
+QT_PATCH=1
 
 QT_MAJOR_MINOR=${QT_MAJOR}.${QT_MINOR}
 QT_MAJOR_MINOR_PATCH=${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}
@@ -51,7 +51,7 @@ QT_MAJOR_MINOR_PATCH=${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}
 QT_TARBALL_URL=https://download.qt.io/archive/qt/$QT_MAJOR_MINOR/\
 $QT_MAJOR_MINOR_PATCH/single/qt-everywhere-src-$QT_MAJOR_MINOR_PATCH.tar.xz
 
-QT_TARBALL_SHA256="3a530d1b243b5dec00bc54937455471aaa3e56849d2593edb8ded07228202240"
+QT_TARBALL_SHA256="e03fffc5c3b5fea09dcc161444df7dfbbe24e8a8ce9377014ec21b66f48d43cd"
 QT_TARBALL_FILE_NAME=$(basename "$QT_TARBALL_URL")
 CACHED_QT_TARBALL=$TARBALLS/$QT_TARBALL_FILE_NAME
 
@@ -97,7 +97,7 @@ if [[ "${DISTRIBUTION}" != "opensuse-tumbleweed" ]]; then
             rpmdev-bumpspec --comment="Automatic nightly release" \
                             --userstring="Jenkins <jami@lists.savoirfairelinux.net>" jami-libqt.spec
 
-            QA_RPATHS=$(( 0x0008 )) rpmbuild -ba jami-libqt.spec
+            QA_RPATHS=$(( 0x0008 )) rpmbuild --define "debug_package %{nil}" -ba jami-libqt.spec
             # Note: try to remove QA_RPATHS=$(( 0x0008 )) with Qt > 6. Else we have a problem with $ORIGIN
             mkdir -p "$TARBALLS/${DISTRIBUTION}"
 
@@ -126,15 +126,15 @@ rpmdev-bumpspec --comment="Automatic nightly release" \
                 --userstring="Jenkins <jami@lists.savoirfairelinux.net>" ./*.spec
 
 # Build the daemon and install it.
-QA_RPATHS=$(( 0x0008 )) rpmbuild -ba jami-daemon.spec
+QA_RPATHS=$(( 0x0008 )) rpmbuild --define "debug_package %{nil}"  -ba jami-daemon.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-daemon-*
 
 # Build the client library and install it.
-QA_RPATHS=$(( 0x0008 )) rpmbuild -ba jami-libclient.spec
+QA_RPATHS=$(( 0x0008 )) rpmbuild --define "debug_package %{nil}"  -ba jami-libclient.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-*
 
 # Build the GNOME and Qt clients.
-QA_RPATHS=$(( 0x0008 )) rpmbuild -ba jami-gnome.spec jami-qt.spec
+#QA_RPATHS=$(( 0x0008 )) rpmbuild -ba jami-gnome.spec jami-qt.spec
 
 # Move the built packages to the output directory.
 mv /root/rpmbuild/RPMS/*/* /opt/output
