@@ -5,7 +5,6 @@ Maintainer: The Jami project <jami@gnu.org>
 Build-Depends: debhelper (>= 9),
                autoconf,
                automake,
-               cmake,
                libtool,
                autotools-dev,
 # qt client
@@ -15,7 +14,6 @@ Build-Depends: debhelper (>= 9),
                libnm-dev,
                libnotify-dev,
 # gnome client
-               libebook1.2-dev,
                libcanberra-gtk3-dev,
                libclutter-gtk-1.0-dev,
                libclutter-1.0-dev,
@@ -79,7 +77,7 @@ Depends: gnupg,
 Replaces: jami,
           jami-libclient,
           jami-daemon,
-          libqt-jami,
+          libqt-jami (>= 6),
 Conflicts: jami,
            jami-libclient,
            jami-daemon,
@@ -95,7 +93,7 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          jami-libclient (=${binary:Version}),
-         libqt-jami
+         libqt-jami (>= 6)
 Provides: jami-qt
 Replaces: jami-all
 Conflicts: jami-all
@@ -123,7 +121,7 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          jami-daemon (=${binary:Version}),
-         libqt-jami
+         libqt-jami (>= 6)
 Description: Secure and distributed voice, video and chat platform - daemon
  Jami (jami.net) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy

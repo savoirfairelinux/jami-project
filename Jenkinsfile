@@ -37,7 +37,7 @@ def SNAPCRAFT_KEY = '/var/lib/jenkins/.snap/key'
 
 pipeline {
     agent {
-        label 'guix'
+        label 'jami-buildmachine-04.mtl.sfl'
     }
 
     triggers {
@@ -152,7 +152,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                         stages[target] =  {
                             stage(target) {
                                 // Offload builds to different agents.
-                                node('linux-builder') {
+                                node('jami-buildmachine-04.mtl.sfl') {
                                     cleanWs()
                                     unstash 'release-tarball'
                                     catchError(buildResult: 'FAILURE',
