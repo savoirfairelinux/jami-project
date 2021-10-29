@@ -148,12 +148,10 @@ apps:
 
 package-repositories:
   - type: apt
-    ppa: beineri/opt-qt-5.15.2-bionic
-    # qt515base consists of:
-    #   Qt5Concurrent, Qt5Core, Qt5DBus, Qt5EglFSDeviceIntegration,
-    #   Qt5EglFsKmsSupport, Qt5Gui, Qt5Network, Qt5OpenGL,
-    #   Qt5PrintSupport, Qt5Sql, Qt5Test, Qt5Widgets, Qt5XcbQpa,
-    #   Qt5Xml
+    components: [main]
+    suites: [jami]
+    key-id: A295D773307D25A33AE72F2F64CD5FA175348F84
+    url: https://dl.jami.net/internal/ubuntu_18.04/
 
 parts:
   desktop-launch:
@@ -162,11 +160,7 @@ parts:
     build-packages:
     - dpkg-dev
     - gcc-8
-    - qt515base
-    stage-packages:
-    - qt515base
-    - qt515svg # for loading icon themes which are svg
-    - try: [appmenu-qt5] # not available on core18
+    - libqt-jami
     override-pull: |
       snapcraftctl pull
       sed -i -E 's|\. \$SNAP/flavor-select|USE_gtk3=true|' gtk/launcher-specific
@@ -230,12 +224,13 @@ parts:
       - -usr/share/doc/libldap-2.4-2/changelog.Debian.gz
       - -usr/share/doc/libldap-common/changelog.Debian.gz
     build-environment:
-      - QT_BASE_DIR: "/opt/qt515"
+      - QT_BASE_DIR: "/usr/lib/libqt-jami"
       - QTDIR: "$QT_BASE_DIR"
-      - QTVER: "5.15.2"
+      - QTVER: "6.2.0"
       - PATH: "$QT_BASE_DIR/bin:$PATH"
       - LD_LIBRARY_PATH: "$QT_BASE_DIR/lib:$LD_LIBRARY_PATH"
       - PKG_CONFIG_PATH: "$QT_BASE_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
+      - PATH: "/usr/bin/cmake/bin:${PATH}"
     override-pull: |
       snapcraftctl pull
       sed -i -E 's|(tmpName) << (PACKAGE_NAME << "_shm_")|\1 << "snap.jami." << \2|' daemon/src/media/video/sinkclient.cpp
@@ -243,9 +238,17 @@ parts:
         sed -i -E 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/jami.svg|' client-qt/$file
       done
     override-build: |
-      update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 10
+      apt-get remove cmake cmake-data
+
+      # We need Cmake > 3.16, which is not in core18
+      wget https://github.com/Kitware/CMake/releases/download/v3.19.8/cmake-3.19.8-Linux-x86_64.sh \
+      -q -O /tmp/cmake-install.sh \
+      && chmod u+x /tmp/cmake-install.sh \
+      && mkdir /usr/bin/cmake \
+      && /tmp/cmake-install.sh --skip-license --prefix=/usr/bin/cmake \
+      && rm /tmp/cmake-install.sh
+
       update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 20
-      update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 10
       update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 20
 
       cd $SNAPCRAFT_PART_BUILD/daemon/contrib
@@ -268,7 +271,7 @@ parts:
                -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
                -DENABLE_STATIC=true -DENABLE_LIBWRAP=true \
                -DRING_BUILD_DIR=$SNAPCRAFT_PART_BUILD/daemon/src \
-               -DQT5_VER=$QTVER -DQT5_PATH=$QTDIR
+               -DQT6_VER=$QTVER -DQT6_PATH=$QTDIR
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
 
@@ -282,7 +285,7 @@ parts:
                -DENABLE_STATIC=true \
                -DLRC=$SNAPCRAFT_PART_BUILD/lrc \
                -DLRCLIB=$SNAPCRAFT_PART_INSTALL/usr/lib \
-               -DQT5_VER=$QTVER -DQT5_PATH=$QTDIR
+               -DQT6_VER=$QTVER -DQT6_PATH=$QTDIR
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
     build-packages:
@@ -291,7 +294,6 @@ parts:
     - automake
     - autopoint
     - bzip2
-    - cmake
     - curl
     - g++-8
     - gettext
@@ -310,6 +312,7 @@ parts:
     - libjack-jackd2-dev
     - libjsoncpp-dev
     - libnm-dev
+    - libfmt-dev
     - libnotify-dev
     - libopus-dev
     - libpcre3-dev
@@ -330,18 +333,9 @@ parts:
     - libyaml-cpp-dev
     - nasm # seems to be needed for building libvpx on an 18.04 base
     - python3
-    - qt515base
-    - qt515declarative
-    - qt515graphicaleffects
-    - qt515multimedia
-    - qt515quickcontrols
-    - qt515quickcontrols2
-    - qt515svg
-    - qt515tools
-    - qt515webchannel
-    - qt515webengine
     - uuid-dev
     - yasm
+    - wget
     stage-packages:
     - libavcodec-extra
     - libavcodec57
@@ -361,6 +355,7 @@ parts:
     - libsamplerate0
     - libslang2
     - libsndfile1
+    - libqt-jami
     - libspeex1
     - libspeexdsp1
     - libswscale4
@@ -373,22 +368,11 @@ parts:
     - libva2
     - libvdpau-va-gl1
     - libvdpau1
-    - qt515base
-    - qt515declarative
-    - qt515graphicaleffects
-    - qt515multimedia
-    - qt515quickcontrols
-    - qt515quickcontrols2
-    - qt515svg
-    - qt515tools
-    - qt515wayland
-    - qt515webchannel
-    - qt515webengine
     - va-driver-all
     prime:
-    - -opt/qt515/bin/
-    - -opt/qt515/docs/
-    - -opt/qt515/examples/
+    - -usr/lib/libqt-jami/bin/
+    - -usr/lib/libqt-jami/docs/
+    - -usr/lib/libqt-jami/examples/
     - -usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libLLVM-*.so*
     - -usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libclang-*.so*
     - -usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libflite*.so*

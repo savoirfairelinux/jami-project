@@ -16,8 +16,6 @@ Requires:      jami-daemon = %{version}
 # Build dependencies
 BuildRequires: autoconf
 BuildRequires: automake
-BuildRequires: cmake
-BuildRequires: gcc-c++
 BuildRequires: gettext-devel
 BuildRequires: libtool
 BuildRequires: make
@@ -29,6 +27,8 @@ BuildRequires: yasm
 # need to explicitly relist them.
 %if 0%{?fedora} >= 32
 BuildRequires: NetworkManager-libnm-devel
+BuildRequires: cmake
+BuildRequires: gcc-c++
 BuildRequires: dbus-devel
 BuildRequires: expat-devel
 BuildRequires: opus-devel
