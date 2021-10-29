@@ -51,7 +51,7 @@ override_dh_auto_configure:
 
 override_dh_auto_build:
 	@echo Building Qt using $(JOB_COUNT) parallel jobs
-	$(MAKE) -j$(JOB_COUNT) V=1 NINJAFLAGS="-j$(JOB_COUNT)"
+	cmake --build . --parallel
 
 override_dh_auto_install:
-	dh_auto_install -Smakefile -- INSTALL_ROOT=$(CURDIR)/debian/tmp/
+	cmake --install .
