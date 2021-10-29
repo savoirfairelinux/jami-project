@@ -7,6 +7,7 @@ RUN apt-get update && \
     apt-get install -y -o Acquire::Retries=10 \
         devscripts \
         equivs \
+        python-is-python3 \
         wget
 
 ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh
@@ -16,6 +17,10 @@ RUN /opt/prebuild-package-debian.sh qt-deps
 
 COPY packaging/rules/debian/control /tmp/builddeps/debian/control
 RUN /opt/prebuild-package-debian.sh jami-deps
+
+# Install CMake 3.19 for Qt 6
+ADD scripts/install-cmake.sh /opt/install-cmake.sh
+RUN /opt/install-cmake.sh
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 CMD ["/opt/build-package-debian.sh"]

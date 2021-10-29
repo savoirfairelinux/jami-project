@@ -156,9 +156,6 @@ cd "${BUILDDIR}"
 # Compute LRC CMake flags
 lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${qt6path}"
                  -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
-                 -DQT6_VER="${qt6ver}"
-                 -DQT6_DIR="${qt6path}"
-                 -DQT6_PATH="${qt6path}"
                  -DENABLE_LIBWRAP="${enable_libwrap}"
                  $static)
 if [ "${global}" = "true" ]; then
@@ -182,9 +179,6 @@ client_cmake_flags=(-DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
 
 if [ "${client}" = "client-qt" ]; then
     # Compute Qt client CMake flags.
-    client_cmake_flags+=(-DQT6_VER="${qt6ver}"
-                         -DQT6_DIR="${qt6path}"
-                         -DQT6_PATH="${qt6path}")
     if [ "${global}" = "true" ]; then
         client_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"}
                              $static)
