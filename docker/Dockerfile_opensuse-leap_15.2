@@ -6,14 +6,13 @@ RUN zypper --non-interactive install -y \
         rpmdevtools \
         Mesa-dri-devel Mesa-dri \
         git \
-        gcc8 \
-        gcc8-c++ \
+        gcc9 \
+        gcc9-c++ \
         rpm-build \
         tar \
         make \
         autoconf \
         automake \
-        cmake \
         nasm \
         speexdsp-devel \
         libpulse-devel \
@@ -32,7 +31,6 @@ RUN zypper --non-interactive install -y \
         check \
         astyle \
         gettext-devel \
-        gcc-c++ \
         which \
         alsa-lib-devel \
         systemd-devel \
@@ -84,15 +82,21 @@ RUN zypper --non-interactive install -y \
         xz \
         xkeyboard-config \
         libnotify \
-        libQt5Sql-devel \
-        libQt5Gui-devel \
-        libqt5-qtbase-devel \
-        libqt5-qttools \
         argon2-devel \
+        libxshmfence-devel \
+        xproto-devel \
+        xcb-proto-devel \
         wget
 
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 50
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50
+
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.19.8/cmake-3.19.8-Linux-x86_64.sh \
+      -q -O /tmp/cmake-install.sh \
+      && chmod u+x /tmp/cmake-install.sh \
+      && mkdir /usr/bin/cmake || true \
+      && /tmp/cmake-install.sh --skip-license --prefix=/usr/local/ \
+      && rm /tmp/cmake-install.sh
 
 ADD scripts/build-package-rpm.sh  /opt/build-package-rpm.sh
 
