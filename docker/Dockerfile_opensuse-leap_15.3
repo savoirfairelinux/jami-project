@@ -13,7 +13,6 @@ RUN zypper --non-interactive install -y \
         make \
         autoconf \
         automake \
-        cmake \
         nasm \
         speexdsp-devel \
         libpulse-devel \
@@ -89,10 +88,13 @@ RUN zypper --non-interactive install -y \
         libqt5-qtbase-devel \
         libqt5-qttools \
         argon2-devel \
-        wget
+        wget \
+        cmake
 
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
+
+ENV PATH="/usr/bin/cmake/bin:${PATH}"
 
 ADD scripts/build-package-rpm.sh  /opt/build-package-rpm.sh
 
