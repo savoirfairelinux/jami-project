@@ -3,29 +3,6 @@
 
 # export DH_VERBOSE = 1
 
-# Return the minimum value of two integer arguments.
-min = $(shell echo $$(( $(1) < $(2) ? $(1) : $(2) )))
-max = $(shell echo $$(( $(1) > $(2) ? $(1) : $(2) )))
-
-# Number of CPUs to build Qt.
-NO_CPUS := $(call max,$(shell nproc),1)
-
-# There can be multiple builds of Qt in parallel.  The following
-# should match the maximum number of per-machine workers used in the
-# CI.
-MAX_PARALLEL_BUILDS := 4
-
-# qtwebengine (aka chromium) takes a ton of memory per build process,
-# up to 2.3 GiB.  Cap the number of jobs based on the amount of
-# available memory to try to guard against OOM build failures.
-AVAILABLE_MEMORY := $(shell free -g | grep -E '^Mem:' | awk '{print $$7}')
-MEMORY_REQUIRED_PER_CORE := 2	# in GiB
-COMPUTED_JOB_COUNT := \
-  $(call max,$(shell echo $$(( $(AVAILABLE_MEMORY) \
-                               / $(MEMORY_REQUIRED_PER_CORE) \
-                               / $(MAX_PARALLEL_BUILDS) ))),1)
-JOB_COUNT = $(call min,$(NO_CPUS),$(COMPUTED_JOB_COUNT))
-
 %:
 	dh $@
 
@@ -41,17 +18,28 @@ override_dh_auto_configure:
 	cat qtbase/src/corelib/global/qendian.h
 	sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/src/corelib/global/qfloat16.h
 	sed -i 's,#include <QtCore/qbytearray.h>,#include <QtCore/qbytearray.h>\n#include <limits>,g' qtbase/src/corelib/text/qbytearraymatcher.h
+	# Qt 6.2 build for gcc 8
+	sed -i 's,->GetProperty({,->GetProperty(GetPropertyRequest{,g' qtwebengine/src/3rdparty/chromium/ui/gfx/x/property_cache.cc
+	sed -i 's/max(),/max()/g' qtwebengine/src/3rdparty/chromium/ui/gfx/x/property_cache.cc
+	sed -i 's,PresentPixmap({,PresentPixmap(x11::Present::PresentPixmapRequest{,g' qtwebengine/src/3rdparty/chromium/components/viz/service/display_embedder/output_presenter_x11.cc
+	sed -i 's/last_target_msc_,/last_target_msc_/g' qtwebengine/src/3rdparty/chromium/components/viz/service/display_embedder/output_presenter_x11.cc
+	# Avoid MakeFlatSet
+	sed -i 's,const auto& GetNeverSniffedMimeTypes,/*const auto& GetNeverSniffedMimeTypes{,g' qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
+	sed -i '1,/\/\/ static/{s/\/\/ static/*\/\}\/\/ static/;}' qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
+	cp qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc temp
+	tac temp | sed '1,/return MimeType::kOthers/{s/return MimeType::kOthers/*\/return MimeType::kOthers/;}' | tac > qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
+	rm temp -f
+	sed -i 's,if (base::Contains,/*if (base::Contains,g' qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
 	./configure \
 	  -opensource \
 	  -confirm-license \
 	  -nomake examples \
 	  -nomake tests \
 	  -prefix "${QT_JAMI_PREFIX}"
-	sed -i 's,bin/python,bin/env python3,g' qtbase/mkspecs/features/uikit/devices.py
+	#sed -i 's,bin/python,bin/env python3,g' qtbase/mkspecs/features/uikit/devices.py
 
 override_dh_auto_build:
-	@echo Building Qt using $(JOB_COUNT) parallel jobs
-	$(MAKE) -j$(JOB_COUNT) V=1 NINJAFLAGS="-j$(JOB_COUNT)"
+	cmake --build .
 
 override_dh_auto_install:
-	dh_auto_install -Smakefile -- INSTALL_ROOT=$(CURDIR)/debian/tmp/
+	cmake --install . --prefix $(CURDIR)/debian/tmp/${QT_JAMI_PREFIX}
