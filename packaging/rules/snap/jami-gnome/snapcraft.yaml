@@ -72,7 +72,7 @@ description: >
 
 confinement: strict
 grade: stable
-base: core18
+base: core20
 
 plugs:
   gnome-3-28-1804:
@@ -171,7 +171,7 @@ parts:
     stage-packages:
     - qt515base
     - qt515svg # for loading icon themes which are svg
-    - try: [appmenu-qt5] # not available on core18
+    - try: [appmenu-qt5] # not available on core20
     override-pull: |
       snapcraftctl pull
       sed -i -E 's|\. \$SNAP/flavor-select|USE_gtk3=true|' gtk/launcher-specific
