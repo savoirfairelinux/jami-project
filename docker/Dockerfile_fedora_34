@@ -15,7 +15,6 @@ RUN dnf install -y \
         autoconf \
         automake \
         nasm \
-        cmake \
         speexdsp-devel \
         pulseaudio-libs-devel \
         libcanberra-devel \
@@ -68,10 +67,12 @@ RUN dnf install -y \
         libargon2-devel \
         libsndfile-devel \
         libdrm \
+        python2.7 \
         gperf \
         bison \
         clang \
         clang-devel \
+        llvm-devel \
         nodejs \
         flex \
         nss-devel \
@@ -80,13 +81,19 @@ RUN dnf install -y \
         libX11-devel \
         libXrender-devel \
         xcb-util-* \
-        python2.7 \
         xz \
         xkeyboard-config \
         libnotify \
         wget \
         libstdc++-static \
-        sqlite-devel
+        sqlite-devel \
+        perl-generators \
+        perl-English \
+        libxshmfence-devel \
+        ninja-build \
+        cmake
+
+ENV PATH="/usr/bin/cmake/bin:${PATH}"
 
 ADD scripts/build-package-rpm.sh /opt/build-package-rpm.sh
 
