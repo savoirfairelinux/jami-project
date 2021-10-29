@@ -7,6 +7,7 @@ RUN apt-get update && \
     apt-get install -y -o Acquire::Retries=10 \
         devscripts \
         equivs \
+        nodejs \
         wget
 
 ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh
