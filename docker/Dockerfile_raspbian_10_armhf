@@ -77,6 +77,15 @@ RUN apt update && \
         libssl-dev:armhf && \
     rm -rf /var/lib/apt/lists/*
 
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.19.8/cmake-3.19.8-Linux-aarch64.sh \
+      -q -O /tmp/cmake-install.sh \
+      && chmod u+x /tmp/cmake-install.sh \
+      && mkdir /usr/bin/cmake \
+      && /tmp/cmake-install.sh --skip-license --prefix=/usr/bin/cmake \
+      && rm /tmp/cmake-install.sh
+
+ENV PATH="/usr/bin/cmake/bin:${PATH}"
+
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 
 CMD ["/opt/build-package-debian.sh"]
