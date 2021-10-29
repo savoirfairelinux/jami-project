@@ -1,5 +1,5 @@
 #!/bin/sh
 
-export QTWEBENGINEPROCESS_PATH="$SNAP/opt/qt515/libexec/QtWebEngineProcess"
+export QTWEBENGINEPROCESS_PATH="$SNAP/usr/lib/libqt-jami/libexec/QtWebEngineProcess"
 
 exec "$@"
