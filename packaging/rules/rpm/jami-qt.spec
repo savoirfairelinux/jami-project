@@ -38,11 +38,13 @@ privacy of its users.
 %setup -n ring-project
 
 %build
+
+# Qt-related variables
 cd %{_builddir}/ring-project/client-qt && \
     mkdir build && cd build && \
     cmake -DCMAKE_INSTALL_PREFIX=%{_prefix} \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
-          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_BUILD_TYPE=Release \
           ..
 
 make -C %{_builddir}/ring-project/client-qt/build %{_smp_mflags} V=1
