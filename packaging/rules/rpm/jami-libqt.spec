@@ -67,10 +67,10 @@ sed -i 's,#include <QtCore/qbytearray.h>,#include <QtCore/qbytearray.h>\n#includ
 sed -i 's,bin/python,bin/env python3,g' qtbase/mkspecs/features/uikit/devices.py
 
 # Chromium is built using Ninja, which doesn't honor MAKEFLAGS.
-make -j%{job_count} V=1 NINJAFLAGS="-j%{job_count}"
+cmake --build . --parallel
 
 %install
-make -j%{job_count} INSTALL_ROOT=%{buildroot} V=1 install
+INSTALL_ROOT=%{buildroot} cmake --install .
 
 %files
 %defattr(-,root,root,-)
