@@ -15,6 +15,8 @@ NO_CPUS := $(call max,$(shell nproc),1)
 # CI.
 MAX_PARALLEL_BUILDS := 4
 
+export DEB_CFLAGS_MAINT_APPEND= -flto -flto-partition=none
+
 # qtwebengine (aka chromium) takes a ton of memory per build process,
 # up to 2.3 GiB.  Cap the number of jobs based on the amount of
 # available memory to try to guard against OOM build failures.
@@ -31,16 +33,28 @@ JOB_COUNT = $(call min,$(NO_CPUS),$(COMPUTED_JOB_COUNT))
 
 override_dh_auto_configure:
 	# https://bugs.gentoo.org/768261 (Qt 5.15)
-	sed -i 's,#include "absl/base/internal/spinlock.h"1,#include "absl/base/internal/spinlock.h"1\n#include <limits>,g' qtwebengine/src/3rdparty/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc
+	sed -i 's,#include "absl/base/internal/spinlock.h"1,#include "absl/base/internal/spinlock.h"1\n#include <limits>,g' qtwebengine/src/3rdparty/chromium/third_party/abseil-cpp/abslsynchronization/internal/graphcycles.cc
 	sed -i 's,#include <stdint.h>,#include <stdint.h>\n#include <limits>,g' qtwebengine/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/containers/string_pool.h
 	# else, break build for ubuntu 21.10
-	sed -i 's/static const unsigned kSigStackSize = std::max(16384, SIGSTKSZ);/static const size_t kSigStackSize = std::max(size_t(16384), size_t(SIGSTKSZ));/g' qtwebengine/src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/exception_handler.cc
+	sed -i 's/static const unsigned kSigStackSize = std::max(16384, SIGSTKSZ);/static const size_t kSigStackSize = std::max(size_t(16384), size_t(SIGSTKSZ));/g' qtwebengine/src/3rdparty/mium/####third_party/breakpad/breakpad/src/client/linux/handler/exception_handler.cc
 	# https://bugreports.qt.io/browse/QTBUG-93452 (Qt 5.15)
 	sed -i 's,#  include <utility>,#  include <utility>\n#  include <limits>,g' qtbase/src/corelib/global/qglobal.h
 	sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/src/corelib/global/qendian.h
 	cat qtbase/src/corelib/global/qendian.h
 	sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/src/corelib/global/qfloat16.h
 	sed -i 's,#include <QtCore/qbytearray.h>,#include <QtCore/qbytearray.h>\n#include <limits>,g' qtbase/src/corelib/text/qbytearraymatcher.h
+	# Qt 6.2 build for gcc 8
+	sed -i 's,->GetProperty({,->GetProperty(GetPropertyRequest{,g' qtwebengine/src/3rdparty/chromium/ui/gfx/x/property_cache.cc
+	sed -i 's/max(),/max()/g' qtwebengine/src/3rdparty/chromium/ui/gfx/x/property_cache.cc
+	sed -i 's,PresentPixmap({,PresentPixmap(x11::Present::PresentPixmapRequest{,g' qtwebengine/src/3rdparty/chromium/components/viz/service/display_embedder/output_presenter_x11.cc
+	sed -i 's/last_target_msc_,/last_target_msc_/g' qtwebengine/src/3rdparty/chromium/components/viz/service/display_embedder/output_presenter_x11.cc
+	# Avoid MakeFlatSet
+	sed -i 's,const auto& GetNeverSniffedMimeTypes,/*const auto& GetNeverSniffedMimeTypes{,g' qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
+	sed -i '1,/\/\/ static/{s/\/\/ static/*\/\}\/\/ static/;}' qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
+	cp qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc temp
+	tac temp | sed '1,/return MimeType::kOthers/{s/return MimeType::kOthers/*\/return MimeType::kOthers/;}' | tac > qtwebengine/src/3rdparty/chromium/services/network/public/cppcross_origin_read_blocking.cc
+	rm temp -f
+	sed -i 's,if (base::Contains,/*if (base::Contains,g' qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
 	./configure \
 	  -opensource \
 	  -confirm-license \
@@ -51,7 +65,7 @@ override_dh_auto_configure:
 
 override_dh_auto_build:
 	@echo Building Qt using $(JOB_COUNT) parallel jobs
-	$(MAKE) -j$(JOB_COUNT) V=1 NINJAFLAGS="-j$(JOB_COUNT)"
+	cmake --build . --parallel
 
 override_dh_auto_install:
-	dh_auto_install -Smakefile -- INSTALL_ROOT=$(CURDIR)/debian/tmp/
+	cmake --install . --prefix $(CURDIR)/debian/tmp/${QT_JAMI_PREFIX}
