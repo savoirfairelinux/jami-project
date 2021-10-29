@@ -14,12 +14,13 @@ Source:        jami_%{version}.tar.gz
 Requires:      jami-daemon = %{version}
 
 # Build dependencies
-BuildRequires: cmake
-BuildRequires: gcc-c++
 BuildRequires: jami-daemon-devel = %{version}
+Requires:      jami-libqt
 BuildRequires: make
 %if 0%{?fedora} >= 32
 BuildRequires: NetworkManager-libnm-devel
+BuildRequires: cmake
+BuildRequires: gcc-c++
 %endif
 
 %description
@@ -31,13 +32,15 @@ users.
 %setup -n ring-project
 
 %build
+
+# Qt-related variables
 cd %{_builddir}/ring-project/lrc && \
     mkdir build && cd build && \
     cmake -DRING_BUILD_DIR=%{_builddir}/ring-project/daemon/src \
           -DENABLE_LIBWRAP=true \
           -DCMAKE_INSTALL_PREFIX=%{_prefix} \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
-          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_BUILD_TYPE=Release \
           ..
 
 make -C %{_builddir}/ring-project/lrc/build %{_smp_mflags} V=1
