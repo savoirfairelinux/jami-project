@@ -72,7 +72,7 @@ description: >
 
 confinement: strict
 grade: stable
-base: core18
+base: core20
 
 plugs:
   gnome-3-28-1804:
@@ -148,12 +148,10 @@ apps:
 
 package-repositories:
   - type: apt
-    ppa: beineri/opt-qt-5.15.2-bionic
-    # qt515base consists of:
-    #   Qt5Concurrent, Qt5Core, Qt5DBus, Qt5EglFSDeviceIntegration,
-    #   Qt5EglFsKmsSupport, Qt5Gui, Qt5Network, Qt5OpenGL,
-    #   Qt5PrintSupport, Qt5Sql, Qt5Test, Qt5Widgets, Qt5XcbQpa,
-    #   Qt5Xml
+    components: [main]
+    suites: [jami]
+    key-id: A295D773307D25A33AE72F2F64CD5FA175348F84
+    url: https://dl.jami.net/internal/ubuntu_20.04/
 
 parts:
   desktop-launch:
@@ -162,11 +160,7 @@ parts:
     build-packages:
     - dpkg-dev
     - gcc-8
-    - qt515base
-    stage-packages:
-    - qt515base
-    - qt515svg # for loading icon themes which are svg
-    - try: [appmenu-qt5] # not available on core18
+    - libqt-jami
     override-pull: |
       snapcraftctl pull
       sed -i -E 's|\. \$SNAP/flavor-select|USE_gtk3=true|' gtk/launcher-specific
@@ -230,9 +224,9 @@ parts:
       - -usr/share/doc/libldap-2.4-2/changelog.Debian.gz
       - -usr/share/doc/libldap-common/changelog.Debian.gz
     build-environment:
-      - QT_BASE_DIR: "/opt/qt515"
+      - QT_BASE_DIR: "/usr/lib/libqt-jami"
       - QTDIR: "$QT_BASE_DIR"
-      - QTVER: "5.15.2"
+      - QTVER: "6.2.0"
       - PATH: "$QT_BASE_DIR/bin:$PATH"
       - LD_LIBRARY_PATH: "$QT_BASE_DIR/lib:$LD_LIBRARY_PATH"
       - PKG_CONFIG_PATH: "$QT_BASE_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
@@ -267,8 +261,7 @@ parts:
       cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
                -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
                -DENABLE_STATIC=true -DENABLE_LIBWRAP=true \
-               -DRING_BUILD_DIR=$SNAPCRAFT_PART_BUILD/daemon/src \
-               -DQT5_VER=$QTVER -DQT5_PATH=$QTDIR
+               -DRING_BUILD_DIR=$SNAPCRAFT_PART_BUILD/daemon/src
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
 
@@ -281,8 +274,7 @@ parts:
                -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
                -DENABLE_STATIC=true \
                -DLRC=$SNAPCRAFT_PART_BUILD/lrc \
-               -DLRCLIB=$SNAPCRAFT_PART_INSTALL/usr/lib \
-               -DQT5_VER=$QTVER -DQT5_PATH=$QTDIR
+               -DLRCLIB=$SNAPCRAFT_PART_INSTALL/usr/lib
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
     build-packages:
@@ -330,16 +322,6 @@ parts:
     - libyaml-cpp-dev
     - nasm # seems to be needed for building libvpx on an 18.04 base
     - python3
-    - qt515base
-    - qt515declarative
-    - qt515graphicaleffects
-    - qt515multimedia
-    - qt515quickcontrols
-    - qt515quickcontrols2
-    - qt515svg
-    - qt515tools
-    - qt515webchannel
-    - qt515webengine
     - uuid-dev
     - yasm
     stage-packages:
@@ -373,22 +355,11 @@ parts:
     - libva2
     - libvdpau-va-gl1
     - libvdpau1
-    - qt515base
-    - qt515declarative
-    - qt515graphicaleffects
-    - qt515multimedia
-    - qt515quickcontrols
-    - qt515quickcontrols2
-    - qt515svg
-    - qt515tools
-    - qt515wayland
-    - qt515webchannel
-    - qt515webengine
     - va-driver-all
     prime:
-    - -opt/qt515/bin/
-    - -opt/qt515/docs/
-    - -opt/qt515/examples/
+    - -usr/lib/libqt-jami/bin/
+    - -usr/lib/libqt-jami/docs/
+    - -usr/lib/libqt-jami/examples/
     - -usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libLLVM-*.so*
     - -usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libclang-*.so*
     - -usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libflite*.so*
