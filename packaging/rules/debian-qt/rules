@@ -41,6 +41,10 @@ override_dh_auto_configure:
 	cat qtbase/src/corelib/global/qendian.h
 	sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/src/corelib/global/qfloat16.h
 	sed -i 's,#include <QtCore/qbytearray.h>,#include <QtCore/qbytearray.h>\n#include <limits>,g' qtbase/src/corelib/text/qbytearraymatcher.h
+	# Qt 6.2 https://chromium.googlesource.com/chromium/src.git/+/75a3fda0d7c1f3a47f11d0b3b8e1b1f9e72786d9%5E%21/
+	pwd
+	echo $(PWD)
+	patch -flp1 < debian/patches/chromium.patch
 	./configure \
 	  -opensource \
 	  -confirm-license \
@@ -51,7 +55,7 @@ override_dh_auto_configure:
 
 override_dh_auto_build:
 	@echo Building Qt using $(JOB_COUNT) parallel jobs
-	$(MAKE) -j$(JOB_COUNT) V=1 NINJAFLAGS="-j$(JOB_COUNT)"
+	cmake --build . --parallel
 
 override_dh_auto_install:
-	dh_auto_install -Smakefile -- INSTALL_ROOT=$(CURDIR)/debian/tmp/
+	cmake --install . --prefix $(CURDIR)/debian/tmp/${QT_JAMI_PREFIX}
