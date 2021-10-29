@@ -21,7 +21,7 @@ OSX_DISTRIBUTION_NAME = "osx"
 ANDROID_DISTRIBUTION_NAME = "android"
 WIN32_DISTRIBUTION_NAME = "win32"
 
-QT5_VERSION = "5.15.0"
+QT5_VERSION = "6.2.1"
 
 # vs vars
 win_sdk_default = '10.0.16299.0'
