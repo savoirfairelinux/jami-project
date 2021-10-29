@@ -12,18 +12,15 @@ RUN zypper --non-interactive install -y \
         make \
         autoconf \
         automake \
-        cmake \
         nasm \
         speexdsp-devel \
         libpulse-devel \
         libcanberra-devel \
         libcurl-devel \
         libtool \
-        libQt5DBus-devel \
         pcre-devel \
         yaml-cpp-devel \
         libdbus-c++-devel \
-        libQt5DBus-devel \
         libXext-devel \
         libXfixes-devel \
         yasm \
@@ -55,29 +52,16 @@ RUN zypper --non-interactive install -y \
         libnma-devel \
         libcryptopp-devel \
         libdbus-c++-devel \
-        libQt5DBus-devel \
         libexpat-devel \
         gnome-icon-theme-symbolic \
         libgsm-devel \
         gtk3-devel \
         libappindicator-devel \
         sqlite-devel \
-        libQt5Sql-devel \
-        libQt5Gui-devel  \
-        libqt5-qtdeclarative-devel \
-        libqt5-qtquickcontrols \
-        libQt5Concurrent-devel \
-        libQt5QuickControls2-devel \
-        libqt5-qtmultimedia-devel \
-        libqt5-qtsvg-devel \
-        libqt5-qtwebengine-devel \
-        libQt5Sql-devel \
-        libQt5Gui-devel  \
         ffmpeg-4-libavutil-devel \
         gtk3-devel\
         qrencode-devel \
         python3-python-dateutil \
-        libqt5-linguist-devel \
         libsndfile-devel \
         libxcb* \
         libxkb* \
@@ -89,15 +73,17 @@ RUN zypper --non-interactive install -y \
         xcb-util-renderutil-devel \
         xcb-util-wm-devel \
         xorg-x11-devel \
-        libQt5Sql-devel \
-        libQt5Gui-devel \
-        libqt5-qtbase-devel \
-        libqt5-qttools \
         xz \
         libnotify \
         xkeyboard-config \
         argon2-devel \
         wget
+
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.19.8/cmake-3.19.8-Linux-x86_64.sh \
+      -q -O /tmp/cmake-install.sh \
+      && chmod u+x /tmp/cmake-install.sh \
+      && /tmp/cmake-install.sh --skip-license --prefix=/usr/local/ \
+      && rm /tmp/cmake-install.sh
 
 ADD scripts/build-package-rpm.sh  /opt/build-package-rpm.sh
 
