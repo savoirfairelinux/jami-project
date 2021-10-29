@@ -47,6 +47,8 @@ This package contains Qt libraries for Jami.
 
 %build
 echo "Building Qt using %{job_count} parallel jobs"
+# Qt 6.2 (https://wiki.linuxfromscratch.org/blfs/ticket/14729)
+sed -i 's,default=False,default=True,g' qtwebengine/src/3rdparty/chromium/third_party/catapult/tracing/tracing_build/generate_about_tracing_contents.py
 # https://bugs.gentoo.org/768261 (Qt 5.15)
 sed -i 's,#include "absl/base/internal/spinlock.h"1,#include "absl/base/internal/spinlock.h"1\n#include <limits>,g' qtwebengine/src/3rdparty/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc
 sed -i 's,#include <stdint.h>,#include <stdint.h>\n#include <limits>,g' qtwebengine/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/containers/string_pool.h
@@ -67,10 +69,10 @@ sed -i 's,#include <QtCore/qbytearray.h>,#include <QtCore/qbytearray.h>\n#includ
 sed -i 's,bin/python,bin/env python3,g' qtbase/mkspecs/features/uikit/devices.py
 
 # Chromium is built using Ninja, which doesn't honor MAKEFLAGS.
-make -j%{job_count} V=1 NINJAFLAGS="-j%{job_count}"
+cmake --build . --parallel
 
 %install
-make -j%{job_count} INSTALL_ROOT=%{buildroot} V=1 install
+cmake --install . --prefix %{buildroot}/${QT_JAMI_PREFIX}
 
 %files
 %defattr(-,root,root,-)
