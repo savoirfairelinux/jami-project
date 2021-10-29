@@ -81,6 +81,8 @@ Build-Depends: debhelper (>= 9),
 # qt5-qmake-bin <cross>,
                unixodbc-dev,
                zlib1g-dev,
+               nodejs,
+               npm,
 # =============
 # qtdeclarative
 # =============
