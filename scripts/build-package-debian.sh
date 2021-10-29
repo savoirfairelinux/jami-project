@@ -93,7 +93,7 @@ ${QT_MAJOR}.${QT_MINOR}/${qt_version}/single
                 --distribution "unstable" debian/changelog
 
         # Build and package Qt.
-        dpkg-buildpackage -uc -us ${DPKG_BUILD_OPTIONS}
+        dpkg-buildpackage -uc -us -d ${DPKG_BUILD_OPTIONS}
 
         # Cache the built .deb.
         mv "../${qt_deb_name}" "${qt_deb_path}"
