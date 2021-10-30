@@ -148,7 +148,7 @@ APT_DEPENDENCIES = [
 ]
 
 APT_CLIENT_GNOME_DEPENDENCIES = [
-    'libwebkit2gtk-4.0-dev', 'libappindicator3-dev', 'libcanberra-gtk3-dev'
+    'libwebkit2gtk-4.0-dev', 'libayatana-appindicator3-dev', 'libcanberra-gtk3-dev'
 ]
 
 APT_CLIENT_QT_DEPENDENCIES = [
