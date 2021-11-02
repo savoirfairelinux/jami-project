@@ -177,6 +177,7 @@ DISTRIBUTIONS := \
 	ubuntu_21.10 \
 	fedora_33 \
 	fedora_34 \
+	fedora_35 \
 	opensuse-leap_15.2 \
 	opensuse-leap_15.3 \
 	opensuse-tumbleweed \
@@ -197,7 +198,7 @@ define make-docker-package-target
 $(1)-docker-image-name := jami-packaging-$(1)
 $(1)-docker-image-file := .docker-image-$$($(1)-docker-image-name)
 $(1)-docker-run-command := docker run \
-  --rm --privileged --security-opt apparmor=docker-default \
+  --rm --privileged --security-opt seccomp=unconfined --security-opt apparmor=docker-default \
   -e RELEASE_VERSION="$(RELEASE_VERSION)" \
   -e RELEASE_TARBALL_FILENAME="$(RELEASE_TARBALL_FILENAME)" \
   -e DEBIAN_VERSION="$(DEBIAN_VERSION)" \
