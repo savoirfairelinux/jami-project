@@ -177,6 +177,7 @@ DISTRIBUTIONS := \
 	ubuntu_21.10 \
 	fedora_33 \
 	fedora_34 \
+	fedora_35 \
 	opensuse-leap_15.2 \
 	opensuse-leap_15.3 \
 	opensuse-tumbleweed \
