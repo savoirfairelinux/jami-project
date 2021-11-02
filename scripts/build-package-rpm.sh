@@ -97,7 +97,7 @@ if [[ "${DISTRIBUTION}" != "opensuse-tumbleweed" ]]; then
             rpmdev-bumpspec --comment="Automatic nightly release" \
                             --userstring="Jenkins <jami@lists.savoirfairelinux.net>" jami-libqt.spec
 
-            rpmbuild -ba jami-libqt.spec
+            QA_RPATHS=$(( 0x0001|0x0010 )) rpmbuild -ba jami-libqt.spec
             mkdir -p "$TARBALLS/${DISTRIBUTION}"
 
             # Cache the built Qt RPM package.
@@ -107,6 +107,8 @@ if [[ "${DISTRIBUTION}" != "opensuse-tumbleweed" ]]; then
                 cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.fc33.x86_64.rpm" "${RPM_PATH}"
             elif [[ "${DISTRIBUTION}" == "fedora_34" ]]; then
                 cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.fc34.x86_64.rpm" "${RPM_PATH}"
+            elif [[ "${DISTRIBUTION}" == "fedora_35" ]]; then
+                cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.fc35.x86_64.rpm" "${RPM_PATH}"
             else
                 cp /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm "${RPM_PATH}"
             fi
@@ -123,15 +125,15 @@ rpmdev-bumpspec --comment="Automatic nightly release" \
                 --userstring="Jenkins <jami@lists.savoirfairelinux.net>" ./*.spec
 
 # Build the daemon and install it.
-rpmbuild -ba jami-daemon.spec
+QA_RPATHS=$(( 0x0001|0x0010 )) rpmbuild -ba jami-daemon.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-daemon-*
 
 # Build the client library and install it.
-rpmbuild -ba jami-libclient.spec
+QA_RPATHS=$(( 0x0001|0x0010 )) rpmbuild -ba jami-libclient.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-*
 
 # Build the GNOME and Qt clients.
-rpmbuild -ba jami-gnome.spec jami-qt.spec
+QA_RPATHS=$(( 0x0001|0x0010 )) rpmbuild -ba jami-gnome.spec jami-qt.spec
 
 # Move the built packages to the output directory.
 mv /root/rpmbuild/RPMS/*/* /opt/output
