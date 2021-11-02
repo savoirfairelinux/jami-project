@@ -111,7 +111,7 @@ test -f configure || ./autogen.sh
 if [ "${global}" = "true" ]; then
     ./configure "$CONFIGURE_FLAGS" ${prefix:+"--prefix=$prefix"}
 else
-    ./configure "$CONFIGURE_FLAGS" --prefix="${INSTALL}/daemon"
+    ./configure --enable-debug "$CONFIGURE_FLAGS" --prefix="${INSTALL}/daemon"
 fi
 make -j"${proc}" V=1
 make_install "${global}" "${priv_install}"
