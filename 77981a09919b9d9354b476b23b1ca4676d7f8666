@@ -22,6 +22,30 @@
       },
       "revId": "77981a09919b9d9354b476b23b1ca4676d7f8666",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19c5d277_14b5a4db",
+        "filename": "scripts/install.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-11-04T17:19:10Z",
+      "side": 1,
+      "message": "it\u0027s a WIP, I don\u0027t succeed to build Qt on fedora 35",
+      "parentUuid": "f33b26a7_cb3c9bad",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 30
+      },
+      "revId": "77981a09919b9d9354b476b23b1ca4676d7f8666",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
