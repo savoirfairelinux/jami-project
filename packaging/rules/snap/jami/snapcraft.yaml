@@ -329,6 +329,7 @@ parts:
     - libvdpau-dev
     - libyaml-cpp-dev
     - nasm # seems to be needed for building libvpx on an 18.04 base
+    - python3
     - qt515base
     - qt515declarative
     - qt515graphicaleffects

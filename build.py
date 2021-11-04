@@ -148,7 +148,7 @@ APT_DEPENDENCIES = [
 ]
 
 APT_CLIENT_GNOME_DEPENDENCIES = [
-    'libwebkit2gtk-4.0-dev', 'libappindicator3-dev', 'libcanberra-gtk3-dev'
+    'libwebkit2gtk-4.0-dev', 'libayatana-appindicator3-dev', 'libcanberra-gtk3-dev'
 ]
 
 APT_CLIENT_QT_DEPENDENCIES = [
@@ -381,6 +381,8 @@ def run_install(args):
         install_args.append('-u')
     if args.debug:
         install_args.append('-d')
+    if args.no_libwrap:
+        install_args.append('-W')
 
     if args.distribution == OSX_DISTRIBUTION_NAME:
         # The `universal_newlines` parameter has been renamed to `text` in
@@ -647,6 +649,9 @@ def parse_args():
                     help='Build the Qt client with the Qt path supplied')
     ap.add_argument('--qtver', default=QT5_VERSION,
                     help='Sets the Qt version to build with')
+    ap.add_argument('--no-libwrap', dest='no_libwrap',
+                    default=False, action='store_true',
+                    help='Disable libwrap. Also set --disable-shared option to daemon configure')
 
     dist = choose_distribution()
 

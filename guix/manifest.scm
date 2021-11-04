@@ -94,8 +94,8 @@
   "yasm"
 
   ;; For libringclient (LRC) and the Qt client.
-  "qtbase"
-  "qtbase:debug"
+  "qtbase@5"
+  "qtbase@5:debug"
 
   ;; Shared by the GNOME and Qt clients.
   "qrencode"

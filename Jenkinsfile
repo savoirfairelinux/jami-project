@@ -1,3 +1,20 @@
+// Copyright (C) 2021 Savoir-faire Linux Inc.
+//
+// Author: Maxim Cournoyer <maxim.cournoyer@savoirfairelinux.com>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 // Packaging validation for supported GNU/Linux systems.
 //
 // Note: To work on this script without having to push a commit each
@@ -102,10 +119,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
 
         stage('Generate release tarball') {
             steps {
-                // Note: sourcing .bashrc is necessary to setup the
-                // environment variables used by Guix.
-                sh '''#!/usr/bin/env bash
-                   test -f $HOME/.bashrc && . $HOME/.bashrc
+                sh '''#!/usr/bin/env -S bash -l
                    make portable-release-tarball .tarball-version
                    '''
                 stash(includes: '*.tar.gz, .tarball-version',
@@ -143,7 +157,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                                     unstash 'release-tarball'
                                     catchError(buildResult: 'FAILURE',
                                                stageResult: 'FAILURE') {
-                                        sh """
+                                        sh """#!/usr/bin/env -S bash -l
                                            echo Building on node \$NODE_NAME
                                            tar xf *.tar.gz --strip-components=1
                                            make ${target}
@@ -179,9 +193,18 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                             echo "Failed to unstash ${target}, skipping..."
                             return
                         }
-                        echo "Deploying packages for ${target}..."
+                    }
+
+                    def distributionsText = sh(
+                        script: 'find packages/* -maxdepth 1 -type d -print0 ' +
+                            '| xargs -0 -n1 basename -z',
+                        returnStdout: true).trim()
+                    def distributions = distributionsText.split("\0")
+
+                    distributions.each { distribution ->
+                        echo "Deploying ${distribution} packages..."
                         sh """scripts/deploy-packages.sh \
-  --distribution=${target} \
+  --distribution=${distribution} \
   --keyid="${RING_PUBLIC_KEY_FINGERPRINT}" \
   --snapcraft-login="${SNAPCRAFT_KEY}" \
   --remote-ssh-identity-file="${SSH_PRIVATE_KEY}" \

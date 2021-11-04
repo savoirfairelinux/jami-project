@@ -1,0 +1,97 @@
+#!/bin/sh
+# Copyright (C) 2021 Savoir-faire Linux Inc.
+#
+# Author: Maxim Cournoyer <maxim.cournoyer@savoirfairelinux.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+set -e
+
+# Fingerprint: A295D773307D25A33AE72F2F64CD5FA175348F84
+jami_key="\
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2
+
+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
+4sRdAfS333T4Uifq4uOu
+=s2aQ
+-----END PGP PUBLIC KEY BLOCK-----"
+
+# System paths and generated variables.
+apt_file=/etc/apt/sources.list.d/jami.list
+update_manager_path=/etc/update-manager/release-upgrades.d/
+jami_update_manager_id=jami
+jami_update_manager_cfg=${jami_update_manager_id}.cfg
+update_manager_cfg_path=$update_manager_path/$jami_update_manager_cfg
+jami_repo_url=https://dl.jami.net/nightly/guix-deb-pack
+
+case "$1" in
+    configure)
+        command -v apt-key > /dev/null \
+            || (echo 'could not run postinst: apt-key is missing' && exit 1)
+
+        # Add the key to the trusted keyring.
+        echo "$jami_key" | apt-key add - > /dev/null 2>&1
+
+        # Additionally, if update manager is installed we inform it about
+        # the repository so it doesn't get scrapped after system updates
+        if [ -d /etc/update-manager ]; then
+            mkdir -p "$update_manager_path"
+            cat > "$update_manager_cfg_path" <<EOF
+# Added by Jami to prevent disabling of Jami repository sources on
+# distribution release upgrade.
+[ThirdPartyMirrors]
+jami/${jami_update_manager_id}=${jami_repo_url}
+EOF
+        fi
+
+        # Add an entry for the package repository.
+        test -f "$apt_file" && cp "$apt_file" "${apt_file}.bak"
+        echo "deb $jami_repo_url jami main" > "$apt_file"
+        ;;
+esac
+
+# Local Variables:
+# mode: sh
+# End:
