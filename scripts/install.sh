@@ -15,14 +15,14 @@ export OSTYPE
 set -ex
 
 # Qt_MIN_VER required for client-qt
-QT5_MIN_VER="5.14"
+QT6_MIN_VER="6.2"
 
 debug=
 global=false
 static=''
 client=''
-qt5ver=''
-qt5path=''
+qt6ver=''
+qt6path=''
 proc='1'
 priv_install=true
 enable_libwrap=true
@@ -42,10 +42,10 @@ while getopts gsc:dq:Q:P:p:uW OPT; do
       debug=true
     ;;
     q)
-      qt5ver="${OPTARG}"
+      qt6ver="${OPTARG}"
     ;;
     Q)
-      qt5path="${OPTARG}"
+      qt6path="${OPTARG}"
     ;;
     P)
       prefix="${OPTARG}"
@@ -124,26 +124,26 @@ make -j"${proc}" V=1
 make_install "${global}" "${priv_install}"
 
 # For the client-qt, verify system's version if no path provided
-if [ "${client}" = "client-qt" ] && [ -z "$qt5path" ]; then
-    sys_qt5ver=""
+if [ "${client}" = "client-qt" ] && [ -z "$qt6path" ]; then
+    sys_qt6ver=""
     if command -v qmake &> /dev/null; then
-        sys_qt5ver=$(qmake -v)
-    elif command -v qmake-qt5 &> /dev/null; then
-        sys_qt5ver=$(qmake-qt5 -v)   # Fedora
+        sys_qt6ver=$(qmake -v)
+    elif command -v qmake-qt6 &> /dev/null; then
+        sys_qt6ver=$(qmake-qt6 -v)   # Fedora
     else
         echo "No valid Qt found"; exit 1;
     fi
 
-    sys_qt5ver=${sys_qt5ver#*Qt version}
-    sys_qt5ver=${sys_qt5ver%\ in\ *}
+    sys_qt6ver=${sys_qt6ver#*Qt version}
+    sys_qt6ver=${sys_qt6ver%\ in\ *}
 
-    installed_qt5ver=$(echo "$sys_qt5ver" | cut -d'.' -f 2)
-    required_qt5ver=$(echo $QT5_MIN_VER | cut -d'.' -f 2)
+    installed_qt6ver=$(echo "$sys_qt6ver" | cut -d'.' -f 2)
+    required_qt6ver=$(echo $QT6_MIN_VER | cut -d'.' -f 2)
 
-    if [[ $installed_qt5ver -ge $required_qt5ver ]] ; then
-        # Disable qt5path and qt5ver in order to use system's Qt
-        qt5path=""
-        qt5ver=""
+    if [[ $installed_qt6ver -ge $required_qt6ver ]] ; then
+        # Disable qt6path and qt6ver in order to use system's Qt
+        qt6path=""
+        qt6ver=""
     else
         echo "No valid Qt found"; exit 1;
     fi
@@ -154,10 +154,11 @@ cd "${TOP}/lrc"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 # Compute LRC CMake flags
-lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}"
+lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${qt6path}"
                  -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
-                 -DQT5_VER="${qt5ver}"
-                 -DQT5_PATH="${qt5path}"
+                 -DQT6_VER="${qt6ver}"
+                 -DQT6_DIR="${qt6path}"
+                 -DQT6_PATH="${qt6path}"
                  -DENABLE_LIBWRAP="${enable_libwrap}"
                  $static)
 if [ "${global}" = "true" ]; then
@@ -177,12 +178,13 @@ mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 
 client_cmake_flags=(-DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
-                    -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}")
+                    -DCMAKE_PREFIX_PATH="${qt6path}")
 
 if [ "${client}" = "client-qt" ]; then
     # Compute Qt client CMake flags.
-    client_cmake_flags+=(-DQT5_VER="${qt5ver}"
-                         -DQT5_PATH="${qt5path}")
+    client_cmake_flags+=(-DQT6_VER="${qt6ver}"
+                         -DQT6_DIR="${qt6path}"
+                         -DQT6_PATH="${qt6path}")
     if [ "${global}" = "true" ]; then
         client_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"}
                              $static)
