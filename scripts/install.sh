@@ -87,6 +87,12 @@ else
     BUILDDIR="build-local"
 fi
 
+BUILD_TYPE="Release"
+if [ "${debug}" = "true" ]; then
+  BUILD_TYPE="Debug"
+  CONFIGURE_FLAGS+=( --enable-debug)
+fi
+
 # jamid
 DAEMON=${TOP}/daemon
 cd "$DAEMON"
@@ -102,7 +108,7 @@ mkdir -p contrib/native
 if [[ "$OSTYPE" != "darwin"* ]]; then
     # Keep the shared libaries on MAC OSX.
     if [ "${enable_libwrap}" == "false" ]; then
-        CONFIGURE_FLAGS+=( --disable-shared)
+        CONFIGURE_FLAGS+=( --disable-shared --enable-shm)
     fi
 fi
 # Build the daemon itself.
@@ -148,7 +154,7 @@ mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 # Compute LRC CMake flags
 lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}"
-                 -DCMAKE_BUILD_TYPE=Debug
+                 -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
                  -DQT5_VER="${qt5ver}"
                  -DQT5_PATH="${qt5path}"
                  -DENABLE_LIBWRAP="${enable_libwrap}"
@@ -169,7 +175,7 @@ cd "${TOP}/${client}"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 
-client_cmake_flags=(-DCMAKE_BUILD_TYPE=Debug
+client_cmake_flags=(-DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
                     -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}")
 
 if [ "${client}" = "client-qt" ]; then
