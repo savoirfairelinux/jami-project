@@ -87,6 +87,12 @@ else
     BUILDDIR="build-local"
 fi
 
+BUILD_TYPE="Release"
+if [ "${debug}" = "true" ]; then
+  BUILD_TYPE="Debug"
+  CONFIGURE_FLAGS+=( --enable-debug)
+fi
+
 # jamid
 DAEMON=${TOP}/daemon
 cd "$DAEMON"
@@ -98,20 +104,22 @@ mkdir -p contrib/native
     ../bootstrap ${prefix:+"--prefix=$prefix"}
     make -j"${proc}"
 )
-# Disable shared if requested
-if [[ "$OSTYPE" != "darwin"* ]]; then
-    # Keep the shared libaries on MAC OSX.
-    if [ "${enable_libwrap}" == "false" ]; then
-        CONFIGURE_FLAGS+=( --disable-shared)
-    fi
+
+if [[ "${enable_libwrap}" == "true" ]]; then
+  CONFIGURE_FLAGS+=" --without-dbus"
+else
+  # Disable shared if requested
+  if [[ "$OSTYPE" != "darwin"* ]]; then
+    CONFIGURE_FLAGS+=" --disable-shared"
+  fi
 fi
 # Build the daemon itself.
 test -f configure || ./autogen.sh
 
 if [ "${global}" = "true" ]; then
-    ./configure "$CONFIGURE_FLAGS" ${prefix:+"--prefix=$prefix"}
+    ./configure ${CONFIGURE_FLAGS} ${prefix:+"--prefix=$prefix"}
 else
-    ./configure "$CONFIGURE_FLAGS" --prefix="${INSTALL}/daemon"
+    ./configure ${CONFIGURE_FLAGS} --prefix="${INSTALL}/daemon"
 fi
 make -j"${proc}" V=1
 make_install "${global}" "${priv_install}"
@@ -148,7 +156,7 @@ mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 # Compute LRC CMake flags
 lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}"
-                 -DCMAKE_BUILD_TYPE=Debug
+                 -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
                  -DQT5_VER="${qt5ver}"
                  -DQT5_PATH="${qt5path}"
                  -DENABLE_LIBWRAP="${enable_libwrap}"
@@ -169,7 +177,7 @@ cd "${TOP}/${client}"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 
-client_cmake_flags=(-DCMAKE_BUILD_TYPE=Debug
+client_cmake_flags=(-DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
                     -DCMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}")
 
 if [ "${client}" = "client-qt" ]; then
