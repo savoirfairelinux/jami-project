@@ -245,7 +245,7 @@ parts:
 
       cd $SNAPCRAFT_PART_BUILD/daemon
       ./autogen.sh
-      ./configure --prefix=/usr
+      ./configure --prefix=/usr --without-dbus
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
 
