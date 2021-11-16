@@ -192,7 +192,7 @@ DOCKER_RUN_EXTRA_ARGS =
 # This function is used to produce the rules of the packaging targets
 # that rely on Docker.
 # Arg1: The name-version string of the distribution (e.g., ubuntu-18.04).
-# Arg2: Extra arguments to pass to 'docker build'.
+# Arg2: Extra arguments to pass to 'docker build --no-cache'.
 # Arg3: Extra arguments to pass to 'docker run'.
 define make-docker-package-target
 $(1)-docker-image-name := jami-packaging-$(1)
@@ -222,7 +222,7 @@ $(1)-docker-run-command := docker run \
   "$$($(1)-docker-image-name)"
 
 $$($(1)-docker-image-file): docker/Dockerfile_$(1)
-	docker build \
+	docker build --no-cache \
 	  -t $$($(1)-docker-image-name) \
 	  -f docker/Dockerfile_$(1) $(2) $(CURDIR) && \
 	touch "$$@"
