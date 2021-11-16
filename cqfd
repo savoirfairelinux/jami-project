@@ -112,10 +112,11 @@ docker_build() {
 	if [ ! -f $dockerfile ]; then
 		die "no Dockerfile found at location $dockerfile"
 	fi
+	docker builder prune -af
 	if [ -z "$project_build_context" ]; then
-		docker build ${quiet:+-q} $CQFD_EXTRA_BUILD_ARGS -t "$docker_img_name" "$(dirname "$dockerfile")"
+		docker build --no-cache ${quiet:+-q} $CQFD_EXTRA_BUILD_ARGS -t "$docker_img_name" "$(dirname "$dockerfile")"
 	else
-		docker build ${quiet:+-q} $CQFD_EXTRA_BUILD_ARGS -t "$docker_img_name" "${project_build_context}" -f "$dockerfile"
+		docker build --no-cache ${quiet:+-q} $CQFD_EXTRA_BUILD_ARGS -t "$docker_img_name" "${project_build_context}" -f "$dockerfile"
 	fi
 }
 
