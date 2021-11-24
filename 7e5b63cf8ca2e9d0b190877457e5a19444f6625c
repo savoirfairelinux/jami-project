@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cc2e138_10efdc1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 94
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-11-24T20:23:08Z",
+      "side": 1,
+      "message": "2 min review",
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77b1125c_8fa236c1",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 94
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-11-24T20:23:08Z",
+      "side": 1,
+      "message": "why?",
+      "range": {
+        "startLine": 19,
+        "startChar": 47,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "958510b1_a4acb1b3",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 94
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-11-24T20:23:08Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 22,
+        "startChar": 49,
+        "endLine": 22,
+        "endChar": 53
+      },
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e81c92c3_ec95a2cb",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 94
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-11-24T20:23:08Z",
+      "side": 1,
+      "message": "What\u0027s this for?  The rationale should be explained here as a comment.  Also; no checksum validation?  That\u0027s at odd with the care we use everywhere else.",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 96
+      },
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f66fc841_b08b3d9d",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 94
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-11-24T20:23:08Z",
+      "side": 1,
+      "message": "you should install with a prefix of /usr/local/; that\u0027s what it\u0027s for.",
+      "range": {
+        "startLine": 30,
+        "startChar": 46,
+        "endLine": 30,
+        "endChar": 69
+      },
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6622f980_85917d04",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 94
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-11-24T20:23:08Z",
+      "side": 1,
+      "message": "Then you wouldn\u0027t need this.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 37
+      },
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c347374c_88d65c41",
+        "filename": "docker/Dockerfile_ubuntu_18.04",
+        "patchSetId": 94
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-11-24T20:23:08Z",
+      "side": 1,
+      "message": "this is very repetititive... perhaps it could be moved to yet another helper script so that it\u0027s not duplicated as many times as there are Dockerfiles.",
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2f9cf99_d4f6c720",
+        "filename": "scripts/prebuild-package-debian.sh",
+        "patchSetId": 94
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-11-24T20:23:08Z",
+      "side": 1,
+      "message": "this will bite us in the rear",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
