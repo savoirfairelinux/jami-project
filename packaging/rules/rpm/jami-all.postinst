@@ -121,11 +121,6 @@ rpm --import "$GPG_FILE"  > /dev/null 2>&1
 
 jami_repo_name="$NAME \$releasever - \$basearch - Jami"
 jami_repo_base_url="$JAMI_REPO_BASE/$ID_\$releasever"
-# Remove releasever for tumbleweed as it's a rolling release.
-if [ "$ID" = "opensuse-tumbleweed" ]; then
-    jami_repo_name="$NAME \$basearch - Jami"
-    jami_repo_base_url=$JAMI_REPO_BASE/$ID
-fi
 
 # Add an entry for the package repository to the trusted package.
 cat > "$REPO_FILE" <<EOF
