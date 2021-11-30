@@ -44,7 +44,7 @@ PACMAN_BASED_DISTROS = [
 ]
 
 ZYPPER_BASED_DISTROS = [
-    'opensuse-leap', 'opensuse-tumbleweed',
+    'opensuse-leap',
 ]
 
 FLATPAK_BASED_RUNTIMES = [

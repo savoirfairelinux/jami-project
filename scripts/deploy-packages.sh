@@ -151,13 +151,8 @@ function package_rpm()
     mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
 
     # .repo file
-    if [ "${DISTRIBUTION:0:19}" == "opensuse-tumbleweed" ]; then
-        name="Jami \$basearch - jami"
-        baseurl="https://dl.jami.net/nightly/${DISTRIBUTION%_*}"
-    else
-        name="Jami \$releasever - \$basearch - jami"
-        baseurl="https://dl.jami.net/nightly/${DISTRIBUTION%_*}_\$releasever"
-    fi
+    name="Jami \$releasever - \$basearch - jami"
+    baseurl="https://dl.jami.net/nightly/${DISTRIBUTION%_*}_\$releasever"
 
     cat << EOF > ${DISTRIBUTION_REPOSITORY_FOLDER}/jami-nightly.repo
 [jami]
