@@ -78,7 +78,7 @@ override_dh_auto_build:
 	make -j$(NO_CPUS) V=1
 	cd daemon && \
 	./autogen.sh && \
-	./configure \
+	CXXFLAGS="-fPIC " ./configure \
 	  --prefix=/usr \
 	  --host=${HOST_ARCH}
 
