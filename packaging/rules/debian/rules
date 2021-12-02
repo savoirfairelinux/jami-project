@@ -47,6 +47,8 @@ export PATH := $(QT_JAMI_PREFIX)/bin:${PATH}
 export LD_LIBRARY_PATH := $(QT_JAMI_PREFIX)/lib:${LD_LIBRARY_PATH}
 export PKG_CONFIG_PATH := $(QT_JAMI_PREFIX)/lib/pkgconfig:${PKG_CONFIG_PATH}
 export CMAKE_PREFIX_PATH := $(QT_JAMI_PREFIX)/lib/cmake:${CMAKE_PREFIX_PATH}
+export CFLAGS := $(CFLAGS) -fno-lto -flto-partition=none
+export CXXFLAGS := $(CXXFLAGS) -fno-lto -flto-partition=none
 
 # Installation directories.
 OCI_INSTALL_DIR = $(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME)
