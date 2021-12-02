@@ -99,9 +99,7 @@ mkdir -p contrib/native
     make -j"${proc}"
 )
 
-if [[ "${enable_libwrap}" == "true" ]]; then
-  CONFIGURE_FLAGS+=" --without-dbus"
-else
+if [[ "${enable_libwrap}" != "true" ]]; then
   # Disable shared if requested
   if [[ "$OSTYPE" != "darwin"* ]]; then
     CONFIGURE_FLAGS+=" --disable-shared"

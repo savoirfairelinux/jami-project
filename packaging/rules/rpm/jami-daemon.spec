@@ -85,7 +85,6 @@ cd %{_builddir}/ring-project/daemon && \
     ./autogen.sh && \
     ./configure \
         --prefix=%{_prefix} \
-        --without-dbus \
         --libdir=%{_libdir}
 
 # Build the daemon.

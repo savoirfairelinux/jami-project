@@ -80,7 +80,6 @@ override_dh_auto_build:
 	./autogen.sh && \
 	./configure \
 	  --prefix=/usr \
-	  --without-dbus \
 	  --host=${HOST_ARCH}
 
 	# Daemon build
