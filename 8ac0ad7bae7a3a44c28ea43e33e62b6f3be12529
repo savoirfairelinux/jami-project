@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5284262d_ca3ed295",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 138
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 938
+      },
+      "writtenOn": "2021-12-04T08:35:57Z",
+      "side": 1,
+      "message": "Qt 6.2.2 Released\n\nhttps://www.qt.io/blog/qt-6.2.2-released",
+      "revId": "8ac0ad7bae7a3a44c28ea43e33e62b6f3be12529",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
