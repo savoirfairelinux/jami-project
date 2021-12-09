@@ -127,6 +127,21 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             }
         }
 
+        stage('Upload release tarball') {
+            when {
+                allOf {
+                    expression { params.DEPLOY }
+                    anyOf {
+                        expression { params.CHANNEL == 'nightly' }
+                        expression { params.CHANNEL == 'stable' }
+                    }
+                }
+            }
+            steps {
+                sh "rsync --verbose -e \"ssh -i ${SSH_PRIVATE_KEY}\" jami*.tar.gz ${REMOTE_HOST}:${REMOTE_BASE_DIR}/release/tarballs/"
+            }
+        }
+
         stage('Build packages') {
             environment {
                 DISABLE_CONTRIB_DOWNLOADS = 'TRUE'
