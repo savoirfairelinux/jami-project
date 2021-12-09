@@ -34,6 +34,7 @@ def REMOTE_HOST = env.SSH_HOST_DL_RING_CX
 def REMOTE_BASE_DIR = '/srv/repository/ring'
 def RING_PUBLIC_KEY_FINGERPRINT = 'A295D773307D25A33AE72F2F64CD5FA175348F84'
 def SNAPCRAFT_KEY = '/var/lib/jenkins/.snap/key'
+def GIT_USER_EMAIL = 'jenkins@jami.net'
 
 pipeline {
     agent {
@@ -70,9 +71,6 @@ pipeline {
         booleanParam(name: 'BUILD_ARM',
                      defaultValue: false,
                      description: 'Whether to build ARM packages.')
-        booleanParam(name: 'DEPLOY',
-                     defaultValue: false,
-                     description: 'Whether and where to deploy packages.')
         choice(name: 'CHANNEL',
                choices: 'internal\nnightly\nstable',
                description: 'The repository channel to deploy to. ' +
@@ -107,6 +105,24 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             }
         }
 
+        stage('Checkout channel branch') {
+            when {
+                expression {
+                    params.CHANNEL == 'nightly' || params.CHANNEL == 'stable'
+                }
+            }
+
+            steps {
+                script {
+                    def releaseBranch = 'nightly'
+                    if (params.CHANNEL == 'stable') {
+                        releaseBranch = 'release'
+                    }
+                    sh("git checkout ${releaseBranch}")
+                }
+            }
+        }
+
         stage('Fetch submodules') {
             steps {
                 echo 'Initializing submodules ' + SUBMODULES.join(', ') +
@@ -117,13 +133,42 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             }
         }
 
+        stage('Commit & tag release in Git') {
+            steps {
+                sh """git config user.email ${GIT_USER_EMAIL}
+                      git add .
+                      git commit -m "New release."
+                      make .tarball-version
+                      git tag $(cat .tarball-version)
+                   """
+            }
+        }
+
         stage('Generate release tarball') {
             steps {
                 sh '''#!/usr/bin/env -S bash -l
-                   make portable-release-tarball .tarball-version
+                   make portable-release-tarball
                    '''
                 stash(includes: '*.tar.gz, .tarball-version',
                       name: 'release-tarball')
+            }
+        }
+
+        stage('Publish release artifacts') {
+            when {
+                expression {
+                    params.CHANNEL == 'nightly' || params.CHANNEL == 'stable'
+                }
+            }
+
+            steps {
+                echo Publishing tag to git repo...
+                sh 'git push --tags'
+                echo Publishing release tarball to dl.jami.net...
+                sh """rsync --verbose -e "ssh -i ${SSH_PRIVATE_KEY}" \
+                        jami*.tar.gz \
+                        ${REMOTE_HOST}:${REMOTE_BASE_DIR}/release/tarballs/"
+                   """
             }
         }
 
