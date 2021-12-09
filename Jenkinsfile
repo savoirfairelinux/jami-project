@@ -26,14 +26,20 @@
 // 2. ws-cleanup plugin
 // 3. ansicolor plugin
 
+// TODO:
+// - GPG-sign release tarballs.
+// - GPG-sign release commits.
+// - Allow publishing from any node, to avoid relying on a single machine.
+
 // Configuration globals.
 def SUBMODULES = ['daemon', 'lrc', 'client-gnome', 'client-qt']
 def TARGETS = [:]
-def SSH_PRIVATE_KEY = '/var/lib/jenkins/.ssh/gplpriv'
 def REMOTE_HOST = env.SSH_HOST_DL_RING_CX
 def REMOTE_BASE_DIR = '/srv/repository/ring'
-def RING_PUBLIC_KEY_FINGERPRINT = 'A295D773307D25A33AE72F2F64CD5FA175348F84'
+def JAMI_PUBLIC_KEY_FINGERPRINT = 'A295D773307D25A33AE72F2F64CD5FA175348F84'
 def SNAPCRAFT_KEY = '/var/lib/jenkins/.snap/key'
+def GIT_USER_EMAIL = 'jenkins@jami.net'
+def SSH_CRED_ID = '35cefd32-dd99-41b0-8312-0b386df306ff'
 
 pipeline {
     agent {
@@ -72,7 +78,7 @@ pipeline {
                      description: 'Whether to build ARM packages.')
         booleanParam(name: 'DEPLOY',
                      defaultValue: false,
-                     description: 'Whether and where to deploy packages.')
+                     description: 'Whether to deploy packages.')
         choice(name: 'CHANNEL',
                choices: 'internal\nnightly\nstable',
                description: 'The repository channel to deploy to. ' +
@@ -107,6 +113,19 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             }
         }
 
+        stage('Checkout channel branch') {
+            when {
+                expression {
+                    params.CHANNEL != 'internal'
+                }
+            }
+
+            steps {
+                sh "git checkout ${params.CHANNEL} " +
+                    '&& git merge --no-commit FETCH_HEAD'
+            }
+        }
+
         stage('Fetch submodules') {
             steps {
                 echo 'Initializing submodules ' + SUBMODULES.join(', ') +
@@ -119,11 +138,40 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
 
         stage('Generate release tarball') {
             steps {
-                sh '''#!/usr/bin/env -S bash -l
-                   make portable-release-tarball .tarball-version
-                   '''
+                sh """#!/usr/bin/env -S bash -l
+                      git config user.email ${GIT_USER_EMAIL}
+                      git commit -am "New release."
+                      make portable-release-tarball .tarball-version
+                      git tag \$(cat .tarball-version)
+                   """
                 stash(includes: '*.tar.gz, .tarball-version',
                       name: 'release-tarball')
+            }
+        }
+
+        stage('Publish release artifacts') {
+            when {
+                expression {
+                    params.DEPLOY && params.CHANNEL != 'internal'
+                }
+            }
+
+            steps {
+                sshagent(credentials: [SSH_CRED_ID]) {
+                    echo "Publishing to git repository..."
+                    // Note: Only stable release tags are published.
+                    script {
+                        if (params.CHANNEL == 'stable') {
+                            sh 'git push --tags'
+                        } else {
+                            sh 'git push'
+                        }
+                    }
+                    echo "Publishing release tarball to https://dl.jami.net..."
+                    sh 'rsync --verbose jami*.tar.gz ' +
+                        "${REMOTE_HOST}:${REMOTE_BASE_DIR}/release/tarballs/" +
+                        "${params.CHANNEL}/"
+                }
             }
         }
 
@@ -185,32 +233,33 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             }
 
             steps {
-                script {
-                    TARGETS.each { target ->
-                        try {
-                            unstash target
-                        } catch (err) {
-                            echo "Failed to unstash ${target}, skipping..."
-                            return
+                sshagent(credentials: [SSH_CRED_ID]) {
+                    script {
+                        TARGETS.each { target ->
+                            try {
+                                unstash target
+                            } catch (err) {
+                                echo "Failed to unstash ${target}, skipping..."
+                                return
+                            }
                         }
-                    }
 
-                    def distributionsText = sh(
-                        script: 'find packages/* -maxdepth 1 -type d -print0 ' +
-                            '| xargs -0 -n1 basename -z',
-                        returnStdout: true).trim()
-                    def distributions = distributionsText.split("\0")
+                        def distributionsText = sh(
+                            script: 'find packages/* -maxdepth 1 -type d -print0 ' +
+                                '| xargs -0 -n1 basename -z',
+                            returnStdout: true).trim()
+                        def distributions = distributionsText.split("\0")
 
-                    distributions.each { distribution ->
-                        echo "Deploying ${distribution} packages..."
-                        sh """scripts/deploy-packages.sh \
+                        distributions.each { distribution ->
+                            echo "Deploying ${distribution} packages..."
+                            sh """scripts/deploy-packages.sh \
   --distribution=${distribution} \
-  --keyid="${RING_PUBLIC_KEY_FINGERPRINT}" \
+  --keyid="${JAMI_PUBLIC_KEY_FINGERPRINT}" \
   --snapcraft-login="${SNAPCRAFT_KEY}" \
-  --remote-ssh-identity-file="${SSH_PRIVATE_KEY}" \
   --remote-repository-location="${REMOTE_HOST}:${REMOTE_BASE_DIR}/${params.CHANNEL}" \
   --remote-manual-download-location="${REMOTE_HOST}:${REMOTE_BASE_DIR}/manual-${params.CHANNEL}"
 """
+                        }
                     }
                 }
             }
