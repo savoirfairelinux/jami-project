@@ -33,6 +33,24 @@
       "message": "The gotcha here is that SSH_PRIVATE_KEY only exists on machine02; either we manually set it up on all build nodes, or a better option would be to keep the secret key as a secret on the head node, and arrange to use/install it temporarily on each run on the build nodes.",
       "revId": "8b40aed7c397ed6188a9b8376eac962efb90758e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44440698_c84515b1",
+        "filename": "Jenkinsfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-12-09T15:31:21Z",
+      "side": 1,
+      "message": "Also, your Groovy variables won\u0027t expand (SSH_PRIVATE_KEY) when enclosed in single quotes.",
+      "parentUuid": "e21b075a_7e187566",
+      "revId": "8b40aed7c397ed6188a9b8376eac962efb90758e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
