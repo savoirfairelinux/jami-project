@@ -225,14 +225,14 @@ function package_snap()
     echo "## deploying snap ##"
     echo "####################"
 
-    if [[ "${CHANNEL:0:19}" == "internal_experiment" ]]; then
+    if [[ $CHANNEL =~ internal ]]; then
         DISTRIBUTION_REPOSITORY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
         mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
         cp packages/${DISTRIBUTION}*/*.snap ${DISTRIBUTION_REPOSITORY_FOLDER}/
-    elif [[ "${CHANNEL:0:7}" == "nightly" ]]; then
+    elif [[ $CHANNEL =~ nightly ]]; then
         snapcraft login --with ${SNAPCRAFT_LOGIN}
         snapcraft push packages/${DISTRIBUTION}*/*.snap --release edge
-    elif [[ "${CHANNEL:0:6}" == "stable" ]]; then
+    elif [[ $CHANNEL =~ production ]]; then
         snapcraft login --with ${SNAPCRAFT_LOGIN}
         snapcraft push packages/${DISTRIBUTION}*/*.snap --release stable
     fi
