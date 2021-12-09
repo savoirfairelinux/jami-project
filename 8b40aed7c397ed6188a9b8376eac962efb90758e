@@ -69,6 +69,24 @@
       "parentUuid": "44440698_c84515b1",
       "revId": "8b40aed7c397ed6188a9b8376eac962efb90758e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f7d4139_509ad936",
+        "filename": "Jenkinsfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2021-12-09T16:22:16Z",
+      "side": 1,
+      "message": "oh, it probably works then to use single quotes in \"\"\".  Inside \u0027\u0027\u0027 it wouldn\u0027t.",
+      "parentUuid": "a45c94ac_a687a543",
+      "revId": "8b40aed7c397ed6188a9b8376eac962efb90758e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
