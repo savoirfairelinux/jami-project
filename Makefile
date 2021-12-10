@@ -24,20 +24,15 @@ export TARBALLS ?= /var/cache/jami
 ##############################
 ## Version number variables ##
 ##############################
-TARBALL_VERSION := $(strip $(shell cat $(CURDIR)/.tarball-version 2> /dev/null))
+TARBALL_VERSION := $(shell cat $(CURDIR)/.tarball-version 2> /dev/null)
 
 ifeq ($(TARBALL_VERSION),)
-LAST_COMMIT_DATE:=$(strip \
-  $(shell git log -1 --format=%cd --date=format:'%Y%m%d.%H%M'))
-
-# last commit id
-COMMIT_ID:=$(strip $(shell git rev-parse --short HEAD))
-
-RELEASE_VERSION:=$(CURRENT_DATE_SHORT).$(NUMBER_OF_COMMITS).$(COMMIT_ID)
-
+LAST_COMMIT_DATE := $(shell git log -1 --format=%cd --date=format:'%Y%m%d.%H%M')
+COMMIT_ID := $(shell git rev-parse --short HEAD)
+RELEASE_VERSION := $(LAST_COMMIT_DATE).$(COMMIT_ID)
 else
 $(warning Using version from the .tarball-version file: $(TARBALL_VERSION))
-RELEASE_VERSION:=$(TARBALL_VERSION)
+RELEASE_VERSION := $(TARBALL_VERSION)
 endif
 RELEASE_TARBALL_FILENAME := jami_$(RELEASE_VERSION).tar.gz
 
@@ -46,8 +41,8 @@ export RELEASE_VERSION
 export RELEASE_TARBALL_FILENAME
 
 # Debian versions
-DEBIAN_VERSION:=$(RELEASE_VERSION)~dfsg1-1
-DEBIAN_DSC_FILENAME:=jami_$(DEBIAN_VERSION).dsc
+DEBIAN_VERSION := $(RELEASE_VERSION)~dfsg1-1
+DEBIAN_DSC_FILENAME := jami_$(DEBIAN_VERSION).dsc
 
 # Qt versions
 QT_MAJOR := 6
