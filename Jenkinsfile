@@ -175,22 +175,21 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             }
 
             steps {
-                sshagent(credentials: [SSH_CRED_ID]) {
-                    echo "Publishing to git repository..."
-                    // Note: Only stable release tags are published.
-                    script {
-                        if (params.CHANNEL == 'stable') {
-                            sh 'git push --tags'
-                        } else {
-                            sh 'git push'
-                        }
+                echo "Publishing to git repository..."
+                // Note: Only stable release tags are published.
+                script {
+                    if (params.CHANNEL == 'stable') {
+                        sh 'git push --tags'
+                    } else {
+                        sh 'git push'
                     }
-                    echo "Publishing release tarball to https://dl.jami.net..."
-                    sh 'rsync --verbose jami*.tar.gz ' +
-                        "${REMOTE_HOST}:${REMOTE_BASE_DIR}/release/tarballs/" +
-                        "${params.CHANNEL}/"
                 }
+                echo "Publishing release tarball to https://dl.jami.net..."
+                sh 'rsync --verbose jami*.tar.gz ' +
+                    "${REMOTE_HOST}:${REMOTE_BASE_DIR}/release/tarballs/" +
+                    "${params.CHANNEL}/"
             }
+
         }
 
         stage('Build packages') {
