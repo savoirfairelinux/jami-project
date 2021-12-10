@@ -29,17 +29,19 @@ TARBALL_VERSION := $(shell cat $(CURDIR)/.tarball-version 2> /dev/null)
 ifeq ($(TARBALL_VERSION),)
 # YYYY-MM-DD
 LAST_COMMIT_DATE:=$(shell git log -1 --format=%cd --date=short)
+CURRENT_DATE:=$(shell date +"%Y-%m-%d")
 
 # number of commits that day
 NUMBER_OF_COMMITS:=$(shell git log --format=%cd --date=short | grep -c $(LAST_COMMIT_DATE))
 
 # YYMMDD
-LAST_COMMIT_DATE_SHORT:=$(shell echo $(LAST_COMMIT_DATE) | sed -s 's/-//g')
+CURRENT_DATE_SHORT:=$(shell echo $(CURRENT_DATE) | sed -s 's/-//g')
 
 # last commit id
 COMMIT_ID:=$(shell git rev-parse --short HEAD)
 
-RELEASE_VERSION:=$(LAST_COMMIT_DATE_SHORT).$(NUMBER_OF_COMMITS).$(COMMIT_ID)
+RELEASE_VERSION:=$(CURRENT_DATE_SHORT).$(NUMBER_OF_COMMITS).$(COMMIT_ID)
+
 else
 $(warning Using version from the .tarball-version file: $(TARBALL_VERSION))
 RELEASE_VERSION:=$(TARBALL_VERSION)
