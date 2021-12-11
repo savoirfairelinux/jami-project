@@ -127,23 +127,23 @@ ifeq ($(TARBALL_VERSION),)
 $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 # Prepare the sources of the top repository and relevant submodules.
 	rm -f "$@"
-	mkdir $(TMPDIR)/ring-project
-	git archive HEAD | tar xf - -C $(TMPDIR)/ring-project
+	mkdir $(TMPDIR)/jami-project
+	git archive HEAD | tar xf - -C $(TMPDIR)/jami-project
 	for m in daemon lrc client-gnome client-qt; do \
 		(cd "$$m" && git archive --prefix "$$m/" HEAD \
-			| tar xf - -C $(TMPDIR)/ring-project); \
+			| tar xf - -C $(TMPDIR)/jami-project); \
 	done
 # Create the base archive.
-	tar -cf $(TMPDIR)/ring-project.tar $(TMPDIR)/ring-project \
-	  --transform 's,.*/ring-project,ring-project,' \
+	tar -cf $(TMPDIR)/jami-project.tar $(TMPDIR)/jami-project \
+	  --transform 's,.*/jami-project,jami-project,' \
 	  $(TAR_REPRODUCIBILITY_OPTIONS)
 # Append the cached tarballs listed in the manifest.
-	tar --append --file $(TMPDIR)/ring-project.tar \
+	tar --append --file $(TMPDIR)/jami-project.tar \
 	  --files-from $< \
-	  --transform 's,^.*/,ring-project/daemon/contrib/tarballs/,' \
+	  --transform 's,^.*/,jami-project/daemon/contrib/tarballs/,' \
           $(TAR_REPRODUCIBILITY_OPTIONS)
-	gzip --no-name $(TMPDIR)/ring-project.tar
-	mv $(TMPDIR)/ring-project.tar.gz "$@"
+	gzip --no-name $(TMPDIR)/jami-project.tar
+	mv $(TMPDIR)/jami-project.tar.gz "$@"
 	rm -rf $(TMPDIR)
 else
 # If TARBALL_VERSION is defined, assume it's already been generated,
