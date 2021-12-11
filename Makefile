@@ -24,13 +24,14 @@ export TARBALLS ?= /var/cache/jami
 ##############################
 ## Version number variables ##
 ##############################
-TARBALL_VERSION := $(shell cat $(CURDIR)/.tarball-version 2> /dev/null)
+TARBALL_VERSION := $(strip $(shell cat $(CURDIR)/.tarball-version 2> /dev/null))
 
 ifeq ($(TARBALL_VERSION),)
-LAST_COMMIT_DATE:=$(shell git log -1 --format=%cd --date=format:'%Y%m%d.%H%M')
+LAST_COMMIT_DATE:=$(strip \
+  $(shell git log -1 --format=%cd --date=format:'%Y%m%d.%H%M'))
 
 # last commit id
-COMMIT_ID:=$(shell git rev-parse --short HEAD)
+COMMIT_ID:=$(strip $(shell git rev-parse --short HEAD))
 
 RELEASE_VERSION:=$(LAST_COMMIT_DATE).$(COMMIT_ID) # e.g.: 20211210.1754.4f78fda
 else
