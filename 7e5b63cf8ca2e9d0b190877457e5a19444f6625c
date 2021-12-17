@@ -41,6 +41,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c10a600_557cb03b",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 94
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-12-17T14:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77b1125c_8fa236c1",
+      "range": {
+        "startLine": 19,
+        "startChar": 47,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "958510b1_a4acb1b3",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-11-24T20:23:08Z",
       "side": 1,
       "message": "likewise",
+      "range": {
+        "startLine": 22,
+        "startChar": 49,
+        "endLine": 22,
+        "endChar": 53
+      },
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f50cb9fc_74fc0fc3",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 94
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-12-17T14:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "958510b1_a4acb1b3",
       "range": {
         "startLine": 22,
         "startChar": 49,
@@ -110,6 +158,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9b8bafd_3efb23ef",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 94
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-12-17T14:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f66fc841_b08b3d9d",
+      "range": {
+        "startLine": 30,
+        "startChar": 46,
+        "endLine": 30,
+        "endChar": 69
+      },
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6622f980_85917d04",
@@ -123,6 +195,30 @@
       "writtenOn": "2021-11-24T20:23:08Z",
       "side": 1,
       "message": "Then you wouldn\u0027t need this.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 37
+      },
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bd7339f_1b3ee7f6",
+        "filename": "docker/Dockerfile_debian_10",
+        "patchSetId": 94
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-12-17T14:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6622f980_85917d04",
       "range": {
         "startLine": 33,
         "startChar": 0,
@@ -150,6 +246,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2f811c0_01266872",
+        "filename": "docker/Dockerfile_ubuntu_18.04",
+        "patchSetId": 94
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-12-17T14:36:46Z",
+      "side": 1,
+      "message": "Not perfect but imho we should have one parametrized dockerfile in the future",
+      "parentUuid": "c347374c_88d65c41",
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d2f9cf99_d4f6c720",
@@ -163,6 +277,30 @@
       "writtenOn": "2021-11-24T20:23:08Z",
       "side": 1,
       "message": "this will bite us in the rear",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "7e5b63cf8ca2e9d0b190877457e5a19444f6625c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7dc2e76_f5449916",
+        "filename": "scripts/prebuild-package-debian.sh",
+        "patchSetId": 94
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2021-12-17T14:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f9cf99_d4f6c720",
       "range": {
         "startLine": 65,
         "startChar": 28,
