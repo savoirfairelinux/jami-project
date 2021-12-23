@@ -152,9 +152,9 @@ function package_rpm()
 
     # .repo file
     name="Jami \$releasever - \$basearch - jami"
-    baseurl="https://dl.jami.net/nightly/${DISTRIBUTION%_*}_\$releasever"
+    baseurl="https://dl.jami.net/${CHANNEL}/${DISTRIBUTION%_*}_\$releasever"
 
-    cat << EOF > ${DISTRIBUTION_REPOSITORY_FOLDER}/jami-nightly.repo
+    cat << EOF > ${DISTRIBUTION_REPOSITORY_FOLDER}/jami-${CHANNEL}.repo
 [jami]
 name=$name
 baseurl=$baseurl
