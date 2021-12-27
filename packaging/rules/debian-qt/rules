@@ -19,6 +19,13 @@ override_dh_auto_configure:
 	tac temp | sed '1,/return MimeType::kOthers/{s/return MimeType::kOthers/*\/return MimeType::kOthers/;}' | tac > qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
 	rm temp -f
 	sed -i 's,if (base::Contains,/*if (base::Contains,g' qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
+	# Dbus
+	# Revert https://codereview.qt-project.org/c/qt/qtbase/+/288279
+	yes | cp $(CURDIR)/debian/patches/qdbusargument.h qtbase/src/dbus/qdbusargument.h
+	yes | cp $(CURDIR)/debian/patches/qdbusargument.cpp qtbase/src/dbus/qdbusargument.cpp
+	# Revert https://codereview.qt-project.org/c/qt/qtbase/+/371626
+	yes | cp $(CURDIR)/debian/patches/qdbusconnection.cpp qtbase/src/dbus/qdbusconnection.cpp
+	yes | cp $(CURDIR)/debian/patches/qdbusintegrator.cpp qtbase/src/dbus/qdbusintegrator.cpp
 
 	CXXFLAGS="-flto -flto-partition=none" CFLAGS="-flto -flto-partition=none" ./configure \
 	  -opensource \
