@@ -19,6 +19,10 @@ override_dh_auto_configure:
 	tac temp | sed '1,/return MimeType::kOthers/{s/return MimeType::kOthers/*\/return MimeType::kOthers/;}' | tac > qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
 	rm temp -f
 	sed -i 's,if (base::Contains,/*if (base::Contains,g' qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
+	# Dbus
+	sed -i 's/typename = typename Container<Key, T>::iterator>/QtPrivate::IfAssociativeIteratorHasKeyAndValue<typename Container<Key, T>::iterator> = true>/g' qtbase/src/dbus/qdbusargument.h
+	sed -i 's/qDBusRegisterMetaType<QList<Struct4> >();/qDBusRegisterMetaType<QList<Struct4> >();qDBusRegisterMetaType<std::vector<Struct1> >();/g' qtbase/tests/auto/dbus/qdbusmetatype/tst_qdbusmetatype.cpp
+	sed -i 's/Struct1> >() << "a(s)";/Struct1> >() << "a(s)";QTest::newRow("std::vector<Struct1>") << qMetaTypeId<std::vector<Struct1> >() << "a(s)";/g' qtbase/tests/auto/dbus/qdbusmetatype/tst_qdbusmetatype.cpp
 
 	CXXFLAGS="-flto -flto-partition=none" CFLAGS="-flto -flto-partition=none" ./configure \
 	  -opensource \
