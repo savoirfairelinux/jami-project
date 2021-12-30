@@ -60,8 +60,10 @@ sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/s
 cat qtbase/src/corelib/global/qendian.h
 sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/src/corelib/global/qfloat16.h
 sed -i 's,#include <QtCore/qbytearray.h>,#include <QtCore/qbytearray.h>\n#include <limits>,g' qtbase/src/corelib/text/qbytearraymatcher.h
+# https://doc.qt.io/qt-6/qtwebengine-features.html -> -webengine-proprietary-codecs should uses OpenH264 from ffmpeg
 ./configure \
   -opensource \
+  -webengine-proprietary-codecs \
   -confirm-license \
   -nomake examples \
   -nomake tests \

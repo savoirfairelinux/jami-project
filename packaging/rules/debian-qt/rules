@@ -20,8 +20,10 @@ override_dh_auto_configure:
 	rm temp -f
 	sed -i 's,if (base::Contains,/*if (base::Contains,g' qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
 
+	# https://doc.qt.io/qt-6/qtwebengine-features.html -> -webengine-proprietary-codecs should uses OpenH264 from ffmpeg
 	CXXFLAGS="-flto -flto-partition=none" CFLAGS="-flto -flto-partition=none" ./configure \
 	  -opensource \
+	  -webengine-proprietary-codecs \
 	  -confirm-license \
 	  -nomake examples \
 	  -nomake tests \
