@@ -395,7 +395,7 @@ def run_init():
     for name in module_names:
         copy_file("./scripts/commit-msg", ".git/modules/"+name+"/hooks")
 
-    module_names_to_format = ['daemon', 'lrc', 'client-qt', 'plugins']
+    module_names_to_format = ['daemon', 'client-qt', 'plugins']
     for name in module_names_to_format:
         execute_script(
             ['./scripts/format.sh --install  %(path)s'],
