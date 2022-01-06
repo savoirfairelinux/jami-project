@@ -1,9 +1,6 @@
 [submodule "client-android"]
 	path = client-android
 	url = https://review.jami.net/jami-client-android
-[submodule "client-gnome"]
-	path = client-gnome
-	url = https://review.jami.net/jami-client-gnome
 [submodule "daemon"]
 	path = daemon
 	url = https://review.jami.net/jami-daemon
@@ -25,6 +22,3 @@
 [submodule "plugins"]
 	path = plugins
 	url = https://review.jami.net/jami-plugins
-[submodule "lrc-gnome"]
-	path = lrc-gnome
-	url = https://review.jami.net/jami-libclient
