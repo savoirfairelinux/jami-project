@@ -243,8 +243,6 @@ parts:
       - -usr/share/doc/libldap-common/changelog.Debian.gz
     build-environment:
       - QT_BASE_DIR: "/usr/lib/libqt-jami"
-      - QTDIR: "$QT_BASE_DIR"
-      - QTVER: "6.2.0"
       - PATH: "$QT_BASE_DIR/bin:$PATH"
       - LD_LIBRARY_PATH: "$QT_BASE_DIR/lib:$LD_LIBRARY_PATH"
       - PKG_CONFIG_PATH: "$QT_BASE_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
@@ -286,11 +284,10 @@ parts:
       cd $SNAPCRAFT_PART_BUILD/client-qt
       mkdir build
       cd build
-      cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
-               -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
-               -DENABLE_STATIC=true -DENABLE_LIBWRAP=true \ \
+      cmake .. -DENABLE_LIBWRAP=true \
                -DLIBJAMI_BUILD_DIR=$SNAPCRAFT_PART_BUILD/daemon/src \
-               -DQT6_VER=$QTVER -DQT6_PATH=$QTDIR
+               -DCMAKE_INSTALL_PREFIX=/usr \
+               -DCMAKE_BUILD_TYPE=Release
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
     build-packages:

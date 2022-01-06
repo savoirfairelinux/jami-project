@@ -32,7 +32,7 @@
 // - Allow publishing from any node, to avoid relying on a single machine.
 
 // Configuration globals.
-def SUBMODULES = ['daemon', 'lrc', 'client-qt']
+def SUBMODULES = ['daemon', 'client-qt']
 def TARGETS = [:]
 def REMOTE_HOST = env.SSH_HOST_DL_RING_CX
 def REMOTE_BASE_DIR = '/srv/repository/ring'
@@ -138,8 +138,8 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                 sh """git checkout ${params.CHANNEL}
                       git reset --hard origin/${params.CHANNEL}
                       # Submodules are generally not managed by merging
-                      git merge -X theirs --no-commit FETCH_HEAD
                       git status
+                      git merge -X theirs --no-commit FETCH_HEAD
                    """
             }
         }
