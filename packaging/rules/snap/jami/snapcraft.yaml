@@ -284,11 +284,6 @@ parts:
       cd $SNAPCRAFT_PART_BUILD/client-qt
       mkdir build
       cd build
-      pwd
-      ls /opt/jami-project/packaging/rules/snap/jami/
-      ls /opt/jami-project/packaging/rules/snap/jami/parts
-      ls /opt/jami-project/packaging/rules/snap/jami/parts/jami
-      ls /opt/jami-project/packaging/rules/snap/jami/parts/jami/build
       cmake .. -DENABLE_LIBWRAP=true \
                -DLIBJAMI_BUILD_DIR=$SNAPCRAFT_PART_BUILD/daemon/src \
                -DCMAKE_INSTALL_PREFIX=/usr \
