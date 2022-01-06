@@ -138,8 +138,8 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                 sh """git checkout ${params.CHANNEL}
                       git reset --hard origin/${params.CHANNEL}
                       # Submodules are generally not managed by merging
-                      git merge -X theirs --no-commit FETCH_HEAD
-                      git status
+                      rm -rf client-gnome
+                      git merge -X theirs --no-commit FETCH_HEAD || git status && git add `git diff --name-status --diff-filter=U | awk '{print \$2}'`
                    """
             }
         }
