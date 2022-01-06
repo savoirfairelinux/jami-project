@@ -19,10 +19,18 @@ RUN unsquashfs -d /snap/core/current core.snap
 RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core18' | jq '.download_url' -r) --output core18.snap
 RUN mkdir -p /snap/core18
 RUN unsquashfs -d /snap/core18/current core18.snap
+RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core20' | jq '.download_url' -r) --output core20.snap
+RUN mkdir -p /snap/core20
+RUN unsquashfs -d /snap/core20/current core20.snap
 
 # Grab the snapcraft snap from the stable channel and unpack it in the proper
 # place.
-RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/snapcraft?channel=stable' | jq '.download_url' -r) --output snapcraft.snap
+# RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/snapcraft?channel=stable' | jq '.download_url' -r) --output snapcraft.snap
+# Current snapcraft snap is broken upstream again:
+#   https://forum.snapcraft.io/t/snapcraft-docker-images-broken-again/27942
+# Temporary workaround: pin to an older, non-broken version for now.
+# TODO: restore to the above once issue is fixed upstream.
+RUN curl -L https://api.snapcraft.io/api/v1/snaps/download/vMTKRaLjnOJQetI78HjntT37VuoyssFE_6751.snap --output snapcraft.snap
 RUN mkdir -p /snap/snapcraft
 RUN unsquashfs -d /snap/snapcraft/current snapcraft.snap
 
@@ -39,6 +47,7 @@ RUN chmod +x /snap/bin/snapcraft
 FROM ubuntu:xenial
 COPY --from=builder /snap/core /snap/core
 COPY --from=builder /snap/core18 /snap/core18
+COPY --from=builder /snap/core20 /snap/core20
 COPY --from=builder /snap/snapcraft /snap/snapcraft
 COPY --from=builder /snap/bin/snapcraft /snap/bin/snapcraft
 
