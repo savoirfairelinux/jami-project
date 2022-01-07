@@ -24,14 +24,13 @@ def build_daemon(parsed_args):
 
 def build_lrc(parsed_args):
     make_cmd = os.path.dirname(this_dir) + '\\lrc\\make-lrc.py'
-    execute_cmd('python ' + make_cmd + ' -gb ' + ' -t ' + parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -q ' + parsed_args.qtver)
+    execute_cmd('python ' + make_cmd + ' -q ' + parsed_args.qtver)
 
 
 def build_client(parsed_args):
     os.chdir('./client-qt')
-    execute_cmd('python make-client.py -d')
-    execute_cmd('python make-client.py -b ' + '-t ' +
-                parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -q ' + parsed_args.qtver)
+    execute_cmd('python make-client.py init')
+    execute_cmd('python make-client.py' + ' -q ' + parsed_args.qtver)
 
 
 def parse_args():
