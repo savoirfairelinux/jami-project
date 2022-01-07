@@ -178,6 +178,10 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                 label 'ring-buildmachine-02.mtl.sfl'
             }
 
+            options {
+                skipDefaultCheckout()
+            }
+
             when {
                 expression {
                     params.DEPLOY
