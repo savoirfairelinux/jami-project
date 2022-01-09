@@ -174,18 +174,18 @@ git tag \$(cat .tarball-version) -am "Jami \$(cat .tarball-version)"
             steps {
                 sshagent(credentials: [JENKINS_SSH_KEY, DL_SSH_KEY]) {
                     echo "Publishing to git repository..."
-                    // Note: Only stable release tags are published.
                     script {
                         if (params.CHANNEL == 'stable') {
+                            // Only stables releases get tarballs and a tag.
                             sh 'git push --tags'
+                            echo "Publishing release tarball..."
+                            sh 'rsync --verbose jami*.tar.gz ' +
+                                "${REMOTE_HOST}:${REMOTE_BASE_DIR}" +
+                                "/release/tarballs/"
                         } else {
                             sh 'git push'
                         }
                     }
-                    echo "Publishing release tarball to https://dl.jami.net..."
-                    sh 'rsync --verbose jami*.tar.gz ' +
-                        "${REMOTE_HOST}:${REMOTE_BASE_DIR}/release/tarballs/" +
-                        "${params.CHANNEL}/"
                 }
             }
         }
