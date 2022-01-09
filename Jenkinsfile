@@ -101,6 +101,17 @@ pipeline {
     }
 
     stages {
+        stage('DEBUG') {
+            agent {
+                label 'ring-buildmachine-02.mtl.sfl'
+            }
+            steps {
+                sshagent(credentials: [JENKINS_SSH_KEY, DL_SSH_KEY]) {
+                    sh "touch hello && rsync hello ${REMOTE_HOST}:${REMOTE_BASE_DIR}/"
+                }
+            }
+        }
+
         stage('Check configuration') {
             steps {
                 script {
