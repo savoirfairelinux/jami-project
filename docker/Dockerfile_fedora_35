@@ -79,6 +79,7 @@ RUN dnf install -y \
         libxcb* \
         libxkb* \
         libX11-devel \
+        vulkan-devel \
         libXrender-devel \
         xcb-util-* \
         xz \
@@ -90,8 +91,8 @@ RUN dnf install -y \
         perl-generators \
         perl-English \
         libxshmfence-devel \
-        ninja-build \  
-        clang \      
+        ninja-build \
+        clang \
         cmake
 
 ADD scripts/build-package-rpm.sh /opt/build-package-rpm.sh

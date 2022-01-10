@@ -91,6 +91,7 @@ RUN dnf install -y \
         perl-English \
         libxshmfence-devel \
         ninja-build \
+        vulkan-devel \
         python2-six \
         cmake
 
