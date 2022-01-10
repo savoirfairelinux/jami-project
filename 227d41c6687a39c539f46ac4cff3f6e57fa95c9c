@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "08df4abf_4a3eb497",
+        "filename": "Jenkinsfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-01-10T21:06:54Z",
+      "side": 1,
+      "message": "rsync will already do the correct stuff to avoid to publish twice the same thing\nThe thing is, any sporadic failure can come. In this case, just a replay will probably be done, and should work ideally and git push should say that there is nothing to push. It\u0027s just to avoid a user of the pipeline to retry several time the pipeline with the same parameters he wanted at first.",
+      "parentUuid": "aab6cd05_e9ae71e9",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 24
+      },
+      "revId": "227d41c6687a39c539f46ac4cff3f6e57fa95c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "76ccd87e_de28b003",
         "filename": "Jenkinsfile",
         "patchSetId": 13
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "I was thinking it\u0027s OK that the GNU/Linux tag is without prefix as it is the preferred system ;-).",
       "parentUuid": "76ccd87e_de28b003",
+      "range": {
+        "startLine": 160,
+        "startChar": 13,
+        "endLine": 160,
+        "endChar": 59
+      },
+      "revId": "227d41c6687a39c539f46ac4cff3f6e57fa95c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1a97439_30b7d3a4",
+        "filename": "Jenkinsfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-01-10T21:06:54Z",
+      "side": 1,
+      "message": "it\u0027s not at all a preferred system. It\u0027s one of the supported system, windows, android, etc should work too.",
+      "parentUuid": "1ff6b40f_cfef1a97",
       "range": {
         "startLine": 160,
         "startChar": 13,
