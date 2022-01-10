@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56f9cd22_93b26b31",
+        "filename": "Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-01-10T13:50:17Z",
+      "side": 1,
+      "message": "this still is unusable for this case,\nhaving different master for submodules will generate the same release tarball (cause it\u0027s still the same commit) to be used and break CI. Til jami-project doesn\u0027t commit on a nightly/release branch this is just unwanted",
+      "range": {
+        "startLine": 30,
+        "startChar": 11,
+        "endLine": 30,
+        "endChar": 45
+      },
+      "revId": "d075a6068bdaa13380437ccb6b2c18a6307bfac3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
