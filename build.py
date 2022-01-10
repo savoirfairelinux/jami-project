@@ -306,11 +306,8 @@ def run_dependencies(args):
         print("The win32 version does not install dependencies with this script.\nPlease continue with the --install instruction.")
         sys.exit(1)
     elif args.distribution == 'guix':
-        print("Building the environment defined in 'guix/manifest.scm'...")
-        execute_script(['mkdir -p ~/.config/guix/profiles',
-                        ('guix time-machine  --channels=guix/channels.scm -- '
-                         'package --manifest=guix/manifest.scm '
-                         '--profile=$HOME/.config/guix/profiles/jami')])
+        print("Building the profile defined in 'guix/manifest.scm'...")
+        execute_script(['guix shell --manifest=guix/manifest.scm -- true'])
 
     else:
         print("Not yet implemented for current distribution (%s). Please continue with the --install instruction. Note: You may need to install some dependencies manually." %
@@ -421,11 +418,14 @@ def run_install(args):
         share_tarballs_args = []
         if 'TARBALLS' in os.environ:
             share_tarballs_args = ['--preserve=TARBALLS',
-                             f'--share={os.environ["TARBALLS"]}']
+                                   f'--share={os.environ["TARBALLS"]}']
+        else:
+            print('info: consider setting the TARBALLS environment variable '
+                  'to a stable writable location to avoid loosing '
+                  'cached tarballs')
         # Note: we must expose /gnu/store because /etc/ssl/certs
         # contains certs that are symlinks to store items.
-        command = ['guix', 'time-machine', '-C', 'guix/channels.scm', '--',
-                   'environment', '--manifest=guix/manifest.scm',
+        command = ['guix', 'shell', '--manifest=guix/manifest.scm',
                    '--expose=/gnu/store', '--expose=/etc/ssl/certs',
                    '--expose=/usr/bin/env',
                    '--container', '--network'] + share_tarballs_args \
@@ -727,13 +727,12 @@ def main():
                 print('FIXME: Qt fails loading QML modules due to '
                       'https://issues.guix.gnu.org/47655')
             # Relaunch this script, this time in a pure Guix environment.
-            guix_args = ['time-machine', '--channels=guix/channels.scm',
-                         '--', 'environment', '--pure',
+            guix_args = ['shell', '--pure',
                          # to allow pulseaudio to connect to an existing server
                          "-E", "XAUTHORITY", "-E", "XDG_RUNTIME_DIR",
                          '--manifest=guix/manifest.scm', '--']
             args = sys.argv + ['--distribution=guix']
-            print('Running in a guix environment spawned with: guix {}'
+            print('Running in a guix shell spawned with: guix {}'
                   .format(str.join(' ', guix_args + args)))
             os.execlp('guix', 'guix', *(guix_args + args))
         else:

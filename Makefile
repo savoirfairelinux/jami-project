@@ -108,7 +108,7 @@ has-guix-p:
 # /etc/ssl/certs.
 guix-share-tarball-arg = $${TARBALLS:+"--share=$$TARBALLS"}
 portable-release-tarball: has-guix-p
-	guix environment --container --network \
+	guix shell --container --network \
           --preserve=TARBALLS $(guix-share-tarball-arg) \
           --expose=/usr/bin/env \
           --expose=$$SSL_CERT_DIR=/etc/ssl/certs \
