@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "98024e93_c8ba0c24",
+        "filename": "Jenkinsfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-01-10T21:40:06Z",
+      "side": 1,
+      "message": "If --allow-empty is added, a commit will be made even when there\u0027s no changes, which in turn will cause the RELEASE_VERSION in the makefile to change, which will cause the tarball name and tag to change... so running replay on publish would do undesired things in such a scenario (you\u0027d have a differently named tarball uploaded, containing the exact same things).",
+      "parentUuid": "08df4abf_4a3eb497",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 24
+      },
+      "revId": "227d41c6687a39c539f46ac4cff3f6e57fa95c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "76ccd87e_de28b003",
         "filename": "Jenkinsfile",
         "patchSetId": 13
@@ -133,6 +157,30 @@
       "side": 1,
       "message": "it\u0027s not at all a preferred system. It\u0027s one of the supported system, windows, android, etc should work too.",
       "parentUuid": "1ff6b40f_cfef1a97",
+      "range": {
+        "startLine": 160,
+        "startChar": 13,
+        "endLine": 160,
+        "endChar": 59
+      },
+      "revId": "227d41c6687a39c539f46ac4cff3f6e57fa95c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eb94b0e_91a54aef",
+        "filename": "Jenkinsfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-01-10T21:40:06Z",
+      "side": 1,
+      "message": "As a GNU package GNU/Linux ought to be the preferred system; which of course doesn\u0027t mean Jami shouldn\u0027t work on other systems.",
+      "parentUuid": "e1a97439_30b7d3a4",
       "range": {
         "startLine": 160,
         "startChar": 13,
