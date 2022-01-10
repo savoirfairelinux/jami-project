@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aab6cd05_e9ae71e9",
+        "filename": "Jenkinsfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-01-10T20:53:40Z",
+      "side": 1,
+      "message": "If the code is exactly the same, it makes sense to me that the tarball produced be exactly the same (as well as the release version string).  We shouldn\u0027t publish twice the same thing, right?  If a distribution failed to deploy because of a nondeterministic build failure or whatever, it can be retriggered with the DEPLOY box checked but PUBLISH unset.",
+      "parentUuid": "8b1d49b6_c9568f8a",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 24
+      },
+      "revId": "227d41c6687a39c539f46ac4cff3f6e57fa95c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "76ccd87e_de28b003",
         "filename": "Jenkinsfile",
         "patchSetId": 13
@@ -37,6 +61,30 @@
       "writtenOn": "2022-01-10T20:41:48Z",
       "side": 1,
       "message": "Tags for android is android/release_324. Imho we should homogeneize like linux/release_yyyymmdd...",
+      "range": {
+        "startLine": 160,
+        "startChar": 13,
+        "endLine": 160,
+        "endChar": 59
+      },
+      "revId": "227d41c6687a39c539f46ac4cff3f6e57fa95c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ff6b40f_cfef1a97",
+        "filename": "Jenkinsfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-01-10T20:53:40Z",
+      "side": 1,
+      "message": "I was thinking it\u0027s OK that the GNU/Linux tag is without prefix as it is the preferred system ;-).",
+      "parentUuid": "76ccd87e_de28b003",
       "range": {
         "startLine": 160,
         "startChar": 13,
