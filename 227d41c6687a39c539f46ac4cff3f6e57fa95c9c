@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b1d49b6_c9568f8a",
+        "filename": "Jenkinsfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-01-10T20:41:48Z",
+      "side": 1,
+      "message": "I guess \"--allow-empty\" should be added. If for whatever reason the git merge --no-commit is done on the same as previous HEAD, this can results in no change. (retriggering a stable/nightly a second time with different distributions)",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 24
+      },
+      "revId": "227d41c6687a39c539f46ac4cff3f6e57fa95c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76ccd87e_de28b003",
+        "filename": "Jenkinsfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-01-10T20:41:48Z",
+      "side": 1,
+      "message": "Tags for android is android/release_324. Imho we should homogeneize like linux/release_yyyymmdd...",
+      "range": {
+        "startLine": 160,
+        "startChar": 13,
+        "endLine": 160,
+        "endChar": 59
+      },
+      "revId": "227d41c6687a39c539f46ac4cff3f6e57fa95c9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
