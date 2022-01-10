@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07697ee3_0b9de096",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-01-10T20:18:07Z",
+      "side": 1,
+      "message": "This may help reducing network reliance of the \u0027guix\u0027 command, given \u0027guix shell\u0027 uses a cache.",
+      "revId": "11e568060b6e583b51e0a69ee63ea93ecbb93673",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
