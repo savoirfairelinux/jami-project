@@ -151,15 +151,10 @@ function package_rpm()
     mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
 
     # .repo file
-    if [ "${DISTRIBUTION:0:19}" == "opensuse-tumbleweed" ]; then
-        name="Jami \$basearch - jami"
-        baseurl="https://dl.jami.net/nightly/${DISTRIBUTION%_*}"
-    else
-        name="Jami \$releasever - \$basearch - jami"
-        baseurl="https://dl.jami.net/nightly/${DISTRIBUTION%_*}_\$releasever"
-    fi
+    name="Jami \$releasever - \$basearch - jami"
+    baseurl="https://dl.jami.net/${CHANNEL}/${DISTRIBUTION%_*}_\$releasever"
 
-    cat << EOF > ${DISTRIBUTION_REPOSITORY_FOLDER}/jami-nightly.repo
+    cat << EOF > ${DISTRIBUTION_REPOSITORY_FOLDER}/jami-${CHANNEL}.repo
 [jami]
 name=$name
 baseurl=$baseurl
@@ -225,14 +220,15 @@ function package_snap()
     echo "## deploying snap ##"
     echo "####################"
 
-    if [[ $CHANNEL =~ internal ]]; then
+    if [[ "${CHANNEL:0:8}" == "internal" ]]; then
         DISTRIBUTION_REPOSITORY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
         mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
+        ls packages/${DISTRIBUTION}*
         cp packages/${DISTRIBUTION}*/*.snap ${DISTRIBUTION_REPOSITORY_FOLDER}/
-    elif [[ $CHANNEL =~ nightly ]]; then
+    elif [[ "${CHANNEL:0:7}" == "nightly" ]]; then
         snapcraft login --with ${SNAPCRAFT_LOGIN}
         snapcraft push packages/${DISTRIBUTION}*/*.snap --release edge
-    elif [[ $CHANNEL =~ stable ]]; then
+    elif [[ "${CHANNEL:0:6}" == "stable" ]]; then
         snapcraft login --with ${SNAPCRAFT_LOGIN}
         snapcraft push packages/${DISTRIBUTION}*/*.snap --release stable
     fi
