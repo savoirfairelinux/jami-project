@@ -21,7 +21,7 @@ OSX_DISTRIBUTION_NAME = "osx"
 ANDROID_DISTRIBUTION_NAME = "android"
 WIN32_DISTRIBUTION_NAME = "win32"
 
-QT5_VERSION = "5.15.0"
+QT5_VERSION = "6.2.1"
 
 # vs vars
 win_sdk_default = '10.0.16299.0'
@@ -44,7 +44,7 @@ PACMAN_BASED_DISTROS = [
 ]
 
 ZYPPER_BASED_DISTROS = [
-    'opensuse-leap', 'opensuse-tumbleweed',
+    'opensuse-leap',
 ]
 
 FLATPAK_BASED_RUNTIMES = [
@@ -394,7 +394,12 @@ def run_install(args):
 
         environ['CMAKE_PREFIX_PATH'] = proc.stdout.rstrip("\n")
         environ['CONFIGURE_FLAGS'] = '--without-dbus'
-        install_args += ("-c", "client-macosx")
+        if args.qt is None:
+            install_args += ("-c", "client-macosx")
+        else:
+            install_args += ("-c", "client-qt")
+            install_args += ("-q", args.qtver)
+            install_args += ("-Q", args.qt)
     else:
         if args.distribution in ZYPPER_BASED_DISTROS:
             # fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
@@ -592,6 +597,7 @@ def validate_args(parsed_args):
     if parsed_args.qt is not None:
         supported_qt_distros = [
             'guix',
+            OSX_DISTRIBUTION_NAME,
             WIN32_DISTRIBUTION_NAME
         ] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS
 

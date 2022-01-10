@@ -141,9 +141,9 @@ override_dh_auto_clean:
 	[ -f lrc/build/Makefile ] && make -C lrc/build clean || true
 	rm -rfv lrc/build
 
-	########################
-	## gnome client clean ##
-	########################
+	###########################
+	##### gnome client clean ##
+	###########################
 	# CMake build system has no distclean target, so use clean.
 	[ -f client-gnome/build/Makefile ] && \
 	  make -C client-gnome/build clean || true
@@ -177,8 +177,8 @@ override_dh_auto_install:
 
 	# cmake files
 	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME)/usr/lib/cmake
-
-        ## GNOME client
+ 
+	## GNOME client
 	cd client-gnome/build && \
 		make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME) install
 	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME)/usr/bin/jami
