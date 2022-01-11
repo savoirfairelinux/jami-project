@@ -10,7 +10,7 @@ Jami is released in the form of a tarball. They are hosted here:
 
  - https://dl.jami.net/ring-release/tarballs/
 
-Tarballs are generated from the integration branch of the `ring-project <https://github.com/savoirfairelinux/ring-project>`_ repository with a job on our `Jenkins server <https://test.savoirfairelinux.com/>`_. They include a copy of all contrib libraries configured in ``daemon/contrib/src``. If you are a Savoir-faire Linux employee, you may trigger the job from `this page <https://test.savoirfairelinux.com/job/ring-release/>`_.
+Tarballs are generated from the integration branch of the `jami-project <https://github.com/savoirfairelinux/jami-project>`_ repository with a job on our `Jenkins server <https://jenkins.jami.net/>`_. They include a copy of all contrib libraries configured in ``daemon/contrib/src``. If you are a Savoir-faire Linux employee, you may trigger the job from `this page <https://jenkins.jami.net/job/packaging-gnu-linux/>`_.
 
 Naming scheme
 -------------
@@ -19,7 +19,7 @@ Tarballs respect the following naming scheme ``ring_<date>_<number_of_commits>.<
 
  - **date** is the current date, for example 20160422
  - **number_of_commits** represents the number of commits that day
- - **commit_id** is the commit id of the last ring-project commit
+ - **commit_id** is the commit id of the last jami-project commit
 
 
 Packaging
