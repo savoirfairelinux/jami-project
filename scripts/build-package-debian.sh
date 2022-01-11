@@ -82,7 +82,7 @@ ${QT_MAJOR}.${QT_MINOR}/${qt_version}/single
         cd "libqt-jami-${qt_version}"
 
         # Extract the debian folder
-        tar xf "/src/$RELEASE_TARBALL_FILENAME" ring-project/packaging/rules/debian-qt \
+        tar xf "/src/$RELEASE_TARBALL_FILENAME" jami-project/packaging/rules/debian-qt \
             --strip-components=3 && mv debian-qt debian
 
         # Create the changelog file.

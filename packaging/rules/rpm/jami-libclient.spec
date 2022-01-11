@@ -29,21 +29,21 @@ universal communication which respects freedoms and privacy of its
 users.
 
 %prep
-%setup -n ring-project
+%setup -n jami-project
 
 %build
 
 # Qt-related variables
-cd %{_builddir}/ring-project/lrc && \
+cd %{_builddir}/jami-project/lrc && \
     mkdir build && cd build && \
-    cmake -DRING_BUILD_DIR=%{_builddir}/ring-project/daemon/src \
+    cmake -DRING_BUILD_DIR=%{_builddir}/jami-project/daemon/src \
           -DENABLE_LIBWRAP=true \
           -DCMAKE_INSTALL_PREFIX=%{_prefix} \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
           -DCMAKE_BUILD_TYPE=Release \
           ..
 
-make -C %{_builddir}/ring-project/lrc/build %{_smp_mflags} V=1
+make -C %{_builddir}/jami-project/lrc/build %{_smp_mflags} V=1
 
 %install
 DESTDIR=%{buildroot} make -C lrc/build install

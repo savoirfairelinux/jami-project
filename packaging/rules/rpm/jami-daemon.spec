@@ -58,12 +58,12 @@ universal communication which respects the freedoms and privacy of its
 users.
 
 %prep
-%setup -n ring-project
+%setup -n jami-project
 
 %build
 # Configure the Jami bundled libraries (ffmpeg & pjproject).
 mkdir -p daemon/contrib/native
-cd %{_builddir}/ring-project/daemon/contrib/native && \
+cd %{_builddir}/jami-project/daemon/contrib/native && \
     ../bootstrap \
         --no-checksums \
         --disable-ogg \
@@ -81,20 +81,20 @@ cd %{_builddir}/ring-project/daemon/contrib/native && \
     make %{_smp_mflags} V=1 .ffmpeg
 
 # Configure the daemon.
-cd %{_builddir}/ring-project/daemon && \
+cd %{_builddir}/jami-project/daemon && \
     ./autogen.sh && \
     ./configure \
         --prefix=%{_prefix} \
         --libdir=%{_libdir}
 
 # Build the daemon.
-make -C %{_builddir}/ring-project/daemon %{_smp_mflags} V=1
-pod2man %{_builddir}/ring-project/daemon/man/jamid.pod \
-        > %{_builddir}/ring-project/daemon/jamid.1
+make -C %{_builddir}/jami-project/daemon %{_smp_mflags} V=1
+pod2man %{_builddir}/jami-project/daemon/man/jamid.pod \
+        > %{_builddir}/jami-project/daemon/jamid.1
 
 %install
 DESTDIR=%{buildroot} make -C daemon install
-cp %{_builddir}/ring-project/daemon/jamid.1 \
+cp %{_builddir}/jami-project/daemon/jamid.1 \
    %{buildroot}/%{_mandir}/man1/jamid.1
 rm -rfv %{buildroot}/%{_libdir}/*.a
 rm -rfv %{buildroot}/%{_libdir}/*.la

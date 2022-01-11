@@ -38,10 +38,10 @@ This package contains the GNOME desktop client of Jami. Jami is a free
 software for universal communication which respects freedoms and
 privacy of its users.
 
-%prep %setup -n ring-project
+%prep %setup -n jami-project
 
 %build
-cd %{_builddir}/ring-project/client-gnome && \
+cd %{_builddir}/jami-project/client-gnome && \
     mkdir build && cd build && \
     cmake -DCMAKE_INSTALL_PREFIX=%{_prefix} \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
@@ -49,11 +49,11 @@ cd %{_builddir}/ring-project/client-gnome && \
           -DGSETTINGS_LOCALCOMPILE=OFF \
           ..
 
-make -C %{_builddir}/ring-project/client-gnome/build \
+make -C %{_builddir}/jami-project/client-gnome/build \
     LDFLAGS="-lpthread" %{_smp_mflags} V=1
 
 %install
-DESTDIR=%{buildroot} make -C %{_builddir}/ring-project/client-gnome/build install
+DESTDIR=%{buildroot} make -C %{_builddir}/jami-project/client-gnome/build install
 # Only keep /bin/jami-gnome for the GNOME client.
 rm -rfv %{buildroot}/%{_bindir}/jami
 
