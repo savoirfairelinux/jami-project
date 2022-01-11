@@ -15,6 +15,10 @@ RUN apt-get update && \
         software-properties-common \
         wget
 
+# nodejs (more recent version needed for building libqt-jami)
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt install nodejs -y
+
 ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh
 
 COPY packaging/rules/debian-qt/control /tmp/builddeps/debian/control
@@ -30,9 +34,6 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 # Install CMake 3.19 for Qt 6
 ADD scripts/install-cmake.sh /opt/install-cmake.sh
 RUN /opt/install-cmake.sh
-# nodejs
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt install nodejs -y
 
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 CMD ["/opt/build-package-debian.sh"]
