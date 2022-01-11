@@ -215,7 +215,7 @@ git tag \$(cat .tarball-version) -am "Jami \$(cat .tarball-version)"
                         stages[target] =  {
                             stage(target) {
                                 // Offload builds to different agents.
-                                node('linux-builder') {
+                                node('jami-buildmachine-04.mtl.sfl') {
                                     cleanWs()
                                     unstash 'release-tarball'
                                     catchError(buildResult: 'FAILURE',
