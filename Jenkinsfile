@@ -191,6 +191,9 @@ git tag \$(cat .tarball-version) -am "Jami \$(cat .tarball-version)"
         }
 
         stage('Build packages') {
+            agent {
+                label 'jami-buildmachine-04.mtl.sfl'
+            }
             environment {
                 DISABLE_CONTRIB_DOWNLOADS = 'TRUE'
             }
