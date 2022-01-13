@@ -14,14 +14,13 @@ Source:        jami_%{version}.tar.gz
 Requires:      jami-libclient = %{version}
 
 # Build dependencies.
-BuildRequires: cmake
+BuildRequires: make
 BuildRequires: gettext-devel
 
 # Build and runtime dependencies.
 BuildRequires: glib2-devel
 %if 0%{?fedora} >= 32
 BuildRequires: gcc
-BuildRequires: make
 BuildRequires: dbus-devel
 BuildRequires: libnotify-devel
 BuildRequires: libappindicator-gtk3-devel
