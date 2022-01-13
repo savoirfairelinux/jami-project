@@ -6,8 +6,8 @@ RUN zypper --non-interactive install -y \
         rpmdevtools \
         Mesa-dri-devel Mesa-dri \
         git \
-        gcc11 \
-        gcc11-c++ \
+        gcc10 \
+        gcc10-c++ \
         rpm-build \
         tar \
         make \
@@ -92,8 +92,8 @@ RUN zypper --non-interactive install -y \
         ninja \
         wget
 
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 50
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 50
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 50
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 50
 
 # Install CMake 3.19 for Qt 6
 ADD scripts/install-cmake.sh /opt/install-cmake.sh

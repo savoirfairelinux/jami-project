@@ -14,7 +14,7 @@ Source:        jami_%{version}.tar.gz
 Requires:      jami-libclient = %{version}
 
 # Build dependencies.
-BuildRequires: cmake
+BuildRequires: make
 BuildRequires: gettext-devel
 
 # Build and runtime dependencies.
