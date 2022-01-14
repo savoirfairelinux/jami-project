@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49bb32cd_9e274ebb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-01-14T14:36:42Z",
+      "side": 1,
+      "message": "If it builds ok for me! I let you merge this patch. Note that next week we will try 6.2.3 for opengl performances, but it should not be to much changes!",
+      "revId": "8c33cc3afcb6ad4930e12cf1630cf8050e594c3d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
