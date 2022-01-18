@@ -34,6 +34,7 @@ BuildRequires: make
 BuildRequires: bison
 BuildRequires: gperf
 BuildRequires: flex
+BuildRequires: vulkan-devel
 %if %{defined suse_version}
 BuildRequires: python-xml
 BuildRequires: mozilla-nss-devel

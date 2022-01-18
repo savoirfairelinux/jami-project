@@ -35,22 +35,22 @@ software for universal communication which respects freedoms and
 privacy of its users.
 
 %prep
-%setup -n ring-project
+%setup -n jami-project
 
 %build
 
 # Qt-related variables
-cd %{_builddir}/ring-project/client-qt && \
+cd %{_builddir}/jami-project/client-qt && \
     mkdir build && cd build && \
     cmake -DCMAKE_INSTALL_PREFIX=%{_prefix} \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
           -DCMAKE_BUILD_TYPE=Release \
           ..
 
-make -C %{_builddir}/ring-project/client-qt/build %{_smp_mflags} V=1
+make -C %{_builddir}/jami-project/client-qt/build %{_smp_mflags} V=1
 
 %install
-DESTDIR=%{buildroot} make -C %{_builddir}/ring-project/client-qt/build install
+DESTDIR=%{buildroot} make -C %{_builddir}/jami-project/client-qt/build install
 
 %files
 %defattr(-,root,root,-)

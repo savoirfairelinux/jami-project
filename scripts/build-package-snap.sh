@@ -24,7 +24,7 @@
 set -e
 
 tar xf "/src/$RELEASE_TARBALL_FILENAME" -C /opt
-cd /opt/ring-project/packaging/rules/snap/${SNAP_PKG_NAME}/
+cd /opt/jami-project/packaging/rules/snap/${SNAP_PKG_NAME}/
 
 # set the version and tarball filename
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" snapcraft.yaml

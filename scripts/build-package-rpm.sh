@@ -24,9 +24,9 @@
 set -e
 
 # Import the spec file.
-mkdir -p /opt/ring-project
-cd /opt/ring-project
-tar xf "/src/$RELEASE_TARBALL_FILENAME" ring-project/packaging/rules/rpm \
+mkdir -p /opt/jami-project
+cd /opt/jami-project
+tar xf "/src/$RELEASE_TARBALL_FILENAME" jami-project/packaging/rules/rpm \
     --strip-components=3 && mv rpm/* . && rmdir rpm
 rm jami-libqt.spec
 
@@ -71,7 +71,7 @@ if [ ! -f "${RPM_PATH}" ]; then
         mkdir /opt/qt-jami-build
         cd /opt/qt-jami-build
         tar xf "/src/$RELEASE_TARBALL_FILENAME" \
-            ring-project/packaging/rules/rpm/jami-libqt.spec \
+            jami-project/packaging/rules/rpm/jami-libqt.spec \
             --strip-components=4
 
         # Fetch and cache the tarball, if not already available.
@@ -115,7 +115,7 @@ if [ ! -f "${RPM_PATH}" ]; then
 fi
 rpm --install "${RPM_PATH}"
 cp "${RPM_PATH}" /opt/output
-cd /opt/ring-project
+cd /opt/jami-project
 
 # Set the version and associated comment.
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" ./*.spec

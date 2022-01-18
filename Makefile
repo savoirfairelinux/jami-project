@@ -27,24 +27,12 @@ export TARBALLS ?= /var/cache/jami
 TARBALL_VERSION := $(shell cat $(CURDIR)/.tarball-version 2> /dev/null)
 
 ifeq ($(TARBALL_VERSION),)
-# YYYY-MM-DD
-LAST_COMMIT_DATE:=$(shell git log -1 --format=%cd --date=short)
-CURRENT_DATE:=$(shell date +"%Y-%m-%d")
-
-# number of commits that day
-NUMBER_OF_COMMITS:=$(shell git log --format=%cd --date=short | grep -c $(LAST_COMMIT_DATE))
-
-# YYMMDD
-CURRENT_DATE_SHORT:=$(shell echo $(CURRENT_DATE) | sed -s 's/-//g')
-
-# last commit id
-COMMIT_ID:=$(shell git rev-parse --short HEAD)
-
-RELEASE_VERSION:=$(CURRENT_DATE_SHORT).$(NUMBER_OF_COMMITS).$(COMMIT_ID)
-
+LAST_COMMIT_DATE := $(shell git log -1 --format=%cd --date=format:'%Y%m%d.%H%M')
+COMMIT_ID := $(shell git rev-parse --short HEAD)
+RELEASE_VERSION := $(LAST_COMMIT_DATE).$(COMMIT_ID)
 else
 $(warning Using version from the .tarball-version file: $(TARBALL_VERSION))
-RELEASE_VERSION:=$(TARBALL_VERSION)
+RELEASE_VERSION := $(TARBALL_VERSION)
 endif
 RELEASE_TARBALL_FILENAME := jami_$(RELEASE_VERSION).tar.gz
 
@@ -53,14 +41,14 @@ export RELEASE_VERSION
 export RELEASE_TARBALL_FILENAME
 
 # Debian versions
-DEBIAN_VERSION:=$(RELEASE_VERSION)~dfsg1-1
-DEBIAN_DSC_FILENAME:=jami_$(DEBIAN_VERSION).dsc
+DEBIAN_VERSION := $(RELEASE_VERSION)~dfsg1-1
+DEBIAN_DSC_FILENAME := jami_$(DEBIAN_VERSION).dsc
 
 # Qt versions
 QT_MAJOR := 6
 QT_MINOR := 2
-QT_PATCH := 1
-QT_TARBALL_CHECKSUM := e03fffc5c3b5fea09dcc161444df7dfbbe24e8a8ce9377014ec21b66f48d43cd
+QT_PATCH := 2
+QT_TARBALL_CHECKSUM := 907994f78d42b30bdea95e290e91930c2d9b593f3f8dd994f44157e387feee0f
 DEBIAN_QT_VERSION := $(QT_MAJOR).$(QT_MINOR).$(QT_PATCH)-1
 DEBIAN_QT_DSC_FILENAME := libqt-jami_$(DEBIAN_QT_VERSION).dsc
 QT_JAMI_PREFIX := /usr/lib/libqt-jami
@@ -108,7 +96,7 @@ has-guix-p:
 # /etc/ssl/certs.
 guix-share-tarball-arg = $${TARBALLS:+"--share=$$TARBALLS"}
 portable-release-tarball: has-guix-p
-	guix environment --container --network \
+	guix shell --container --network \
           --preserve=TARBALLS $(guix-share-tarball-arg) \
           --expose=/usr/bin/env \
           --expose=$$SSL_CERT_DIR=/etc/ssl/certs \
@@ -135,23 +123,23 @@ ifeq ($(TARBALL_VERSION),)
 $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 # Prepare the sources of the top repository and relevant submodules.
 	rm -f "$@"
-	mkdir $(TMPDIR)/ring-project
-	git archive HEAD | tar xf - -C $(TMPDIR)/ring-project
+	mkdir $(TMPDIR)/jami-project
+	git archive HEAD | tar xf - -C $(TMPDIR)/jami-project
 	for m in daemon lrc client-gnome client-qt; do \
 		(cd "$$m" && git archive --prefix "$$m/" HEAD \
-			| tar xf - -C $(TMPDIR)/ring-project); \
+			| tar xf - -C $(TMPDIR)/jami-project); \
 	done
 # Create the base archive.
-	tar -cf $(TMPDIR)/ring-project.tar $(TMPDIR)/ring-project \
-	  --transform 's,.*/ring-project,ring-project,' \
+	tar -cf $(TMPDIR)/jami-project.tar $(TMPDIR)/jami-project \
+	  --transform 's,.*/jami-project,jami-project,' \
 	  $(TAR_REPRODUCIBILITY_OPTIONS)
 # Append the cached tarballs listed in the manifest.
-	tar --append --file $(TMPDIR)/ring-project.tar \
+	tar --append --file $(TMPDIR)/jami-project.tar \
 	  --files-from $< \
-	  --transform 's,^.*/,ring-project/daemon/contrib/tarballs/,' \
+	  --transform 's,^.*/,jami-project/daemon/contrib/tarballs/,' \
           $(TAR_REPRODUCIBILITY_OPTIONS)
-	gzip --no-name $(TMPDIR)/ring-project.tar
-	mv $(TMPDIR)/ring-project.tar.gz "$@"
+	gzip --no-name $(TMPDIR)/jami-project.tar
+	mv $(TMPDIR)/jami-project.tar.gz "$@"
 	rm -rf $(TMPDIR)
 else
 # If TARBALL_VERSION is defined, assume it's already been generated,

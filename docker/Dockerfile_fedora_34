@@ -90,6 +90,7 @@ RUN dnf install -y \
         perl-generators \
         perl-English \
         libxshmfence-devel \
+        vulkan-devel \
         ninja-build \
         cmake
 

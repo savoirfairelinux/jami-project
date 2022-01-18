@@ -41,7 +41,8 @@ def SNAPCRAFT_KEY = '/var/lib/jenkins/.snap/key'
 def GIT_USER_EMAIL = 'jenkins@jami.net'
 def GIT_USER_NAME = 'jenkins'
 def GIT_PUSH_URL = 'ssh://jenkins@review.jami.net:29420/jami-project'
-def SSH_CRED_ID = '35cefd32-dd99-41b0-8312-0b386df306ff'
+def JENKINS_SSH_KEY = '35cefd32-dd99-41b0-8312-0b386df306ff'
+def DL_SSH_KEY = '5825b39b-dfc6-435f-918e-12acc1f56221'
 
 pipeline {
     agent {
@@ -122,7 +123,6 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             steps {
                 sh """git config user.name ${GIT_USER_NAME}
                       git config user.email ${GIT_USER_EMAIL}
-                      git remote set-url origin ${GIT_PUSH_URL}
                    """
             }
         }
@@ -135,8 +135,9 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             }
 
             steps {
-                sh "git checkout ${params.CHANNEL} " +
-                    '&& git merge --no-commit FETCH_HEAD'
+                sh """git checkout ${params.CHANNEL}
+                      git merge --no-commit FETCH_HEAD
+                   """
             }
         }
 
@@ -152,11 +153,12 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
 
         stage('Generate release tarball') {
             steps {
-                sh """#!/usr/bin/env -S bash -l
-                      git commit -am "New release."
-                      make portable-release-tarball .tarball-version
-                      git tag \$(cat .tarball-version)
-                   """
+                sh """\
+#!/usr/bin/env -S bash -l
+git commit -am 'New release.'
+make portable-release-tarball .tarball-version
+git tag \$(cat .tarball-version) -am "Jami \$(cat .tarball-version)"
+"""
                 stash(includes: '*.tar.gz, .tarball-version',
                       name: 'release-tarball')
             }
@@ -169,26 +171,21 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                 }
             }
 
-            environment {
-                GIT_SSH_COMMAND = 'ssh -o UserKnownHostsFile=/dev/null ' +
-                    '-o StrictHostKeyChecking=no'
-            }
-
             steps {
-                sshagent(credentials: [SSH_CRED_ID]) {
+                sshagent(credentials: [JENKINS_SSH_KEY, DL_SSH_KEY]) {
                     echo "Publishing to git repository..."
-                    // Note: Only stable release tags are published.
                     script {
                         if (params.CHANNEL == 'stable') {
+                            // Only stables releases get tarballs and a tag.
                             sh 'git push --tags'
+                            echo "Publishing release tarball..."
+                            sh 'rsync --verbose jami*.tar.gz ' +
+                                "${REMOTE_HOST}:${REMOTE_BASE_DIR}" +
+                                "/release/tarballs/"
                         } else {
                             sh 'git push'
                         }
                     }
-                    echo "Publishing release tarball to https://dl.jami.net..."
-                    sh 'rsync --verbose jami*.tar.gz ' +
-                        "${REMOTE_HOST}:${REMOTE_BASE_DIR}/release/tarballs/" +
-                        "${params.CHANNEL}/"
                 }
             }
         }
@@ -251,7 +248,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             }
 
             steps {
-                sshagent(credentials: [SSH_CRED_ID]) {
+                sshagent(credentials: [DL_SSH_KEY]) {
                     script {
                         TARGETS.each { target ->
                             try {

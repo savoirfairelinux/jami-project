@@ -19,7 +19,7 @@
 ;;;
 ;;; It can also be invoked directly to spawn a development environment, like so:
 ;;;
-;;; $ guix environment --pure --manifest=guix/manifest.scm
+;;; $ guix shell --pure --manifest=guix/manifest.scm
 
 (specifications->manifest
  (list
