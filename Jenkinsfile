@@ -127,6 +127,16 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             }
         }
 
+        stage('Fetch submodules') {
+            steps {
+                echo 'Initializing submodules ' + SUBMODULES.join(', ') +
+                    (params.WITH_MANUAL_SUBMODULES ? '.' : ' to their latest commit.')
+                sh 'git submodule update --init --recursive' +
+                    (params.WITH_MANUAL_SUBMODULES ? ' ' : ' --remote ') +
+                    SUBMODULES.join(' ')
+            }
+        }
+
         stage('Checkout channel branch') {
             when {
                 expression {
@@ -138,16 +148,6 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                 sh """git checkout ${params.CHANNEL}
                       git merge --no-commit FETCH_HEAD
                    """
-            }
-        }
-
-        stage('Fetch submodules') {
-            steps {
-                echo 'Initializing submodules ' + SUBMODULES.join(', ') +
-                    (params.WITH_MANUAL_SUBMODULES ? '.' : ' to their latest commit.')
-                sh 'git submodule update --init --recursive' +
-                    (params.WITH_MANUAL_SUBMODULES ? ' ' : ' --remote ') +
-                    SUBMODULES.join(' ')
             }
         }
 
