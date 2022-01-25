@@ -136,7 +136,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
 
             steps {
                 sh """git checkout ${params.CHANNEL}
-                      git merge --no-commit FETCH_HEAD
+                      git merge -X theirs --no-commit FETCH_HEAD
                    """
             }
         }
