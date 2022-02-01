@@ -1,6 +1,7 @@
-// Copyright (C) 2021 Savoir-faire Linux Inc.
+// Copyright (C) 2021-2022 Savoir-faire Linux Inc.
 //
 // Author: Maxim Cournoyer <maxim.cournoyer@savoirfairelinux.com>
+// Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -79,6 +80,20 @@ pipeline {
         booleanParam(name: 'BUILD_ARM',
                      defaultValue: false,
                      description: 'Whether to build ARM packages.')
+        choice(name: 'SNAP_PKG_NAME',
+               choices: ['jami', 'jami-gnome'],
+               description: 'Whether to build the client-qt or client-gnome ' +
+               'snap. Defaults to "jami" (client-qt).')
+        booleanParam(name: 'SNAP_BUILD_LOCAL',
+                     defaultValue: false,
+                     description: 'Whether to build the snap package locally ' +
+                     'on one of our build machines, or remotely on a ' +
+                     'Launchpad build server. Defaults to remote build.')
+        string(name: 'SNAP_BUILD_ARCHES',
+               defaultValue: 'amd64 arm64 armhf i386 ppc64el s390x',
+               description: 'A whitespace-separated list of architectures ' +
+               'to build the snap package on.  Only used when building ' +
+               'remotely.')
         booleanParam(name: 'DEPLOY',
                      defaultValue: false,
                      description: 'Whether to deploy packages.')
@@ -86,7 +101,7 @@ pipeline {
                      defaultValue: false,
                      description: 'Whether to upload tarball and push to git.')
         choice(name: 'CHANNEL',
-               choices: 'internal\nnightly\nstable',
+               choices: ['internal', 'nightly', 'stable'],
                description: 'The repository channel to deploy to. ' +
                'Defaults to "internal".')
         string(name: 'PACKAGING_TARGETS',
