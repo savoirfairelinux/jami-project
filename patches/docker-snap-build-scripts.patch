@@ -20,10 +20,12 @@ Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
  COPY --from=builder /snap/core /snap/core
  COPY --from=builder /snap/core18 /snap/core18
  COPY --from=builder /snap/snapcraft /snap/snapcraft
-@@ -53,3 +53,7 @@
+@@ -53,3 +53,9 @@
  ENV SNAP="/snap/snapcraft/current"
  ENV SNAP_NAME="snapcraft"
  ENV SNAP_ARCH="amd64"
++
++RUN apt-get update && apt-get install --yes git # for snapcraft remote-build
 +
 +ADD scripts/build-package-snap.sh /opt/build-package-snap.sh
 +

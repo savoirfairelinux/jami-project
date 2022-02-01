@@ -200,6 +200,7 @@ $(1)-docker-run-command := docker run \
   -e QT_PATCH="$(QT_PATCH)" \
   -e QT_TARBALL_CHECKSUM="$(QT_TARBALL_CHECKSUM)" \
   -e FORCE_REBUILD_QT="$(FORCE_REBUILD_QT)" \
+  -e SNAP_BUILD_ARCHES="$(or $(SNAP_BUILD_ARCHES),amd64)" \
   -e SNAP_PKG_NAME="$(or $(SNAP_PKG_NAME),jami)" \
   -e TARBALLS="$(TARBALLS)" \
   -v '$(TARBALLS)':'$(TARBALLS)' \
