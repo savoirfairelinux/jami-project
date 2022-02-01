@@ -38,6 +38,7 @@ CMAKE_OPTIONS=-DCHOST=${HOST_ARCH} \
   -DCMAKE_C_COMPILER=${HOST_ARCH}-gcc \
   -DCMAKE_CXX_COMPILER=${HOST_ARCH}-g++ \
   -DCMAKE_FIND_ROOT_PATH=/usr/${HOST_ARCH} \
+  -DCMAKE_BUILD_TYPE=Release \
   -DPKG_CONFIG_EXECUTABLE=/usr/bin/${HOST_ARCH}-pkg-config
 endif
 
@@ -177,7 +178,7 @@ override_dh_auto_install:
 
 	# cmake files
 	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME)/usr/lib/cmake
- 
+
 	## GNOME client
 	cd client-gnome/build && \
 		make DESTDIR=$(CURDIR)/debian/$(JAMI_CLIENT_GNOME_PKG_NAME) install

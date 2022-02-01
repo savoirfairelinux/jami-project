@@ -77,7 +77,7 @@ Depends: gnupg,
 Replaces: jami,
           jami-libclient,
           jami-daemon,
-          libqt-jami (>= 6),
+          libqt-jami (>= 6.2.3),
 Conflicts: jami,
            jami-libclient,
            jami-daemon,
@@ -93,7 +93,7 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          jami-libclient (=${binary:Version}),
-         libqt-jami (>= 6)
+         libqt-jami (>= 6.2.3)
 Provides: jami-qt
 Replaces: jami-all
 Conflicts: jami-all
@@ -121,7 +121,7 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          jami-daemon (=${binary:Version}),
-         libqt-jami (>= 6)
+         libqt-jami (>= 6.2.3)
 Description: Secure and distributed voice, video and chat platform - daemon
  Jami (jami.net) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy
