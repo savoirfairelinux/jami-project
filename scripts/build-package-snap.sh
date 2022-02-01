@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (C) 2020-2021 Savoir-faire Linux Inc.
+# Copyright (C) 2020-2022 Savoir-faire Linux Inc.
 #
 # Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
 #
@@ -24,13 +24,34 @@
 set -e
 
 tar xf "/src/$RELEASE_TARBALL_FILENAME" -C /opt
-cd /opt/jami-project/packaging/rules/snap/${SNAP_PKG_NAME}/
 
-# set the version and tarball filename
-sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" snapcraft.yaml
+if [ -z "${SNAP_BUILD_LOCAL}" ]; then
+    git config --global user.name 'The Jami project'
+    git config --global user.email 'jami@gnu.org'
 
-snapcraft # requires snapcraft >= 4.8
+    cd /opt/jami-project
+    cp -rp packaging/rules/snap/common snap
+    cp -p packaging/rules/snap/${SNAP_PKG_NAME}/snapcraft.yaml snap/
+    sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" snap/snapcraft.yaml
+    sed -i "s|../common|snap|g" snap/snapcraft.yaml
 
-# move the built snap to output
+    snapcraft remote-build \
+        --launchpad-accept-public-upload \
+        --build-on=${SNAP_BUILD_ARCHES// /,}
+
+    for arch in ${SNAP_BUILD_ARCHES}; do
+        if [ ! -f "${SNAP_PKG_NAME}_${RELEASE_VERSION}_${arch}.snap" ]; then
+            if [ -f "${SNAP_PKG_NAME}_${arch}.txt" ]; then
+                cat "${SNAP_PKG_NAME}_${arch}.txt"
+            fi
+        fi
+    done
+else
+    cd /opt/jami-project/packaging/rules/snap/${SNAP_PKG_NAME}/
+    sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" snapcraft.yaml
+    snapcraft # requires snapcraft >= 4.8
+fi
+
+# move the built snap(s) to output
 mv *.snap /opt/output/
 chown ${CURRENT_UID}:${CURRENT_GID} /opt/output/*.snap
