@@ -200,11 +200,13 @@ $(1)-docker-run-command := docker run \
   -e QT_PATCH="$(QT_PATCH)" \
   -e QT_TARBALL_CHECKSUM="$(QT_TARBALL_CHECKSUM)" \
   -e FORCE_REBUILD_QT="$(FORCE_REBUILD_QT)" \
+  -e SNAP_BUILD_ARCHES="$(or $(SNAP_BUILD_ARCHES),amd64)" \
   -e SNAP_PKG_NAME="$(or $(SNAP_PKG_NAME),jami)" \
   -e TARBALLS="$(TARBALLS)" \
   -v '$(TARBALLS)':'$(TARBALLS)' \
   -v '$(CURDIR)/$(RELEASE_TARBALL_FILENAME)':'/src/$(RELEASE_TARBALL_FILENAME)' \
   -v '$(CURDIR)/packages/$(1)':/opt/output \
+  -v "$${HOME}/.snap/launchpad":/creds/launchpad \
   -t $(and $(IS_SHELL_INTERACTIVE),-i) \
   $(3) \
   "$$($(1)-docker-image-name)"
