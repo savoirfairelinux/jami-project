@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f2f65a4_7afdf76a",
+        "filename": "Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-02-02T15:10:46Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 12
+      },
+      "revId": "b5faf14ec9c03db597a528e199358561f334e447",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
