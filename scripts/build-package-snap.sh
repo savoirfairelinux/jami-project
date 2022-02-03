@@ -30,6 +30,9 @@ if [ -z "${SNAP_BUILD_LOCAL}" ]; then
     git config --global user.email 'jami@gnu.org'
     mkdir -p ~/.local/share/snapcraft/provider/
     cp -rp /creds/launchpad ~/.local/share/snapcraft/provider/
+    ls -la /creds/launchpad
+    ls -la ~/.local/share/snapcraft/provider/
+    cat ~/.local/share/snapcraft/provider/*
 
     cd /opt/jami-project
 
