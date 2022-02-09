@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0b21565_e758256f",
+        "filename": "Jenkinsfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-02-09T20:19:54Z",
+      "side": 1,
+      "message": "question. The main problem I see is that in the snapcraft, to build client-qt we download jami-libqt from our repo. But we only release for x86_64, so, I think the other build will logically fail? Was it tested?",
+      "range": {
+        "startLine": 93,
+        "startChar": 36,
+        "endLine": 93,
+        "endChar": 66
+      },
+      "revId": "f966d71ea1e6bbbdc6c833cbe09c73ed5a79e201",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f60ad90_e1919f89",
+        "filename": "scripts/build-package-snap.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-02-09T20:19:54Z",
+      "side": 1,
+      "message": "for the I/O error you got, if you got it again on jenkins, I guess it will be because of a docker permission. Probably a missing capabilities. On your system if you have it again, you can technically validate the theory by checking if it works with --privileged (if it works ,some capabilities should be added to docker run)",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 6
+      },
+      "revId": "f966d71ea1e6bbbdc6c833cbe09c73ed5a79e201",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
