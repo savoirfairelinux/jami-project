@@ -137,7 +137,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             steps {
                 sh """git checkout ${params.CHANNEL}
                       # Submodules are generally not managed by merging
-                      git merge -X theirs --no-commit FETCH_HEAD || git add `git diff --name-status --diff-filter=U | awk '{print \$2}'`
+                      git merge -X theirs --no-commit FETCH_HEAD || git status && git add `git diff --name-status --diff-filter=U | awk '{print \$2}'` || true
                    """
             }
         }
@@ -156,6 +156,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             steps {
                 sh """\
 #!/usr/bin/env -S bash -l
+git status
 git commit -am 'New release.'
 make portable-release-tarball .tarball-version
 git tag \$(cat .tarball-version) -am "Jami \$(cat .tarball-version)"
