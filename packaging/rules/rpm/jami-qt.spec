@@ -38,7 +38,6 @@ privacy of its users.
 %setup -n jami-project
 
 %build
-
 # Qt-related variables
 cd %{_builddir}/jami-project/client-qt && \
     mkdir build && cd build && \
@@ -46,7 +45,6 @@ cd %{_builddir}/jami-project/client-qt && \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
           -DCMAKE_BUILD_TYPE=Release \
           ..
-
 make -C %{_builddir}/jami-project/client-qt/build %{_smp_mflags} V=1
 
 %install
