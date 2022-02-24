@@ -101,13 +101,13 @@ if [ ! -f "${RPM_PATH}" ]; then
 
         # Cache the built Qt RPM package.
         if [[ "${DISTRIBUTION:0:4}" == "rhel" ]]; then
-            cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.el8.x86_64.rpm" "${RPM_PATH}"
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.el8.x86_64.rpm "${RPM_PATH}"
         elif [[ "${DISTRIBUTION}" == "fedora_33" ]]; then
-            cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.fc33.x86_64.rpm" "${RPM_PATH}"
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc33.x86_64.rpm "${RPM_PATH}"
         elif [[ "${DISTRIBUTION}" == "fedora_34" ]]; then
-            cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.fc34.x86_64.rpm" "${RPM_PATH}"
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc34.x86_64.rpm "${RPM_PATH}"
         elif [[ "${DISTRIBUTION}" == "fedora_35" ]]; then
-            cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.fc35.x86_64.rpm" "${RPM_PATH}"
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc35.x86_64.rpm "${RPM_PATH}"
         else
             cp /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm "${RPM_PATH}"
         fi
