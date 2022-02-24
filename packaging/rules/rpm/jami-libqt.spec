@@ -1,6 +1,6 @@
 %define name        jami-libqt
 %define version     RELEASE_VERSION
-%define release     0
+%define release     2
 
 # qtwebengine (aka chromium) takes a ton of memory per build process,
 # up to 2.3 GiB.  Cap the number of jobs based on the amount of
@@ -34,6 +34,7 @@ BuildRequires: make
 BuildRequires: bison
 BuildRequires: gperf
 BuildRequires: flex
+BuildRequires: ffmpeg-devel
 BuildRequires: vulkan-devel
 %if %{defined suse_version}
 BuildRequires: python-xml
