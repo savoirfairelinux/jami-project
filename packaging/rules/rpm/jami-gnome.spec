@@ -48,7 +48,6 @@ cd %{_builddir}/jami-project/client-gnome && \
           -DCMAKE_BUILD_TYPE=Debug \
           -DGSETTINGS_LOCALCOMPILE=OFF \
           ..
-
 make -C %{_builddir}/jami-project/client-gnome/build \
     LDFLAGS="-lpthread" %{_smp_mflags} V=1
 
