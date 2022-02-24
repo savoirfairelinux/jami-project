@@ -75,6 +75,7 @@ RUN dnf install -y \
         llvm-devel \
         nodejs \
         flex \
+        ffmpeg ffmpeg-devel \ # For video backend
         nss-devel \
         libxcb* \
         libxkb* \

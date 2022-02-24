@@ -75,6 +75,7 @@ RUN dnf install -y \
         nodejs \
         bison \
         flex \
+        ffmpeg ffmpeg-devel \ # For video backend
         nss-devel \
         libxcb* \
         libxkb* \
