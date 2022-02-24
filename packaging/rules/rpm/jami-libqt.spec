@@ -1,6 +1,6 @@
 %define name        jami-libqt
 %define version     RELEASE_VERSION
-%define release     0
+%define release     2
 
 # qtwebengine (aka chromium) takes a ton of memory per build process,
 # up to 2.3 GiB.  Cap the number of jobs based on the amount of
@@ -27,6 +27,11 @@ Vendor:        Savoir-faire Linux
 URL:           https://jami.net/
 Source:        jami-qtlib_%{version}.tar.xz
 
+%global gst 0.10
+%if 0%{?fedora} || 0%{?rhel} > 7
+%global gst 1.0
+%endif
+
 # Build dependencies
 BuildRequires: autoconf
 BuildRequires: make
@@ -36,8 +41,18 @@ BuildRequires: gperf
 BuildRequires: flex
 BuildRequires: vulkan-devel
 %if %{defined suse_version}
+BuildRequires: ffmpeg-devel
+BuildRequires: ffmpeg
 BuildRequires: python-xml
 BuildRequires: mozilla-nss-devel
+%else
+BuildRequires: pkgconfig(gstreamer-%{gst})
+BuildRequires: pkgconfig(gstreamer-app-%{gst})
+BuildRequires: pkgconfig(gstreamer-audio-%{gst})
+BuildRequires: pkgconfig(gstreamer-base-%{gst})
+BuildRequires: pkgconfig(gstreamer-pbutils-%{gst})
+BuildRequires: pkgconfig(gstreamer-plugins-bad-%{gst})
+BuildRequires: pkgconfig(gstreamer-video-%{gst})
 %endif
 
 %description
