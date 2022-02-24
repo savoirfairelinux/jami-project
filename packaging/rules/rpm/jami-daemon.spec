@@ -79,14 +79,12 @@ cd %{_builddir}/jami-project/daemon/contrib/native && \
     make fetch && \
     make %{_smp_mflags} V=1 && \
     make %{_smp_mflags} V=1 .ffmpeg
-
 # Configure the daemon.
 cd %{_builddir}/jami-project/daemon && \
     ./autogen.sh && \
     ./configure \
         --prefix=%{_prefix} \
         --libdir=%{_libdir}
-
 # Build the daemon.
 make -C %{_builddir}/jami-project/daemon %{_smp_mflags} V=1
 pod2man %{_builddir}/jami-project/daemon/man/jamid.pod \
