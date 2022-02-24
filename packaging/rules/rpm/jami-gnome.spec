@@ -41,6 +41,7 @@ privacy of its users.
 %prep %setup -n jami-project
 
 %build
+
 cd %{_builddir}/jami-project/client-gnome && \
     mkdir build && cd build && \
     cmake -DCMAKE_INSTALL_PREFIX=%{_prefix} \

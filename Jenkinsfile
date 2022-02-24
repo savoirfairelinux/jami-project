@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Savoir-faire Linux Inc.
+// Copyright (C) 2021-2022 Savoir-faire Linux Inc.
 //
 // Author: Maxim Cournoyer <maxim.cournoyer@savoirfairelinux.com>
 //
