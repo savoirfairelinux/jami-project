@@ -7,6 +7,9 @@ RUN dnf install -y dnf-command\(builddep\) rpmdevtools && \
 
 RUN dnf groupinstall -y "X Software Development"
 
+RUN dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+RUN dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
 RUN dnf install -y \
         git \
         rpm-build \
@@ -75,6 +78,12 @@ RUN dnf install -y \
         llvm-devel \
         nodejs \
         flex \
+        gstreamer1 gstreamer1-devel \
+        gstreamer1-libav \
+        gstreamer1-plugins-base-devel \
+        gstreamer1-plugins-good \
+        gstreamer1-plugins-bad-free-devel \
+        gstreamer1-plugins-ugly \
         nss-devel \
         libxcb* \
         libxkb* \
