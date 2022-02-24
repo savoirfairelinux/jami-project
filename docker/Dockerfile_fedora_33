@@ -75,6 +75,11 @@ RUN dnf install -y \
         nodejs \
         bison \
         flex \
+        gstreamer1 gstreamer1-devel \
+        gstreamer1-libav \
+        gstreamer1-plugins-base-devel \
+        gstreamer1-plugins-good \
+        gstreamer1-plugins-ugly \
         nss-devel \
         libxcb* \
         libxkb* \
