@@ -45,6 +45,30 @@
       },
       "revId": "f966d71ea1e6bbbdc6c833cbe09c73ed5a79e201",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2449dfb3_651e571d",
+        "filename": "scripts/build-package-snap.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-02-26T04:51:58Z",
+      "side": 1,
+      "message": "Docker is already always running with --privileged, per line 189 of the Makefile.",
+      "parentUuid": "3f60ad90_e1919f89",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 6
+      },
+      "revId": "f966d71ea1e6bbbdc6c833cbe09c73ed5a79e201",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
