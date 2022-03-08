@@ -21,7 +21,7 @@ OSX_DISTRIBUTION_NAME = "osx"
 ANDROID_DISTRIBUTION_NAME = "android"
 WIN32_DISTRIBUTION_NAME = "win32"
 
-QT5_VERSION = "6.2.1"
+QT_VERSION = "6.2.3"
 
 # vs vars
 win_sdk_default = '10.0.16299.0'
@@ -215,7 +215,7 @@ def run_powersell_cmd(cmd):
     return
 
 
-def write_qt_conf(path, qt5version=QT5_VERSION):
+def write_qt_conf(path, qt5version=QT_VERSION):
     # Add a configuration that can be supplied to qmake
     # e.g. `qmake -qt=5.15 [mode] [options] [files]`
     if path == '':
@@ -653,7 +653,7 @@ def parse_args():
                     default=True, action='store_false')
     ap.add_argument('--qt', nargs='?', const='', type=str,
                     help='Build the Qt client with the Qt path supplied')
-    ap.add_argument('--qtver', default=QT5_VERSION,
+    ap.add_argument('--qtver', default=QT_VERSION,
                     help='Sets the Qt version to build with')
     ap.add_argument('--no-libwrap', dest='no_libwrap',
                     default=False, action='store_true',
