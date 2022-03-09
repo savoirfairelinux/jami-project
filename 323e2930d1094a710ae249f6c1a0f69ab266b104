@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0661f6a_e4e79cd9",
+        "filename": "Jenkinsfile",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-03-09T18:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "896ab6fd_7c044c1e",
+      "revId": "323e2930d1094a710ae249f6c1a0f69ab266b104",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58a3fb14_e35f1dd5",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-03-07T15:45:48Z",
       "side": 1,
       "message": "are the \u0027ugly\u0027 plugins from nonfree rpmfusion really necessary?\ni just tried locally and was able to build jami-libqt without them",
+      "revId": "323e2930d1094a710ae249f6c1a0f69ab266b104",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f35ffb15_47351ad3",
+        "filename": "docker/Dockerfile_fedora_33",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-03-09T18:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a3fb14_e35f1dd5",
       "revId": "323e2930d1094a710ae249f6c1a0f69ab266b104",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
