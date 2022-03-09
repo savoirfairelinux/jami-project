@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73bbd860_4ff6da65",
+        "filename": "build.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-03-09T22:12:01Z",
+      "side": 1,
+      "message": "is this even necessary?",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 10
+      },
+      "revId": "76e459c4ed283dc651e2e268a1205708333f0024",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
