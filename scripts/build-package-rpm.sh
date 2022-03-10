@@ -127,12 +127,16 @@ rpmdev-bumpspec --comment="Automatic nightly release" \
 rpmbuild --define "debug_package %{nil}"  -ba jami-daemon.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-daemon-*
 
-# Build the client library and install it.
+# Build the client library, install it, and build the Qt client.
 rpmbuild --define "debug_package %{nil}"  -ba jami-libclient.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-*
-
-# Build the GNOME and Qt clients.
 rpmbuild --define "debug_package %{nil}" -ba jami-qt.spec
+
+# Uninstall the client library, build and install the client library
+# version specific to the GNOME client, and build the GNOME client.
+rpm --erase $(rpm --query --all 'jami-libclient*')
+rpmbuild --define "debug_package %{nil}"  -ba jami-libclient-gnome.spec
+rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-gnome-*
 rpmbuild --define "debug_package %{nil}" -ba jami-gnome.spec
 
 # Move the built packages to the output directory.

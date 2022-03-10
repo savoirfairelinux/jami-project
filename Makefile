@@ -125,7 +125,7 @@ $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 	rm -f "$@"
 	mkdir $(TMPDIR)/jami-project
 	git archive HEAD | tar xf - -C $(TMPDIR)/jami-project
-	for m in daemon lrc client-gnome client-qt; do \
+	for m in daemon lrc lrc-gnome client-gnome client-qt; do \
 		(cd "$$m" && git archive --prefix "$$m/" HEAD \
 			| tar xf - -C $(TMPDIR)/jami-project); \
 	done
