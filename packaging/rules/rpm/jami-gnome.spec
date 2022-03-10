@@ -11,7 +11,7 @@ License:       GPLv3+
 Vendor:        Savoir-faire Linux
 URL:           https://jami.net/
 Source:        jami_%{version}.tar.gz
-Requires:      jami-libclient = %{version}
+Requires:      jami-libclient-gnome = %{version}
 
 # Build dependencies.
 BuildRequires: make
