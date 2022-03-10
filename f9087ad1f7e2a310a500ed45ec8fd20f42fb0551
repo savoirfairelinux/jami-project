@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95837fbe_741acbcd",
+        "filename": "build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-03-10T20:42:35Z",
+      "side": 1,
+      "message": "seems unused too. --qt /path should be enough imho, the generic build should not even care about a dependency for client-qt",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 20
+      },
+      "revId": "f9087ad1f7e2a310a500ed45ec8fd20f42fb0551",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
