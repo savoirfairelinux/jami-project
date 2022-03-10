@@ -25,3 +25,6 @@
 [submodule "plugins"]
 	path = plugins
 	url = https://review.jami.net/jami-plugins
+[submodule "lrc-gnome"]
+	path = lrc-gnome
+	url = https://review.jami.net/jami-libclient

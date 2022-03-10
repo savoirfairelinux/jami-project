@@ -133,7 +133,7 @@ rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-*
 
 # Build the GNOME and Qt clients.
 rpmbuild --define "debug_package %{nil}" -ba jami-qt.spec
-rpmbuild --define "debug_package %{nil}" -ba jami-gnome.spec
+#rpmbuild --define "debug_package %{nil}" -ba jami-gnome.spec
 
 # Move the built packages to the output directory.
 mv /root/rpmbuild/RPMS/*/* /opt/output
