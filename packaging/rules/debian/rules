@@ -26,6 +26,7 @@ JAMI_ALL_IN_ONE_PKG_NAME="jami-all"
 JAMI_CLIENT_PKG_NAME="jami"
 JAMI_CLIENT_GNOME_PKG_NAME="jami-gnome"
 JAMI_LIB_CLIENT_PKG_NAME="jami-libclient"
+JAMI_LIB_CLIENT_GNOME_PKG_NAME="jami-libclient-gnome"
 JAMI_DAEMON_PKG_NAME="jami-daemon"
 
 # Bundled packages from contrib
@@ -100,8 +101,22 @@ override_dh_auto_build:
 	  -DCMAKE_INSTALL_LIBDIR=lib \
 	  $(CMAKE_OPTIONS) ..
 
+	# Libringclient configure (for GNOME client)
+	cd lrc-gnome && \
+	mkdir build && \
+	cd build && \
+	cmake  \
+	  -DRING_BUILD_DIR=$(CURDIR)/daemon/src \
+	  -DENABLE_LIBWRAP=true \
+	  -DCMAKE_INSTALL_PREFIX=/usr \
+	  -DCMAKE_INSTALL_LIBDIR=lib \
+	  $(CMAKE_OPTIONS) ..
+
 	# libringclient build
 	make -C lrc/build -j$(NO_CPUS) V=1
+
+	# libringclient build (for GNOME client)
+	make -C lrc-gnome/build -j$(NO_CPUS) V=1
 
 	# GNOME client configure
 	cd client-gnome && \
@@ -109,11 +124,13 @@ override_dh_auto_build:
 	  cd build && \
 	  cmake -DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_INSTALL_LIBDIR=lib \
-		-DLibRingClient_PROJECT_DIR=/$(CURDIR)/lrc \
+		-DLibRingClient_PROJECT_DIR=/$(CURDIR)/lrc-gnome \
 		-DGSETTINGS_LOCALCOMPILE=OFF \
 		$(CMAKE_OPTIONS) ..
 
 	# GNOME client build
+	cd client-gnome/web && \
+	  for f in ../../lrc-gnome/src/web-chatview/*.*; do ln -sf $f .; done
 	make -C client-gnome/build LDFLAGS="-lpthread" -j$(NO_CPUS) V=1
 
 	# Qt client configure and build
@@ -141,6 +158,8 @@ override_dh_auto_clean:
 	# CMake build system has no distclean target, so use clean.
 	[ -f lrc/build/Makefile ] && make -C lrc/build clean || true
 	rm -rfv lrc/build
+	[ -f lrc-gnome/build/Makefile ] && make -C lrc-gnome/build clean || true
+	rm -rfv lrc-gnome/build
 
 	###########################
 	##### gnome client clean ##
@@ -172,9 +191,13 @@ override_dh_auto_install:
         ## LibRingClient
 	cd lrc/build && make DESTDIR=$(CURDIR)/debian/$(JAMI_LIB_CLIENT_PKG_NAME) install
 	rm -rfv $(CURDIR)/debian/$(JAMI_LIB_CLIENT_PKG_NAME)/usr/include
+        ## LibRingClient (for GNOME client)
+	cd lrc-gnome/build && make DESTDIR=$(CURDIR)/debian/$(JAMI_LIB_CLIENT_GNOME_PKG_NAME) install
+	rm -rfv $(CURDIR)/debian/$(JAMI_LIB_CLIENT_GNOME_PKG_NAME)/usr/include
 
 	# This is a symlink, should be in -dev package
 	rm -v $(CURDIR)/debian/$(JAMI_LIB_CLIENT_PKG_NAME)/usr/lib/libringclient.so
+	rm -v $(CURDIR)/debian/$(JAMI_LIB_CLIENT_GNOME_PKG_NAME)/usr/lib/libringclient.so
 
 	# cmake files
 	rm -rfv $(CURDIR)/debian/$(JAMI_CLIENT_PKG_NAME)/usr/lib/cmake
