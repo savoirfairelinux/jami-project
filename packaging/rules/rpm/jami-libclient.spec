@@ -32,6 +32,24 @@ users.
 %setup -n jami-project
 
 %build
+# Configure the Jami bundled libraries (ffmpeg & pjproject).
+mkdir -p %{_builddir}/jami-project/daemon/contrib/native
+cd %{_builddir}/jami-project/daemon/contrib/native && \
+    ../bootstrap \
+        --no-checksums \
+        --disable-ogg \
+        --disable-flac \
+        --disable-vorbis \
+        --disable-vorbisenc \
+        --disable-speex \
+        --disable-sndfile \
+        --disable-gsm \
+        --disable-speexdsp \
+        --disable-natpmp && \
+    make list && \
+    make fetch && \
+    make %{_smp_mflags} V=1 .ffmpeg
+
 # Qt-related variables
 cd %{_builddir}/jami-project/lrc && \
     mkdir build && cd build && \
