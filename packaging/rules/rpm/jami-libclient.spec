@@ -69,3 +69,6 @@ library for developing with the Jami client library.
 
 %postun
 /sbin/ldconfig
+
+%clean
+echo NOOP

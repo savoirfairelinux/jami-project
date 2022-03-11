@@ -62,7 +62,7 @@ users.
 
 %build
 # Configure the Jami bundled libraries (ffmpeg & pjproject).
-mkdir -p daemon/contrib/native
+mkdir -p  %{_builddir}/jami-project/daemon/contrib/native
 cd %{_builddir}/jami-project/daemon/contrib/native && \
     ../bootstrap \
         --no-checksums \
@@ -122,3 +122,6 @@ This package contains the header files for using the Jami daemon as a library.
 
 %postun
 /sbin/ldconfig
+
+%clean
+echo NOOP
