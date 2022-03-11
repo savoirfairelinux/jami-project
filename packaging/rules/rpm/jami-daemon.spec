@@ -1,6 +1,7 @@
 %define name        jami-daemon
 %define version     RELEASE_VERSION
 %define release     0
+%define __spec_install_pre /bin/true
 
 Name:          %{name}
 Version:       %{version}
@@ -62,7 +63,7 @@ users.
 
 %build
 # Configure the Jami bundled libraries (ffmpeg & pjproject).
-mkdir -p daemon/contrib/native
+mkdir -p  %{_builddir}/jami-project/daemon/contrib/native
 cd %{_builddir}/jami-project/daemon/contrib/native && \
     ../bootstrap \
         --no-checksums \

@@ -1,6 +1,7 @@
 %define name        jami-libclient
 %define version     RELEASE_VERSION
 %define release     0
+%define __spec_install_pre /bin/true
 
 Name:          %{name}
 Version:       %{version}

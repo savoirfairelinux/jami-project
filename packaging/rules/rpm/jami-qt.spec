@@ -15,6 +15,7 @@ Requires:      jami-libclient = %{version}
 Requires:      jami-libqt
 Provides:      jami
 Obsoletes:     jami < %{version}-%{release}
+%define __spec_install_pre /bin/true
 
 # Build dependencies.
 %if 0%{?fedora} >= 32
