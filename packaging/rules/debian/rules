@@ -31,6 +31,10 @@ JAMI_DAEMON_PKG_NAME="jami-daemon"
 
 # Bundled packages from contrib
 BUNDLED_PKGS=""
+ifeq (debian_10,$(findstring debian_10, $(DISTRIBUTION)))
+# Daemon's bundled libarchive does not build on Debian 10
+BUNDLED_PKGS="--disable-libarchive"
+endif
 ifeq (raspbian_10_armhf,$(findstring raspbian_10_armhf, $(DISTRIBUTION)))
 # Raspbian's yaml-cpp lib does not work properly
 BUNDLED_PKGS="--enable-ffmpeg --enable-yaml-cpp"
