@@ -44,6 +44,7 @@ CMAKE_PREFIX_PATH="${QT_JAMI_PREFIX}/lib/cmake:${CMAKE_PREFIX_PATH}"
 QT_MAJOR=6
 QT_MINOR=2
 QT_PATCH=3
+QT_RELEASE_PATCH=3
 
 QT_MAJOR_MINOR=${QT_MAJOR}.${QT_MINOR}
 QT_MAJOR_MINOR_PATCH=${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}
@@ -56,9 +57,9 @@ QT_TARBALL_FILE_NAME=$(basename "$QT_TARBALL_URL")
 CACHED_QT_TARBALL=$TARBALLS/$QT_TARBALL_FILE_NAME
 
 mkdir -p "$TARBALLS/$DISTRIBUTION"
-RPM_PATH=$TARBALLS/$DISTRIBUTION/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.x86_64.rpm
+RPM_PATH=$TARBALLS/$DISTRIBUTION/jami-libqt-$QT_MAJOR_MINOR_PATCH-${QT_RELEASE_PATCH}.x86_64.rpm
 if [[ "${DISTRIBUTION:0:4}" == "rhel" ]]; then
-    RPM_PATH=$TARBALLS/${DISTRIBUTION}/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.el8.x86_64.rpm
+    RPM_PATH=$TARBALLS/${DISTRIBUTION}/jami-libqt-$QT_MAJOR_MINOR_PATCH-${QT_RELEASE_PATCH}.el8.x86_64.rpm
 fi
 
 if [ ! -f "${RPM_PATH}" ]; then
@@ -101,13 +102,13 @@ if [ ! -f "${RPM_PATH}" ]; then
 
         # Cache the built Qt RPM package.
         if [[ "${DISTRIBUTION:0:4}" == "rhel" ]]; then
-            cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.el8.x86_64.rpm" "${RPM_PATH}"
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.el8.x86_64.rpm "${RPM_PATH}"
         elif [[ "${DISTRIBUTION}" == "fedora_33" ]]; then
-            cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.fc33.x86_64.rpm" "${RPM_PATH}"
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc33.x86_64.rpm "${RPM_PATH}"
         elif [[ "${DISTRIBUTION}" == "fedora_34" ]]; then
-            cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.fc34.x86_64.rpm" "${RPM_PATH}"
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc34.x86_64.rpm "${RPM_PATH}"
         elif [[ "${DISTRIBUTION}" == "fedora_35" ]]; then
-            cp "/root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-1.fc35.x86_64.rpm" "${RPM_PATH}"
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc35.x86_64.rpm "${RPM_PATH}"
         else
             cp /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm "${RPM_PATH}"
         fi
@@ -126,12 +127,16 @@ rpmdev-bumpspec --comment="Automatic nightly release" \
 rpmbuild --define "debug_package %{nil}"  -ba jami-daemon.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-daemon-*
 
-# Build the client library and install it.
+# Build the client library, install it, and build the Qt client.
 rpmbuild --define "debug_package %{nil}"  -ba jami-libclient.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-*
-
-# Build the GNOME and Qt clients.
 rpmbuild --define "debug_package %{nil}" -ba jami-qt.spec
+
+# Uninstall the client library, build and install the client library
+# version specific to the GNOME client, and build the GNOME client.
+rpm --erase $(rpm --query --all 'jami-libclient*')
+rpmbuild --define "debug_package %{nil}"  -ba jami-libclient-gnome.spec
+rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-gnome-*
 rpmbuild --define "debug_package %{nil}" -ba jami-gnome.spec
 
 # Move the built packages to the output directory.

@@ -1,11 +1,11 @@
-%define name        jami-libclient
+%define name        jami-libclient-gnome
 %define version     RELEASE_VERSION
 %define release     0
 
 Name:          %{name}
 Version:       %{version}
 Release:       %{release}%{?dist}
-Summary:       Client library for Jami
+Summary:       Client library for Jami GNOME
 Group:         Applications/Internet
 License:       GPLv3+
 Vendor:        Savoir-faire Linux
@@ -24,33 +24,16 @@ BuildRequires: gcc-c++
 %endif
 
 %description
-This package contains the client library of Jami, a free software for
-universal communication which respects freedoms and privacy of its
-users.
+This package contains the client library of Jami GNOME, a free
+software for universal communication which respects freedoms and
+privacy of its users.
 
 %prep
 %setup -n jami-project
 
 %build
-# Configure and build bundled ffmpeg (for libavutil/avframe).
-mkdir -p %{_builddir}/jami-project/daemon/contrib/native
-cd %{_builddir}/jami-project/daemon/contrib/native && \
-    ../bootstrap \
-        --no-checksums \
-        --disable-ogg \
-        --disable-flac \
-        --disable-vorbis \
-        --disable-vorbisenc \
-        --disable-speex \
-        --disable-sndfile \
-        --disable-gsm \
-        --disable-speexdsp \
-        --disable-natpmp && \
-    make list && \
-    make fetch && \
-    make %{_smp_mflags} V=1 .ffmpeg
 # Qt-related variables
-cd %{_builddir}/jami-project/lrc && \
+cd %{_builddir}/jami-project/lrc-gnome && \
     mkdir build && cd build && \
     cmake -DRING_BUILD_DIR=%{_builddir}/jami-project/daemon/src \
           -DENABLE_LIBWRAP=true \
@@ -58,10 +41,10 @@ cd %{_builddir}/jami-project/lrc && \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
           -DCMAKE_BUILD_TYPE=Release \
           ..
-make -C %{_builddir}/jami-project/lrc/build %{_smp_mflags} V=1
+make -C %{_builddir}/jami-project/lrc-gnome/build %{_smp_mflags} V=1
 
 %install
-DESTDIR=%{buildroot} make -C lrc/build install
+DESTDIR=%{buildroot} make -C lrc-gnome/build install
 
 %files
 %defattr(-,root,root,-)
@@ -69,7 +52,7 @@ DESTDIR=%{buildroot} make -C lrc/build install
 %{_datadir}/libringclient
 
 %package devel
-Summary: Development files of the Jami client library
+Summary: Development files of the Jami GNOME client library
 
 %description devel
 This package contains the header files and the unversioned shared

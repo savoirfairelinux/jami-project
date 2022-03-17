@@ -12,6 +12,7 @@ RUN apt-get install -y -o Acquire::Retries=10 \
         g++-8 \
         clang \
         clang-tools \
+        libarchive-dev \
         wget
 
 ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh

@@ -38,7 +38,23 @@ privacy of its users.
 %setup -n jami-project
 
 %build
-
+# Configure and build bundled ffmpeg (for libavutil/avframe).
+mkdir -p %{_builddir}/jami-project/daemon/contrib/native
+cd %{_builddir}/jami-project/daemon/contrib/native && \
+    ../bootstrap \
+        --no-checksums \
+        --disable-ogg \
+        --disable-flac \
+        --disable-vorbis \
+        --disable-vorbisenc \
+        --disable-speex \
+        --disable-sndfile \
+        --disable-gsm \
+        --disable-speexdsp \
+        --disable-natpmp && \
+    make list && \
+    make fetch && \
+    make %{_smp_mflags} V=1 .ffmpeg
 # Qt-related variables
 cd %{_builddir}/jami-project/client-qt && \
     mkdir build && cd build && \
@@ -46,7 +62,6 @@ cd %{_builddir}/jami-project/client-qt && \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
           -DCMAKE_BUILD_TYPE=Release \
           ..
-
 make -C %{_builddir}/jami-project/client-qt/build %{_smp_mflags} V=1
 
 %install

@@ -11,7 +11,7 @@ License:       GPLv3+
 Vendor:        Savoir-faire Linux
 URL:           https://jami.net/
 Source:        jami_%{version}.tar.gz
-Requires:      jami-libclient = %{version}
+Requires:      jami-libclient-gnome = %{version}
 
 # Build dependencies.
 BuildRequires: make
@@ -48,7 +48,6 @@ cd %{_builddir}/jami-project/client-gnome && \
           -DCMAKE_BUILD_TYPE=Debug \
           -DGSETTINGS_LOCALCOMPILE=OFF \
           ..
-
 make -C %{_builddir}/jami-project/client-gnome/build \
     LDFLAGS="-lpthread" %{_smp_mflags} V=1
 

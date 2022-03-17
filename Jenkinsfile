@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Savoir-faire Linux Inc.
+// Copyright (C) 2021-2022 Savoir-faire Linux Inc.
 //
 // Author: Maxim Cournoyer <maxim.cournoyer@savoirfairelinux.com>
 //
@@ -32,7 +32,7 @@
 // - Allow publishing from any node, to avoid relying on a single machine.
 
 // Configuration globals.
-def SUBMODULES = ['daemon', 'lrc', 'client-gnome', 'client-qt']
+def SUBMODULES = ['daemon', 'lrc', 'lrc-gnome', 'client-gnome', 'client-qt']
 def TARGETS = [:]
 def REMOTE_HOST = env.SSH_HOST_DL_RING_CX
 def REMOTE_BASE_DIR = '/srv/repository/ring'
@@ -136,8 +136,14 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
 
             steps {
                 sh """git checkout ${params.CHANNEL}
+                      git status
+                      git reset --hard origin/nightly
+                      git status
                       # Submodules are generally not managed by merging
-                      git merge -X theirs --no-commit FETCH_HEAD || git status && git add `git diff --name-status --diff-filter=U | awk '{print \$2}'` || true
+                      git merge -X theirs --no-commit FETCH_HEAD || true
+                      git status
+                      git checkout FETCH_HEAD -- daemon lrc client-qt client-gnome lrc-gnome
+                      git status
                    """
             }
         }
