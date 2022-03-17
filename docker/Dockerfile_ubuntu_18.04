@@ -13,6 +13,7 @@ RUN apt-get update && \
         clang \
         clang-tools \
         software-properties-common \
+        libarchive-dev \
         wget
 
 # nodejs (more recent version needed for building libqt-jami)
