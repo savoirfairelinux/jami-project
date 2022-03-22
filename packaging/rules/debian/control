@@ -97,7 +97,7 @@ Depends: ${shlibs:Depends},
          libqt-jami (>= 6.2.3)
 Provides: jami-qt
 Replaces: jami-all
-Conflicts: jami-all
+Conflicts: jami-all, jami-libclient-gnome
 Description: Secure and distributed voice, video and chat platform - desktop client
  Jami (jami.net) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy
@@ -109,7 +109,9 @@ Package: jami-gnome
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         jami-libclient-gnome (=${binary:Version})
+         jami-libclient-gnome (=${binary:Version}),
+         libqt-jami (>= 6.2.3)
+Conflicts: jami-all, jami-libclient
 Description: Secure and distributed voice, video and chat platform - desktop client
  Jami (jami.net) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy
