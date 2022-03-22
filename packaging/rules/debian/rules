@@ -35,6 +35,10 @@ ifeq (debian_10,$(findstring debian_10, $(DISTRIBUTION)))
 # Daemon's bundled libarchive does not build on Debian 10
 BUNDLED_PKGS="--disable-libarchive"
 endif
+ifeq (ubuntu_18.04,$(findstring ubuntu_18.04, $(DISTRIBUTION)))
+# Daemon's bundled libarchive does not build on Ubuntu 18.04
+BUNDLED_PKGS="--disable-libarchive"
+endif
 ifeq (raspbian_10_armhf,$(findstring raspbian_10_armhf, $(DISTRIBUTION)))
 # Raspbian's yaml-cpp lib does not work properly
 BUNDLED_PKGS="--enable-ffmpeg --enable-yaml-cpp"

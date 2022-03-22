@@ -12,6 +12,7 @@ RUN apt-get update && \
         g++-8 \
         clang \
         clang-tools \
+        libarchive-dev \
         software-properties-common \
         wget
 
