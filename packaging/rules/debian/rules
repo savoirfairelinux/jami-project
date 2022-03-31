@@ -36,7 +36,7 @@ ifeq (debian_10,$(findstring debian_10, $(DISTRIBUTION)))
 BUNDLED_PKGS="--disable-libarchive"
 endif
 ifeq (ubuntu_18.04,$(findstring ubuntu_18.04, $(DISTRIBUTION)))
-# Daemon's bundled libarchive does not build on Debian 10
+# Daemon's bundled libarchive does not build on Ubuntu 18.04
 BUNDLED_PKGS="--disable-libarchive"
 endif
 ifeq (raspbian_10_armhf,$(findstring raspbian_10_armhf, $(DISTRIBUTION)))
@@ -251,7 +251,10 @@ override_dh_auto_install:
 	make DESTDIR=$(CURDIR)/debian/$(JAMI_ALL_IN_ONE_PKG_NAME) install
 
 override_dh_shlibdeps:
-	dh_shlibdeps -- -x$(JAMI_ALL_IN_ONE_PKG_NAME)
+	dh_shlibdeps -- \
+	  -x$(JAMI_ALL_IN_ONE_PKG_NAME) \
+	  -x$(JAMI_LIB_CLIENT_PKG_NAME) \
+	  -x$(JAMI_LIB_CLIENT_GNOME_PKG_NAME)
 
 tmpdir:= $(shell mktemp -d)
 workdir:= $(shell pwd)
