@@ -137,10 +137,10 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
             steps {
                 sh """git checkout ${params.CHANNEL}
                       git status
-                      git reset --hard origin/nightly
+                      git reset --hard origin/${params.CHANNEL}
                       git status
                       # Submodules are generally not managed by merging
-                      git merge -X theirs --no-commit FETCH_HEAD || true
+                      git merge -X theirs --no-commit FETCH_HEAD
                       git status
                       git checkout FETCH_HEAD -- daemon lrc client-qt
                       git status
