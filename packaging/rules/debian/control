@@ -86,8 +86,7 @@ Conflicts: jami,
            libqt-jami
 Description: One-click install package for Jami
  This package only exists to provide an easy installation user experience.
- To install the default client, install the 'jami' package. To install
- the GNOME client, install the 'jami-gnome' package.
+ To install the default client, install the 'jami' package.
 
 Package: jami
 Architecture: any
