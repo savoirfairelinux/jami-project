@@ -16,6 +16,24 @@
       "message": "how about we drop both cmake and nodejs from here, at least for now, since 22.04\u0027s\nversions are new enough?",
       "revId": "bde70f0789059550d977ad0ab229adf05eb81c49",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4b2f9ee_0a607f25",
+        "filename": "docker/Dockerfile_ubuntu_22.04",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-04-07T20:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1806857_93a92c32",
+      "revId": "bde70f0789059550d977ad0ab229adf05eb81c49",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
