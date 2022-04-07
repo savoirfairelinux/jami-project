@@ -16,6 +16,24 @@
       "message": "should check which of these were client-gnome-only and not needed anymore,\nand drop them (like you did for webkit2gtk below).",
       "revId": "bde70f0789059550d977ad0ab229adf05eb81c49",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac51b54e_ebea84c1",
+        "filename": "packaging/rules/debian/control",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-04-07T21:48:47Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "12d4bf83_3137f16a",
+      "revId": "bde70f0789059550d977ad0ab229adf05eb81c49",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }

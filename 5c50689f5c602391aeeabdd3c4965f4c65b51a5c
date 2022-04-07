@@ -16,6 +16,24 @@
       "message": "here only the lrc-gnome bits should be removed (you accidentally dropped some lrc\nbits as well, which should stay)",
       "revId": "5c50689f5c602391aeeabdd3c4965f4c65b51a5c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc291faf_2d5166cd",
+        "filename": "packaging/rules/debian/rules",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-04-07T21:48:47Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "840bd989_1c91bdbb",
+      "revId": "5c50689f5c602391aeeabdd3c4965f4c65b51a5c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
