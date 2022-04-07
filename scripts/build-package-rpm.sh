@@ -132,13 +132,6 @@ rpmbuild --define "debug_package %{nil}"  -ba jami-libclient.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-*
 rpmbuild --define "debug_package %{nil}" -ba jami-qt.spec
 
-# Uninstall the client library, build and install the client library
-# version specific to the GNOME client, and build the GNOME client.
-rpm --erase $(rpm --query --all 'jami-libclient*')
-rpmbuild --define "debug_package %{nil}"  -ba jami-libclient-gnome.spec
-rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-gnome-*
-rpmbuild --define "debug_package %{nil}" -ba jami-gnome.spec
-
 # Move the built packages to the output directory.
 mv /root/rpmbuild/RPMS/*/* /opt/output
 touch /opt/output/.packages-built
