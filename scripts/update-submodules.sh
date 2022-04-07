@@ -2,7 +2,6 @@
 
 git submodule foreach "git pull origin master"
 git add client-android \
-        client-gnome \
         client-ios \
         client-macosx \
         client-qt \

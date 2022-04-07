@@ -86,8 +86,7 @@ Conflicts: jami,
            libqt-jami
 Description: One-click install package for Jami
  This package only exists to provide an easy installation user experience.
- To install the default client, install the 'jami' package. To install
- the GNOME client, install the 'jami-gnome' package.
+ To install the default client, install the 'jami' package.
 
 Package: jami
 Architecture: any
@@ -109,7 +108,8 @@ Package: jami-gnome
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         jami-libclient-gnome (=${binary:Version})
+         jami-libclient-gnome (=${binary:Version}),
+         libqt-jami (>= 6.2.3)
 Description: Secure and distributed voice, video and chat platform - desktop client
  Jami (jami.net) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy

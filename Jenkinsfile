@@ -32,7 +32,7 @@
 // - Allow publishing from any node, to avoid relying on a single machine.
 
 // Configuration globals.
-def SUBMODULES = ['daemon', 'lrc', 'lrc-gnome', 'client-gnome', 'client-qt']
+def SUBMODULES = ['daemon', 'lrc', 'client-qt']
 def TARGETS = [:]
 def REMOTE_HOST = env.SSH_HOST_DL_RING_CX
 def REMOTE_BASE_DIR = '/srv/repository/ring'

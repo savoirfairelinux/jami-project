@@ -125,7 +125,7 @@ $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 	rm -f "$@"
 	mkdir $(TMPDIR)/jami-project
 	git archive HEAD | tar xf - -C $(TMPDIR)/jami-project
-	for m in daemon lrc lrc-gnome client-gnome client-qt; do \
+	for m in daemon lrc client-qt; do \
 		(cd "$$m" && git archive --prefix "$$m/" HEAD \
 			| tar xf - -C $(TMPDIR)/jami-project); \
 	done
@@ -165,6 +165,7 @@ DISTRIBUTIONS := \
 	ubuntu_20.04 \
 	ubuntu_21.04 \
 	ubuntu_21.10 \
+	ubuntu_22.04 \
 	fedora_33 \
 	fedora_34 \
 	fedora_35 \
