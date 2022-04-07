@@ -16,6 +16,24 @@
       "message": "do we want to also drop the client-gnome and lrc-gnome submodules here?",
       "revId": "7bb1fc7919b2f312d8b1983383a65891e2461473",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e168e05e_92bf7ce4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-04-07T20:12:47Z",
+      "side": 1,
+      "message": "can be separated, it\u0027s more for packaging here",
+      "parentUuid": "2c0f469a_fd2335f5",
+      "revId": "7bb1fc7919b2f312d8b1983383a65891e2461473",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
