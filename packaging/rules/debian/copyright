@@ -98,17 +98,6 @@ License: LGPL-2.1+
 ## End of lrc ##
 ################
 
-###########################
-## Start of gnome client ##
-###########################
-
-Files: client-gnome/web/linkify*
-Copyright: 2016 SoapBox Innovations Inc.
-License: Expat
-
-#########################
-## End of gnome client ##
-#########################
 
 License: GPL-3+
  This program is free software: you can redistribute it and/or modify

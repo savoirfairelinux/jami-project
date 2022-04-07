@@ -18,12 +18,5 @@ RUN /opt/prebuild-package-debian.sh qt-deps
 COPY packaging/rules/debian/control /tmp/builddeps/debian/control
 RUN /opt/prebuild-package-debian.sh jami-deps
 
-# Install CMake 3.19 for Qt 6
-ADD scripts/install-cmake.sh /opt/install-cmake.sh
-RUN /opt/install-cmake.sh
-# nodejs
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt install nodejs -y
-
 ADD scripts/build-package-debian.sh /opt/build-package-debian.sh
 CMD ["/opt/build-package-debian.sh"]

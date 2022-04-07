@@ -129,6 +129,13 @@ override_dh_auto_clean:
 	rm -rfv daemon/contrib/native
 	rm -rfv daemon/jamid.1
 
+	#########################
+	## libringclient clean ##
+	#########################
+	# CMake build system has no distclean target, so use clean.
+	[ -f lrc/build/Makefile ] && make -C lrc/build clean || true
+	rm -rfv lrc/build
+
 	#####################
 	## qt client clean ##
 	#####################
@@ -196,8 +203,7 @@ override_dh_auto_install:
 override_dh_shlibdeps:
 	dh_shlibdeps -- \
 	  -x$(JAMI_ALL_IN_ONE_PKG_NAME) \
-	  -x$(JAMI_LIB_CLIENT_PKG_NAME) \
-	  -x$(JAMI_LIB_CLIENT_GNOME_PKG_NAME)
+	  -x$(JAMI_LIB_CLIENT_PKG_NAME)
 
 tmpdir:= $(shell mktemp -d)
 workdir:= $(shell pwd)
