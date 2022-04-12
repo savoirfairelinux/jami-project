@@ -142,7 +142,7 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                       # Submodules are generally not managed by merging
                       git merge -X theirs --no-commit FETCH_HEAD || true
                       git status
-                      git checkout FETCH_HEAD -- daemon lrc client-qt
+                      git checkout FETCH_HEAD && git add -A
                       git status
                    """
             }
