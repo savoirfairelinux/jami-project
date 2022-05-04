@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69185969_d2d6e66c",
+        "filename": "docker/Dockerfile_snap",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-05-04T08:34:44Z",
+      "side": 1,
+      "message": "this should not be necessary anymore btw (we don\u0027t use it on master and seems fix\u0027d)",
+      "range": {
+        "startLine": 28,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 125
+      },
+      "revId": "0f35faaf5b78521453987b6f35964462d02bcdd5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
