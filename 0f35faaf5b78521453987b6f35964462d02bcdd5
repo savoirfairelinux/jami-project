@@ -22,6 +22,30 @@
       },
       "revId": "0f35faaf5b78521453987b6f35964462d02bcdd5",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cebc313_4ff11ddf",
+        "filename": "docker/Dockerfile_snap",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-05-04T18:52:26Z",
+      "side": 1,
+      "message": "I was hoping so too, and I initially did try without it (if you check the recent pipeline runs) but unfortunately it seems to be broken again with the same kind of issue/error about Python 3, and I was only able to successfully do it using this.",
+      "parentUuid": "69185969_d2d6e66c",
+      "range": {
+        "startLine": 28,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 125
+      },
+      "revId": "0f35faaf5b78521453987b6f35964462d02bcdd5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
