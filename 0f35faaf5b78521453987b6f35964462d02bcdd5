@@ -46,6 +46,30 @@
       },
       "revId": "0f35faaf5b78521453987b6f35964462d02bcdd5",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29f2668a_91af08a0",
+        "filename": "docker/Dockerfile_snap",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-05-05T14:48:18Z",
+      "side": 1,
+      "message": "lmao\nBut yeah if we have their contact, we should ping them as it\u0027s a shitty workaround. One day they will fix it hopefully",
+      "parentUuid": "0cebc313_4ff11ddf",
+      "range": {
+        "startLine": 28,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 125
+      },
+      "revId": "0f35faaf5b78521453987b6f35964462d02bcdd5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
