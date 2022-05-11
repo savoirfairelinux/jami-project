@@ -1,4 +1,4 @@
-# Copyright (C) 2019-2021 Savoir-faire Linux Inc.
+# Copyright (C) 2019-2022 Savoir-faire Linux Inc.
 #
 # Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
 # Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
@@ -17,11 +17,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# This file is based on earlier work by Daniel Llewellyn, under the
+# This file is based on earlier work by Dani Llewellyn, under the
 # Expat License (also referred to as "the MIT License"), per the
 # following notice:
 
-# Copyright (C) 2017-2020 Daniel Llewellyn <daniel@bowlhat.net>
+# Copyright (C) 2017-2020 Dani Llewellyn <dani@bowlhat.net>
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -49,26 +49,39 @@ version: "RELEASE_VERSION"
 adopt-info: jami
 icon: ../common/icons/jami.svg
 license: GPL-3.0+
-summary: 'Privacy-oriented voice, video, chat, and conference platform and SIP client'
-description: >
-  Jami is free software for universal communication that respects the freedom and privacy of its users.
+summary: 'Privacy-oriented voice, video, chat, and conference platform and SIP phone'
+description: |
+  Jami is free software for universal communication that respects the
+  freedom and privacy of its users.
 
-  Jami is an end-to-end encrypted secure and distributed voice, video, and chat communication platform that requires no central server and leaves the power of privacy and freedom in the hands of users.
+  Jami is an end-to-end encrypted secure and distributed voice, video,
+  and chat communication platform.  Jami requires no central server
+  for these communications and leaves the power of privacy and freedom
+  in the hands of users.
 
-  Jami supports the following key features:
+  Jami provides the following key features to its users:
 
-  * One-to-one conversations
-  * File sharing
-  * Audio calls and conferences
-  * Video calls and conferences
+  * Synchronized and enriched one-to-one conversations
+  * Group conversations (Beta)
+  * Audio/video calls and conferences
   * Screen sharing in video calls and conferences
-  * Recording and sending audio messages
-  * Recording and sending video messages
-  * Functioning as a SIP phone software
+  * Unlimited peer-to-peer file sharing
+  * Recording and sending audio/video messages
+  * Jami plugins SDK for additional functionality (green screen,
+    watermark, audio filters, and more)
+  * Use Jami as your SIP phone with a variety of media codecs
+    and VoIP providers
 
-  Client applications for GNU/Linux, Windows, macOS, iOS, Android, and Android TV are available, making Jami an interoperable and cross-platform communication framework.
+  Client applications for GNU/Linux, Windows, macOS, iOS, Android,
+  and Android TV are available, making Jami an interoperable and
+  cross-platform communication framework.
 
-  This snap packages the new Qt-based `jami-qt` client.  The older GTK-based `jami-gnome` client is available as a separate `jami-gnome` snap.
+  Seamlessly deploy Jami in your organization using
+  Jami Account Management Server (JAMS).   With JAMS, you can enable
+  your users to connect using their LDAP/ActiveDirectory credentials
+  or create local accounts, enabling you to manage your own
+  Jami community while taking advantage of Jami's distributed network
+  architecture.  For more information, please visit https://jami.biz.
 
 confinement: strict
 grade: stable

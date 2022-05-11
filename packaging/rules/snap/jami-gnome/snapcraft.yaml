@@ -1,4 +1,4 @@
-# Copyright (C) 2019-2021 Savoir-faire Linux Inc.
+# Copyright (C) 2019-2022 Savoir-faire Linux Inc.
 #
 # Author: Sébastien Blin <sebastien.blin@savoirfairelinux.com>
 # Author: Amin Bandali <amin.bandali@savoirfairelinux.com>
@@ -17,11 +17,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# This file is based on earlier work by Daniel Llewellyn, under the
+# This file is based on earlier work by Dani Llewellyn, under the
 # Expat License (also referred to as "the MIT License"), per the
 # following notice:
 
-# Copyright (C) 2017-2020 Daniel Llewellyn <daniel@bowlhat.net>
+# Copyright (C) 2017-2020 Dani Llewellyn <dani@bowlhat.net>
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files

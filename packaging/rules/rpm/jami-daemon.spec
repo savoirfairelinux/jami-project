@@ -61,6 +61,8 @@ users.
 %setup -n jami-project
 
 %build
+CFLAGS="${CFLAGS} -fno-lto"
+CXXFLAGS="${CXXFLAGS} -fno-lto"
 # Configure the Jami bundled libraries (ffmpeg & pjproject).
 mkdir -p daemon/contrib/native
 cd %{_builddir}/jami-project/daemon/contrib/native && \

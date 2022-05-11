@@ -76,7 +76,8 @@ sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/s
 cat qtbase/src/corelib/global/qendian.h
 sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/src/corelib/global/qfloat16.h
 sed -i 's,#include <QtCore/qbytearray.h>,#include <QtCore/qbytearray.h>\n#include <limits>,g' qtbase/src/corelib/text/qbytearraymatcher.h
-./configure \
+# recent gcc version do not like lto from qt
+CXXFLAGS="${CXXFLAGS} -fno-lto" CFLAGS="${CFLAGS} -fno-lto" ./configure \
   -opensource \
   -confirm-license \
   -nomake examples \
