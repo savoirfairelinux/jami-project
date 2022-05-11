@@ -109,6 +109,8 @@ if [ ! -f "${RPM_PATH}" ]; then
             cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc34.x86_64.rpm "${RPM_PATH}"
         elif [[ "${DISTRIBUTION}" == "fedora_35" ]]; then
             cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc35.x86_64.rpm "${RPM_PATH}"
+        elif [[ "${DISTRIBUTION}" == "fedora_36" ]]; then
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc36.x86_64.rpm "${RPM_PATH}"
         else
             cp /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm "${RPM_PATH}"
         fi
