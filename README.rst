@@ -40,7 +40,8 @@ On Linux
 
     ./build.py --dependencies
 
-Your distribution's package manager will be used.
+Your distribution's package manager will be used. Adding the ``-y`` flag will install the 
+dependencies non-interactively (assumes yes at all prompts).
 
 2. Build and install locally under this repository:
 
