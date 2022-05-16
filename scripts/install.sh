@@ -11,23 +11,24 @@ export OSTYPE
   # -p: number of processors to use
   # -u: disable use of privileges (sudo) during install
   # -W: disable libwrap and shared library
+  # -w: do not use Qt WebEngine
 
 set -ex
 
 # Qt_MIN_VER required for client-qt
-QT6_MIN_VER="6.2"
+QT_MIN_VER="6.2"
 
 debug=
 global=false
 static=''
 client=''
-qt6ver=''
-qt6path=''
+qtpath=''
 proc='1'
 priv_install=true
 enable_libwrap=true
+enable_webengine=true
 
-while getopts gsc:dq:Q:P:p:uW OPT; do
+while getopts gsc:dQ:P:p:uWw OPT; do
   case "$OPT" in
     g)
       global='true'
@@ -41,11 +42,8 @@ while getopts gsc:dq:Q:P:p:uW OPT; do
     d)
       debug=true
     ;;
-    q)
-      qt6ver="${OPTARG}"
-    ;;
     Q)
-      qt6path="${OPTARG}"
+      qtpath="${OPTARG}"
     ;;
     P)
       prefix="${OPTARG}"
@@ -58,6 +56,9 @@ while getopts gsc:dq:Q:P:p:uW OPT; do
     ;;
     W)
       enable_libwrap='false'
+    ;;
+    w)
+      enable_webengine='false'
     ;;
     \?)
       exit 1
@@ -124,28 +125,27 @@ make -j"${proc}" V=1
 make_install "${global}" "${priv_install}"
 
 # For the client-qt, verify system's version if no path provided
-if [ "${client}" = "client-qt" ] && [ -z "$qt6path" ]; then
-    sys_qt6ver=""
+if [ "${client}" = "client-qt" ] && [ -z "$qtpath" ]; then
+    sys_qtver=""
     if command -v qmake &> /dev/null; then
-        sys_qt6ver=$(qmake -v)
+        sys_qtver=$(qmake -v)
     elif command -v qmake-qt6 &> /dev/null; then
-        sys_qt6ver=$(qmake-qt6 -v)   # Fedora
+        sys_qtver=$(qmake-qt6 -v)   # Fedora
     elif command -v qmake6 &> /dev/null; then
-        sys_qt6ver=$(qmake6 -v) # macOS
+        sys_qtver=$(qmake6 -v) # macOS
     else
         echo "No valid Qt found"; exit 1;
     fi
 
-    sys_qt6ver=${sys_qt6ver#*Qt version}
-    sys_qt6ver=${sys_qt6ver%\ in\ *}
+    sys_qtver=${sys_qtver#*Qt version}
+    sys_qtver=${sys_qtver%\ in\ *}
 
-    installed_qt6ver=$(echo "$sys_qt6ver" | cut -d'.' -f 2)
-    required_qt6ver=$(echo $QT6_MIN_VER | cut -d'.' -f 2)
+    installed_qtver=$(echo "$sys_qtver" | cut -d'.' -f 2)
+    required_qtver=$(echo $QT_MIN_VER | cut -d'.' -f 2)
 
-    if [[ $installed_qt6ver -ge $required_qt6ver ]] ; then
-        # Disable qt6path and qt6ver in order to use system's Qt
-        qt6path=""
-        qt6ver=""
+    if [[ $installed_qtver -ge $required_qtver ]] ; then
+        # Set qtpath to empty in order to use system's Qt.
+        qtpath=""
     else
         echo "No valid Qt found"; exit 1;
     fi
@@ -156,7 +156,7 @@ cd "${TOP}/lrc"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 # Compute LRC CMake flags
-lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${qt6path}"
+lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${qtpath}"
                  -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
                  -DENABLE_LIBWRAP="${enable_libwrap}"
                  $static)
@@ -177,11 +177,12 @@ mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 
 client_cmake_flags=(-DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
-                    -DCMAKE_PREFIX_PATH="${qt6path}")
+                    -DCMAKE_PREFIX_PATH="${qtpath}")
 
 if [ "${client}" = "client-qt" ]; then
     if [ "${global}" = "true" ]; then
         client_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"}
+                             -DWITH_WEBENGINE="${enable_webengine}"
                              $static)
     else
         client_cmake_flags+=(-DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}"

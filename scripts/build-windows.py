@@ -24,13 +24,13 @@ def build_daemon(parsed_args):
 
 def build_lrc(parsed_args):
     make_cmd = os.path.dirname(this_dir) + '\\lrc\\make-lrc.py'
-    execute_cmd('python ' + make_cmd + ' -q ' + parsed_args.qtver)
+    execute_cmd('python ' + make_cmd)
 
 
 def build_client(parsed_args):
     os.chdir('./client-qt')
     execute_cmd('python make-client.py init')
-    execute_cmd('python make-client.py' + ' -q ' + parsed_args.qtver)
+    execute_cmd('python make-client.py')
 
 
 def parse_args():
@@ -40,8 +40,6 @@ def parse_args():
                     help='Windows use only, specify Visual Studio toolset version')
     ap.add_argument('--sdk', default='', type=str,
                     help='Windows use only, specify Windows SDK version')
-    ap.add_argument('--qtver', default='5.15.0',
-                    help='Sets the Qt version to build with')
 
     parsed_args = ap.parse_args()
 
