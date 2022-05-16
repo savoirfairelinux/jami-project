@@ -21,7 +21,7 @@ OSX_DISTRIBUTION_NAME = "osx"
 ANDROID_DISTRIBUTION_NAME = "android"
 WIN32_DISTRIBUTION_NAME = "win32"
 
-QT5_VERSION = "6.2.1"
+QT_VERSION = "6.2.3"
 
 # vs vars
 win_sdk_default = '10.0.16299.0'
@@ -40,7 +40,7 @@ DNF_BASED_DISTROS = [
 ]
 
 PACMAN_BASED_DISTROS = [
-    'arch',
+    'arch', 'parabola',
 ]
 
 ZYPPER_BASED_DISTROS = [
@@ -94,7 +94,7 @@ ZYPPER_DEPENDENCIES = [
     'alsa-devel', 'libpulse-devel', 'libudev-devel', 'libva-devel', 'libvdpau-devel',
     'libopenssl-devel', 'libavutil-devel',
     # lrc
-    'libQt5Core-devel', 'libQt5DBus-devel', 'libqt5-linguist-devel',
+    'qt6-core-devel', 'qt6-dbus-devel', 'qt6-linguist-devel',
     # client gnome / qt
     'qrencode-devel', 'NetworkManager-devel'
 ]
@@ -105,8 +105,14 @@ ZYPPER_CLIENT_GNOME_DEPENDENCIES = [
 ]
 
 ZYPPER_CLIENT_QT_DEPENDENCIES = [
-    'libqt5-qtsvg-devel', 'libqt5-qtwebengine-devel', 'libqt5-qtmultimedia-devel',
-    'libqt5-qtdeclarative-devel', 'libQt5QuickControls2-devel', 'libqt5-qtquickcontrols'
+    'qt6-svg-devel', 'qt6-multimedia-devel', 'qt6-declarative-devel',
+    'qt6-quickcontrols2-devel'
+]
+
+ZYPPER_QT_WEBENGINE = [
+    'qt6-webenginecore-devel',
+    'qt6-webenginequick-devel',
+    'qt6-webenginewidgets-devel'
 ]
 
 DNF_DEPENDENCIES = [
@@ -129,9 +135,10 @@ DNF_CLIENT_GNOME_DEPENDENCIES = [
 ]
 
 DNF_CLIENT_QT_DEPENDENCIES = [
-    'qt5-qtsvg-devel', 'qt5-qtwebengine-devel', 'qt5-qtmultimedia-devel', 'qt5-qtdeclarative-devel',
-    'qt5-qtquickcontrols2-devel', 'qt5-qtquickcontrols'
+    'qt6-qtsvg-devel', 'qt6-qtmultimedia-devel', 'qt6-qtdeclarative-devel'
 ]
+
+DNF_QT_WEBENGINE = [ 'qt6-qtwebengine-devel' ]
 
 APT_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'autopoint', 'automake', 'cmake', 'make', 'dbus', 'doxygen', 'graphviz',
@@ -142,7 +149,7 @@ APT_DEPENDENCIES = [
     'libgtk-3-dev', 'libjack-dev', 'libnotify-dev',
     'libopus-dev', 'libpcre3-dev', 'libpulse-dev', 'libssl-dev',
     'libspeex-dev', 'libspeexdsp-dev', 'libswscale-dev', 'libtool',
-    'libudev-dev', 'libyaml-cpp-dev', 'qtbase5-dev', 'libqt5sql5-sqlite', 'sip-tester', 'swig',
+    'libudev-dev', 'libyaml-cpp-dev', 'qt6-base-dev', 'libqt6sql6-sqlite', 'sip-tester', 'swig',
     'uuid-dev', 'yasm', 'libjsoncpp-dev', 'libva-dev', 'libvdpau-dev', 'libmsgpack-dev',
     'pandoc', 'nasm', 'libqrencode-dev', 'libnm-dev', 'dpkg-dev'
 ]
@@ -152,20 +159,21 @@ APT_CLIENT_GNOME_DEPENDENCIES = [
 ]
 
 APT_CLIENT_QT_DEPENDENCIES = [
-    'qtmultimedia5-dev', 'libqt5svg5-dev', 'qtwebengine5-dev', 'qtdeclarative5-dev',
-    'qtquickcontrols2-5-dev', 'qml-module-qtquick2', 'qml-module-qtquick-controls',
-    'qml-module-qtquick-controls2', 'qml-module-qtquick-dialogs',
-    'qml-module-qtquick-layouts', 'qml-module-qtquick-privatewidgets',
-    'qml-module-qtquick-shapes', 'qml-module-qtquick-window2',
-    'qml-module-qtquick-templates2', 'qml-module-qt-labs-platform',
-    'qml-module-qtwebengine', 'qml-module-qtwebchannel'
+    'qt6-multimedia-dev', 'libqt6svg6-dev', 'qt6-declarative-dev',
+    'qml6-module-qtquick2', 'qml6-module-qtquick-controls',
+    'qml6-module-qtquick-controls2', 'qml6-module-qtquick-dialogs',
+    'qml6-module-qtquick-layouts', 'qml6-module-qtquick-privatewidgets',
+    'qml6-module-qtquick-shapes', 'qml6-module-qtquick-window2',
+    'qml6-module-qtquick-templates2', 'qml6-module-qt-labs-platform'
 ]
+
+APT_QT_WEBENGINE = [ 'qt6-webengine-dev', 'qml6-module-qtwebengine', 'qml6-module-qtwebchannel' ]
 
 PACMAN_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'gettext', 'cmake', 'dbus', 'doxygen', 'graphviz',
     'gcc', 'ffmpeg', 'boost', 'cppunit', 'libdbus', 'dbus-c++', 'libe-book', 'expat',
     'jack', 'opus', 'pcre', 'libpulse', 'speex', 'speexdsp', 'libtool', 'yaml-cpp',
-    'qt5-base', 'swig', 'yasm', 'qrencode', 'make', 'patch', 'pkg-config',
+    'qt6-base', 'swig', 'yasm', 'qrencode', 'make', 'patch', 'pkg-config',
     'automake', 'libva', 'libnm', 'libvdpau', 'openssl', 'pandoc', 'nasm'
 ]
 
@@ -175,17 +183,19 @@ PACMAN_CLIENT_GNOME_DEPENDENCIES = [
 ]
 
 PACMAN_CLIENT_QT_DEPENDENCIES = [
-    'qt5-declarative', 'qt5-graphicaleffects', 'qt5-multimedia', 'qt5-quickcontrols',
-    'qt5-quickcontrols2', 'qt5-svg', 'qt5-tools', 'qt5-webengine'
+    'qt6-declarative', 'qt6-graphicaleffects', 'qt6-multimedia',
+    'qt6-svg', 'qt6-tools'
 ]
 
+PACMAN_QT_WEBENGINE = [ 'qt6-webengine' ]
+
 OSX_DEPENDENCIES = [
-    'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt5',
+    'autoconf', 'cmake', 'gettext', 'pkg-config', 'qt6',
     'libtool', 'yasm', 'nasm', 'automake'
 ]
 
 OSX_DEPENDENCIES_UNLINK = [
-    'autoconf*', 'cmake*', 'gettext*', 'pkg-config*', 'qt*', 'qt@5.*',
+    'autoconf*', 'cmake*', 'gettext*', 'pkg-config*', 'qt*', 'qt@6.*',
     'libtool*', 'yasm*', 'nasm*', 'automake*', 'gnutls*', 'nettle*', 'msgpack*'
 ]
 
@@ -215,12 +225,12 @@ def run_powersell_cmd(cmd):
     return
 
 
-def write_qt_conf(path, qt5version=QT5_VERSION):
+def write_qt_conf(path, qtversion=QT_VERSION):
     # Add a configuration that can be supplied to qmake
     # e.g. `qmake -qt=5.15 [mode] [options] [files]`
     if path == '':
         return
-    with open('/usr/share/qtchooser/' + qt5version + '.conf', 'w+') as fd:
+    with open('/usr/share/qtchooser/' + qtversion + '.conf', 'w+') as fd:
         fd.write(path.rstrip('/') + '/bin\n')
         fd.write(path.rstrip('/') + '/lib\n')
     return
@@ -235,40 +245,48 @@ def run_dependencies(args):
             'Set-ExecutionPolicy Unrestricted; .\\scripts\\install-deps-windows.ps1')
 
     elif args.distribution in APT_BASED_DISTROS:
-        if args.qt is None:
-            APT_DEPENDENCIES.extend(APT_CLIENT_GNOME_DEPENDENCIES)
-        else:
+        if args.gnome is None:
             APT_DEPENDENCIES.extend(APT_CLIENT_QT_DEPENDENCIES)
+        else:
+            APT_DEPENDENCIES.extend(APT_CLIENT_GNOME_DEPENDENCIES)
+        if not args.no_webengine:
+            APT_DEPENDENCIES.extend(APT_QT_WEBENGINE)
         execute_script(
             APT_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, APT_DEPENDENCIES))}
         )
 
     elif args.distribution in DNF_BASED_DISTROS:
-        if args.qt is None:
-            DNF_DEPENDENCIES.extend(DNF_CLIENT_GNOME_DEPENDENCIES)
-        else:
+        if args.gnome is None:
             DNF_DEPENDENCIES.extend(DNF_CLIENT_QT_DEPENDENCIES)
+        else:
+            DNF_DEPENDENCIES.extend(DNF_CLIENT_GNOME_DEPENDENCIES)
+        if not args.no_webengine:
+            DNF_DEPENDENCIES.extend(DNF_QT_WEBENGINE)
         execute_script(
             RPM_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, DNF_DEPENDENCIES))}
         )
 
     elif args.distribution in PACMAN_BASED_DISTROS:
-        if args.qt is None:
-            PACMAN_DEPENDENCIES.extend(PACMAN_CLIENT_GNOME_DEPENDENCIES)
-        else:
+        if args.gnome is None:
             PACMAN_DEPENDENCIES.extend(PACMAN_CLIENT_QT_DEPENDENCIES)
+        else:
+            PACMAN_DEPENDENCIES.extend(PACMAN_CLIENT_GNOME_DEPENDENCIES)
+        if not args.no_webengine:
+            PACMAN_DEPENDENCIES.extend(PACMAN_QT_WEBENGINE)
         execute_script(
             PACMAN_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, PACMAN_DEPENDENCIES))}
         )
 
     elif args.distribution in ZYPPER_BASED_DISTROS:
-        if args.qt is None:
-            ZYPPER_DEPENDENCIES.extend(ZYPPER_CLIENT_GNOME_DEPENDENCIES)
-        else:
+        if args.gnome is None:
             ZYPPER_DEPENDENCIES.extend(ZYPPER_CLIENT_QT_DEPENDENCIES)
+        else:
+            ZYPPER_DEPENDENCIES.extend(ZYPPER_CLIENT_GNOME_DEPENDENCIES)
+        if not args.no_webengine:
+            ZYPPER_DEPENDENCIES.extend(ZYPPER_QT_WEBENGINE)
         execute_script(
             ZYPPER_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, ZYPPER_DEPENDENCIES))}
@@ -380,33 +398,35 @@ def run_install(args):
         install_args.append('-d')
     if args.no_libwrap:
         install_args.append('-W')
+    if args.no_webengine:
+        install_args.append('-w')
 
     if args.distribution == OSX_DISTRIBUTION_NAME:
         # The `universal_newlines` parameter has been renamed to `text` in
         # Python 3.7+ and triggering automatical binary to text conversion is
         # what it actually does
-        proc = subprocess.run(["brew", "--prefix", "qt5"],
+        proc = subprocess.run(["brew", "--prefix", "qt6"],
                               stdout=subprocess.PIPE, check=True,
                               universal_newlines=True)
 
         environ['CMAKE_PREFIX_PATH'] = proc.stdout.rstrip("\n")
         environ['CONFIGURE_FLAGS'] = '--without-dbus'
-        if args.qt is None:
-            install_args += ("-c", "client-macosx")
-        else:
+        if args.macos is None:
             install_args += ("-c", "client-qt")
             install_args += ("-q", args.qtver)
             install_args += ("-Q", args.qt)
+        else:
+            install_args += ("-c", "client-macosx")
     else:
         if args.distribution in ZYPPER_BASED_DISTROS:
             # fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
             environ['JSONCPP_LIBS'] = "-ljsoncpp"
-        if args.qt is None:
-            install_args += ("-c", "client-gnome")
-        else:
+        if args.gnome is None:
             install_args += ("-c", "client-qt")
             install_args += ("-q", args.qtver)
             install_args += ("-Q", args.qt)
+        else:
+            install_args += ("-c", "client-gnome")
 
     command = ['bash', 'scripts/install.sh'] + install_args
 
@@ -441,7 +461,7 @@ def run_uninstall(args):
     else:
         execute_script(UNINSTALL_DAEMON_SCRIPT)
 
-        CLIENT_SUFFIX = 'qt' if (args.qt is not None) else 'gnome'
+        CLIENT_SUFFIX = 'qt' if (args.gnome is None) else 'gnome'
         INSTALL_DIR = '/build-global' if args.global_install else '/build-local'
 
         # Client needs to be uninstalled first
@@ -489,7 +509,7 @@ def run_run(args):
             f.write(str(jamid_process.pid)+'\n')
 
         client_suffix = ""
-        if args.qt is not None:
+        if args.gnome is None:
             client_suffix += "qt"
         else:
             client_suffix += "gnome"
@@ -538,7 +558,7 @@ def run_run(args):
 
 
 def run_stop(args):
-    client_suffix = "qt" if (args.qt is not None) else "gnome"
+    client_suffix = "qt" if (args.gnome is None) else "gnome"
     STOP_SCRIPT = [
         'xargs kill < jami-' + client_suffix + '.pid',
         'xargs kill < daemon.pid'
@@ -594,7 +614,7 @@ def validate_args(parsed_args):
         sys.exit(1)
 
     # The Qt client support will be added incrementally.
-    if parsed_args.qt is not None:
+    if parsed_args.gnome is None:
         supported_qt_distros = [
             'guix',
             OSX_DISTRIBUTION_NAME,
@@ -651,13 +671,17 @@ def parse_args():
     ap.add_argument('--background', default=False, action='store_true')
     ap.add_argument('--no-priv-install', dest='priv_install',
                     default=True, action='store_false')
+    ap.add_argument('--gnome', default=False, action='store_true')
     ap.add_argument('--qt', nargs='?', const='', type=str,
                     help='Build the Qt client with the Qt path supplied')
-    ap.add_argument('--qtver', default=QT5_VERSION,
+    ap.add_argument('--qtver', default=QT_VERSION,
                     help='Sets the Qt version to build with')
     ap.add_argument('--no-libwrap', dest='no_libwrap',
                     default=False, action='store_true',
                     help='Disable libwrap. Also set --disable-shared option to daemon configure')
+    ap.add_argument('--no-webengine' dest='no_webengine',
+                    default=False, action='store_true',
+                    help='Do not use Qt WebEngine.')
 
     dist = choose_distribution()
 
@@ -723,7 +747,7 @@ def main():
     elif parsed_args.run:
         if (parsed_args.distribution == 'guix'
                 and 'GUIX_ENVIRONMENT' not in os.environ):
-            if parsed_args.qt is not None:
+            if parsed_args.gnome is None:
                 print('FIXME: Qt fails loading QML modules due to '
                       'https://issues.guix.gnu.org/47655')
             # Relaunch this script, this time in a pure Guix environment.
