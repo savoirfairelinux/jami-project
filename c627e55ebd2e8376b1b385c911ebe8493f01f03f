@@ -144,6 +144,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14a6e072_19aafe2b",
+        "filename": "build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-05-17T17:06:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17943ef1_feeaf25e",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "c627e55ebd2e8376b1b385c911ebe8493f01f03f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a674975_2bc787a0",

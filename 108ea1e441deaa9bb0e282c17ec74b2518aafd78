@@ -41,6 +41,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e1a678e_6851d123",
+        "filename": "build.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-05-17T17:06:58Z",
+      "side": 1,
+      "message": "Ack, i\u0027ll put a note to send a patch for jami-client-qt.git later to update them too.",
+      "parentUuid": "f4f27202_c5a66403",
+      "range": {
+        "startLine": 148,
+        "startChar": 15,
+        "endLine": 150,
+        "endChar": 50
+      },
+      "revId": "108ea1e441deaa9bb0e282c17ec74b2518aafd78",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0b7fb5b_a7b9fa0a",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-05-17T15:24:34Z",
       "side": 1,
       "message": "missing comma,",
+      "range": {
+        "startLine": 722,
+        "startChar": 31,
+        "endLine": 722,
+        "endChar": 39
+      },
+      "revId": "108ea1e441deaa9bb0e282c17ec74b2518aafd78",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a011972c_1eb4a8a1",
+        "filename": "build.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-05-17T17:06:58Z",
+      "side": 1,
+      "message": "whoops, nice catch.  thanks, done.",
+      "parentUuid": "e0b7fb5b_a7b9fa0a",
       "range": {
         "startLine": 722,
         "startChar": 31,
