@@ -16,6 +16,29 @@
       "message": "now pending confirmation from Andreas and testing by me on a few different distros",
       "revId": "108ea1e441deaa9bb0e282c17ec74b2518aafd78",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4f27202_c5a66403",
+        "filename": "build.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-05-17T15:21:04Z",
+      "side": 1,
+      "message": "also last note a bit unrelated, there is an occurrence of those packages in client-qt/INSTALL.md",
+      "range": {
+        "startLine": 148,
+        "startChar": 15,
+        "endLine": 150,
+        "endChar": 50
+      },
+      "revId": "108ea1e441deaa9bb0e282c17ec74b2518aafd78",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
