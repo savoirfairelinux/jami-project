@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b68b3102_2af036ce",
+        "filename": "build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-05-17T12:11:28Z",
+      "side": 1,
+      "message": "this can be done in another patch, I\u0027ll not block this patch for this point anyway, but yeah we use cmake anyway",
+      "parentUuid": "99c8862a_1f7fa7c0",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "c627e55ebd2e8376b1b385c911ebe8493f01f03f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1a674975_2bc787a0",
         "filename": "build.py",
         "patchSetId": 2
