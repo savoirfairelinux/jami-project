@@ -53,7 +53,7 @@ FLATPAK_BASED_RUNTIMES = [
 
 APT_INSTALL_SCRIPT = [
     'apt-get update',
-    'apt-get install -y %(packages)s'
+    'apt-get install %(packages)s'
 ]
 
 BREW_UNLINK_SCRIPT = [
@@ -68,7 +68,7 @@ BREW_INSTALL_SCRIPT = [
 
 RPM_INSTALL_SCRIPT = [
     'dnf update',
-    'dnf install -y %(packages)s'
+    'dnf install %(packages)s'
 ]
 
 PACMAN_INSTALL_SCRIPT = [
@@ -78,7 +78,7 @@ PACMAN_INSTALL_SCRIPT = [
 
 ZYPPER_INSTALL_SCRIPT = [
     'zypper update',
-    'zypper install -y %(packages)s'
+    'zypper install %(packages)s'
 ]
 
 ZYPPER_DEPENDENCIES = [
@@ -208,6 +208,8 @@ OSX_UNINSTALL_SCRIPT = [
     'rm -rf install/client-macosx'
 ]
 
+ASSUME_YES_FLAG = ' -y'
+
 def run_powersell_cmd(cmd):
     p = subprocess.Popen(["powershell.exe", cmd], stdout=sys.stdout)
     p.communicate()
@@ -239,6 +241,11 @@ def run_dependencies(args):
             APT_DEPENDENCIES.extend(APT_CLIENT_GNOME_DEPENDENCIES)
         else:
             APT_DEPENDENCIES.extend(APT_CLIENT_QT_DEPENDENCIES)
+
+        if args.assume_yes:
+            for i, _ in enumerate(APT_INSTALL_SCRIPT):
+                APT_INSTALL_SCRIPT[i] += ASSUME_YES_FLAG
+
         execute_script(
             APT_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, APT_DEPENDENCIES))}
@@ -249,6 +256,11 @@ def run_dependencies(args):
             DNF_DEPENDENCIES.extend(DNF_CLIENT_GNOME_DEPENDENCIES)
         else:
             DNF_DEPENDENCIES.extend(DNF_CLIENT_QT_DEPENDENCIES)
+
+        if args.assume_yes:
+            for i, _ in enumerate(DNF_INSTALL_SCRIPT): 
+                DNF_INSTALL_SCRIPT[i] += ASSUME_YES_FLAG
+
         execute_script(
             RPM_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, DNF_DEPENDENCIES))}
@@ -269,6 +281,11 @@ def run_dependencies(args):
             ZYPPER_DEPENDENCIES.extend(ZYPPER_CLIENT_GNOME_DEPENDENCIES)
         else:
             ZYPPER_DEPENDENCIES.extend(ZYPPER_CLIENT_QT_DEPENDENCIES)
+
+        if args.assume_yes:
+            for i, _ in enumerate(ZYPPER_INSTALL_SCRIPT): 
+                ZYPPER_INSTALL_SCRIPT[i] += ASSUME_YES_FLAG
+
         execute_script(
             ZYPPER_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, ZYPPER_DEPENDENCIES))}
@@ -658,6 +675,8 @@ def parse_args():
     ap.add_argument('--no-libwrap', dest='no_libwrap',
                     default=False, action='store_true',
                     help='Disable libwrap. Also set --disable-shared option to daemon configure')
+    ap.add_argument('-y', '--assume-yes', default=False, action='store_true',
+                    help='Assume yes (do not prompt user) for dependency installations through the system package manager')
 
     dist = choose_distribution()
 
