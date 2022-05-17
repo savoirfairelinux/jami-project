@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df20cab0_46cd7d76",
+        "filename": "build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-05-17T11:02:29Z",
+      "side": 1,
+      "message": "it is actually used in write_qt_conf and in parse_args :)",
+      "parentUuid": "2a05aff4_0c5170ba",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "c627e55ebd2e8376b1b385c911ebe8493f01f03f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a674975_2bc787a0",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-05-17T09:23:56Z",
       "side": 1,
       "message": "I doubt all modules exists yet?",
+      "range": {
+        "startLine": 162,
+        "startChar": 37,
+        "endLine": 167,
+        "endChar": 45
+      },
+      "revId": "c627e55ebd2e8376b1b385c911ebe8493f01f03f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cd21365_246ea682",
+        "filename": "build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-05-17T11:02:29Z",
+      "side": 1,
+      "message": "i\u0027ve checked the ones now mentioned in the list, they exist on ubuntu 22.04.\nbut they are indeed not available on earlier ubuntu releases or any existing\ndebian release.\n\nalso, for fedora (dnf) qt6 packages are only partially available in newest\nfedora release (afaik they don\u0027t have qt6-qtwebengine-devel yet), and for\nopensuse-leap (zypper) qt6 packages are only available in their 15.4 beta.\n\nwe might later want to adapt the script to download libqt-jami from dl.jami.net\nfor these cases.",
+      "parentUuid": "1a674975_2bc787a0",
       "range": {
         "startLine": 162,
         "startChar": 37,
