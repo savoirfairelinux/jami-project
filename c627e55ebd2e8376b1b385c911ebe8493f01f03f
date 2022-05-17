@@ -48,6 +48,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "792a2eae_18e06e17",
+        "filename": "build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-05-17T11:24:01Z",
+      "side": 1,
+      "message": "yeah, just I don\u0027t know if we really need those things after this.",
+      "parentUuid": "df20cab0_46cd7d76",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "c627e55ebd2e8376b1b385c911ebe8493f01f03f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a674975_2bc787a0",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "i\u0027ve checked the ones now mentioned in the list, they exist on ubuntu 22.04.\nbut they are indeed not available on earlier ubuntu releases or any existing\ndebian release.\n\nalso, for fedora (dnf) qt6 packages are only partially available in newest\nfedora release (afaik they don\u0027t have qt6-qtwebengine-devel yet), and for\nopensuse-leap (zypper) qt6 packages are only available in their 15.4 beta.\n\nwe might later want to adapt the script to download libqt-jami from dl.jami.net\nfor these cases.",
       "parentUuid": "1a674975_2bc787a0",
+      "range": {
+        "startLine": 162,
+        "startChar": 37,
+        "endLine": 167,
+        "endChar": 45
+      },
+      "revId": "c627e55ebd2e8376b1b385c911ebe8493f01f03f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d532851_95ff6f2f",
+        "filename": "build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-05-17T11:24:01Z",
+      "side": 1,
+      "message": "I think we should avoid to fail at least and install the dependencies available.\nI think it tries to install all the dependencies in one step, maybe we can try to install for daemon, then lrc, then client-qt (or gnome), so if it fails it will just limit the failure to client-qt\u0027s packages\n\nElse, for the rest, it\u0027s ok for me.",
+      "parentUuid": "4cd21365_246ea682",
       "range": {
         "startLine": 162,
         "startChar": 37,
