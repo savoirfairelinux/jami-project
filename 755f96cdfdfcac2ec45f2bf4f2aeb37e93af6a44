@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "475cc7ae_7ac2c196",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-05-18T13:35:23Z",
+      "side": 1,
+      "message": "hey, thanks for the patch :)\n\ndouble check to make sure `apt install foo bar -y` would work as `apt install -y foo bar` does.\ncheck this for all package managers.",
+      "revId": "755f96cdfdfcac2ec45f2bf4f2aeb37e93af6a44",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1e51864_b4f375e1",
+        "filename": "build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-05-18T13:35:23Z",
+      "side": 1,
+      "message": "--noconfirm for pacman",
+      "revId": "755f96cdfdfcac2ec45f2bf4f2aeb37e93af6a44",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5bc1322_1e51f7d6",
