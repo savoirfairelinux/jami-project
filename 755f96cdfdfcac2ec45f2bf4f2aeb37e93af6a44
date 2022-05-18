@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5bc1322_1e51f7d6",
+        "filename": "build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-05-18T07:35:01Z",
+      "side": 1,
+      "message": "configure your editor to remove trailing spaces",
+      "range": {
+        "startLine": 286,
+        "startChar": 55,
+        "endLine": 286,
+        "endChar": 58
+      },
+      "revId": "755f96cdfdfcac2ec45f2bf4f2aeb37e93af6a44",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
