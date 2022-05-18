@@ -52,6 +52,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "327eecd0_23672346",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-05-18T13:19:49Z",
+      "side": 1,
+      "message": "thanks for checking that",
+      "parentUuid": "d82d617b_84d810dd",
+      "revId": "49d738464a9dce345d2881597116466533b2dd41",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "629a4039_9ae9274b",
@@ -65,6 +83,30 @@
       "writtenOn": "2022-05-18T08:52:34Z",
       "side": 1,
       "message": "seems not available on ubuntu 20",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "49d738464a9dce345d2881597116466533b2dd41",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f840b23_98435881",
+        "filename": "build.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-05-18T13:19:49Z",
+      "side": 1,
+      "message": "ack; i later realized it\u0027s not part of core python.  i rewrote the relevant logic.",
+      "parentUuid": "629a4039_9ae9274b",
       "range": {
         "startLine": 13,
         "startChar": 11,
