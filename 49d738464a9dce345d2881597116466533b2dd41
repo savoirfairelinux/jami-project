@@ -33,6 +33,46 @@
       "message": "pending a few incoming fixes/improvements + testing on a few distros besides ubuntu 22.04",
       "revId": "49d738464a9dce345d2881597116466533b2dd41",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d82d617b_84d810dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-05-18T08:52:34Z",
+      "side": 1,
+      "message": "fedora 35 seems ok",
+      "revId": "49d738464a9dce345d2881597116466533b2dd41",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "629a4039_9ae9274b",
+        "filename": "build.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-05-18T08:52:34Z",
+      "side": 1,
+      "message": "seems not available on ubuntu 20",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "49d738464a9dce345d2881597116466533b2dd41",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
