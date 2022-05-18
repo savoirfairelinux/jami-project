@@ -53,6 +53,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37c6e3a3_349c739c",
+        "filename": "build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 951
+      },
+      "writtenOn": "2022-05-18T18:08:30Z",
+      "side": 1,
+      "message": "Works the same on a default Arch installation 👍",
+      "parentUuid": "4b6218bb_0fc5515c",
+      "revId": "755f96cdfdfcac2ec45f2bf4f2aeb37e93af6a44",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5bc1322_1e51f7d6",
