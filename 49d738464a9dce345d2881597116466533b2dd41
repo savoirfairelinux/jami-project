@@ -16,6 +16,23 @@
       "message": "also Andreas confirmed no qmake use on Windows either.\n\nso, i\u0027ll test on a few distros and make sure my changes\nare working as expected, and will merge this afterwards.",
       "revId": "49d738464a9dce345d2881597116466533b2dd41",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa315316_7d49b818",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-05-18T04:52:37Z",
+      "side": 1,
+      "message": "pending a few incoming fixes/improvements + testing on a few distros besides ubuntu 22.04",
+      "revId": "49d738464a9dce345d2881597116466533b2dd41",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
