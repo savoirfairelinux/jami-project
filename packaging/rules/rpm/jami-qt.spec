@@ -11,10 +11,11 @@ License:       GPLv3+
 Vendor:        Savoir-faire Linux
 URL:           https://jami.net/
 Source:        jami_%{version}.tar.gz
-Requires:      jami-libclient = %{version}
+Requires:      jami-daemon = %{version}
 Requires:      jami-libqt
 Provides:      jami
 Obsoletes:     jami < %{version}-%{release}
+Obsoletes:     jami-libclient <= 20220516.0214.9b42ad3-1
 
 # Build dependencies.
 %if 0%{?fedora} >= 32
@@ -58,7 +59,9 @@ cd %{_builddir}/jami-project/daemon/contrib/native && \
 # Qt-related variables
 cd %{_builddir}/jami-project/client-qt && \
     mkdir build && cd build && \
-    cmake -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+    cmake -DENABLE_LIBWRAP=true \
+          -DLIBJAMI_BUILD_DIR=%{_builddir}/jami-project/daemon/src \
+          -DCMAKE_INSTALL_PREFIX=%{_prefix} \
           -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
           -DCMAKE_BUILD_TYPE=Release \
           ..
@@ -77,4 +80,4 @@ DESTDIR=%{buildroot} make -C %{_builddir}/jami-project/client-qt/build install
 %{_datadir}/icons/hicolor/48x48/apps/jami.png
 %{_datadir}/pixmaps/jami.xpm
 %{_datadir}/metainfo/jami-qt.appdata.xml
-%{_datadir}/ring/translations/*
+%{_datadir}/jami/translations/*
