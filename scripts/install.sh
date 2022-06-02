@@ -151,7 +151,8 @@ if [ "${client}" = "client-qt" ] && [ -z "$qtpath" ]; then
     fi
 fi
 
-# libringclient
+# libringclient (only if not client-qt)
+if [ "${client}" != "client-qt" ]; then
 cd "${TOP}/lrc"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
@@ -170,6 +171,7 @@ echo "info: Configuring LRC with flags: ${lrc_cmake_flags[*]}"
 cmake .. "${lrc_cmake_flags[@]}"
 make -j"${proc}" V=1
 make_install "${global}" "${priv_install}"
+fi
 
 # client
 cd "${TOP}/${client}"
@@ -180,13 +182,14 @@ client_cmake_flags=(-DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
                     -DCMAKE_PREFIX_PATH="${qtpath}")
 
 if [ "${client}" = "client-qt" ]; then
-    client_cmake_flags+=(-DWITH_WEBENGINE="${enable_webengine}")
+    client_cmake_flags+=(-DENABLE_LIBWRAP="${enable_libwrap}"
+                         -DWITH_WEBENGINE="${enable_webengine}")
     if [ "${global}" = "true" ]; then
         client_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"}
                              $static)
     else
         client_cmake_flags+=(-DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}"
-                             -DLRC="${INSTALL}/lrc")
+                             -DLIBJAMI_BUILD_DIR="${DAEMON}/src")
     fi
 else
     # Compute GNOME client CMake flags.
