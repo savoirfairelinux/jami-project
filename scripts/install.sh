@@ -151,25 +151,27 @@ if [ "${client}" = "client-qt" ] && [ -z "$qtpath" ]; then
     fi
 fi
 
-# libringclient
-cd "${TOP}/lrc"
-mkdir -p "${BUILDDIR}"
-cd "${BUILDDIR}"
-# Compute LRC CMake flags
-lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${qtpath}"
-                 -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
-                 -DENABLE_LIBWRAP="${enable_libwrap}"
-                 $static)
-if [ "${global}" = "true" ]; then
-    lrc_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"})
-else
-    lrc_cmake_flags+=(-DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc"
-                      -DRING_BUILD_DIR="${DAEMON}/src")
+# libringclient (only if not client-qt)
+if [ "${client}" != "client-qt" ]; then
+    cd "${TOP}/lrc"
+    mkdir -p "${BUILDDIR}"
+    cd "${BUILDDIR}"
+    # Compute LRC CMake flags
+    lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${qtpath}"
+                     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
+                     -DENABLE_LIBWRAP="${enable_libwrap}"
+                     $static)
+    if [ "${global}" = "true" ]; then
+        lrc_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"})
+    else
+        lrc_cmake_flags+=(-DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc"
+                          -DRING_BUILD_DIR="${DAEMON}/src")
+    fi
+    echo "info: Configuring LRC with flags: ${lrc_cmake_flags[*]}"
+    cmake .. "${lrc_cmake_flags[@]}"
+    make -j"${proc}" V=1
+    make_install "${global}" "${priv_install}"
 fi
-echo "info: Configuring LRC with flags: ${lrc_cmake_flags[*]}"
-cmake .. "${lrc_cmake_flags[@]}"
-make -j"${proc}" V=1
-make_install "${global}" "${priv_install}"
 
 # client
 cd "${TOP}/${client}"
@@ -180,13 +182,14 @@ client_cmake_flags=(-DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
                     -DCMAKE_PREFIX_PATH="${qtpath}")
 
 if [ "${client}" = "client-qt" ]; then
-    client_cmake_flags+=(-DWITH_WEBENGINE="${enable_webengine}")
+    client_cmake_flags+=(-DENABLE_LIBWRAP="${enable_libwrap}"
+                         -DWITH_WEBENGINE="${enable_webengine}")
     if [ "${global}" = "true" ]; then
         client_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"}
                              $static)
     else
         client_cmake_flags+=(-DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}"
-                             -DLRC="${INSTALL}/lrc")
+                             -DLIBJAMI_BUILD_DIR="${DAEMON}/src")
     fi
 else
     # Compute GNOME client CMake flags.
