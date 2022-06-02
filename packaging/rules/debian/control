@@ -83,31 +83,19 @@ Package: jami
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         jami-libclient (=${binary:Version}),
+         jami-daemon (=${binary:Version}),
          libqt-jami (>= 6.2.3)
 Provides: jami-qt
-Replaces: jami-all
-Conflicts: jami-all
+Replaces: jami-all,
+          jami-libclient (<= 20220516.0214.9b42ad3~dfsg1-1)
+Conflicts: jami-all,
+           jami-libclient (<= 20220516.0214.9b42ad3~dfsg1-1)
 Description: Secure and distributed voice, video and chat platform - desktop client
  Jami (jami.net) is a secure and distributed voice, video and chat communication
  platform that requires no centralized server and leaves the power of privacy
  in the hands of the user.
  .
  This package contains the jami-qt desktop client.
-
-Package: jami-libclient
-Architecture: any
-Depends: ${shlibs:Depends},
-         ${misc:Depends},
-         jami-daemon (=${binary:Version}),
-         libqt-jami (>= 6.2.3)
-Conflicts: jami-libclient-gnome
-Description: Secure and distributed voice, video and chat platform - daemon
- Jami (jami.net) is a secure and distributed voice, video and chat communication
- platform that requires no centralized server and leaves the power of privacy
- in the hands of the user.
- .
- This package contains the Jami client library, lrc, for the Qt client.
 
 Package: jami-daemon
 Architecture: any
