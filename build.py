@@ -458,7 +458,7 @@ def run_install(args):
 
         environ['CMAKE_PREFIX_PATH'] = proc.stdout.rstrip("\n")
         environ['CONFIGURE_FLAGS'] = '--without-dbus'
-        if args.macos is None:
+        if not args.macos:
             install_args += ("-c", "client-qt")
             if args.qt is not None:
                 install_args += ("-Q", args.qt)
@@ -539,8 +539,9 @@ def run_run(args):
         return True
 
     run_env = os.environ
-    run_env['LD_LIBRARY_PATH'] = run_env.get(
-        'LD_LIBRARY_PATH', '') + ":install/lrc/lib"
+    if args.gnome or args.macos:
+        run_env['LD_LIBRARY_PATH'] = run_env.get(
+            'LD_LIBRARY_PATH', '') + ":install/lrc/lib"
 
     try:
         jamid_log = open("daemon.log", 'a')
