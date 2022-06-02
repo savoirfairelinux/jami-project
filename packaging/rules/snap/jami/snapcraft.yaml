@@ -283,27 +283,13 @@ parts:
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
 
-      cd $SNAPCRAFT_PART_BUILD/lrc
-      mkdir build
-      cd build
-      cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
-               -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
-               -DENABLE_STATIC=true -DENABLE_LIBWRAP=true \
-               -DRING_BUILD_DIR=$SNAPCRAFT_PART_BUILD/daemon/src \
-               -DQT6_VER=$QTVER -DQT6_PATH=$QTDIR
-      make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
-      DESTDIR=$SNAPCRAFT_PART_INSTALL make install
-
-      sed -i "s|/usr|$SNAPCRAFT_PART_INSTALL/usr|g" $SNAPCRAFT_PART_INSTALL/usr/lib/cmake/LibRingClient/LibRingClientConfig.cmake
-
       cd $SNAPCRAFT_PART_BUILD/client-qt
       mkdir build
       cd build
       cmake .. -DCMAKE_INSTALL_PREFIX=/usr \
                -DCMAKE_PREFIX_PATH=$SNAPCRAFT_PART_INSTALL/usr \
-               -DENABLE_STATIC=true \
-               -DLRC=$SNAPCRAFT_PART_BUILD/lrc \
-               -DLRCLIB=$SNAPCRAFT_PART_INSTALL/usr/lib \
+               -DENABLE_STATIC=true -DENABLE_LIBWRAP=true \ \
+               -DLIBJAMI_BUILD_DIR=$SNAPCRAFT_PART_BUILD/daemon/src \
                -DQT6_VER=$QTVER -DQT6_PATH=$QTDIR
       make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
       DESTDIR=$SNAPCRAFT_PART_INSTALL make install
