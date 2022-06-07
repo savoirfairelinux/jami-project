@@ -458,10 +458,9 @@ def run_install(args):
 
         environ['CMAKE_PREFIX_PATH'] = proc.stdout.rstrip("\n")
         environ['CONFIGURE_FLAGS'] = '--without-dbus'
-        if args.macos is None:
+        if args.qt is not None:
             install_args += ("-c", "client-qt")
-            if args.qt is not None:
-                install_args += ("-Q", args.qt)
+            install_args += ("-Q", args.qt)
         else:
             install_args += ("-c", "client-macosx")
     else:
