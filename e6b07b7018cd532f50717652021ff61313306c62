@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e93fd66d_73c0f47c",
+        "filename": "scripts/install.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-06-08T19:38:16Z",
+      "side": 1,
+      "message": "indent",
+      "range": {
+        "startLine": 156,
+        "startChar": 3,
+        "endLine": 173,
+        "endChar": 3
+      },
+      "revId": "e6b07b7018cd532f50717652021ff61313306c62",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
