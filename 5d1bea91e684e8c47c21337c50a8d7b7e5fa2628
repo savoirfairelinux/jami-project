@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d9b831d_787a43be",
+        "filename": "packaging/rules/rpm/jami-qt.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-06-08T20:37:21Z",
+      "side": 0,
+      "message": "Something to test:\n+ updating from current nightly to a new one with this, is jami-libclient removed from the system? (it should as the headers moved)\n+ Translation (jsut in case)",
+      "range": {
+        "startLine": 14,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "5d1bea91e684e8c47c21337c50a8d7b7e5fa2628",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}

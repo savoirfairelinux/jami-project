@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99dc490d_a04e0083",
+        "filename": "packaging/rules/debian/rules",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-06-08T20:37:21Z",
+      "side": 1,
+      "message": "indent",
+      "range": {
+        "startLine": 104,
+        "startChar": 3,
+        "endLine": 105,
+        "endChar": 8
+      },
+      "revId": "fe3b75aef0bc120358038dfd2b2bd18e6ed5f258",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39b1480b_09189cba",
+        "filename": "scripts/build-package-rpm.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-06-08T20:37:21Z",
+      "side": 1,
+      "message": "+17 -190 yeay",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "fe3b75aef0bc120358038dfd2b2bd18e6ed5f258",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
