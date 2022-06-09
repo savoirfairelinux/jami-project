@@ -1,0 +1,38 @@
+Subject: [PATCH 1/2] fix segv when destroying qml elements
+
+---
+ qtbase/src/corelib/kernel/qproperty.cpp | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/qtbase/src/corelib/kernel/qproperty.cpp b/qtbase/src/corelib/kernel/qproperty.cpp
+index 356de96ef9..b210a532be 100644
+--- a/qtbase/src/corelib/kernel/qproperty.cpp
++++ b/qtbase/src/corelib/kernel/qproperty.cpp
+@@ -2190,7 +2190,7 @@ struct QBindingStoragePrivate
+         newData->used = d->used;
+         Pair *p = pairs(d);
+         for (size_t i = 0; i < d->size; ++i, ++p) {
+-            if (p->data) {
++            if (p && p->data) {
+                 Pair *pp = pairs(newData);
+                 Q_ASSERT(newData->size && (newData->size & (newData->size - 1)) == 0); // size is a power of two
+                 size_t index = qHash(p->data) & (newData->size - 1);
+@@ -2255,10 +2255,12 @@ struct QBindingStoragePrivate
+         if (!d)
+             return;
+         Pair *p = pairs(d);
+-        for (size_t i = 0; i < d->size; ++i) {
+-            if (p->data)
+-                p->~Pair();
+-            ++p;
++        if (p) {
++            for (size_t i = 0; i < d->size; ++i) {
++                if (p->data)
++                    p->~Pair();
++                ++p;
++            }
+         }
+         free(d);
+     }
+--
+2.35.3
