@@ -1,6 +1,6 @@
 %define name        jami-libqt
 %define version     RELEASE_VERSION
-%define release     2
+%define release     3
 
 # qtwebengine (aka chromium) takes a ton of memory per build process,
 # up to 2.3 GiB.  Cap the number of jobs based on the amount of
@@ -76,6 +76,11 @@ sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/s
 cat qtbase/src/corelib/global/qendian.h
 sed -i 's,#include <string.h>,#include <string.h>\n#include <limits>,g' qtbase/src/corelib/global/qfloat16.h
 sed -i 's,#include <QtCore/qbytearray.h>,#include <QtCore/qbytearray.h>\n#include <limits>,g' qtbase/src/corelib/text/qbytearraymatcher.h
+# Apply patches (Fix in Qt 6.2.4)
+ls /root/rpmbuild/SOURCES/
+pwd
+patch -flp1 < /root/rpmbuild/SOURCES/patches/0001-qtbug-102017-sporadic-binding-crash.patch
+patch -flp1 < /root/rpmbuild/SOURCES/patches/0002-qtbug-101201-fatal-errror-getcurrenkeyboard.patch
 # recent gcc version do not like lto from qt
 CXXFLAGS="${CXXFLAGS} -fno-lto" CFLAGS="${CFLAGS} -fno-lto" ./configure \
   -opensource \
