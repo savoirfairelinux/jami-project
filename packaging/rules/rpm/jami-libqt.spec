@@ -1,6 +1,6 @@
 %define name        jami-libqt
 %define version     RELEASE_VERSION
-%define release     2
+%define release     4
 
 # qtwebengine (aka chromium) takes a ton of memory per build process,
 # up to 2.3 GiB.  Cap the number of jobs based on the amount of
@@ -26,6 +26,8 @@ License:       GPLv3+
 Vendor:        Savoir-faire Linux
 URL:           https://jami.net/
 Source:        jami-qtlib_%{version}.tar.xz
+Patch0:        0001-qtbug-102017-sporadic-binding-crash.patch
+Patch1:        0002-qtbug-101201-fatal-errror-getcurrenkeyboard.patch
 
 %global gst 0.10
 %if 0%{?fedora} || 0%{?rhel} > 7
@@ -63,6 +65,11 @@ This package contains Qt libraries for Jami.
 
 %build
 echo "Building Qt using %{job_count} parallel jobs"
+cat qtbase/src/corelib/kernel/qproperty.cpp
+echo "@@@@@"
+cat src/core/ozone/ozone_platform_qt.cpp
+echo "@@@@"
+cat qtwebengine/src/core/ozone/ozone_platform_qt.cpp
 # Qt 6.2 (https://wiki.linuxfromscratch.org/blfs/ticket/14729)
 sed -i 's,default=False,default=True,g' qtwebengine/src/3rdparty/chromium/third_party/catapult/tracing/tracing_build/generate_about_tracing_contents.py
 # https://bugs.gentoo.org/768261 (Qt 5.15)
