@@ -1,0 +1,59 @@
+From 69cd28b820ba8f8c578591b98f3ad88b00efcef3 Mon Sep 17 00:00:00 2001
+From: Martin Negyokru <negyokru@inf.u-szeged.hu>
+Date: Thu, 07 Apr 2022 10:55:26 +0200
+Subject: [PATCH] Fix fatal error in getCurrentKeyboardLayout()
+
+FATAL:xkb_keyboard_layout_engine.cc(640)] Keymap file failed to load: dk(polytonic)
+
+Remove unnecessary tokenization of XKB layout.
+Parsing of layout configuration is already handled by
+XkbKeyboardLayoutEngine::ParseLayoutName().
+
+Fixes: QTBUG-101201
+Task-number: QTBUG-92971
+Pick-to: 6.2 6.3
+Change-Id: Ia4f09ed99eb82064a3b12e14eda69a6e0e12b0dd
+Reviewed-by: Peter Varga <pvarga@inf.u-szeged.hu>
+Reviewed-by: Allan Sandfeld Jensen <allan.jensen@qt.io>
+---
+
+diff --git a/src/core/ozone/ozone_platform_qt.cpp b/src/core/ozone/ozone_platform_qt.cpp
+index 5fe1457..3830630 100644
+--- a/src/core/ozone/ozone_platform_qt.cpp
++++ b/src/core/ozone/ozone_platform_qt.cpp
+@@ -184,29 +184,16 @@
+     if (XkbRF_GetNamesProp(dpy, nullptr, &vdr) == 0)
+         return std::string();
+
+-    char *layout = strtok(vdr.layout, ",");
+-    for (int i = 0; i < state.group; i++) {
+-        layout = strtok(nullptr, ",");
+-        if (layout == nullptr)
+-            return std::string();
+-    }
++    if (!vdr.layout)
++        return std::string();
+
+     if (!vdr.variant)
+-        return layout;
++        return std::string(vdr.layout);
+
+-    char *variant = strtok(vdr.variant, ",");
+-    if (!variant)
+-        return layout;
+-
+-    for (int i = 0; i < state.group; i++) {
+-        variant = strtok(nullptr, ",");
+-        if (variant == nullptr)
+-            return layout;
+-    }
+-
+-    std::string layoutWithVariant = layout;
++    std::string layoutWithVariant = vdr.layout;
+     layoutWithVariant = layoutWithVariant.append("-");
+-    layoutWithVariant = layoutWithVariant.append(variant);
++    layoutWithVariant = layoutWithVariant.append(vdr.variant);
++
+     return layoutWithVariant;
+ }
+ #endif // BUILDFLAG(USE_XKBCOMMON)

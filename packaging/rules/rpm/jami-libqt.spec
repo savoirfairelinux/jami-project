@@ -1,6 +1,6 @@
 %define name        jami-libqt
 %define version     RELEASE_VERSION
-%define release     2
+%define release     4
 
 # qtwebengine (aka chromium) takes a ton of memory per build process,
 # up to 2.3 GiB.  Cap the number of jobs based on the amount of
@@ -26,6 +26,8 @@ License:       GPLv3+
 Vendor:        Savoir-faire Linux
 URL:           https://jami.net/
 Source:        jami-qtlib_%{version}.tar.xz
+Patch0:        0001-qtbug-102017-sporadic-binding-crash.patch
+Patch1:        0002-qtbug-101201-fatal-errror-getcurrenkeyboard.patch
 
 %global gst 0.10
 %if 0%{?fedora} || 0%{?rhel} > 7

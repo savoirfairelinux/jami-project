@@ -1,0 +1,22 @@
+diff --git a/src/qtbase/src/corelib/kernel/qproperty.cpp b/src/qtbase/src/corelib/kernel/qproperty.cpp
+index fd6a9bdcd09d9c3bd26d5cdc3974418857c7e113..ec4c332f3285ad1066d328dd273de638eb018abb 100644
+--- a/src/qtbase/src/corelib/kernel/qproperty.cpp
++++ b/src/qtbase/src/corelib/kernel/qproperty.cpp
+@@ -2195,7 +2195,7 @@ struct QBindingStoragePrivate
+         newData->used = d->used;
+         Pair *p = pairs(d);
+         for (size_t i = 0; i < d->size; ++i, ++p) {
+-            if (p->data) {
++            if (p && p->data) {
+                 Pair *pp = pairs(newData);
+                 Q_ASSERT(newData->size && (newData->size & (newData->size - 1)) == 0); // size is a power of two
+                 size_t index = qHash(p->data) & (newData->size - 1);
+@@ -2261,7 +2261,7 @@ struct QBindingStoragePrivate
+             return;
+         Pair *p = pairs(d);
+         for (size_t i = 0; i < d->size; ++i) {
+-            if (p->data)
++            if (p && p->data)
+                 p->~Pair();
+             ++p;
+         }
