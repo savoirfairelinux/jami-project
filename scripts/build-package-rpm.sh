@@ -36,6 +36,8 @@ rpmdev-setuptree
 # Copy the source tarball.
 cp --reflink=auto "/src/$RELEASE_TARBALL_FILENAME" /root/rpmbuild/SOURCES
 
+cp /opt/jami-project/packaging/rpm/patches/* /root/rpmbuild/SOURCES/
+
 QT_JAMI_PREFIX="/usr/lib64/qt-jami"
 PATH="${QT_JAMI_PREFIX}/bin:${PATH}"
 LD_LIBRARY_PATH="${QT_JAMI_PREFIX}/lib:${LD_LIBRARY_PATH}"
@@ -44,7 +46,7 @@ CMAKE_PREFIX_PATH="${QT_JAMI_PREFIX}/lib/cmake:${CMAKE_PREFIX_PATH}"
 QT_MAJOR=6
 QT_MINOR=2
 QT_PATCH=3
-QT_RELEASE_PATCH=3
+QT_RELEASE_PATCH=4
 
 QT_MAJOR_MINOR=${QT_MAJOR}.${QT_MINOR}
 QT_MAJOR_MINOR_PATCH=${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}

@@ -19,7 +19,10 @@ override_dh_auto_configure:
 	tac temp | sed '1,/return MimeType::kOthers/{s/return MimeType::kOthers/*\/return MimeType::kOthers/;}' | tac > qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
 	rm temp -f
 	sed -i 's,if (base::Contains,/*if (base::Contains,g' qtwebengine/src/3rdparty/chromium/services/network/public/cpp/cross_origin_read_blocking.cc
-
+	# Apply patches
+	pwd
+	patch -flp1 < ../../patches/0001-qtbug-102017-sporadic-binding-crash.patch
+	patch -flp1 < ../../patches/0002-qtbug-101201-fatal-errror-getcurrenkeyboard.patch
 	CXXFLAGS="-flto -flto-partition=none" CFLAGS="-flto -flto-partition=none" ./configure \
 	  -opensource \
 	  -confirm-license \
