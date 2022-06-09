@@ -40,6 +40,8 @@ deb_arch=$(dpkg --print-architecture)
 qt_deb_name=libqt-jami_${DEBIAN_QT_VERSION}_${deb_arch}.deb
 qt_deb_path=${cache_packaging}/${qt_deb_name}
 
+QUILT_REFRESH_ARGS="-p 1"
+
 if [ ! -f "${qt_deb_path}" ] || [ "${FORCE_REBUILD_QT}" = "true" ]; then
     (
         flock 9                 # block until the lock file is gone
