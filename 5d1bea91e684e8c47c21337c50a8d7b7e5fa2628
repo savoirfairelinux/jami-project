@@ -22,6 +22,30 @@
       },
       "revId": "5d1bea91e684e8c47c21337c50a8d7b7e5fa2628",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c747c9f1_0c599a4f",
+        "filename": "packaging/rules/rpm/jami-qt.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-06-13T17:55:38Z",
+      "side": 0,
+      "message": "Translation works",
+      "parentUuid": "7d9b831d_787a43be",
+      "range": {
+        "startLine": 14,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "5d1bea91e684e8c47c21337c50a8d7b7e5fa2628",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
