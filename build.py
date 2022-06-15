@@ -532,14 +532,16 @@ def run_clean():
 
 
 def run_run(args):
-    if args.distribution == OSX_DISTRIBUTION_NAME:
+    if args.distribution == OSX_DISTRIBUTION_NAME and args.qt is None:
         subprocess.Popen(
             ["install/client-macosx/Ring.app/Contents/MacOS/Ring"])
         return True
 
     run_env = os.environ
-    run_env['LD_LIBRARY_PATH'] = run_env.get(
-        'LD_LIBRARY_PATH', '') + ":install/lrc/lib"
+    if args.gnome or (args.distribution == OSX_DISTRIBUTION_NAME \
+                     and args.qt is None):
+        run_env['LD_LIBRARY_PATH'] = run_env.get(
+            'LD_LIBRARY_PATH', '') + ":install/lrc/lib"
 
     try:
         jamid_log = open("daemon.log", 'a')
@@ -718,7 +720,6 @@ def parse_args():
     ap.add_argument('--no-priv-install', dest='priv_install',
                     default=True, action='store_false')
     ap.add_argument('--gnome', default=False, action='store_true')
-    ap.add_argument('--macos', default=False, action='store_true')
     ap.add_argument('--qt', nargs='?', const='', type=str,
                     help='Build the Qt client with the Qt path supplied')
     ap.add_argument('--no-libwrap', dest='no_libwrap',
