@@ -46,6 +46,54 @@
       },
       "revId": "5d1bea91e684e8c47c21337c50a8d7b7e5fa2628",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e63c969d_dcf7ec8e",
+        "filename": "packaging/rules/rpm/jami-qt.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-06-17T16:01:01Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "c747c9f1_0c599a4f",
+      "range": {
+        "startLine": 14,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "5d1bea91e684e8c47c21337c50a8d7b7e5fa2628",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78cf6956_84e8e4d5",
+        "filename": "packaging/rules/rpm/jami-qt.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-06-17T16:01:01Z",
+      "side": 0,
+      "message": "for both deb and rpm, jami-libclient becomes \u0027autoremove\u0027able, which as we discussed would be fine.\n\nregardless, i\u0027m adding \u0027Replaces\u0027 and \u0027Obsoletes\u0027 for the deb and rpm packages respectively.",
+      "parentUuid": "c747c9f1_0c599a4f",
+      "range": {
+        "startLine": 14,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "5d1bea91e684e8c47c21337c50a8d7b7e5fa2628",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
