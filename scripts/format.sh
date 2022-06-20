@@ -71,7 +71,7 @@ fi
 
 case "${1}" in
   --all )
-    files=$(find src -regex '.*\.\(cpp\|hpp\|cc\|cxx\|h\)') || true
+    files=$(find src -regex '.*\.\(cpp\|hpp\|cc\|cxx\|h\)$') || true
     echo Formatting all source files...
     format_files "$files"
     ;;
@@ -79,7 +79,7 @@ case "${1}" in
     install_hook "${2}"
     ;;
   * )
-    files=$(git diff-index --cached --name-only HEAD | grep -iE '\.(cpp|cxx|cc|h|hpp)') || exit_if_no_files
+    files=$(git diff-index --cached --name-only HEAD | grep -iE '\.(cpp|cxx|cc|h|hpp)$') || exit_if_no_files
     echo Formatting committed source files...
     format_files "$files"
     ;;
