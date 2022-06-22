@@ -22,6 +22,30 @@
       },
       "revId": "fcc8fb5785e66675151758c5be9f239e58ae3b94",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b963b1d_d39934dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 951
+      },
+      "writtenOn": "2022-06-22T21:06:01Z",
+      "side": 1,
+      "message": "I was working on a refactor of the plugin SDK and so I created template files with names like *.cpp.jinja. I could have just done *_cpp.jinja, but then I wouldn\u0027t get automatic syntax highlighting 😎. Not sure if the plugin SDK is even going to have templating in the future, so this might end up being a useless change",
+      "parentUuid": "562ca2d2_6d9858fc",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "fcc8fb5785e66675151758c5be9f239e58ae3b94",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
