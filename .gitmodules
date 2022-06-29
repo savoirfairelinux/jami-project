@@ -4,9 +4,6 @@
 [submodule "daemon"]
 	path = daemon
 	url = https://review.jami.net/jami-daemon
-[submodule "lrc"]
-	path = lrc
-	url = https://review.jami.net/jami-libclient
 [submodule "client-macosx"]
 	path = client-macosx
 	url = https://review.jami.net/jami-client-macos
