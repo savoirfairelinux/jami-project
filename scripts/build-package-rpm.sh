@@ -36,6 +36,8 @@ rpmdev-setuptree
 # Copy the source tarball.
 cp --reflink=auto "/src/$RELEASE_TARBALL_FILENAME" /root/rpmbuild/SOURCES
 
+cp patches/0001-qtbug-101201-fatal-error-getcurrenkeyboard.patch /root/rpmbuild/SOURCES/
+
 QT_JAMI_PREFIX="/usr/lib64/qt-jami"
 PATH="${QT_JAMI_PREFIX}/bin:${PATH}"
 LD_LIBRARY_PATH="${QT_JAMI_PREFIX}/lib:${LD_LIBRARY_PATH}"
@@ -44,7 +46,7 @@ CMAKE_PREFIX_PATH="${QT_JAMI_PREFIX}/lib/cmake:${CMAKE_PREFIX_PATH}"
 QT_MAJOR=6
 QT_MINOR=2
 QT_PATCH=3
-QT_RELEASE_PATCH=3
+QT_RELEASE_PATCH=4
 
 QT_MAJOR_MINOR=${QT_MAJOR}.${QT_MINOR}
 QT_MAJOR_MINOR_PATCH=${QT_MAJOR}.${QT_MINOR}.${QT_PATCH}
@@ -129,9 +131,10 @@ rpmdev-bumpspec --comment="Automatic nightly release" \
 rpmbuild --define "debug_package %{nil}"  -ba jami-daemon.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-daemon-*
 
-# Build the client library, install it, and build the Qt client.
+# Build the transitional libclient package.
 rpmbuild --define "debug_package %{nil}"  -ba jami-libclient.spec
-rpm --install /root/rpmbuild/RPMS/x86_64/jami-libclient-*
+
+# Build the Qt client.
 rpmbuild --define "debug_package %{nil}" -ba jami-qt.spec
 
 # Move the built packages to the output directory.
