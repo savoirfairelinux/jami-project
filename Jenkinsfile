@@ -139,7 +139,8 @@ See https://wiki.savoirfairelinux.com/wiki/Jenkins.jami.net#Configuration_client
                       git reset --hard origin/${params.CHANNEL}
                       # Submodules are generally not managed by merging
                       git status
-                      git merge -X theirs --no-commit FETCH_HEAD
+                      rm -rf client-gnome lrc-gnome
+                      git merge -X theirs --no-commit FETCH_HEAD || git status && git add `git diff --name-status --diff-filter=U | awk '{print \$2}'`
                    """
             }
         }
