@@ -10,9 +10,6 @@
 [submodule "client-ios"]
 	path = client-ios
 	url = https://review.jami.net/jami-client-ios
-[submodule "client-uwp"]
-	path = client-uwp
-	url = https://review.jami.net/jami-client-uwp
 [submodule "client-qt"]
 	path = client-qt
 	url = https://review.jami.net/jami-client-qt
