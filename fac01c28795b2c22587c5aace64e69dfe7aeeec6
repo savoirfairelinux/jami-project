@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8143ce08_a88dd3d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-11T20:04:52Z",
+      "side": 1,
+      "message": "Oh I see.\n\nA better fix I guess would be to have:\n\n        if not os.path.exists(hooks_dir):\n            os.makedirs(hooks_dir)\n        copy_file(\"./scripts/commit-msg\", hooks_dir + /commit-msg)\n\nSo an explicit paste (to havoir commit-msg as a file.\n\nand still got 2 loops cause if module_names_to_format contains something not in module_names, it\u0027s probably wrong.",
+      "parentUuid": "404de23e_a2cfa82e",
+      "revId": "fac01c28795b2c22587c5aace64e69dfe7aeeec6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c9df51bd_0e051f54",
         "filename": "build.py",
         "patchSetId": 1
