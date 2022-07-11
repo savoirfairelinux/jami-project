@@ -392,15 +392,17 @@ def run_init():
     subprocess.run(["git", "submodule", "update", "--init"], check=True)
     subprocess.run(["git", "submodule", "foreach",
                     "git checkout master && git pull"], check=True)
-    for name in module_names:
-        copy_file("./scripts/commit-msg", ".git/modules/"+name+"/hooks")
 
     module_names_to_format = ['daemon', 'client-qt', 'plugins']
-    for name in module_names_to_format:
-        execute_script(
-            ['./scripts/format.sh --install  %(path)s'],
-            {"path": ".git/modules/" + name + "/hooks"}
-        )
+
+    for name in module_names:
+        hooks_dir = ".git/modules/" + name + "/hooks/"
+        if not os.path.exists(hooks_dir):
+            os.makedirs(hooks_dir)
+        copy_file("./scripts/commit-msg", hooks_dir)
+        if name in module_names_to_format:
+            execute_script(['./scripts/format.sh --install %(path)s'],
+                           {"path": hooks_dir})
 
 
 def copy_file(src, dest):
