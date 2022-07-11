@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "404de23e_a2cfa82e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-07-11T19:54:48Z",
+      "side": 1,
+      "message": "Okay, found the culprit: this customization I\u0027d recently added to my\nglobal git config:\n\n[init]\n\ttemplateDir \u003d ~/.config/git/template\n\nwhere the \u0027template\u0027 directory doesn\u0027t have any hooks directory.\n\nI don\u0027t think it\u0027s an invalid use-case, and I\u0027m kind of surprised that\ngit would completely omit the hooks directory (containing only sample\nhooks by default) in new inits.\n\nI guess I\u0027d be fine with abandoning this patch, but I could see\nsomeone else easily running into this and being confused.",
+      "revId": "fac01c28795b2c22587c5aace64e69dfe7aeeec6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9df51bd_0e051f54",
