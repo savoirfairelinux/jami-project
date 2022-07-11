@@ -661,21 +661,6 @@ def validate_args(parsed_args):
               file=sys.stderr)
         sys.exit(1)
 
-    # The Qt client support will be added incrementally.
-    if not parsed_args.gnome:
-        supported_qt_distros = [
-            'guix',
-            OSX_DISTRIBUTION_NAME,
-            WIN32_DISTRIBUTION_NAME
-        ] + APT_BASED_DISTROS + DNF_BASED_DISTROS + PACMAN_BASED_DISTROS
-
-        if parsed_args.distribution not in supported_qt_distros:
-            print('Distribution \'{0}\' not supported when building the Qt client.'
-                  '\nChoose one of: {1}'.format(
-                      parsed_args.distribution, ', '.join(supported_qt_distros)
-                  ), file=sys.stderr)
-            sys.exit(1)
-
     # On Windows, version 10 or later is needed to build Jami.
     if parsed_args.distribution == WIN32_DISTRIBUTION_NAME:
         if hasattr(sys, 'getwindowsversion') and sys.getwindowsversion()[0] < 10:
