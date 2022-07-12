@@ -102,4 +102,6 @@ RUN /opt/install-cmake.sh
 
 ADD scripts/build-package-rpm.sh  /opt/build-package-rpm.sh
 
+ENV CC=gcc
+ENV CXX=g++
 CMD ["/opt/build-package-rpm.sh"]
