@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "80e4268f_f2919587",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-07-12T12:51:16Z",
+      "side": 1,
+      "message": "Okay cool I guess something like the latest patchset then?",
+      "parentUuid": "8143ce08_a88dd3d5",
+      "revId": "fac01c28795b2c22587c5aace64e69dfe7aeeec6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c9df51bd_0e051f54",
         "filename": "build.py",
         "patchSetId": 1
@@ -49,6 +67,30 @@
       "writtenOn": "2022-07-11T19:07:14Z",
       "side": 1,
       "message": "This should never be necessary.\na \"git init\" should create .git/hooks and git submodule should create .git/modules/name/hooks, and we should avoid to play with default directories in .git.\n\nFor me, if this is failing here, there is something wrong with the git binary.\n\nI don\u0027t seem to reproduce your issue directly on the build machines or my device.",
+      "range": {
+        "startLine": 400,
+        "startChar": 34,
+        "endLine": 401,
+        "endChar": 34
+      },
+      "revId": "fac01c28795b2c22587c5aace64e69dfe7aeeec6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ebcba33_1fabcc82",
+        "filename": "build.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-07-12T12:51:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c9df51bd_0e051f54",
       "range": {
         "startLine": 400,
         "startChar": 34,
@@ -72,6 +114,30 @@
       "writtenOn": "2022-07-11T19:07:14Z",
       "side": 1,
       "message": "This may be problematic.\n\nif a name is not in modules, but in modules_names_to_format this is bad anyway and should not happen I guess.",
+      "range": {
+        "startLine": 403,
+        "startChar": 19,
+        "endLine": 405,
+        "endChar": 30
+      },
+      "revId": "fac01c28795b2c22587c5aace64e69dfe7aeeec6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa2b6ad5_3cdb2ed7",
+        "filename": "build.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-07-12T12:51:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9eb7e3dd_88014714",
       "range": {
         "startLine": 403,
         "startChar": 19,
