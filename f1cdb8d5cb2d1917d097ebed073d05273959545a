@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9463ba07_35f72599",
+        "filename": "docker/Dockerfile_opensuse-leap_15.3",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-07-13T13:25:56Z",
+      "side": 1,
+      "message": "I don\u0027t mind merging it, but I still don\u0027t understand why this would be necessary 😕",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 11
+      },
+      "revId": "f1cdb8d5cb2d1917d097ebed073d05273959545a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
