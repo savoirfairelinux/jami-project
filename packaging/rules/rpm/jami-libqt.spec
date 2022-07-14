@@ -1,6 +1,6 @@
 %define name        jami-libqt
 %define version     RELEASE_VERSION
-%define release     4
+%define release     5
 
 # qtwebengine (aka chromium) takes a ton of memory per build process,
 # up to 2.3 GiB.  Cap the number of jobs based on the amount of
