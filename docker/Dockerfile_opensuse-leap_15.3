@@ -91,6 +91,10 @@ RUN zypper --non-interactive install -y \
         xorg-* \
         vulkan-devel \
         ninja \
+        gstreamer-devel \
+        gstreamer-plugins-good-devel \
+        gstreamer-plugins-bad-devel \
+        gstreamer-plugins-base-devel \
         wget
 
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 50
