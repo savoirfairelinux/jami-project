@@ -85,13 +85,13 @@ description: |
 
 confinement: strict
 grade: stable
-base: core18
+base: core20
 
 plugs:
-  gnome-3-28-1804:
+  gnome-3-38-2004:
     interface: content
     target: $SNAP/gnome-platform
-    default-provider: gnome-3-28-1804:gnome-3-28-1804
+    default-provider: gnome-3-38-2004:gnome-3-38-2004
   gtk-3-themes:
     interface: content
     target: $SNAP/data-dir/themes
@@ -166,7 +166,7 @@ package-repositories:
     components: [main]
     suites: [jami]
     key-id: A295D773307D25A33AE72F2F64CD5FA175348F84
-    url: https://dl.jami.net/nightly/ubuntu_18.04/
+    url: https://dl.jami.net/nightly/ubuntu_20.04/
 
 parts:
   desktop-launch:
@@ -334,7 +334,6 @@ parts:
     - libva-dev
     - libvdpau-dev
     - libyaml-cpp-dev
-    - nasm # seems to be needed for building libvpx on an 18.04 base
     - python3
     - uuid-dev
     - yasm
