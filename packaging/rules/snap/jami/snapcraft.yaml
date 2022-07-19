@@ -85,13 +85,13 @@ description: |
 
 confinement: strict
 grade: stable
-base: core18
+base: core22
 
 plugs:
-  gnome-3-28-1804:
+  gnome-42-2204:
     interface: content
     target: $SNAP/gnome-platform
-    default-provider: gnome-3-28-1804:gnome-3-28-1804
+    default-provider: gnome-42-2204:gnome-42-2204
   gtk-3-themes:
     interface: content
     target: $SNAP/data-dir/themes
@@ -166,7 +166,7 @@ package-repositories:
     components: [main]
     suites: [jami]
     key-id: A295D773307D25A33AE72F2F64CD5FA175348F84
-    url: https://dl.jami.net/nightly/ubuntu_18.04/
+    url: https://dl.jami.net/nightly/ubuntu_22.04/
 
 parts:
   desktop-launch:
@@ -174,8 +174,10 @@ parts:
     plugin: nil
     build-packages:
     - dpkg-dev
-    - gcc-8
-    - g++-8
+    - gcc
+    - g++
+    - cmake
+    - cmake-data
     - libqt-jami
     - devscripts
     - equivs
@@ -246,7 +248,6 @@ parts:
       - PATH: "$QT_BASE_DIR/bin:$PATH"
       - LD_LIBRARY_PATH: "$QT_BASE_DIR/lib:$LD_LIBRARY_PATH"
       - PKG_CONFIG_PATH: "$QT_BASE_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
-      - PATH: "/usr/bin/cmake/bin:${PATH}"
     override-pull: |
       snapcraftctl pull
       sed -i -E 's|(tmpName) << (PACKAGE_NAME << "_shm_")|\1 << "snap.jami." << \2|' daemon/src/media/video/sinkclient.cpp
@@ -254,20 +255,6 @@ parts:
         sed -i -E 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/jami.svg|' client-qt/$file
       done
     override-build: |
-      apt-get remove cmake cmake-data
-
-      # We need Cmake > 3.19, which is not in core20
-      wget https://github.com/Kitware/CMake/releases/download/v3.19.8/cmake-3.19.8-Linux-x86_64.sh \
-      -q -O /tmp/cmake-install.sh \
-      && echo "aa5a0e0dd5594b7fd7c107a001a2bfb5f83d9b5d89cf4acabf423c5d977863ad  /tmp/cmake-install.sh" | sha256sum --check \
-      && chmod u+x /tmp/cmake-install.sh \
-      && mkdir /usr/bin/cmake \
-      && /tmp/cmake-install.sh --skip-license --prefix=/usr/bin/cmake \
-      && rm /tmp/cmake-install.sh
-
-      update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 20
-      update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 20
-
       cd $SNAPCRAFT_PART_BUILD/daemon/contrib
       mkdir -p native
       cd native
@@ -297,74 +284,66 @@ parts:
     - autopoint
     - bzip2
     - curl
-    - gcc-8
-    - g++-8
+    - gcc
+    - g++
     - gettext
     - gzip
-    - libargon2-0-dev
-    - libasound2-dev
-    - libavcodec-dev
-    - libavdevice-dev
-    - libavformat-dev
-    - libboost-dev
-    - libdbus-1-dev
-    - libdbus-c++-dev
-    - libexpat1-dev
-    - libglu1-mesa-dev
-    - libgnutls28-dev
-    - libjack-jackd2-dev
-    - libjsoncpp-dev
-    - libnm-dev
-    - libfmt-dev
     - libnotify-dev
-    - libopus-dev
-    - libpcre3-dev
-    - libpulse-dev
     - libqrencode-dev
-    - libsamplerate0-dev
     - libsndfile1-dev
     - libspeex-dev
-    - libspeexdsp-dev
-    - libsrtp0-dev
-    - libssl-dev
-    - libswscale-dev
-    - libtool
-    - libudev-dev
-    - libupnp-dev
-    - libva-dev
-    - libvdpau-dev
-    - libyaml-cpp-dev
-    - nasm # seems to be needed for building libvpx on an 18.04 base
     - python3
     - uuid-dev
     - yasm
     - wget
+    - nasm # ffmpeg
+    - libavcodec-dev
+    - libavdevice-dev
+    - libavformat-dev
+    - libswscale-dev
+    - libva-dev
+    - libvdpau-dev
+    - libargon2-0-dev # opendht
+    - libexpat1-dev
+    - libjsoncpp-dev
+    - libnm-dev # connectivityChanged()
+    - libdbus-1-dev # dbus
+    - libdbus-c++-dev
+    - libpulse-dev # pulse
+    - libudev-dev
+    - libglu1-mesa-dev # Qt 6
     stage-packages:
-    - libavcodec-extra
-    - libavcodec57
-    - libavdevice57
-    - libavformat57
-    - libdbus-1-3
-    - libdbus-c++-1-0v5
-    - libexpat1
-    - libglu1-mesa
-    - libgnutls30
-    - libjack-jackd2-0
+    - libavutil56
+    - libdouble-conversion3
+    - libegl1
+    - libgbm1
+    - libgstreamer-gl1.0-0
+    - libgstreamer-plugins-base1.0-0
+    - libgstreamer1.0-0
+    - libgudev-1.0-0
     - libjsoncpp1
-    - libnm-dev
+    - libllvm12
+    - libminizip1
+    - libnm0
+    - libnotify4
+    - libnspr4
+    - libnss3
+    - libopengl0
     - libopus0
-    - libpcre3
-    - libqrencode3
-    - libsamplerate0
-    - libslang2
-    - libsndfile1
+    - liborc-0.4-0
+    - libpcre2-16-0
+    - libqrencode4
     - libqt-jami
+    - libre2-5
+    - libsnappy1v5
     - libspeex1
-    - libspeexdsp1
-    - libswscale4
-    - libudev1
-    - libupnp6
-    - libuuid1
+    - libproxy1v5
+    - libwayland-server0
+    - libwebpdemux2
+    - libwebpmux3
+    - libxkbfile1
+    - libxtst6
+    - ocl-icd-libopencl1
     - libva-drm2
     - libva-glx2
     - libva-wayland2
