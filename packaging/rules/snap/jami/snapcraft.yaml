@@ -85,13 +85,13 @@ description: |
 
 confinement: strict
 grade: stable
-base: core18
+base: core20 # core22
 
 plugs:
-  gnome-3-28-1804:
+  gnome-3-38-2004:
     interface: content
     target: $SNAP/gnome-platform
-    default-provider: gnome-3-28-1804:gnome-3-28-1804
+    default-provider: gnome-3-38-2004:gnome-3-38-2004 # gnome-42-2204
   gtk-3-themes:
     interface: content
     target: $SNAP/data-dir/themes
@@ -166,7 +166,7 @@ package-repositories:
     components: [main]
     suites: [jami]
     key-id: A295D773307D25A33AE72F2F64CD5FA175348F84
-    url: https://dl.jami.net/nightly/ubuntu_18.04/
+    url: https://dl.jami.net/nightly/ubuntu_20.04/
 
 parts:
   desktop-launch:
@@ -174,8 +174,8 @@ parts:
     plugin: nil
     build-packages:
     - dpkg-dev
-    - gcc-8
-    - g++-8
+    - gcc
+    - g++
     - libqt-jami
     - devscripts
     - equivs
@@ -265,9 +265,6 @@ parts:
       && /tmp/cmake-install.sh --skip-license --prefix=/usr/bin/cmake \
       && rm /tmp/cmake-install.sh
 
-      update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 20
-      update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 20
-
       cd $SNAPCRAFT_PART_BUILD/daemon/contrib
       mkdir -p native
       cd native
@@ -297,81 +294,29 @@ parts:
     - autopoint
     - bzip2
     - curl
-    - gcc-8
-    - g++-8
+    - gcc
+    - g++
     - gettext
     - gzip
-    - libargon2-0-dev
-    - libasound2-dev
-    - libavcodec-dev
-    - libavdevice-dev
-    - libavformat-dev
-    - libboost-dev
-    - libdbus-1-dev
-    - libdbus-c++-dev
-    - libexpat1-dev
-    - libglu1-mesa-dev
-    - libgnutls28-dev
-    - libjack-jackd2-dev
-    - libjsoncpp-dev
-    - libnm-dev
-    - libfmt-dev
     - libnotify-dev
-    - libopus-dev
-    - libpcre3-dev
-    - libpulse-dev
     - libqrencode-dev
-    - libsamplerate0-dev
     - libsndfile1-dev
     - libspeex-dev
-    - libspeexdsp-dev
-    - libsrtp0-dev
-    - libssl-dev
-    - libswscale-dev
-    - libtool
-    - libudev-dev
-    - libupnp-dev
-    - libva-dev
-    - libvdpau-dev
-    - libyaml-cpp-dev
-    - nasm # seems to be needed for building libvpx on an 18.04 base
     - python3
     - uuid-dev
     - yasm
     - wget
-    stage-packages:
-    - libavcodec-extra
-    - libavcodec57
-    - libavdevice57
-    - libavformat57
-    - libdbus-1-3
-    - libdbus-c++-1-0v5
-    - libexpat1
-    - libglu1-mesa
-    - libgnutls30
-    - libjack-jackd2-0
-    - libjsoncpp1
-    - libnm-dev
-    - libopus0
-    - libpcre3
-    - libqrencode3
-    - libsamplerate0
-    - libslang2
-    - libsndfile1
-    - libqt-jami
-    - libspeex1
-    - libspeexdsp1
-    - libswscale4
-    - libudev1
-    - libupnp6
-    - libuuid1
-    - libva-drm2
-    - libva-glx2
-    - libva-wayland2
-    - libva2
-    - libvdpau-va-gl1
-    - libvdpau1
-    - va-driver-all
+    - nasm # ffmpeg
+    - libavcodec-dev
+    - libavdevice-dev
+    - libavformat-dev
+    - libswscale-dev
+    - libva-dev
+    - libvdpau-dev
+    - libargon2-0-dev # opendht
+    - libexpat1-dev
+    - libjsoncpp-dev
+    - libnm-dev # connectivityChanged()
     prime:
     - -usr/lib/libqt-jami/bin/
     - -usr/lib/libqt-jami/docs/
