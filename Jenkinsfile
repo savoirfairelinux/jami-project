@@ -180,7 +180,7 @@ git tag \$(cat .tarball-version) -am "Jami \$(cat .tarball-version)"
                     script {
                         if (params.CHANNEL == 'stable') {
                             // Only stables releases get tarballs and a tag.
-                            sh 'git push --tags'
+                            sh 'git push --follow-tags'
                             echo "Publishing release tarball..."
                             sh 'rsync --verbose jami*.tar.gz ' +
                                 "${REMOTE_HOST}:${REMOTE_BASE_DIR}" +
