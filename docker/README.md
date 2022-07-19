@@ -28,9 +28,8 @@ TODO
 
 ### Snap
 
-`Dockerfile_snap` is from [stable.Dockerfile](stable.Dockerfile)
+`Dockerfile_snap` is from snapcraft [Dockerfile](snapcraft-Dockerfile)
 upstream, under GPLv3-only, and is not considered part of the project.
-It is patched with `../patches/docker-snap-build-scripts.patch` to
-add and invoke our build script.
+It was modified to support `core22`.
 
-[stable.Dockerfile]: https://raw.githubusercontent.com/snapcore/snapcraft/master/docker/stable.Dockerfile
+[stable.Dockerfile]: https://raw.githubusercontent.com/snapcore/snapcraft/main/docker/Dockerfile
