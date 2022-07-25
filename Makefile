@@ -163,10 +163,7 @@ DISTRIBUTIONS := \
 	raspbian_10_armhf \
 	ubuntu_18.04 \
 	ubuntu_20.04 \
-	ubuntu_21.04 \
-	ubuntu_21.10 \
 	ubuntu_22.04 \
-	fedora_33 \
 	fedora_34 \
 	fedora_35 \
 	fedora_36 \
