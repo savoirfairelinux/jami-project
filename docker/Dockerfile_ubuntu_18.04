@@ -2,14 +2,15 @@ FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
 RUN apt-get clean
 RUN apt-get update && \
     apt-get install -y -o Acquire::Retries=10 \
         devscripts \
         equivs \
         curl \
-        gcc-8 \
-        g++-8 \
+        gcc-10 \
+        g++-10 \
         clang \
         clang-tools \
         libarchive-dev \
@@ -28,8 +29,8 @@ RUN /opt/prebuild-package-debian.sh qt-deps
 COPY packaging/rules/debian/control /tmp/builddeps/debian/control
 RUN /opt/prebuild-package-debian.sh jami-deps
 
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 50
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 50
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 50
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 
 # Install CMake 3.19 for Qt 6
