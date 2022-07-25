@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f70465af_6c5ae5fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-07-25T20:07:32Z",
+      "side": 1,
+      "message": "oh, the logic is incorrect; BUNDLED_PKGS gets overwritten further donw",
+      "revId": "76584ae77b365ad22d27af9d973df694e6de5e49",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
