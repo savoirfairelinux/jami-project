@@ -13,6 +13,7 @@ RUN apt-get update && \
         clang \
         clang-tools \
         libarchive-dev \
+        libgnutls28-dev \
         software-properties-common \
         wget
 
