@@ -8,6 +8,8 @@ RUN apt-get update && \
         devscripts \
         equivs \
         python-is-python3 \
+        libdbus-1-dev \
+        libdbus-c++-dev \
         wget
 
 ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh
