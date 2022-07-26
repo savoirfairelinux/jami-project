@@ -68,6 +68,9 @@ override_dh_auto_configure:
 override_dh_auto_build:
 	# Daemon contribs build + configure
 	mkdir -p daemon/contrib/native
+ifeq (ubuntu_18.04,$(findstring ubuntu_18.04, $(DISTRIBUTION)))
+	sed -i 's/GNUTLS_CONF :=/& --without-zstd/' daemon/contrib/src/gnutls/rules.mak
+endif
 	cd daemon/contrib/native && \
 	../bootstrap \
 	  --host=${HOST_ARCH} \
