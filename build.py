@@ -93,16 +93,7 @@ ZYPPER_DEPENDENCIES = [
     'libopenssl-devel', 'libavutil-devel',
 ]
 
-ZYPPER_CLIENT_GNOME_DEPENDENCIES = [
-    # lrc
-    'qt6-core-devel', 'qt6-dbus-devel', 'qt6-linguist-devel',
-    # client-gnome
-    'gtk3-devel', 'clutter-gtk-devel', 'gettext-tools', 'libnotify-devel', 'libappindicator3-devel',
-    'webkit2gtk3-devel', 'libcanberra-gtk3-devel',
-    'qrencode-devel', 'NetworkManager-devel'
-]
-
-ZYPPER_CLIENT_QT_DEPENDENCIES = [
+ZYPPER_CLIENT_DEPENDENCIES = [
     # lrc
     'qt6-core-devel', 'qt6-dbus-devel', 'qt6-linguist-devel',
     # client-qt
@@ -131,16 +122,7 @@ DNF_DEPENDENCIES = [
     'bzip2'
 ]
 
-DNF_CLIENT_GNOME_DEPENDENCIES = [
-    # lrc
-    'qt6-qtbase-devel',
-    # client-gnome
-    'gtk3-devel', 'clutter-devel', 'clutter-gtk-devel', 'libnotify-devel','libappindicator-gtk3-devel',
-    'webkitgtk4-devel', 'libcanberra-devel',
-    'qrencode-devel', 'NetworkManager-libnm-devel'
-]
-
-DNF_CLIENT_QT_DEPENDENCIES = [
+DNF_CLIENT_DEPENDENCIES = [
     # lrc
     'qt6-qtbase-devel',
     # client-qt
@@ -152,7 +134,7 @@ DNF_QT_WEBENGINE = [ 'qt6-qtwebengine-devel' ]
 
 APT_DEPENDENCIES = [
     'autoconf', 'autoconf-archive', 'autopoint', 'automake', 'cmake', 'make', 'dbus', 'doxygen', 'graphviz',
-    'g++', 'gettext', 'gnome-icon-theme-symbolic', 'libasound2-dev', 'libavcodec-dev',
+    'g++', 'gettext', 'libasound2-dev', 'libavcodec-dev',
     'libavdevice-dev', 'libavformat-dev', 'libboost-dev',
     'libcppunit-dev', 'libdbus-1-dev',
     'libdbus-c++-dev', 'libebook1.2-dev', 'libexpat1-dev', 'libgnutls28-dev',
@@ -164,16 +146,7 @@ APT_DEPENDENCIES = [
     'pandoc', 'nasm', 'dpkg-dev'
 ]
 
-APT_CLIENT_GNOME_DEPENDENCIES = [
-    # lrc
-    'qt6-base-dev', 'qt6-tools-dev', 'qt6-tools-dev-tools',
-    'qt6-l10n-tools', 'libqt6sql6-sqlite',
-    # client-gnome
-    'libwebkit2gtk-4.0-dev', 'libayatana-appindicator3-dev', 'libcanberra-gtk3-dev',
-    'libclutter-gtk-1.0-dev', 'libqrencode-dev', 'libnm-dev'
-]
-
-APT_CLIENT_QT_DEPENDENCIES = [
+APT_CLIENT_DEPENDENCIES = [
     # lrc
     'qt6-base-dev', 'qt6-tools-dev', 'qt6-tools-dev-tools',
     'qt6-l10n-tools', 'libqt6sql6-sqlite',
@@ -204,16 +177,7 @@ PACMAN_DEPENDENCIES = [
     'automake', 'libva', 'libvdpau', 'openssl', 'pandoc', 'nasm'
 ]
 
-PACMAN_CLIENT_GNOME_DEPENDENCIES = [
-    # lrc
-    'qt6-base',
-    # client-gnome
-    'clutter-gtk','gnome-icon-theme-symbolic', 'gtk3', 'libappindicator-gtk3',
-    'libcanberra', 'libnotify', 'webkit2gtk',
-    'qrencode', 'libnm'
-]
-
-PACMAN_CLIENT_QT_DEPENDENCIES = [
+PACMAN_CLIENT_DEPENDENCIES = [
     # lrc
     'qt6-base',
     # client-qt
@@ -275,16 +239,11 @@ def run_dependencies(args):
         execute_script(
             APT_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, APT_DEPENDENCIES))})
-        if not args.gnome:
-            if not args.no_webengine:
-                APT_CLIENT_QT_DEPENDENCIES.extend(APT_QT_WEBENGINE)
-            execute_script(
-                APT_INSTALL_SCRIPT,
-                {"packages": ' '.join(map(shlex.quote, APT_CLIENT_QT_DEPENDENCIES))})
-        else:
-            execute_script(
-                APT_INSTALL_SCRIPT,
-                {"packages": ' '.join(map(shlex.quote, APT_CLIENT_GNOME_DEPENDENCIES))})
+        if not args.no_webengine:
+            APT_CLIENT_DEPENDENCIES.extend(APT_QT_WEBENGINE)
+        execute_script(
+            APT_INSTALL_SCRIPT,
+            {"packages": ' '.join(map(shlex.quote, APT_CLIENT_DEPENDENCIES))})
 
     elif args.distribution in DNF_BASED_DISTROS:
         if args.assume_yes:
@@ -293,16 +252,11 @@ def run_dependencies(args):
         execute_script(
             RPM_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, DNF_DEPENDENCIES))})
-        if not args.gnome:
-            if not args.no_webengine:
-                DNF_CLIENT_QT_DEPENDENCIES.extend(DNF_QT_WEBENGINE)
-            execute_script(
-                RPM_INSTALL_SCRIPT,
-                {"packages": ' '.join(map(shlex.quote, DNF_CLIENT_QT_DEPENDENCIES))})
-        else:
-            execute_script(
-                RPM_INSTALL_SCRIPT,
-                {"packages": ' '.join(map(shlex.quote, DNF_CLIENT_GNOME_DEPENDENCIES))})
+        if not args.no_webengine:
+            DNF_CLIENT_DEPENDENCIES.extend(DNF_QT_WEBENGINE)
+        execute_script(
+            RPM_INSTALL_SCRIPT,
+            {"packages": ' '.join(map(shlex.quote, DNF_CLIENT_DEPENDENCIES))})
 
     elif args.distribution in PACMAN_BASED_DISTROS:
         if args.assume_yes:
@@ -311,16 +265,11 @@ def run_dependencies(args):
         execute_script(
             PACMAN_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, PACMAN_DEPENDENCIES))})
-        if not args.gnome:
-            if not args.no_webengine:
-                PACMAN_CLIENT_QT_DEPENDENCIES.extend(PACMAN_QT_WEBENGINE)
-            execute_script(
-                PACMAN_INSTALL_SCRIPT,
-                {"packages": ' '.join(map(shlex.quote, PACMAN_CLIENT_QT_DEPENDENCIES))})
-        else:
-            execute_script(
-                PACMAN_INSTALL_SCRIPT,
-                {"packages": ' '.join(map(shlex.quote, PACMAN_CLIENT_GNOME_DEPENDENCIES))})
+        if not args.no_webengine:
+            PACMAN_CLIENT_DEPENDENCIES.extend(PACMAN_QT_WEBENGINE)
+        execute_script(
+            PACMAN_INSTALL_SCRIPT,
+            {"packages": ' '.join(map(shlex.quote, PACMAN_CLIENT_DEPENDENCIES))})
 
     elif args.distribution in ZYPPER_BASED_DISTROS:
         if args.assume_yes:
@@ -329,16 +278,11 @@ def run_dependencies(args):
         execute_script(
             ZYPPER_INSTALL_SCRIPT,
             {"packages": ' '.join(map(shlex.quote, ZYPPER_DEPENDENCIES))})
-        if not args.gnome:
-            if not args.no_webengine:
-                ZYPPER_CLIENT_QT_DEPENDENCIES.extend(ZYPPER_QT_WEBENGINE)
-            execute_script(
-                ZYPPER_INSTALL_SCRIPT,
-                {"packages": ' '.join(map(shlex.quote, ZYPPER_CLIENT_QT_DEPENDENCIES))})
-        else:
-            execute_script(
-                ZYPPER_INSTALL_SCRIPT,
-                {"packages": ' '.join(map(shlex.quote, ZYPPER_CLIENT_GNOME_DEPENDENCIES))})
+        if not args.no_webengine:
+            ZYPPER_CLIENT_DEPENDENCIES.extend(ZYPPER_QT_WEBENGINE)
+        execute_script(
+            ZYPPER_INSTALL_SCRIPT,
+            {"packages": ' '.join(map(shlex.quote, ZYPPER_CLIENT_DEPENDENCIES))})
 
     elif args.distribution == OSX_DISTRIBUTION_NAME:
         execute_script(
@@ -461,23 +405,17 @@ def run_install(args):
 
         environ['CMAKE_PREFIX_PATH'] = proc.stdout.rstrip("\n")
         environ['CONFIGURE_FLAGS'] = '--without-dbus'
-        if args.qt is not None:
-            install_args += ("-c", "client-qt")
-            install_args += ("-Q", args.qt)
-        else:
-            install_args += ("-c", "client-macosx")
+        if not args.qt:
+            raise Exception('provide the qt path via --qt=/qt/install/prefix')
+        install_args += ("-Q", args.qt)
     else:
         if args.distribution in ZYPPER_BASED_DISTROS:
             # fix jsoncpp pkg-config bug, remove when jsoncpp package bumped
             environ['JSONCPP_LIBS'] = "-ljsoncpp"
-        if not args.gnome:
-            install_args += ("-c", "client-qt")
-            if args.qt is not None:
-                install_args += ("-Q", args.qt)
-        else:
-            install_args += ("-c", "client-gnome")
+        if args.qt:
+            install_args += ("-Q", args.qt)
 
-    command = ['bash', 'scripts/install.sh'] + install_args
+    command = ['scripts/install.sh'] + install_args
 
     if args.distribution == 'guix':
         if args.global_install:
@@ -510,14 +448,13 @@ def run_uninstall(args):
     else:
         execute_script(UNINSTALL_DAEMON_SCRIPT)
 
-        CLIENT_SUFFIX = 'qt' if (not args.gnome) else 'gnome'
         INSTALL_DIR = '/build-global' if args.global_install else '/build-local'
 
         # Client needs to be uninstalled first
-        if (os.path.exists('./client-' + CLIENT_SUFFIX + INSTALL_DIR)):
+        if (os.path.exists('./client' + INSTALL_DIR)):
             UNINSTALL_CLIENT = [
-                 'make -C client-' + CLIENT_SUFFIX + INSTALL_DIR + ' uninstall',
-                 'rm -rf ./client-' + CLIENT_SUFFIX + INSTALL_DIR
+                 'make -C client' + INSTALL_DIR + ' uninstall',
+                 'rm -rf ./client' + INSTALL_DIR
             ]
             execute_script(UNINSTALL_CLIENT)
 
@@ -535,17 +472,7 @@ def run_clean():
 
 
 def run_run(args):
-    if args.distribution == OSX_DISTRIBUTION_NAME and args.qt is None:
-        subprocess.Popen(
-            ["install/client-macosx/Ring.app/Contents/MacOS/Ring"])
-        return True
-
     run_env = os.environ
-    if args.gnome or (args.distribution == OSX_DISTRIBUTION_NAME \
-                     and args.qt is None):
-        run_env['LD_LIBRARY_PATH'] = run_env.get(
-            'LD_LIBRARY_PATH', '') + ":install/lrc/lib"
-
     try:
         jamid_log = open("daemon.log", 'a')
         jamid_log.write('=== Starting daemon (%s) ===' %
@@ -559,23 +486,15 @@ def run_run(args):
         with open('daemon.pid', 'w') as f:
             f.write(str(jamid_process.pid)+'\n')
 
-        client_suffix = ""
-        if not args.gnome:
-            client_suffix += "qt"
-        else:
-            client_suffix += "gnome"
-        client_log = open("jami-" + client_suffix + ".log", 'a')
+        client_log = open("jami.log", 'a')
         client_log.write('=== Starting client (%s) ===' %
                          time.strftime("%d/%m/%Y %H:%M:%S"))
-        client_process = subprocess.Popen(
-            ["./install/client-" + client_suffix +
-                "/bin/jami-" + client_suffix, "-d"],
-            stdout=client_log,
-            stderr=client_log,
-            env=run_env
-        )
+        client_process = subprocess.Popen(["./install/jami/bin/jami-qt", "-d"],
+                                          stdout=client_log,
+                                          stderr=client_log,
+                                          env=run_env)
 
-        with open("jami-" + client_suffix + ".pid", 'w') as f:
+        with open('jami.pid', 'w') as f:
             f.write(str(client_process.pid)+'\n')
 
         if args.debug:
@@ -609,21 +528,18 @@ def run_run(args):
 
 
 def run_stop(args):
-    client_suffix = "qt" if (not args.gnome) else "gnome"
-    STOP_SCRIPT = [
-        'xargs kill < jami-' + client_suffix + '.pid',
-        'xargs kill < daemon.pid'
-    ]
+    STOP_SCRIPT = ['xargs kill < jami.pid',
+                   'xargs kill < daemon.pid']
     execute_script(STOP_SCRIPT)
 
 
 def execute_script(script, settings=None, fail=True):
-    if settings == None:
+    if settings is None:
         settings = {}
     for line in script:
         line = line % settings
         rv = os.system(line)
-        if rv != 0 and fail == True:
+        if rv and fail:
             print('Error executing script! Exit code: %s' %
                   rv, file=sys.stderr)
             sys.exit(1)
@@ -707,9 +623,8 @@ def parse_args():
     ap.add_argument('--background', default=False, action='store_true')
     ap.add_argument('--no-priv-install', dest='priv_install',
                     default=True, action='store_false')
-    ap.add_argument('--gnome', default=False, action='store_true')
-    ap.add_argument('--qt', nargs='?', const='', type=str,
-                    help='Build the Qt client with the Qt path supplied')
+    ap.add_argument('--qt', type=str,
+                    help='Use the Qt path supplied')
     ap.add_argument('--no-libwrap', dest='no_libwrap',
                     default=False, action='store_true',
                     help='Disable libwrap. Also set --disable-shared option to daemon configure')
@@ -783,9 +698,6 @@ def main():
     elif parsed_args.run:
         if (parsed_args.distribution == 'guix'
                 and 'GUIX_ENVIRONMENT' not in os.environ):
-            if not parsed_args.gnome:
-                print('FIXME: Qt fails loading QML modules due to '
-                      'https://issues.guix.gnu.org/47655')
             # Relaunch this script, this time in a pure Guix environment.
             guix_args = ['shell', '--pure',
                          # to allow pulseaudio to connect to an existing server

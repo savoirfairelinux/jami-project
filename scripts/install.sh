@@ -7,7 +7,6 @@ export OSTYPE
 
   # -g: install globally instead for all users
   # -s: link everything statically, no D-Bus communication. More likely to work!
-  # -c: client to build
   # -p: number of processors to use
   # -u: disable use of privileges (sudo) during install
   # -W: disable libwrap and shared library
@@ -21,7 +20,6 @@ QT_MIN_VER="6.2"
 debug=
 global=false
 static=''
-client=''
 qtpath=''
 proc='1'
 priv_install=true
@@ -35,9 +33,6 @@ while getopts gsc:dQ:P:p:uWw OPT; do
     ;;
     s)
       static='-DENABLE_STATIC=true'
-    ;;
-    c)
-      client="${OPTARG}"
     ;;
     d)
       debug=true
@@ -124,8 +119,8 @@ fi
 make -j"${proc}" V=1
 make_install "${global}" "${priv_install}"
 
-# For the client-qt, verify system's version if no path provided
-if [ "${client}" = "client-qt" ] && [ -z "$qtpath" ]; then
+# Verify system's version if no path provided.
+if [ -z "$qtpath" ]; then
     sys_qtver=""
     if command -v qmake6 &> /dev/null; then
         sys_qtver=$(qmake6 -v)
@@ -151,58 +146,24 @@ if [ "${client}" = "client-qt" ] && [ -z "$qtpath" ]; then
     fi
 fi
 
-# libringclient (only if not client-qt)
-if [ "${client}" != "client-qt" ]; then
-    cd "${TOP}/lrc"
-    mkdir -p "${BUILDDIR}"
-    cd "${BUILDDIR}"
-    # Compute LRC CMake flags
-    lrc_cmake_flags=(-DCMAKE_PREFIX_PATH="${qtpath}"
-                     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
-                     -DENABLE_LIBWRAP="${enable_libwrap}"
-                     $static)
-    if [ "${global}" = "true" ]; then
-        lrc_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"})
-    else
-        lrc_cmake_flags+=(-DCMAKE_INSTALL_PREFIX="${INSTALL}/lrc"
-                          -DRING_BUILD_DIR="${DAEMON}/src")
-    fi
-    echo "info: Configuring LRC with flags: ${lrc_cmake_flags[*]}"
-    cmake .. "${lrc_cmake_flags[@]}"
-    make -j"${proc}" V=1
-    make_install "${global}" "${priv_install}"
-fi
-
 # client
-cd "${TOP}/${client}"
+cd "${TOP}/client-qt"
 mkdir -p "${BUILDDIR}"
 cd "${BUILDDIR}"
 
 client_cmake_flags=(-DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
-                    -DCMAKE_PREFIX_PATH="${qtpath}")
+                    -DCMAKE_PREFIX_PATH="${qtpath}"
+                    -DENABLE_LIBWRAP="${enable_libwrap}"
+                    -DWITH_WEBENGINE="${enable_webengine}")
 
-if [ "${client}" = "client-qt" ]; then
-    client_cmake_flags+=(-DENABLE_LIBWRAP="${enable_libwrap}"
-                         -DWITH_WEBENGINE="${enable_webengine}")
-    if [ "${global}" = "true" ]; then
-        client_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"}
-                             $static)
-    else
-        client_cmake_flags+=(-DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}"
-                             -DLIBJAMI_BUILD_DIR="${DAEMON}/src")
-    fi
+if [ "${global}" = "true" ]; then
+    client_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"}
+                         $static)
 else
-    # Compute GNOME client CMake flags.
-    client_cmake_flags+=($static)
-    if [ "${global}" = "true" ]; then
-        client_cmake_flags+=(${prefix:+"-DCMAKE_INSTALL_PREFIX=$prefix"})
-    else
-        client_cmake_flags+=(
-            -DCMAKE_INSTALL_PREFIX="${INSTALL}/${client}"
-            -DRINGTONE_DIR="${INSTALL}/daemon/share/jami/ringtones"
-            -DLibRingClient_DIR="${INSTALL}/lrc/lib/cmake/LibRingClient")
-    fi
+    client_cmake_flags+=(-DCMAKE_INSTALL_PREFIX="${INSTALL}/jami"
+                         -DLIBJAMI_BUILD_DIR="${DAEMON}/src")
 fi
+
 echo "info: Configuring $client client with flags: ${client_cmake_flags[*]}"
 cmake .. "${client_cmake_flags[@]}"
 make -j"${proc}" V=1
