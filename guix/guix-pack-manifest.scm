@@ -22,6 +22,7 @@
              (gnu packages jami)
              (gnu packages python)
              (guix base32)
+             (guix gexp)
              (guix packages)
              (guix transformations)
              (guix store)
@@ -30,9 +31,8 @@
 ;;; XXX: Below is a rather strenuous way to specify something that
 ;;; would have been nicer if it could have been specified via:
 ;;;
-;;; --with-source=libring=$(RELEASE_TARBALL_FILENAME) \
-;;; --with-source=libringclient=$(RELEASE_TARBALL_FILENAME) \
-;;; --with-source=jami-qt=$(RELEASE_TARBALL_FILENAME) in the Makefile.
+;;; --with-source=libjami=$(RELEASE_TARBALL_FILENAME) \
+;;; --with-source=jami=$(RELEASE_TARBALL_FILENAME) in the Makefile.
 ;;;
 ;;; The above doesn't currently rewrite the dependency graph
 ;;; recursively, hence why it is not sufficient.
@@ -68,53 +68,31 @@
    `((with-source . ,(format #f "~a@~a=~a" name
                              %release-version %release-file-name)))))
 
-(define libring/latest ((with-latest-sources "libring") libring))
+(define libjami/latest ((with-latest-sources "libjami") libjami))
 
-(define with-libring/latest
-  (package-input-rewriting `((,libring . ,libring/latest))))
-
-(define libringclient/latest ((with-latest-sources "libringclient")
-                              (with-libring/latest libringclient)))
-
-(define libringclient/latest+libwrap
-  (package/inherit libringclient/latest
-    (arguments
-     (substitute-keyword-arguments (package-arguments libringclient/latest)
-       ((#:configure-flags flags ''())
-        `(cons "-DENABLE_LIBWRAP=true"
-               (delete "-DENABLE_LIBWRAP=false" ,flags)))))))
-
-(define with-libringclient/latest+libwrap
-  (package-input-rewriting
-   `((,libringclient . ,libringclient/latest+libwrap))))
+(define with-libjami/latest
+  (package-input-rewriting `((,libjami . ,libjami/latest))))
 
 ;;; Bundling the TLS certificates with Jami enables a fully
 ;;; functional, configuration-free experience, useful in the context
 ;;; of Guix packs.
-(define jami-qt-with-certs
-  (package/inherit jami-qt
-    (inputs (cons `("nss-certs" ,nss-certs)
-                  (package-inputs jami-qt)))
-    (native-inputs (cons `("python" ,python)
-                         (package-native-inputs jami-qt)))
+(define jami-with-certs
+  (package/inherit jami
+    (inputs (modify-inputs (package-inputs jami)
+              (append nss-certs)))
     (arguments
-     (substitute-keyword-arguments (package-arguments jami-qt)
+     (substitute-keyword-arguments (package-arguments jami)
        ((#:phases phases '%standard-phases)
-        `(modify-phases ,phases
-           (add-after 'qt-wrap 'wrap-ssl-cert-dir
-             (lambda* (#:key inputs outputs #:allow-other-keys)
-               (let* ((out (assoc-ref outputs "out"))
-                      (wrapper (string-append out "/bin/jami-qt"))
-                      (nss-certs (assoc-ref inputs "nss-certs")))
-                 (substitute* wrapper
-                   (("^exec.*" exec-line)
-                    (string-append "export SSL_CERT_DIR="
-                                   nss-certs
-                                   "/etc/ssl/certs\n"
-                                   exec-line))))))))))))
+        #~(modify-phases #$phases
+            (add-after 'qt-wrap 'wrap-ssl-cert-dir
+              (lambda* (#:key inputs outputs #:allow-other-keys)
+                (substitute* (search-input-file outputs "bin/jami-qt")
+                  (("^exec.*" exec-line)
+                   (format #f "export SSL_CERT_DIR=~a~%"
+                           (search-input-directory inputs "etc/ssl/certs")
+                           exec-line)))))))))))
 
-(define jami-qt-with-certs/latest
-  ((with-latest-sources "jami-qt")
-   (with-libringclient/latest+libwrap jami-qt-with-certs)))
+(define jami-with-certs/latest
+  ((with-latest-sources "jami") jami-with-certs))
 
-(packages->manifest (list jami-qt-with-certs/latest))
+(packages->manifest (list jami-with-certs/latest))
