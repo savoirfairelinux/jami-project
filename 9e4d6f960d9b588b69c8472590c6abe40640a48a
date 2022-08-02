@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a32387a_515d3860",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-08-02T19:58:09Z",
+      "side": 1,
+      "message": "Here\u0027s a test build: https://jenkins.jami.net/view/packaging/job/packaging-gnu-linux/.  It\u0027s deployed to the internal channel.",
+      "revId": "9e4d6f960d9b588b69c8472590c6abe40640a48a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
