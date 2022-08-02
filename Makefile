@@ -234,7 +234,7 @@ $(foreach target,$(DISTRIBUTIONS),\
 #
 # Guix-generated Debian packages (deb packs) targets.
 #
-SUPPORTED_GNU_ARCHS = x86_64 i686
+SUPPORTED_GNU_ARCHS = x86_64
 DEB_PACK_TARGETS =
 
 define guix-pack-command
@@ -256,7 +256,8 @@ deb-pack-$(subst _,-,$(1)): $$(deb-file-name)
 $$(deb-file-name): has-guix-p $(RELEASE_TARBALL_FILENAME)
 	output=$$$$($(guix-pack-command) --system=$(1)-linux $$(GUIX_PACK_ARGS)) && \
 	mkdir -p "$$$$(dirname "$$@")" && \
-	cp --reflink=auto "$$$$output" "$$@"
+	cp --reflink=auto "$$$$output" "$$@" && \
+	guix gc --delete "$$$$output"
 	chmod +w "$$@"
 endef
 
