@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73303911_319a4b5c",
+        "filename": "Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 951
+      },
+      "writtenOn": "2022-08-10T17:04:39Z",
+      "side": 0,
+      "message": "form feed character U+000C",
+      "revId": "1a7fd3fddd9c06f0c5e337a07de23d408bb4c8ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}

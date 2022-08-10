@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d957d44_509f04a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 951
+      },
+      "writtenOn": "2022-08-10T17:04:39Z",
+      "side": 1,
+      "message": "probably due to hitting ctrl+V ctrl+L in vim",
+      "revId": "c001248aa57e5af9810308a1766f1d8dd1b8878c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
