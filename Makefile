@@ -151,7 +151,6 @@ endif
 ## Packaging targets ##
 #######################
 
-
 #
 # Traditionally built packages (in Docker containers).
 #
@@ -271,16 +270,6 @@ package-all: $(PACKAGE-TARGETS)
 list-package-targets:
 	@$(foreach p,$(PACKAGE-TARGETS),\
 		echo $(p);)
-
-docker/Dockerfile_snap: patches/docker-snap-build-scripts.patch
-	if patch -p1 -fR --dry-run < $< >/dev/null 2>&1; then \
-	  echo "Patching $@... skipped (already patched)"; \
-	else \
-	  echo "Patching $@..."; \
-	  patch -p1 -Ns < $< || { echo "Patching $@... failed" >&2 && exit 1; }; \
-	  echo "Patching $@... done"; \
-	fi
-.PHONY: docker/Dockerfile_snap
 
 ###################
 ## Other targets ##
