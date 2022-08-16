@@ -37,12 +37,12 @@ def TARGETS = [:]
 def REMOTE_HOST = env.SSH_HOST_DL_RING_CX
 def REMOTE_BASE_DIR = '/srv/repository/ring'
 def JAMI_PUBLIC_KEY_FINGERPRINT = 'A295D773307D25A33AE72F2F64CD5FA175348F84'
-def SNAPCRAFT_KEY = '/var/lib/jenkins/.snap/key'
 def GIT_USER_EMAIL = 'jenkins@jami.net'
 def GIT_USER_NAME = 'jenkins'
 def GIT_PUSH_URL = 'ssh://jenkins@review.jami.net:29420/jami-project'
 def JENKINS_SSH_KEY = '35cefd32-dd99-41b0-8312-0b386df306ff'
 def DL_SSH_KEY = '5825b39b-dfc6-435f-918e-12acc1f56221'
+def SNAPCRAFT_KEY = '106e398c-43ca-41c0-8f7e-4f45030f8bdd'
 
 pipeline {
     agent {
@@ -270,13 +270,14 @@ git tag \$(cat .tarball-version) -am "Jami \$(cat .tarball-version)"
 
                         distributions.each { distribution ->
                             echo "Deploying ${distribution} packages..."
-                            sh """scripts/deploy-packages.sh \
+                            withCredentials([string(credentialsId: SNAPCRAFT_KEY, variable: 'SNAPCRAFT_STORE_CREDENTIALS')]) {
+                                sh """scripts/deploy-packages.sh \
   --distribution=${distribution} \
   --keyid="${JAMI_PUBLIC_KEY_FINGERPRINT}" \
-  --snapcraft-login="${SNAPCRAFT_KEY}" \
   --remote-repository-location="${REMOTE_HOST}:${REMOTE_BASE_DIR}/${params.CHANNEL}" \
   --remote-manual-download-location="${REMOTE_HOST}:${REMOTE_BASE_DIR}/manual-${params.CHANNEL}"
 """
+                            }
                         }
                     }
                 }
