@@ -226,10 +226,8 @@ function package_snap()
         ls packages/${DISTRIBUTION}*
         cp packages/${DISTRIBUTION}*/*.snap ${DISTRIBUTION_REPOSITORY_FOLDER}/
     elif [[ $CHANNEL =~ nightly ]]; then
-        snapcraft login --with ${SNAPCRAFT_LOGIN}
         snapcraft push packages/${DISTRIBUTION}*/*.snap --release edge
     elif [[ $CHANNEL =~ stable ]]; then
-        snapcraft login --with ${SNAPCRAFT_LOGIN}
         snapcraft push packages/${DISTRIBUTION}*/*.snap --release stable
     fi
 }
@@ -309,10 +307,6 @@ case $i in
     ;;
     --remote-ssh-identity-file=*)
     SSH_IDENTITY_FILE="${i#*=}"
-    shift
-    ;;
-    --snapcraft-login=*)
-    SNAPCRAFT_LOGIN="${i#*=}"
     shift
     ;;
     *)
