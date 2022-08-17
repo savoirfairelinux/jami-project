@@ -220,6 +220,8 @@ function package_snap()
     echo "## deploying snap ##"
     echo "####################"
 
+    echo ${SNAPCRAFT_STORE_CREDENTIALS} | head -c 5
+
     if [[ "${CHANNEL:0:8}" == "internal" ]]; then
         DISTRIBUTION_REPOSITORY_FOLDER=$(realpath repositories)/${DISTRIBUTION}
         mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
