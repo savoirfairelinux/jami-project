@@ -166,6 +166,7 @@ DISTRIBUTIONS := \
 	fedora_35 \
 	fedora_36 \
 	opensuse-leap_15.3 \
+	opensuse-leap_15.4 \
 	snap
 
 IS_SHELL_INTERACTIVE := $(shell [ -t 0 ] && echo yes)
