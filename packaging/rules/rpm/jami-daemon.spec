@@ -39,9 +39,10 @@ BuildRequires: libdbus-c++-devel
 BuildRequires: libexpat-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulse-devel
+%else
+BuildRequires: gnutls-devel
 %endif
 BuildRequires: alsa-lib-devel
-BuildRequires: gnutls-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: libXext-devel
 BuildRequires: libXfixes-devel
