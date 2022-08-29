@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd553b57_1ea5ab5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-08-29T15:39:27Z",
+      "side": 1,
+      "message": "just a small dependency misplaced since a long time",
+      "revId": "6515db0c5a9086b809fd7d655a89a7d6543e80ae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20eeeeea_64df7636",
+        "filename": "build.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-08-29T15:39:27Z",
+      "side": 0,
+      "message": "libnotify should be there, it\u0027s for notifications in client-qt",
+      "range": {
+        "startLine": 138,
+        "startChar": 58,
+        "endLine": 138,
+        "endChar": 71
+      },
+      "revId": "1a7fd3fddd9c06f0c5e337a07de23d408bb4c8ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
