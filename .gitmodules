@@ -16,3 +16,6 @@
 [submodule "plugins"]
 	path = plugins
 	url = https://review.jami.net/jami-plugins
+[submodule "jami-web"]
+	path = client-web
+	url = https://review.jami.net/jami-web

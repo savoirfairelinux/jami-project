@@ -4,7 +4,6 @@ client-ios
 client-macosx
 client-qt
 client-uwp
-daemon
 lrc
 jami_*
 packages
