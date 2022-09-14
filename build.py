@@ -405,6 +405,9 @@ def run_init():
         execute_script(['./scripts/format.sh --install %(path)s'],
                        {"path": hooks_dir})
 
+    subprocess.run(["git", "submodule", "update", "--recursive", "--init"],
+                   check=True, cwd='client-qt')
+
 
 def copy_file(src, dest):
     print("Copying:" + src + " to " + dest)
