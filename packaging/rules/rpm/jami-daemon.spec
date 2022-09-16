@@ -103,6 +103,7 @@ rm -rfv %{buildroot}/%{_libdir}/*.la
 %files
 %defattr(-,root,root,-)
 %{_libdir}/libring.so*
+%{_libdir}/pkg-config/jami.pc
 # XXX: Use %%{_libexecdir}/jamid after there's no more OpenSUSE Leap
 # < 16 (see https://en.opensuse.org/openSUSE:Specfile_guidelines).
 /usr/libexec/jamid
