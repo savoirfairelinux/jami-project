@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cfbb1fd_eed10f00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-09-29T16:10:18Z",
+      "side": 1,
+      "message": "Thanks for the patch!  Looks great to me for the most part, except one small thing:\nchanging the install location etc. of client-qt.  I very much prefer we don\u0027t do this right now and keep what we\u0027ve had so far, and instead make these changes during the upcoming moving of this script (and other packaging-related things) into the jami-client-qt.git repository.",
+      "revId": "139b307ffcac1aec06f08232c40c3d9030b128bf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
