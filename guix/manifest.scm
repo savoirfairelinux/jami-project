@@ -4,18 +4,17 @@
 ;;; Commentary:
 ;;;
 ;;; A full-blown development environment that can be used to build the
-;;; whole project.  It includes both the GNOME as well as the Qt
-;;; libraries, so that both clients can be built.  The sensitive
-;;; (i.e., patched) dependencies are consciously omitted from this
-;;; list so that the bundled libraries are the ones used, which is
-;;; usually what is desired for development purposes.
+;;; whole project.  The sensitive (i.e., patched) dependencies are
+;;; consciously omitted from this list so that the bundled libraries
+;;; are the ones used, which is usually what is desired for
+;;; development purposes.
 
-;;; The make-jami.py script makes use of it to build Jami in a Linux
+;;; The build.py script makes use of it to build Jami in a Linux
 ;;; container with the dependencies below when Guix is detected (and
 ;;; no /etc/os-release file exists) or when explicitly specified,
 ;;; e.g.:
 ;;;
-;;; $ ./make-jami.py --distribution=guix --install
+;;; $ ./build.py --distribution=guix --install
 ;;;
 ;;; It can also be invoked directly to spawn a development environment, like so:
 ;;;
@@ -93,52 +92,25 @@
   "yaml-cpp"
   "yasm"
 
-  ;; For libringclient (LRC) and the Qt client.
-  "qtbase@5"
-  "qtbase@5:debug"
-
-  ;; Shared by the GNOME and Qt clients.
-  "qrencode"
-
-  ;; Shared by the LRC, GNOME and Qt clients.
-  "network-manager"                     ;libnm
-
-  ;; For the GNOME client (client-gnome)
-  "adwaita-icon-theme"
-  "hicolor-icon-theme"
-  "clutter"
-  "clutter-gtk"
-  "glib:bin"                            ;for glib-compile-resources
-  "gtk+"
-  "gtk+:debug"
-  "libcanberra"
-  "libindicator"
-  "libnotify"
-  "sqlite"
-  "webkitgtk"
-
   ;; For the Qt client.
-  "qtsvg"
-  "qtsvg:debug"
-  "qttools"
-  "qtwebengine"
-  "qtwebengine:debug"
-  "qtwebchannel"
-  "qtwebchannel:debug"
-  "qtmultimedia"
-  "qtmultimedia:debug"
+  "libxkbcommon"
+  "network-manager"                     ;libnm
+  "qrencode"
+  "qtbase"
+  "qt5compat"
   "qtdeclarative"
-  "qtdeclarative:debug"
-  "qtgraphicaleffects"
-  "qtgraphicaleffects:debug"
-  "qtquickcontrols"
-  "qtquickcontrols:debug"
-  "qtquickcontrols2"
-  "qtquickcontrols2:debug"
+  "qtmultimedia"
+  "qtnetworkauth"
+  "qtpositioning"
+  "qtsvg"
+  "qttools"
+  "qtwebchannel"
+  "qtwebengine"
+  "vulkan-headers"
 
   ;; For tests and debugging.
-  "cppunit"
   "file"
   "gdb"
+  "googletest"
   "ltrace"
   "strace"))
