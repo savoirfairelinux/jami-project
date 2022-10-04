@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a320f732_76a5dfe8",
+        "filename": "packaging/rules/rpm/jami-daemon.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-10-04T15:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e20d1ab3_6aaa4c36",
+      "range": {
+        "startLine": 105,
+        "startChar": 11,
+        "endLine": 105,
+        "endChar": 23
+      },
+      "revId": "7f11d29835bed1e5ef0d2890b0e84ca9673deba7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c39d7317_365d52b2",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-09-08T19:38:11Z",
       "side": 1,
       "message": "todo (unrelated to this change)\n\nOpensuse leap 15.3\nerror: Failed dependencies:\n\tlibicudata.so.69()(64bit) is needed by jami-libqt-6.2.3-6.x86_64\n\tlibicui18n.so.69()(64bit) is needed by jami-libqt-6.2.3-6.x86_64\n\tlibicuuc.so.69()(64bit) is needed by jami-libqt-6.2.3-6.x86_64\n\t\ndebian_testing doesn\u0027t build anymore\nhttps://jenkins.jami.net/job/packaging-gnu-linux/1928/execution/node/154/log/",
+      "range": {
+        "startLine": 112,
+        "startChar": 29,
+        "endLine": 113,
+        "endChar": 31
+      },
+      "revId": "7f11d29835bed1e5ef0d2890b0e84ca9673deba7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fc87c96_5b560b84",
+        "filename": "packaging/rules/rpm/jami-daemon.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-10-04T15:00:22Z",
+      "side": 1,
+      "message": "since unrelated, let\u0027s open separate bug/patch for it",
+      "parentUuid": "c39d7317_365d52b2",
       "range": {
         "startLine": 112,
         "startChar": 29,
