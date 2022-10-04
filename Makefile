@@ -132,6 +132,7 @@ $(RELEASE_TARBALL_FILENAME): tarballs.manifest
 	  (cd "$$m" && git archive --prefix "$$m/" HEAD \
 		| tar xf - -C $(TMPDIR)/jami-project); \
 	done
+	(cd client-qt/3rdparty/SortFilterProxyModel; git status; git show)
 # Create the base archive.
 	tar -cf $(TMPDIR)/jami-project.tar $(TMPDIR)/jami-project \
 	  --transform 's,.*/jami-project,jami-project,' \
