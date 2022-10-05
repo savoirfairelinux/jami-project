@@ -1,5 +1,6 @@
 FROM opensuse/leap:15.3
 
+RUN zypper refresh
 RUN zypper --non-interactive install -y \
         dnf \
         dnf-command\(builddep\) \
@@ -95,7 +96,8 @@ RUN zypper --non-interactive install -y \
         gstreamer-plugins-good \
         gstreamer-plugins-bad-devel \
         gstreamer-plugins-base-devel \
-        wget
+        wget \
+        libicu69
 
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 50
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 50
