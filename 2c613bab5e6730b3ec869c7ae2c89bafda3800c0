@@ -33,6 +33,24 @@
       "message": "How much of a compressed tarball size increase does this incur?",
       "revId": "2c613bab5e6730b3ec869c7ae2c89bafda3800c0",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d74439cc_a323ca73",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-10-05T04:55:12Z",
+      "side": 1,
+      "message": "About 66 kB, if I\u0027m not mistaken.",
+      "parentUuid": "3fb0701e_61cab868",
+      "revId": "2c613bab5e6730b3ec869c7ae2c89bafda3800c0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
