@@ -95,7 +95,8 @@ RUN zypper --non-interactive install -y \
         gstreamer-plugins-good \
         gstreamer-plugins-bad-devel \
         gstreamer-plugins-base-devel \
-        wget
+        wget \
+        libicu69-69
 
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 50
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 50

@@ -1,6 +1,6 @@
 %define name        jami-libqt
 %define version     RELEASE_VERSION
-%define release     5
+%define release     6
 
 # qtwebengine (aka chromium) takes a ton of memory per build process,
 # up to 2.3 GiB.  Cap the number of jobs based on the amount of
@@ -46,6 +46,7 @@ BuildRequires: ffmpeg-devel
 BuildRequires: ffmpeg
 BuildRequires: python-xml
 BuildRequires: mozilla-nss-devel
+BuildRequires: libicu69-69
 %else
 BuildRequires: pkgconfig(gstreamer-%{gst})
 BuildRequires: pkgconfig(gstreamer-app-%{gst})
