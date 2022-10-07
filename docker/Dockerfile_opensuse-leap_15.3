@@ -1,5 +1,7 @@
 FROM opensuse/leap:15.3
 
+RUN zypper refresh
+
 RUN zypper --non-interactive install -y \
         dnf \
         dnf-command\(builddep\) \
