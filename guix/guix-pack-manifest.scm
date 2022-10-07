@@ -86,7 +86,7 @@
         #~(modify-phases #$phases
             (add-after 'qt-wrap 'wrap-ssl-cert-dir
               (lambda* (#:key inputs outputs #:allow-other-keys)
-                (substitute* (search-input-file outputs "bin/jami-qt")
+                (substitute* (search-input-file outputs "bin/jami")
                   (("^exec.*" exec-line)
                    (format #f "export SSL_CERT_DIR=~a~%"
                            (search-input-directory inputs "etc/ssl/certs")

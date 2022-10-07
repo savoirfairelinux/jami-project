@@ -1,4 +1,4 @@
-%define name        jami-qt
+%define name        jami
 %define version     RELEASE_VERSION
 %define release     0
 
@@ -13,8 +13,8 @@ URL:           https://jami.net/
 Source:        jami_%{version}.tar.gz
 Requires:      jami-daemon = %{version}
 Requires:      jami-libqt
-Provides:      jami
-Obsoletes:     jami < %{version}-%{release}
+Provides:      jami-qt = %{version}
+Obsoletes:     jami-qt <= 20221010.1109.641d67d-1
 Obsoletes:     jami-libclient <= 20220516.0214.9b42ad3-1
 
 # Build dependencies.
@@ -73,11 +73,10 @@ DESTDIR=%{buildroot} make -C %{_builddir}/jami-project/client-qt/build install
 %files
 %defattr(-,root,root,-)
 %{_bindir}/jami
-%{_bindir}/jami-qt
-%{_datadir}/applications/jami-qt.desktop
-%{_datadir}/jami-qt/jami-qt.desktop
+%{_datadir}/applications/jami.desktop
+%{_datadir}/jami/jami.desktop
 %{_datadir}/icons/hicolor/scalable/apps/jami.svg
 %{_datadir}/icons/hicolor/48x48/apps/jami.png
 %{_datadir}/pixmaps/jami.xpm
-%{_datadir}/metainfo/jami-qt.appdata.xml
+%{_datadir}/metainfo/jami.appdata.xml
 %{_datadir}/jami/translations/*
