@@ -16,6 +16,24 @@
       "message": "Do we want to rename the whole file/package from jami-qt to jami also?\n(And changing \"Provides: jami\" below to \"Provides: jami-qt\" instead, like the deb package)",
       "revId": "f121eb6f55a078c07b1ef6866f24d4de7c815ab8",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8440a6c5_4eee534e",
+        "filename": "packaging/rules/rpm/jami-qt.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-10-07T21:49:10Z",
+      "side": 1,
+      "message": "If we make it in a way that jami-qt users will be transparently upgraded to jami, that\u0027d be neat!",
+      "parentUuid": "8f280d54_bbf6c454",
+      "revId": "f121eb6f55a078c07b1ef6866f24d4de7c815ab8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
