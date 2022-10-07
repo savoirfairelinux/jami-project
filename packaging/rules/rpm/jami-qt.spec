@@ -73,11 +73,10 @@ DESTDIR=%{buildroot} make -C %{_builddir}/jami-project/client-qt/build install
 %files
 %defattr(-,root,root,-)
 %{_bindir}/jami
-%{_bindir}/jami-qt
-%{_datadir}/applications/jami-qt.desktop
-%{_datadir}/jami-qt/jami-qt.desktop
+%{_datadir}/applications/jami.desktop
+%{_datadir}/jami/jami.desktop
 %{_datadir}/icons/hicolor/scalable/apps/jami.svg
 %{_datadir}/icons/hicolor/48x48/apps/jami.png
 %{_datadir}/pixmaps/jami.xpm
-%{_datadir}/metainfo/jami-qt.appdata.xml
+%{_datadir}/metainfo/jami.appdata.xml
 %{_datadir}/jami/translations/*
