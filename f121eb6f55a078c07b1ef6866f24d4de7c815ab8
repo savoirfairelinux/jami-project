@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f280d54_bbf6c454",
+        "filename": "packaging/rules/rpm/jami-qt.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-10-07T21:45:49Z",
+      "side": 1,
+      "message": "Do we want to rename the whole file/package from jami-qt to jami also?\n(And changing \"Provides: jami\" below to \"Provides: jami-qt\" instead, like the deb package)",
+      "revId": "f121eb6f55a078c07b1ef6866f24d4de7c815ab8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
