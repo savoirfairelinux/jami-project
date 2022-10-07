@@ -128,14 +128,15 @@ rpmdev-bumpspec --comment="Automatic nightly release" \
                 --userstring="Jenkins <jami@lists.savoirfairelinux.net>" ./*.spec
 
 # Build the daemon and install it.
-rpmbuild --define "debug_package %{nil}"  -ba jami-daemon.spec
+rpmbuild --define "debug_package %{nil}" -ba jami-daemon.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-daemon-*
 
-# Build the transitional libclient package.
-rpmbuild --define "debug_package %{nil}"  -ba jami-libclient.spec
+# Build the temporary transitional packages.
+rpmbuild --define "debug_package %{nil}" -ba jami-libclient.spec
+rpmbuild --define "debug_package %{nil}" -ba jami-qt.spec
 
 # Build the Qt client.
-rpmbuild --define "debug_package %{nil}" -ba jami-qt.spec
+rpmbuild --define "debug_package %{nil}" -ba jami.spec
 
 # Move the built packages to the output directory.
 mv /root/rpmbuild/RPMS/*/* /opt/output
