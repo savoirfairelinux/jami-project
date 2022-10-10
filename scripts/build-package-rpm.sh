@@ -135,7 +135,7 @@ rpm --install /root/rpmbuild/RPMS/x86_64/jami-daemon-*
 rpmbuild --define "debug_package %{nil}"  -ba jami-libclient.spec
 
 # Build the Qt client.
-rpmbuild --define "debug_package %{nil}" -ba jami-qt.spec
+rpmbuild --define "debug_package %{nil}" -ba jami.spec
 
 # Move the built packages to the output directory.
 mv /root/rpmbuild/RPMS/*/* /opt/output

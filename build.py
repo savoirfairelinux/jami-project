@@ -486,7 +486,7 @@ def run_run(args):
         with open('daemon.pid', 'w') as f:
             f.write(str(jamid_process.pid)+'\n')
 
-        client_log = open('jami-qt.log', 'a')
+        client_log = open('jami.log', 'a')
         client_log.write('=== Starting client (%s) ===' %
                          time.strftime("%d/%m/%Y %H:%M:%S"))
         client_process = subprocess.Popen(["./install/client-qt/bin/jami-qt", "-d"],
@@ -494,7 +494,7 @@ def run_run(args):
                                           stderr=client_log,
                                           env=run_env)
 
-        with open('jami-qt.pid', 'w') as f:
+        with open('jami.pid', 'w') as f:
             f.write(str(client_process.pid)+'\n')
 
         if args.debug:
@@ -528,7 +528,7 @@ def run_run(args):
 
 
 def run_stop(args):
-    STOP_SCRIPT = ['xargs kill < jami-qt.pid',
+    STOP_SCRIPT = ['xargs kill < jami.pid',
                    'xargs kill < daemon.pid']
     execute_script(STOP_SCRIPT)
 
