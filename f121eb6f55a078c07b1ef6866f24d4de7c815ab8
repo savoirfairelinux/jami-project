@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "416006df_b00c23fe",
+        "filename": "packaging/rules/rpm/jami-qt.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-10-11T20:54:10Z",
+      "side": 1,
+      "message": "Okay will do.  So far this patchset (3) breaks upgrade, so it\u0027s not ready yet.",
+      "parentUuid": "8faca779_40a4c51d",
+      "revId": "f121eb6f55a078c07b1ef6866f24d4de7c815ab8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1dfcd84e_b7a373ae",
         "filename": "packaging/rules/snap/jami/snapcraft.yaml",
         "patchSetId": 1
