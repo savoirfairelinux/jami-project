@@ -57,6 +57,30 @@
       },
       "revId": "f121eb6f55a078c07b1ef6866f24d4de7c815ab8",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd4da490_cf444c7a",
+        "filename": "packaging/rules/snap/jami/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-10-11T17:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dfcd84e_b7a373ae",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 57
+      },
+      "revId": "f121eb6f55a078c07b1ef6866f24d4de7c815ab8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
