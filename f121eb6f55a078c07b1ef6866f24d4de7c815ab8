@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8faca779_40a4c51d",
+        "filename": "packaging/rules/rpm/jami-qt.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-10-11T19:55:23Z",
+      "side": 1,
+      "message": "ping us when it\u0027s oK!",
+      "parentUuid": "c7a40dbe_1bc25dac",
+      "revId": "f121eb6f55a078c07b1ef6866f24d4de7c815ab8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1dfcd84e_b7a373ae",
         "filename": "packaging/rules/snap/jami/snapcraft.yaml",
         "patchSetId": 1
