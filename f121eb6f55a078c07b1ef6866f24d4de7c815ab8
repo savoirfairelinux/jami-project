@@ -34,6 +34,29 @@
       "parentUuid": "8f280d54_bbf6c454",
       "revId": "f121eb6f55a078c07b1ef6866f24d4de7c815ab8",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dfcd84e_b7a373ae",
+        "filename": "packaging/rules/snap/jami/snapcraft.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-10-11T13:14:26Z",
+      "side": 1,
+      "message": "the files moved in extras/, so I guess the command will fail",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 57
+      },
+      "revId": "f121eb6f55a078c07b1ef6866f24d4de7c815ab8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
