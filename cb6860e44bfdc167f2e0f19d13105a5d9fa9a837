@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aaa439a_5dda7a52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-10-12T13:51:39Z",
+      "side": 1,
+      "message": "There are two change IDs :-)",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 6
+      },
+      "revId": "cb6860e44bfdc167f2e0f19d13105a5d9fa9a837",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d4d10d7_09ae87d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-10-12T13:51:39Z",
+      "side": 1,
+      "message": "LGTM with the duplicate change ID in commit message fixed.",
+      "revId": "cb6860e44bfdc167f2e0f19d13105a5d9fa9a837",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
