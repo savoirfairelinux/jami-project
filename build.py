@@ -385,6 +385,8 @@ def run_install(args):
         install_args.append('-g')
     if args.prefix:
         install_args += ('-P', args.prefix)
+    if args.arch:
+        install_args += ('-a', args.arch)
     if not args.priv_install:
         install_args.append('-u')
     if args.debug:
@@ -615,6 +617,7 @@ def parse_args():
 
     ap.add_argument('--distribution')
     ap.add_argument('--prefix')
+    ap.add_argument('--arch')
     ap.add_argument('--static', default=False, action='store_true')
     ap.add_argument('--global-install', default=False, action='store_true')
     ap.add_argument('--debug', default=False, action='store_true',
