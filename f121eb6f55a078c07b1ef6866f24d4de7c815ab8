@@ -90,6 +90,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "753e44a0_0544e45a",
+        "filename": "packaging/rules/rpm/jami-qt.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-10-12T13:34:38Z",
+      "side": 1,
+      "message": "Okay this should now be the case.  Tested with internal build for Fedora 36 and openSUSE Leap 15.4.",
+      "parentUuid": "416006df_b00c23fe",
+      "revId": "f121eb6f55a078c07b1ef6866f24d4de7c815ab8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1dfcd84e_b7a373ae",
