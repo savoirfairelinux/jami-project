@@ -119,7 +119,7 @@ echo "$JAMI_KEY" > "$GPG_FILE"
 rm -f /var/lib/rpm/.rpm.lock > /dev/null 2>&1
 rpm --import "$GPG_FILE"  > /dev/null 2>&1
 
-jami_repo_name="$NAME \$releasever - \$basearch - Jami"
+jami_repo_name="$DISTRIBUTION \$releasever - \$basearch - Jami"
 jami_repo_base_url="$JAMI_REPO_BASE/$ID_\$releasever"
 
 # Add an entry for the package repository to the trusted package.
