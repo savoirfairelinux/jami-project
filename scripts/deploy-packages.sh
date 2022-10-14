@@ -151,7 +151,7 @@ function package_rpm()
     mkdir -p ${DISTRIBUTION_REPOSITORY_FOLDER}
 
     # .repo file
-    name="Jami \$releasever - \$basearch - jami"
+    name="${DISTRIBUTION%_*} \$releasever - \$basearch - jami"
     baseurl="https://dl.jami.net/${CHANNEL}/${DISTRIBUTION%_*}_\$releasever"
 
     cat << EOF > ${DISTRIBUTION_REPOSITORY_FOLDER}/jami-${CHANNEL}.repo

@@ -254,7 +254,7 @@ parts:
       snapcraftctl pull
       sed -i -E 's|(tmpName) << (PACKAGE_NAME << "_shm_")|\1 << "snap.jami." << \2|' daemon/src/media/video/sinkclient.cpp
       for file in jami-qt.desktop jami-qt.desktop.autostart; do
-        sed -i -E 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/jami.svg|' client-qt/$file
+        sed -i -E 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/jami.svg|' client-qt/extras/data/$file
       done
     override-build: |
       cd $SNAPCRAFT_PART_BUILD/daemon/contrib
