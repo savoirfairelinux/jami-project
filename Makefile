@@ -167,6 +167,7 @@ DISTRIBUTIONS := \
 	ubuntu_18.04 \
 	ubuntu_20.04 \
 	ubuntu_22.04 \
+	ubuntu_22.10 \
 	fedora_35 \
 	fedora_36 \
 	fedora_37 \
