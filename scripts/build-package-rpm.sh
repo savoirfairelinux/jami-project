@@ -113,6 +113,8 @@ if [ ! -f "${RPM_PATH}" ]; then
             cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc35.x86_64.rpm "${RPM_PATH}"
         elif [[ "${DISTRIBUTION}" == "fedora_36" ]]; then
             cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc36.x86_64.rpm "${RPM_PATH}"
+        elif [[ "${DISTRIBUTION}" == "fedora_37" ]]; then
+            cp /root/rpmbuild/RPMS/x86_64/jami-libqt-$QT_MAJOR_MINOR_PATCH-*.fc37.x86_64.rpm "${RPM_PATH}"
         else
             cp /root/rpmbuild/RPMS/x86_64/jami-libqt-*.rpm "${RPM_PATH}"
         fi
@@ -128,14 +130,15 @@ rpmdev-bumpspec --comment="Automatic nightly release" \
                 --userstring="Jenkins <jami@lists.savoirfairelinux.net>" ./*.spec
 
 # Build the daemon and install it.
-rpmbuild --define "debug_package %{nil}"  -ba jami-daemon.spec
+rpmbuild --define "debug_package %{nil}" -ba jami-daemon.spec
 rpm --install /root/rpmbuild/RPMS/x86_64/jami-daemon-*
 
-# Build the transitional libclient package.
-rpmbuild --define "debug_package %{nil}"  -ba jami-libclient.spec
+# Build the temporary transitional packages.
+rpmbuild --define "debug_package %{nil}" -ba jami-libclient.spec
+rpmbuild --define "debug_package %{nil}" -ba jami-qt.spec
 
 # Build the Qt client.
-rpmbuild --define "debug_package %{nil}" -ba jami-qt.spec
+rpmbuild --define "debug_package %{nil}" -ba jami.spec
 
 # Move the built packages to the output directory.
 mv /root/rpmbuild/RPMS/*/* /opt/output

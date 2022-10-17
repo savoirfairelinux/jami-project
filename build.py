@@ -489,7 +489,7 @@ def run_run(args):
         client_log = open('jami-qt.log', 'a')
         client_log.write('=== Starting client (%s) ===' %
                          time.strftime("%d/%m/%Y %H:%M:%S"))
-        client_process = subprocess.Popen(["./install/client-qt/bin/jami-qt", "-d"],
+        client_process = subprocess.Popen(["./install/client-qt/bin/jami", "-d"],
                                           stdout=client_log,
                                           stderr=client_log,
                                           env=run_env)

@@ -167,8 +167,10 @@ DISTRIBUTIONS := \
 	ubuntu_18.04 \
 	ubuntu_20.04 \
 	ubuntu_22.04 \
+	ubuntu_22.10 \
 	fedora_35 \
 	fedora_36 \
+	fedora_37 \
 	opensuse-leap_15.3 \
 	opensuse-leap_15.4 \
 	snap
@@ -243,11 +245,11 @@ DEB_PACK_TARGETS =
 
 define guix-pack-command
 guix pack -C xz -f deb -m $(CURDIR)/guix/guix-pack-manifest.scm -v3 \
-  -S /usr/bin/jami-qt=bin/jami-qt \
-  -S /usr/share/applications/jami-qt.desktop=share/applications/jami-qt.desktop \
+  -S /usr/bin/jami=bin/jami \
+  -S /usr/share/applications/jami.desktop=share/applications/jami.desktop \
   -S /usr/share/icons/hicolor/scalable/apps/jami.svg=share/icons/hicolor/scalable/apps/jami.svg \
   -S /usr/share/icons/hicolor/48x48/apps/jami.png=share/icons/hicolor/48x48/apps/jami.png \
-  -S /usr/share/metainfo/jami-qt.appdata.xml=share/metainfo/jami-qt.appdata.xml \
+  -S /usr/share/metainfo/jami.appdata.xml=share/metainfo/jami.appdata.xml \
   --postinst-file=$(CURDIR)/guix/guix-pack-deb.postinst
 endef
 
