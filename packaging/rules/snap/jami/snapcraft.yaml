@@ -135,7 +135,7 @@ apps:
     - bin/desktop-launch
     - snap/command-chain/alsa-launch
     - bin/jami-wrapper
-    autostart: extras/data/jami.desktop
+    autostart: jami.desktop
     common-id: net.jami.Jami
     desktop: usr/share/applications/jami.desktop
     slots:
