@@ -159,8 +159,8 @@ Function install_msys2_packages($packages) {
     write-host "Pacman Packages Installation Succeeded" -ForegroundColor Green
 }
 
-# Web installed msys2_64 bit to install make, gcc, perl, diffutils
-$msys_packages = @("make", "gcc", "perl", "diffutils")
+# Web installed msys2_64 bit to install make, gcc, perl, diffutils, yasm
+$msys_packages = @("make", "gcc", "perl", "diffutils", "yasm")
 
 # Install 7zip, unzip, wget --version 1.19.4, cmake, git --version 2.10.2, pandoc, strawberryperl, msys2
 $choco_packages = @(
@@ -208,10 +208,6 @@ download_file_to_temp 'VSYASM' "https://github.com/ShiftMediaProject/VSYASM/rele
 unzip_file_from_temp 'VSYASM' 'VSYASM.zip' 'VSYASM_UNZIP'
 $batch_path = "/c set ISINSTANCE=1 &&" + $env:TEMP + "\VSYASM_UNZIP\install_script.bat"
 run_batch $batch_path "Install VSYASM"
-
-# Install yasm.exe (win64)
-download_file_to_temp 'yasm.exe (win64)' "http://www.tortall.net/projects/yasm/releases/yasm-1.3.0-win64.exe" 'yasm.exe'
-move_file_from_temp_to_msys64 'yasm.exe' 'Move yasm.exe (win64) to msys64 folder'
 
 # Install gas-preprocessor.pl
 download_file_to_temp 'gas-preprocessor.pl' "https://github.com/FFmpeg/gas-preprocessor/blob/master/gas-preprocessor.pl" 'gas-preprocessor.pl'
