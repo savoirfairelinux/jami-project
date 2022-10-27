@@ -24,6 +24,30 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48d8b39e_6980db1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 982
+      },
+      "writtenOn": "2022-10-27T19:42:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18c7a978_c8f3c46e",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "d78ef3a2bb5fddfc22d266b57f581be994bddc6d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15dd0a88_3f4bd1da",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-10-27T13:34:47Z",
       "side": 1,
       "message": "non-existent",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "d78ef3a2bb5fddfc22d266b57f581be994bddc6d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c2da6d6_d89cd69c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 982
+      },
+      "writtenOn": "2022-10-27T19:42:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15dd0a88_3f4bd1da",
       "range": {
         "startLine": 10,
         "startChar": 7,
@@ -77,6 +125,30 @@
       "writtenOn": "2022-10-27T13:34:47Z",
       "side": 1,
       "message": "We shouldn\u0027t pull in the Qt5 package.  The qt6-5compat package which you\u0027ve added\nshould already contain the GraphicalEffects library per\nhttps://archlinux.org/packages/extra/x86_64/qt6-5compat/files/\n\nAlso it would be nice to keep these Qt packages in alphabetical order. :)",
+      "range": {
+        "startLine": 181,
+        "startChar": 24,
+        "endLine": 181,
+        "endChar": 44
+      },
+      "revId": "d78ef3a2bb5fddfc22d266b57f581be994bddc6d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d46c5926_172247a4",
+        "filename": "build.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 982
+      },
+      "writtenOn": "2022-10-27T19:42:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0af3b9cf_773b2aaf",
       "range": {
         "startLine": 181,
         "startChar": 24,
