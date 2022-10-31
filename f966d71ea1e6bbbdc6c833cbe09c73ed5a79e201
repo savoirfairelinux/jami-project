@@ -36,6 +36,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22826609_5208ec19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2022-10-31T13:10:51Z",
+      "side": 1,
+      "message": "it\u0027s for building packages, like debian build for their packages, or FDroid.",
+      "parentUuid": "4638d595_5235ef53",
+      "revId": "f966d71ea1e6bbbdc6c833cbe09c73ed5a79e201",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0b21565_e758256f",
