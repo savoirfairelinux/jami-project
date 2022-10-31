@@ -178,7 +178,8 @@ PACMAN_CLIENT_DEPENDENCIES = [
     # lrc
     'qt6-base',
     # client-qt
-    'qt6-declarative', 'qt6-graphicaleffects', 'qt6-multimedia',
+    'qt6-declarative', 'qt6-5compat' , 'qt6-multimedia',
+    'qt6-networkauth', 'qt6-shadertools',
     'qt6-svg', 'qt6-tools',
     'qrencode', 'libnm'
 ]
