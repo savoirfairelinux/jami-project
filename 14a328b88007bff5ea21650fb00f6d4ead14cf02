@@ -33,6 +33,41 @@
       "message": "Thanks a lot for the reviews.",
       "revId": "14a328b88007bff5ea21650fb00f6d4ead14cf02",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bae535a7_9d1e9b93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-10-31T13:22:36Z",
+      "side": 1,
+      "message": "Cheers, and thanks again for your patch!",
+      "parentUuid": "580ada76_7fced5d5",
+      "revId": "14a328b88007bff5ea21650fb00f6d4ead14cf02",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55d5ecad_8da19b14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-10-31T13:22:36Z",
+      "side": 1,
+      "message": "Cheers, and",
+      "revId": "14a328b88007bff5ea21650fb00f6d4ead14cf02",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     }
   ]
 }
