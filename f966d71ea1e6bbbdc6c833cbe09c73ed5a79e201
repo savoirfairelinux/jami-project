@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf3c82ec_292b5c1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-10-31T01:23:24Z",
+      "side": 1,
+      "message": "I may have asked before, but I\u0027ll ask again: what does offloading the snapcraft builds to ubuntu give us, as compared to building them ourselfs (current situation).\n\nI\u0027m no big fan of \"software as a service (SaaS)\" and the alienation/loss of control it entails.",
+      "revId": "f966d71ea1e6bbbdc6c833cbe09c73ed5a79e201",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0b21565_e758256f",
