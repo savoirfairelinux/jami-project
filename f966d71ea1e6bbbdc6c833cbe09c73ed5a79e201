@@ -18,6 +18,24 @@
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4638d595_5235ef53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 892
+      },
+      "writtenOn": "2022-10-31T13:08:21Z",
+      "side": 1,
+      "message": "The primary benefit of offloading the builds to Canonical\u0027s Launchpad build severs in my eyes would be easily getting our snap package built for several other non-amd64 arches, namely arm64, armhf, ppc64el, and s390x.\n\nFWIW I plan to give this another go after my upcoming refactoring/simplification of the packaging and its move from jami-project.git to jami-client-qt.git, and see if it might work better with snapcraft.",
+      "parentUuid": "bf3c82ec_292b5c1d",
+      "revId": "f966d71ea1e6bbbdc6c833cbe09c73ed5a79e201",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0b21565_e758256f",
