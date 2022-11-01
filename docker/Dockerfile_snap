@@ -49,7 +49,7 @@ RUN echo /snap/snapcraft/current/lib/python3.*/site-packages >> /snap/snapcraft/
 RUN mkdir -p /snap/bin
 RUN echo "#!/bin/sh" > /snap/bin/snapcraft
 RUN snap_version="$(awk '/^version:/{print $2}' /snap/snapcraft/current/meta/snap.yaml | tr -d \')" && echo "export SNAP_VERSION=\"$snap_version\"" >> /snap/bin/snapcraft
-RUN echo 'exec "$SNAP/usr/bin/python3" "$SNAP/bin/snapcraft" "$@"' >> /snap/bin/snapcraft
+RUN echo 'exec "$SNAP/usr/bin/python3.8" "$SNAP/bin/snapcraft" "$@"' >> /snap/bin/snapcraft
 RUN chmod +x /snap/bin/snapcraft
 
 # Multi-stage build, only need the snaps from the builder. Copy them one at a
