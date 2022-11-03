@@ -79,6 +79,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "23f96487_f018f194",
+        "filename": "Jenkinsfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 915
+      },
+      "writtenOn": "2022-11-03T21:34:45Z",
+      "side": 1,
+      "message": "Seems we\u0027d be adding switches that make us dependent on the snapcraft cloud building service.  I\u0027m not too keen on that.  Shouldn\u0027t we be able to build snaps for other architectures locally just as they do?  Or at least make the two modes work (whether we build locally or offload to their service).",
+      "parentUuid": "b0b21565_e758256f",
+      "range": {
+        "startLine": 93,
+        "startChar": 36,
+        "endLine": 93,
+        "endChar": 66
+      },
+      "revId": "f966d71ea1e6bbbdc6c833cbe09c73ed5a79e201",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f60ad90_e1919f89",
         "filename": "scripts/build-package-snap.sh",
         "patchSetId": 7
