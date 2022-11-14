@@ -76,9 +76,6 @@ pipeline {
                      ' submodules at their Git-recorded commit.  When left ' +
                      'unticked (the default), checkout the submodules at ' +
                      'their latest commit from their main remote branch.')
-        booleanParam(name: 'BUILD_ARM',
-                     defaultValue: false,
-                     description: 'Whether to build ARM packages.')
         booleanParam(name: 'DEPLOY',
                      defaultValue: false,
                      description: 'Whether to deploy packages.')
@@ -206,9 +203,6 @@ git tag \$(cat .tarball-version) -am "Jami \$(cat .tarball-version)"
                     }
 
                     TARGETS = targetsText.split(/\s/)
-                    if (!params.BUILD_ARM) {
-                        TARGETS = TARGETS.findAll { !(it =~ /_(armhf|arm64)$/) }
-                    }
 
                     def stages = [:]
 

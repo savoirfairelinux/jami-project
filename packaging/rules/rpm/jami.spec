@@ -80,3 +80,4 @@ DESTDIR=%{buildroot} make -C %{_builddir}/jami-project/client-qt/build install
 %{_datadir}/pixmaps/jami.xpm
 %{_datadir}/metainfo/jami.appdata.xml
 %{_datadir}/jami/translations/*
+%doc %{_mandir}/man1/jami*
