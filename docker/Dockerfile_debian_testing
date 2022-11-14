@@ -8,7 +8,8 @@ RUN apt-get update --allow-releaseinfo-change && \
         devscripts \
         equivs \
         python-is-python3 \
-        wget
+        wget \
+        nasm
 
 ADD scripts/prebuild-package-debian.sh /opt/prebuild-package-debian.sh
 
