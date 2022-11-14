@@ -23,13 +23,14 @@
 
 set -e
 
+ls
 tar xf "/src/$RELEASE_TARBALL_FILENAME" -C /opt
 cd /opt/jami-project/packaging/rules/snap/${SNAP_PKG_NAME}/
 
 # set the version and tarball filename
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" snapcraft.yaml
 
-snapcraft # requires snapcraft >= 4.8
+SNAPCRAFT_BUILD_ENVIRONMENT=host snapcraft # requires snapcraft >= 4.8
 
 # move the built snap to output
 mv *.snap /opt/output/
