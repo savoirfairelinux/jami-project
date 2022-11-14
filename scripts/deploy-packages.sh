@@ -226,6 +226,9 @@ function package_snap()
         ls packages/${DISTRIBUTION}*
         cp packages/${DISTRIBUTION}*/*.snap ${DISTRIBUTION_REPOSITORY_FOLDER}/
     elif [[ $CHANNEL =~ nightly ]]; then
+        echo $(hostname)
+        echo $(whoami)
+        echo $(snapcraft whoami)
         snapcraft push packages/${DISTRIBUTION}*/*.snap --release edge
     elif [[ $CHANNEL =~ stable ]]; then
         snapcraft push packages/${DISTRIBUTION}*/*.snap --release stable
