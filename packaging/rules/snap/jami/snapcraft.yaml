@@ -45,7 +45,7 @@
 
 
 name: jami
-version: "RELEASE_VERSION"
+version: "20221121"
 adopt-info: jami
 icon: ../common/icons/jami.svg
 license: GPL-3.0+
@@ -116,8 +116,8 @@ slots:
     name: cx.ring.Ring
 
 layout:
-  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib:
-    bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/alsa-lib
+  /usr/lib/$CRAFT_ARCH_TRIPLET/alsa-lib:
+    bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/alsa-lib
   /usr/share/alsa:
     bind: $SNAP/usr/share/alsa
   /usr/share/X11/xkb:
@@ -132,7 +132,7 @@ apps:
   jami:
     command: usr/bin/jami
     command-chain:
-    - bin/desktop-launch
+    #- bin/desktop-launch
     - snap/command-chain/alsa-launch
     - bin/jami-wrapper
     autostart: jami.desktop
@@ -171,49 +171,50 @@ package-repositories:
     url: https://dl.jami.net/nightly/ubuntu_22.04/
 
 parts:
-  desktop-launch:
-    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
-    plugin: nil
-    build-packages:
-    - dpkg-dev
-    - gcc
-    - g++
-    - cmake
-    - cmake-data
-    - libqt-jami
-    - devscripts
-    - equivs
-    override-pull: |
-      snapcraftctl pull
-      sed -i -E 's|\. \$SNAP/flavor-select|USE_gtk3=true|' gtk/launcher-specific
-      sed -i -E 's|\. \$SNAP/flavor-select|USE_qt5=true|' qt/launcher-specific
-      sed -i -E 's|(append_dir GTK_PATH \$RUNTIME/usr/lib/\$ARCH/gtk-2.0)|#\1|' qt/launcher-specific
-      sed -i -E 's|\$RUNTIME|$SNAP|g' qt/launcher-specific
-      sed -i -E 's|\$WITH_RUNTIME|no|g' qt/launcher-specific
-    override-build: |
-      snapcraftctl build
-      gcc -Wall -O2 -o bindtextdomain.so -fPIC -shared src/bindtextdomain.c -ldl
-
-      echo "#!/bin/bash" > desktop-launch
-      cat common/init >> desktop-launch
-
-      cat qt/runtime-exports >> desktop-launch
-      cat gtk/runtime-exports >> desktop-launch
-
-      cat common/desktop-exports >> desktop-launch
-
-      cat qt/launcher-specific >> desktop-launch
-      cat gtk/launcher-specific >> desktop-launch
-
-      cat common/mark-and-exec >> desktop-launch
-
-      install -D -m755 desktop-launch $SNAPCRAFT_PART_INSTALL/bin/desktop-launch
-      install -D -m644 bindtextdomain.so $SNAPCRAFT_PART_INSTALL/lib/bindtextdomain.so
-
-      mkdir -pv $SNAPCRAFT_PART_INSTALL/gnome-platform
+  #desktop-launch:
+  #  source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+  #  plugin: nil
+  #  build-packages:
+  #  - dpkg-dev
+  #  - gcc
+  #  - g++
+  #  - cmake
+  #  - cmake-data
+  #  - libqt-jami
+  #  - devscripts
+  #  - equivs
+  #  override-pull: |
+  #    craftctl default
+  #    sed -i -E 's|\. \$SNAP/flavor-select|USE_gtk3=true|' gtk/launcher-specific
+  #    sed -i -E 's|\. \$SNAP/flavor-select|USE_qt5=true|' qt/launcher-specific
+  #    sed -i -E 's|(append_dir GTK_PATH \$RUNTIME/usr/lib/\$ARCH/gtk-2.0)|#\1|' qt/launcher-specific
+  #    sed -i -E 's|\$RUNTIME|$SNAP|g' qt/launcher-specific
+  #    sed -i -E 's|\$WITH_RUNTIME|no|g' qt/launcher-specific
+  #  override-build: |
+  #    craftctl default
+  #    gcc -Wall -O2 -o bindtextdomain.so -fPIC -shared src/bindtextdomain.c -ldl
+#
+  #    echo "#!/bin/bash" > desktop-launch
+  #    cat common/init >> desktop-launch
+#
+  #    cat qt/runtime-exports >> desktop-launch
+  #    cat gtk/runtime-exports >> desktop-launch
+#
+  #    cat common/desktop-exports >> desktop-launch
+#
+  #    cat qt/launcher-specific >> desktop-launch
+  #    cat gtk/launcher-specific >> desktop-launch
+#
+  #    cat common/mark-and-exec >> desktop-launch
+#
+  #    install -D -m755 desktop-launch $CRAFT_PART_INSTALL/bin/desktop-launch
+  #    install -D -m644 bindtextdomain.so $CRAFT_PART_INSTALL/lib/bindtextdomain.so
+#
+  #    mkdir -pv $CRAFT_PART_INSTALL/gnome-platform
 
   scripts:
     plugin: dump
+    source-type: local
     source: ../common/scripts
     organize:
       jami-wrapper: bin/jami-wrapper
@@ -248,35 +249,35 @@ parts:
     build-environment:
       - QT_BASE_DIR: "/usr/lib/libqt-jami"
       - PATH: "$QT_BASE_DIR/bin:$PATH"
-      - LD_LIBRARY_PATH: "$QT_BASE_DIR/lib:$LD_LIBRARY_PATH"
-      - PKG_CONFIG_PATH: "$QT_BASE_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
+      - LD_LIBRARY_PATH: $QT_BASE_DIR/lib/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+      - PKG_CONFIG_PATH: $QT_BASE_DIR/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
     override-pull: |
-      snapcraftctl pull
+      craftctl default
       sed -i -E 's|(tmpName) << (PACKAGE_NAME << "_shm_")|\1 << "snap.jami." << \2|' daemon/src/media/video/sinkclient.cpp
       sed -i -E 's|^Icon=.*|Icon=${SNAP}/usr/share/icons/hicolor/scalable/apps/jami.svg|' client-qt/extras/data/jami.desktop
     override-build: |
-      cd $SNAPCRAFT_PART_BUILD/daemon/contrib
+      cd $CRAFT_PART_BUILD/daemon/contrib
       mkdir -p native
       cd native
       ../bootstrap
       make .ffmpeg
       make
 
-      cd $SNAPCRAFT_PART_BUILD/daemon
+      cd $CRAFT_PART_BUILD/daemon
       ./autogen.sh
       ./configure --prefix=/usr --without-dbus
-      make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
-      DESTDIR=$SNAPCRAFT_PART_INSTALL make install
+      make -j$CRAFT_PARALLEL_BUILD_COUNT
+      DESTDIR=$CRAFT_PART_INSTALL make install
 
-      cd $SNAPCRAFT_PART_BUILD/client-qt
+      cd $CRAFT_PART_BUILD/client-qt
       mkdir build
       cd build
       cmake .. -DENABLE_LIBWRAP=true \
-               -DLIBJAMI_BUILD_DIR=$SNAPCRAFT_PART_BUILD/daemon/src \
+               -DLIBJAMI_BUILD_DIR=$CRAFT_PART_BUILD/daemon/src \
                -DCMAKE_INSTALL_PREFIX=/usr \
                -DCMAKE_BUILD_TYPE=Release
-      make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
-      DESTDIR=$SNAPCRAFT_PART_INSTALL make install
+      make -j$CRAFT_PARALLEL_BUILD_COUNT
+      DESTDIR=$CRAFT_PART_INSTALL make install
     build-packages:
     - autoconf
     - autoconf-archive
@@ -304,6 +305,7 @@ parts:
     - libswscale-dev
     - libva-dev
     - libvdpau-dev
+    - libvpx-dev
     - libargon2-0-dev # opendht
     - libexpat1-dev
     - libjsoncpp-dev
@@ -362,6 +364,6 @@ parts:
     - -usr/lib/libqt-jami/bin/
     - -usr/lib/libqt-jami/docs/
     - -usr/lib/libqt-jami/examples/
-    - -usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libLLVM-*.so*
-    - -usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libclang-*.so*
-    - -usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libflite*.so*
+    - -usr/lib/$CRAFT_ARCH_TRIPLET/libLLVM-*.so*
+    - -usr/lib/$CRAFT_ARCH_TRIPLET/libclang-*.so*
+    - -usr/lib/$CRAFT_ARCH_TRIPLET/libflite*.so*
