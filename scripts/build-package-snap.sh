@@ -23,6 +23,7 @@
 
 set -e
 
+ls
 tar xf "/src/$RELEASE_TARBALL_FILENAME" -C /opt
 cd /opt/jami-project/packaging/rules/snap/${SNAP_PKG_NAME}/
 
