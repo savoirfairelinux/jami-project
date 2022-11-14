@@ -37,6 +37,12 @@ RUN curl -L https://api.snapcraft.io/api/v1/snaps/download/vMTKRaLjnOJQetI78Hjnt
 RUN mkdir -p /snap/snapcraft
 RUN unsquashfs -d /snap/snapcraft/current snapcraft.snap
 
+# Fix Python3 installation: Make sure we use the interpreter from
+# the snapcraft snap:
+RUN unlink /snap/snapcraft/current/usr/bin/python3
+RUN ln -s /snap/snapcraft/current/usr/bin/python3.* /snap/snapcraft/current/usr/bin/python3
+RUN echo /snap/snapcraft/current/lib/python3.*/site-packages >> /snap/snapcraft/current/usr/lib/python3/dist-packages/site-packages.pth
+
 # Create a snapcraft runner (TODO: move version detection to the core of
 # snapcraft).
 RUN mkdir -p /snap/bin
@@ -61,7 +67,7 @@ RUN apt-get update && apt-get dist-upgrade --yes && apt-get install --yes snapd 
 ENV LANG="en_US.UTF-8"
 ENV LANGUAGE="en_US:en"
 ENV LC_ALL="en_US.UTF-8"
-ENV PATH="/snap/bin:$PATH"
+ENV PATH="/snap/bin:/snap/snapcraft/current/usr/bin:$PATH"
 ENV SNAP="/snap/snapcraft/current"
 ENV SNAP_NAME="snapcraft"
 
