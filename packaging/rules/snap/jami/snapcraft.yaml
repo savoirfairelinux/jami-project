@@ -85,13 +85,13 @@ description: |
 
 confinement: strict
 grade: stable
-base: core22
+base: core20
 
 plugs:
-  gnome-42-2204:
+  gnome-3-38-2004:
     interface: content
     target: $SNAP/gnome-platform
-    default-provider: gnome-42-2204:gnome-42-2204
+    default-provider: gnome-3-38-2004:gnome-3-38-2004
   gtk-3-themes:
     interface: content
     target: $SNAP/data-dir/themes
@@ -168,7 +168,7 @@ package-repositories:
     components: [main]
     suites: [jami]
     key-id: A295D773307D25A33AE72F2F64CD5FA175348F84
-    url: https://dl.jami.net/nightly/ubuntu_22.04/
+    url: https://dl.jami.net/nightly/ubuntu_20.04/
 
 parts:
   desktop-launch:
@@ -329,7 +329,7 @@ parts:
     - libgstreamer-plugins-base1.0-0
     - libgstreamer1.0-0
     - libgudev-1.0-0
-    - libjsoncpp25
+    - libjsoncpp1
     - libllvm12
     - libminizip1
     - libnm0
