@@ -22,7 +22,7 @@ RUN unsquashfs -d /snap/core/current core.snap
 
 # Grab the core22 snap (which snapcraft uses as a base) from the stable channel
 # and unpack it in the proper place.
-RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core22?channel=candidate' | jq '.download_url' -r) --output core22.snap
+RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core22?channel=edge' | jq '.download_url' -r) --output core22.snap
 RUN mkdir -p /snap/core22
 RUN unsquashfs -d /snap/core22/current core22.snap
 
