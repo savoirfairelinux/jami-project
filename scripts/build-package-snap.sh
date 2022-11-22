@@ -30,7 +30,7 @@ cd /opt/jami-project/packaging/rules/snap/${SNAP_PKG_NAME}/
 # set the version and tarball filename
 sed -i "s/RELEASE_VERSION/${RELEASE_VERSION}/g" snapcraft.yaml
 
-snapcraft # requires snapcraft >= 4.8
+snapcraft --destructive-mode # requires snapcraft >= 4.8
 
 # move the built snap to output
 mv *.snap /opt/output/

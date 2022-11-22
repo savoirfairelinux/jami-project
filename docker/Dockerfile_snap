@@ -1,5 +1,5 @@
 ARG RISK=edge
-ARG UBUNTU=xenial
+ARG UBUNTU=focal
 
 FROM ubuntu:$UBUNTU as builder
 ARG RISK
@@ -22,7 +22,7 @@ RUN unsquashfs -d /snap/core/current core.snap
 
 # Grab the core22 snap (which snapcraft uses as a base) from the stable channel
 # and unpack it in the proper place.
-RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core22?channel=edge' | jq '.download_url' -r) --output core22.snap
+RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core22?channel='$RISK | jq '.download_url' -r) --output core22.snap
 RUN mkdir -p /snap/core22
 RUN unsquashfs -d /snap/core22/current core22.snap
 
@@ -31,6 +31,12 @@ RUN unsquashfs -d /snap/core22/current core22.snap
 RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core20' | jq '.download_url' -r) --output core20.snap
 RUN mkdir -p /snap/core20
 RUN unsquashfs -d /snap/core20/current core20.snap
+
+# Grab the core20 snap (which snapcraft uses as a base) from the stable channel
+# and unpack it in the proper place.
+RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/lxd' | jq '.download_url' -r) --output lxd.snap
+RUN mkdir -p /snap/lxd
+RUN unsquashfs -d /snap/lxd/current lxd.snap
 
 # Grab the snapcraft snap from the $RISK channel and unpack it in the proper
 # place.
@@ -59,17 +65,18 @@ FROM ubuntu:$UBUNTU
 COPY --from=builder /snap/core /snap/core
 COPY --from=builder /snap/core22 /snap/core22
 COPY --from=builder /snap/core20 /snap/core20
+COPY --from=builder /snap/lxd /snap/lxd
 COPY --from=builder /snap/snapcraft /snap/snapcraft
 COPY --from=builder /snap/bin/snapcraft /snap/bin/snapcraft
 
 # Generate locale and install dependencies.
-RUN apt-get update && apt-get dist-upgrade --yes && apt-get install --yes snapd sudo locales && locale-gen en_US.UTF-8
+RUN apt-get update && apt-get dist-upgrade --yes && apt-get install --yes snapd sudo apt-transport-https locales && locale-gen en_US.UTF-8
 
 # Set the proper environment.
 ENV LANG="en_US.UTF-8"
 ENV LANGUAGE="en_US:en"
 ENV LC_ALL="en_US.UTF-8"
-ENV PATH="/snap/bin:/snap/snapcraft/current/usr/bin:$PATH"
+ENV PATH="/snap/bin:/snap/snapcraft/current/usr/bin:/snap/snapcraft/current/libexec/snapcraft/:$PATH"
 ENV SNAP="/snap/snapcraft/current"
 ENV SNAP_NAME="snapcraft"
 ENV SNAP_ARCH="amd64"
