@@ -22,8 +22,7 @@ ANDROID_DISTRIBUTION_NAME = "android"
 WIN32_DISTRIBUTION_NAME = "win32"
 
 # vs vars
-win_sdk_default = '10.0.16299.0'
-win_toolset_default = '142'
+win_sdk_default = '10.0.18362.0'
 
 APT_BASED_DISTROS = [
     'debian',
@@ -373,7 +372,6 @@ def run_install(args):
         return subprocess.run([
             sys.executable, os.path.join(
                 os.getcwd(), "scripts/build-windows.py"),
-            "--toolset", args.toolset,
             "--sdk", args.sdk
         ], check=True)
 
@@ -638,8 +636,6 @@ def parse_args():
     dist = choose_distribution()
 
     if dist == WIN32_DISTRIBUTION_NAME:
-        ap.add_argument('--toolset', default=win_toolset_default, type=str,
-                        help='Windows use only, specify Visual Studio toolset version')
         ap.add_argument('--sdk', default=win_sdk_default, type=str,
                         help='Windows use only, specify Windows SDK version')
 
