@@ -17,8 +17,7 @@ def execute_cmd(cmd, with_shell=False):
 def build_daemon(parsed_args):
     make_cmd = os.path.dirname(this_dir) + '\\daemon\\compat\\msvc\\winmake.py'
     os.chdir(os.path.dirname(this_dir) + '\\daemon\\compat\\msvc')
-    execute_cmd('python ' + make_cmd + ' -iv -t ' +
-                parsed_args.toolset + ' -s ' + parsed_args.sdk + ' -b daemon')
+    execute_cmd('python ' + make_cmd + ' -iv -s ' + parsed_args.sdk + ' -b daemon')
     os.chdir(os.path.dirname(this_dir))
 
 
@@ -31,8 +30,6 @@ def build_client(parsed_args):
 def parse_args():
     ap = argparse.ArgumentParser(description="Qt Client build tool")
 
-    ap.add_argument('--toolset', default='', type=str,
-                    help='Windows use only, specify Visual Studio toolset version')
     ap.add_argument('--sdk', default='', type=str,
                     help='Windows use only, specify Windows SDK version')
 

@@ -198,13 +198,13 @@ install_choco_packages $choco_packages
 install_msys2_packages $msys_packages
 
 # Install VSNASM
-download_file_to_temp 'VSNASM' "https://github.com/ShiftMediaProject/VSNASM/releases/download/0.5/VSNASM.zip" 'VSNASM.zip'
+download_file_to_temp 'VSNASM' "https://github.com/ShiftMediaProject/VSNASM/releases/download/0.8/VSNASM.zip" 'VSNASM.zip'
 unzip_file_from_temp 'VSNASM' 'VSNASM.zip' 'VSNASM_UNZIP'
 $batch_path = "/c set ISINSTANCE=1 &&" + $env:TEMP + "\VSNASM_UNZIP\install_script.bat"
 run_batch $batch_path "Install VSNASM"
 
 # Install VSYASM
-download_file_to_temp 'VSYASM' "https://github.com/ShiftMediaProject/VSYASM/releases/download/0.4/VSYASM.zip" 'VSYASM.zip'
+download_file_to_temp 'VSYASM' "https://github.com/ShiftMediaProject/VSYASM/releases/download/0.7/VSYASM.zip" 'VSYASM.zip'
 unzip_file_from_temp 'VSYASM' 'VSYASM.zip' 'VSYASM_UNZIP'
 $batch_path = "/c set ISINSTANCE=1 &&" + $env:TEMP + "\VSYASM_UNZIP\install_script.bat"
 run_batch $batch_path "Install VSYASM"
