@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3280bc2d_2e8afbec",
+        "filename": "build.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2023-03-13T13:03:48Z",
+      "side": 1,
+      "message": "still used? daemon is in client-qt and should be used? jami-project is kinda deprecated",
+      "range": {
+        "startLine": 388,
+        "startChar": 7,
+        "endLine": 388,
+        "endChar": 11
+      },
+      "revId": "9df5700c6a2bf8e51e402d290ce3261371f3a346",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
