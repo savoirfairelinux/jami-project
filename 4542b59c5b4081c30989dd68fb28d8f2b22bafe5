@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "053b3d6d_28ecc428",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2024-03-26T19:49:33Z",
+      "side": 1,
+      "message": "This is untested.\n\nPlease try to build the RPM with this change and verify that `rpm --query --provides /path/to/jami-libqt.rpm` does not include the name of qt libraries (should be pretty much empty)\n\nThis is rather important as it breaks upgrading Fedora 39 KDE to Fedora 40 KDE, where new Qt6 dependencies should be pulled in but aren\u0027t because of this issue.",
+      "revId": "4542b59c5b4081c30989dd68fb28d8f2b22bafe5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a"
+    }
+  ]
+}
