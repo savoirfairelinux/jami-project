@@ -4,7 +4,7 @@ jami-project
 This repository is the master repository for Jami. It contains a build script, build.py,
 that can be used to build and install Jami from source on different platforms.
 
-More documentation can be found on http://docs.jami.net. You may also build the documentation
+More documentation can be found on https://docs.jami.net. You may also build the documentation
 with ``make docs``. The documentation will be built in ``docs/build/html``.
 
 Using build.py
@@ -83,7 +83,7 @@ Uninstall the global install:
 On OSX
 ------
 
-You need to setup Homebrew (<http://brew.sh/>) since their is no built-in package manager on OSX.
+You need to setup Homebrew (https://brew.sh/) since their is no built-in package manager on OSX.
 
 Build and install all the dependencies:
 
@@ -106,7 +106,7 @@ You can find the .app file in the ``./install/client-macosx`` folder.
 On Android
 ----------
 
-Please make sure you have the Android SDK and NDK installed, and that their paths are properly set. For further information, please visit <https://git.jami.net/savoirfairelinux/jami-client-android>
+Please ensure you have the Android SDK and NDK installed, and that their paths are properly set. For further information, please visit the https://git.jami.net/savoirfairelinux/jami-client-android page.
 
 Build and install locally under this repository:
 
