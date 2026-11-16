@@ -4,4 +4,4 @@ dependencyResolutionManagement {
     repositories { google(); mavenCentral() }
 }
 rootProject.name = "tucnet-android"
-include(":app")
+include(":app", ":core")

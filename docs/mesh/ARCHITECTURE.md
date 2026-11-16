@@ -1,6 +1,26 @@
 # Offline Mesh Messaging — Architecture & Roadmap
 
-Status: proposal. Nothing in this document is implemented yet.
+Status: partly implemented in `tucnet-android/` (version 0.2).
+
+| Part | State |
+|---|---|
+| On-device identity, QR contact cards | Built (`core/Identity.kt`) |
+| X3DH + Double Ratchet + AES-256-GCM, 1:1 text | Built, unit-tested (`core/Session.kt`) |
+| Flooding router, hop limit, dedup, 24 h store-and-forward, delivery receipts | Built, unit-tested (`core/Engine.kt`) |
+| BLE bearer (advertise, scan, GATT link), foreground service | Built, **not yet tested on real phones** (`app/BleBearer.kt`) |
+| Wi-Fi Aware, files, rooms, Meshtastic, on-device AI, APK sharing, iOS | Not started |
+
+Differences from the plan below, for the code that exists today:
+
+- The mesh core is a pure Kotlin/JVM module (`tucnet-android/core`), not C++. It has no Android
+  dependencies, so it runs under plain JVM unit tests. Porting to C++ is only needed for iOS.
+- Delivery receipts are not signatures. The message id is the hash of a secret carried inside the
+  ciphertext; the recipient reveals the secret, and any carrier can check it and drop its copy.
+- The routing header is 34 bytes and has no fragment fields; the BLE link layer does the chunking.
+- Each payload carries an 8-byte session tag so the recipient can find the right ratchet. A relay can
+  therefore tell that two packets belong to the same conversation, though not whose it is.
+- Not implemented yet: per-hop Noise encryption, signed-prekey rotation, one-time prekeys,
+  anti-entropy summaries (a new link simply receives everything the carrier holds), rate limits.
 
 This repository is a fork of `jami-project`: a C++ daemon (`daemon/`, libjami),
 a Kotlin Android client (`client-android/`), a Swift iOS client (`client-ios/`)

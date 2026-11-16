@@ -11,8 +11,8 @@ android {
         applicationId = "org.tucnet.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1-prototype"
+        versionCode = 2
+        versionName = "0.2"
     }
     buildFeatures { compose = true }
     compileOptions {
@@ -28,4 +28,8 @@ dependencies {
     implementation("androidx.compose.foundation:foundation")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.activity:activity-compose:1.10.1")
+    implementation(project(":core"))
+    implementation("com.google.zxing:core:3.5.3")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
+    implementation("androidx.core:core-ktx:1.15.0")
 }

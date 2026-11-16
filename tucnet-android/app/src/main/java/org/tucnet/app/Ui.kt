@@ -70,18 +70,20 @@ object Ic {
     val User = icon(circle(12f, 8f, 4f), "M4 21a8 8 0 0 1 16 0")
 }
 
-data class Peer(val initials: String, val name: String, val a: Color, val b: Color, val hop: String)
-
-val peers = listOf(
-    Peer("BK", "Ben", Color(0xFFFF9A62), Color(0xFFE93D98), "1"),
-    Peer("LM", "Liza", Color(0xFF34E3A8), Color(0xFF2F5FF5), "1"),
-    Peer("RS", "Rico", Color(0xFFFFD34D), Color(0xFFF2603D), "2"),
-    Peer("MJ", "Mia", Color(0xFF7FE7FF), Color(0xFF7C3AED), "2"),
-    Peer("TG", "Tess", Color(0xFFFF7FD0), Color(0xFFF2603D), "3"),
-    Peer("DN", "Dan", Color(0xFF5AA0FF), Color(0xFF0C8F6C), "3"),
-    Peer("PC", "Paolo", Color(0xFFD946EF), Color(0xFF2F3FF5), "LoRa"),
-    Peer("CD", "Carlo", Color(0xFF8A78B8), Color(0xFF3D2A7C), "away"),
+private val palette = listOf(
+    Color(0xFFFF9A62) to Color(0xFFE93D98), Color(0xFF34E3A8) to Color(0xFF2F5FF5), Color(0xFFFFD34D) to Color(0xFFF2603D),
+    Color(0xFF7FE7FF) to Color(0xFF7C3AED), Color(0xFFFF7FD0) to Color(0xFFF2603D), Color(0xFF5AA0FF) to Color(0xFF0C8F6C),
+    Color(0xFFD946EF) to Color(0xFF2F3FF5), Color(0xFF5A3DF0) to Color(0xFF22B8FF),
 )
+
+/** Stable avatar colours derived from an id, so a contact looks the same everywhere. */
+fun colorsFor(idHex: String): Pair<Color, Color> = palette[(idHex.take(4).toIntOrNull(16) ?: 0) % palette.size]
+
+fun initials(name: String): String =
+    name.trim().split(Regex("\\s+")).filter { it.isNotEmpty() }.take(2).joinToString("") { it.take(1).uppercase() }.ifEmpty { "?" }
+
+/** Groups a 32-hex-digit id as TN-XXXX-XXXX-XXXX-XXXX for display. */
+fun shortId(idHex: String): String = "TN-" + idHex.take(16).uppercase().chunked(4).joinToString("-")
 
 @Composable
 fun Avatar(initials: String, a: Color, b: Color, size: Dp = 40.dp, modifier: Modifier = Modifier) {
