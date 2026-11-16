@@ -1,0 +1,110 @@
+package org.tucnet.app
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+        setContent { App() }
+    }
+}
+
+private val tabs: List<Pair<String, ImageVector>> = listOf(
+    "Mesh" to Ic.Mesh, "Radar" to Ic.Radar, "Chats" to Ic.Chat, "Vault" to Ic.Shield,
+)
+
+@Composable
+fun App() {
+    val ctx = LocalContext.current
+    var tab by rememberSaveable { mutableStateOf(0) }
+    // Full-screen destination above the tabs: "chat:<contact id>", "add", "code" or null.
+    var overlay by rememberSaveable { mutableStateOf<String?>(null) }
+    val open: (String) -> Unit = { overlay = it }
+    val close = { overlay = null }
+
+    val askPermissions = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+        Mesh.startService(ctx)
+    }
+    val requestRadio = { if (Mesh.hasPermissions(ctx)) Mesh.startService(ctx) else askPermissions.launch(Mesh.permissions()) }
+    LaunchedEffect(Mesh.ready) { if (Mesh.ready) requestRadio() }
+
+    if (!Mesh.ready) { OnboardingScreen(); return }
+
+    BackHandler(enabled = overlay != null || tab != 0) { if (overlay != null) overlay = null else tab = 0 }
+
+    val o = overlay
+    when {
+        o != null && o.startsWith("chat:") -> ChatScreen(o.removePrefix("chat:"), close)
+        o == "add" -> AddContactScreen(close, open)
+        o == "code" -> MyCodeScreen(close)
+        else -> Column(Modifier.fillMaxSize().background(C.Nav)) {
+            Box(Modifier.weight(1f).fillMaxWidth()) {
+                when (tab) {
+                    0 -> NearbyScreen(open, requestRadio)
+                    1 -> RadarScreen(open)
+                    2 -> ChatsScreen(open)
+                    else -> VaultScreen(open)
+                }
+            }
+            Row(
+                Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = 8.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+            ) {
+                tabs.forEachIndexed { i, (label, ic) ->
+                    val active = i == tab
+                    Column(
+                        Modifier
+                            .clip(RoundedCornerShape(14.dp))
+                            .background(
+                                if (active) Brush.linearGradient(listOf(Color(0xFF4F7BFF), C.Violet))
+                                else Brush.linearGradient(listOf(Color.Transparent, Color.Transparent))
+                            )
+                            .clickable { tab = i }
+                            .padding(horizontal = 16.dp, vertical = 7.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        val tint = if (active) Color.White else Color(0xFFB9A6E6)
+                        Icon(ic, label, Modifier.size(22.dp), tint = tint)
+                        Text(label, color = tint, fontSize = 10.sp)
+                    }
+                }
+            }
+        }
+    }
+}

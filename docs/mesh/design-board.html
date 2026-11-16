@@ -1,0 +1,366 @@
+<title>Tucnet Mesh Design Board</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: lavender board; a horizontal strip of four phone mockups, then the architecture as a stacked layer diagram, flow, tables and a phase timeline. */
+:root{
+  --bg:#e3ccfb; --surface:#f6eeff; --surface-2:#ecdcff; --ink:#1d0b47; --ink-soft:#5a4690; --line:#cdb2f2;
+  --violet:#7c3aed; --pink:#e93d98; --coral:#f2603d; --blue:#2f5ff5; --mint:#0c8f6c;
+  --f-display:"Urbanist","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#130a30; --surface:#1e1248; --surface-2:#2a1a60; --ink:#f1e9ff; --ink-soft:#b9a6e6; --line:#3d2a7c;
+  --violet:#b294ff; --pink:#ff7fc0; --coral:#ff9272; --blue:#8aa6ff; --mint:#5fe0bb; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#130a30; --surface:#1e1248; --surface-2:#2a1a60; --ink:#f1e9ff; --ink-soft:#b9a6e6; --line:#3d2a7c;
+  --violet:#b294ff; --pink:#ff7fc0; --coral:#ff9272; --blue:#8aa6ff; --mint:#5fe0bb; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding-block:36px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2rem,6vw,3.4rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.5rem,4vw,2.1rem);font-weight:800}
+h3{font-size:1.1rem;font-weight:700}
+p{margin:0;max-width:65ch}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--violet)}
+.lead{color:var(--ink-soft);font-size:1.05rem}
+section,header{display:flex;flex-direction:column;gap:18px}
+code{font-family:var(--f-mono);font-size:.85em}
+
+/* ---------- phone strip ---------- */
+.strip{display:flex;gap:28px;overflow-x:auto;padding:8px 4px 24px;scroll-snap-type:x proximity}
+.shot{flex:0 0 auto;display:flex;flex-direction:column;gap:12px;width:272px;scroll-snap-align:start}
+.shot figcaption{font-size:.9rem;color:var(--ink-soft)}
+.shot figcaption b{display:block;font-family:var(--f-display);font-size:1.05rem;color:var(--ink)}
+figure{margin:0}
+.phone{width:272px;height:584px;border-radius:36px;overflow:hidden;position:relative;display:flex;flex-direction:column;font-size:11px;line-height:1.3;box-shadow:0 18px 40px -18px rgba(40,10,110,.55)}
+.phone svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sb{display:flex;justify-content:space-between;padding:12px 20px 4px;font-weight:700;font-size:11px}
+.av{--a:#ff8db5;--b:#7c3aed;width:34px;height:34px;border-radius:50%;background:linear-gradient(140deg,var(--a),var(--b));display:grid;place-items:center;color:#fff;font-family:var(--f-display);font-weight:800;font-size:12px;flex:none}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:3px 8px;font-weight:700;font-size:9.5px;white-space:nowrap}
+
+/* phone 1: Nearby (light) */
+.p1{background:linear-gradient(180deg,#f3e9ff,#e9d7ff 60%,#dcc6ff);color:#1d0b47}
+.p1 .top{display:flex;align-items:center;gap:8px;padding:10px 16px}
+.p1 .top h4{font-family:var(--f-display);font-size:19px;font-weight:800;margin:0}
+.p1 .pill.on{background:#7c3aed;color:#fff}
+.p1 .ic{margin-left:auto;width:32px;height:32px;border-radius:50%;border:1.5px solid #1d0b47;display:grid;place-items:center}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:4px 16px}
+.tile{height:82px;border-radius:16px;padding:9px;color:#fff;font-family:var(--f-display);font-weight:800;font-size:12.5px;line-height:1.1;position:relative;overflow:hidden;transform:skewY(-2deg)}
+.tile svg{position:absolute;right:8px;bottom:8px;width:30px;height:30px;opacity:.9}
+.t1{background:linear-gradient(150deg,#ff9a62,#f2603d)}.t2{background:linear-gradient(150deg,#ff7fd0,#c026d3)}.t3{background:linear-gradient(150deg,#5aa0ff,#2f3ff5)}
+.tabs{display:flex;gap:14px;padding:12px 16px 6px;color:#8a78b8;font-weight:500}
+.tabs b{color:#1d0b47;border-bottom:2px solid #1d0b47;padding-bottom:2px}
+.status{margin:4px 16px;border-radius:99px;background:linear-gradient(90deg,#8b5cf6,#d946ef);color:#fff;padding:8px 14px;display:flex;align-items:center;gap:6px;font-weight:700}
+.status span{margin-left:auto;font-weight:500;opacity:.9}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 16px;flex:1;min-height:0}
+.card{border-radius:14px;background:#fff;overflow:hidden;display:flex;flex-direction:column}
+.cover{height:86px;position:relative;display:grid;place-items:center;color:#fff}
+.cover svg{width:34px;height:34px;opacity:.85}
+.cover .pill{position:absolute;left:6px;bottom:6px;background:rgba(20,6,60,.6);color:#fff}
+.cover .hop{position:absolute;right:6px;top:6px;font-family:var(--f-mono);font-size:9px;color:#fff}
+.card p{padding:6px 8px 8px;font-weight:700;font-size:11px}
+.card p small{display:block;font-weight:400;color:#8a78b8;font-size:9.5px}
+.nav{background:#231067;color:#b9a6e6;display:flex;justify-content:space-around;padding:10px 6px 14px;font-size:8.5px}
+.nav div{display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 8px;border-radius:12px}
+.nav .act{background:linear-gradient(160deg,#4f7bff,#7c3aed);color:#fff}
+
+/* phone 2: Chat (coral) */
+.p2{background:linear-gradient(170deg,#ff8f7a,#f0566f 55%,#a12a6b);color:#fff}
+.p2 .top{display:flex;align-items:center;gap:8px;padding:8px 14px}
+.p2 .top div{line-height:1.2}.p2 .top b{font-family:var(--f-display);font-size:14px;display:block}
+.p2 .top small{display:flex;align-items:center;gap:3px;font-size:9.5px;opacity:.95}
+.p2 .top small svg{width:10px;height:10px}
+.p2 .top .rb{margin-left:auto;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.22);display:grid;place-items:center}
+.msgs{flex:1;display:flex;flex-direction:column;gap:8px;padding:8px 14px;min-height:0}
+.b{max-width:82%;border-radius:16px;padding:8px 10px;background:rgba(255,255,255,.22);backdrop-filter:blur(6px)}
+.b.me{align-self:flex-end;background:#fff;color:#3a0f3c}
+.b .meta{display:flex;align-items:center;gap:4px;font-size:9px;opacity:.85;margin-top:5px}
+.b .meta svg{width:10px;height:10px}
+.wave{display:flex;align-items:center;gap:2px;height:22px}
+.wave i{width:2.5px;border-radius:2px;background:#fff}
+.tr{margin-top:6px;padding-top:6px;border-top:1px dashed rgba(255,255,255,.5);font-size:10.5px}
+.tr em{display:block;font-style:normal;font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+.bar{height:5px;border-radius:4px;background:#f3d4e0;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:68%;background:linear-gradient(90deg,#f0566f,#7c3aed)}
+.comp{display:flex;gap:6px;align-items:center;padding:8px 12px 16px}
+.comp .in{flex:1;border-radius:99px;padding:8px 12px;background:rgba(255,255,255,.2)}
+.comp .rb{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center}
+
+/* phone 3: Room (neon dark) */
+.p3{background:radial-gradient(120% 60% at 80% 10%,#3a1fd1 0%,transparent 60%),radial-gradient(90% 50% at 10% 60%,#c0189a 0%,transparent 65%),#0d0633;color:#fff}
+.p3 .top{display:flex;align-items:center;gap:8px;padding:8px 14px}
+.p3 .top .rm{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.1);border-radius:14px;padding:5px 10px 5px 5px}
+.p3 .top b{font-family:var(--f-display);font-size:13px;display:block}
+.p3 .top small{font-family:var(--f-mono);font-size:8.5px;opacity:.75}
+.p3 .rb{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center}
+.p3 .chips{display:flex;flex-direction:column;gap:6px;align-items:flex-start;padding:6px 14px 0;position:absolute;top:84px}
+.p3 .chips .pill{background:rgba(255,255,255,.12)}.p3 .chips svg{width:11px;height:11px}
+.host{align-self:center;display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:6px}
+.host .av{width:58px;height:58px;font-size:18px;box-shadow:0 0 0 2px #0d0633,0 0 0 4px #ff7fd0}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 4px;padding:14px 12px 6px}
+.m{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9.5px;position:relative}
+.m .av{width:44px;height:44px;font-size:14px}
+.m i{position:absolute;top:-3px;right:4px;font-style:normal;font-family:var(--f-mono);font-size:8px;background:#0d0633;border:1px solid #7fe7ff;color:#7fe7ff;border-radius:99px;padding:0 4px}
+.log{flex:1;padding:8px 14px;display:flex;flex-direction:column;gap:7px;justify-content:flex-end;font-size:11px;min-height:0}
+.log b{color:#ffd34d}.log .c{color:#7fe7ff}
+
+/* phone 4: Share + Radio */
+.p4{background:linear-gradient(180deg,#2a1380,#5b21b6 55%,#d946ef);color:#fff}
+.p4 .top{padding:10px 18px 0}
+.p4 .top h4{font-family:var(--f-display);font-size:19px;font-weight:800;margin:0}
+.p4 .top p{font-size:10.5px;opacity:.85}
+.qr{align-self:center;margin:12px 0 8px;background:#fff;border-radius:18px;padding:10px;width:138px;height:138px}
+.qr svg{width:100%;height:100%;stroke:none}
+.steps{margin:0;padding:0 18px;list-style:none;display:flex;flex-direction:column;gap:5px;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:8px;align-items:center}
+.steps li::before{content:counter(s);width:17px;height:17px;border-radius:50%;background:#fff;color:#5b21b6;font-weight:700;display:grid;place-items:center;font-size:9.5px;flex:none}
+.radio{margin:auto 14px 16px;background:rgba(13,6,51,.55);border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.radio .hd{display:flex;align-items:center;gap:8px}.radio .hd b{font-family:var(--f-display);font-size:13px}
+.radio .hd .pill{margin-left:auto;background:#34e3a8;color:#06301f}
+.kv{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;text-align:center}
+.kv div{background:rgba(255,255,255,.1);border-radius:10px;padding:5px 2px;font-family:var(--f-mono);font-size:10px}
+.kv small{display:block;font-family:var(--f-body);font-size:8px;opacity:.75}
+
+/* ---------- architecture ---------- */
+.stack{display:flex;flex-direction:column;gap:6px}
+.layer{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;background:var(--surface);border-radius:14px;padding:12px 14px}
+.layer>b{font-family:var(--f-display);font-size:1rem}
+.layer>b small{display:block;font-family:var(--f-mono);font-weight:400;font-size:.68rem;color:var(--ink-soft)}
+.chipsrow{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
+.chip{font-size:.82rem;border:1px solid var(--line);border-radius:99px;padding:3px 10px;background:var(--surface-2)}
+.layer.core{background:var(--violet);color:var(--bg)}
+.layer.core>b small{color:inherit;opacity:.8}
+.layer.core .chip{background:transparent;border-color:currentColor}
+.note{font-size:.92rem;color:var(--ink-soft);border-left:3px solid var(--pink);padding-left:12px}
+.flow{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;counter-reset:f}
+.flow li{counter-increment:f;background:var(--surface);border-radius:14px;padding:12px 14px;font-size:.92rem;min-width:0}
+.flow li::before{content:counter(f,decimal-leading-zero);font-family:var(--f-mono);font-size:.75rem;color:var(--pink);display:block}
+.flow b{font-family:var(--f-display)}
+.tablewrap{overflow-x:auto;border-radius:14px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:.88rem}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+tr:last-child td{border-bottom:0}
+td:first-child{font-family:var(--f-display);font-weight:700;white-space:nowrap}
+.limits{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.limits div{background:var(--surface);border-radius:14px;padding:14px;font-size:.9rem;min-width:0}
+.limits h3{margin-bottom:4px}
+.limits p+p{margin-top:6px;color:var(--ink-soft)}
+.limits p+p::before{content:"Handle it: ";font-weight:700;color:var(--mint)}
+.road{display:flex;flex-direction:column;gap:0;border-left:2px solid var(--violet);margin-left:6px}
+.ph{position:relative;padding:0 0 22px 22px}
+.ph::before{content:"";position:absolute;left:-7px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--violet)}
+.ph.mvp::before{background:var(--pink);border-color:var(--pink)}
+.ph h3 span{font-family:var(--f-mono);font-weight:400;font-size:.75rem;color:var(--ink-soft);margin-left:6px}
+.ph p{font-size:.93rem}
+.ph .test{color:var(--ink-soft);font-size:.88rem}
+.ph .test::before{content:"Done when: ";font-weight:700;color:var(--mint)}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 1 1 12 0v5l2 2H4zM10 21a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-3-6z"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-mesh" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M7.2 6h9.6M6 8l5 8M18 8l-5 8"/></symbol>
+  <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12l6-6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.500-7-4.500-7-9V6z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l2.200 6.800L21 12l-6.800 2.200L12 21l-2.200-6.800L3 12l6.800-2.200z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-tower" viewBox="0 0 24 24"><circle cx="12" cy="9" r="1.600"/><path d="M12 11v10M8 21h8M7.500 5a6 6 0 0 0 0 8M16.500 5a6 6 0 0 1 0 8"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6h14v-6"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v4h4"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+</svg>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Design board + architecture · proposal</span>
+  <h1>Tucnet: offline mesh chat on top of Jami</h1>
+  <p class="lead">Four screens in the look of your reference (lavender home, warm full-bleed chat, neon room), redrawn around mesh features. Below them: the architecture, libraries per module, platform limits and a phased roadmap. "Tucnet" is a working name taken from the repository.</p>
+</header>
+
+<section aria-label="Screen mockups">
+<div class="strip">
+
+<figure class="shot">
+<div class="phone p1">
+  <div class="sb"><span>9:41</span><span>BLE · NAN</span></div>
+  <div class="top"><h4>Nearby</h4><span class="pill on">Mesh on</span><span class="ic"><svg><use href="#i-bell"/></svg></span><span class="av" style="--a:#ff9a62;--b:#e93d98">JT</span></div>
+  <div class="tiles">
+    <div class="tile t1">New<br>Peers<svg><use href="#i-user"/></svg></div>
+    <div class="tile t2">Mesh<br>Rooms<svg><use href="#i-mesh"/></svg></div>
+    <div class="tile t3">LoRa<br>Link<svg><use href="#i-tower"/></svg></div>
+  </div>
+  <div class="tabs"><b>All</b><span>Chats</span><span>Rooms</span><span>Files</span><span>LoRa</span></div>
+  <div class="status"><svg><use href="#i-mesh"/></svg>12 peers in reach<span>up to 3 hops ›</span></div>
+  <div class="cards">
+    <div class="card"><div class="cover" style="background:linear-gradient(140deg,#5a3df0,#22b8ff)"><svg><use href="#i-mesh"/></svg><span class="hop">1 hop</span><span class="pill">Room · 9 online</span></div><p>Barangay Relief<small>Water point moved to gym</small></p></div>
+    <div class="card"><div class="cover" style="background:linear-gradient(140deg,#ff9a62,#e93d98)"><svg><use href="#i-file"/></svg><span class="hop">direct</span><span class="pill">Wi-Fi Aware</span></div><p>Liza M.<small>Sending map · 21 MB/s</small></p></div>
+    <div class="card"><div class="cover" style="background:linear-gradient(140deg,#0c8f6c,#2f5ff5)"><svg><use href="#i-tower"/></svg><span class="hop">4.2 km</span><span class="pill">LoRa</span></div><p>Ridge Camp<small>Text only · SNR 7.5 dB</small></p></div>
+    <div class="card"><div class="cover" style="background:linear-gradient(140deg,#7c3aed,#d946ef)"><svg><use href="#i-shield"/></svg><span class="hop">waiting</span><span class="pill">Held 3 h</span></div><p>Carlo D.<small>3 carriers have your message</small></p></div>
+  </div>
+  <div class="nav"><div class="act"><svg><use href="#i-mesh"/></svg>Mesh</div><div><svg><use href="#i-radar"/></svg>Radar</div><div><svg><use href="#i-shield"/></svg>Vault</div><div><svg><use href="#i-spark"/></svg>Moments</div><div><svg><use href="#i-chat"/></svg>Chats</div></div>
+</div>
+<figcaption><b>Nearby</b>Home. Tiles for peers, rooms and LoRa; each card shows the link it uses and how many hops away it is.</figcaption>
+</figure>
+
+<figure class="shot">
+<div class="phone p2">
+  <div class="sb"><span>9:41</span><span>No internet</span></div>
+  <div class="top"><svg><use href="#i-back"/></svg><span class="av" style="--a:#ffd34d;--b:#f2603d">LM</span><div><b>Liza M.</b><small><svg><use href="#i-lock"/></svg>End-to-end encrypted · 2 hops</small></div><span class="rb"><svg><use href="#i-shield"/></svg></span></div>
+  <div class="msgs">
+    <div class="b">
+      <div class="wave" id="wave"></div>
+      <div class="tr"><em>Transcribed on this phone</em>Nandito na kami sa covered court, dala namin ang mga gamot.</div>
+    </div>
+    <div class="b">We need two more volunteers at the east gate.
+      <div class="tr"><em>Translated on this phone</em>Kailangan pa namin ng dalawang volunteer sa east gate.</div>
+    </div>
+    <div class="b me"><b>evac-map.jpg</b> · 4.8 MB<div class="bar"><i></i></div><div class="meta"><svg><use href="#i-file"/></svg>Wi-Fi Aware direct · 68%</div></div>
+    <div class="b me">Papunta na ako. Sabihan si Carlo.<div class="meta"><svg><use href="#i-shield"/></svg>Held by 3 carriers · expires in 21 h</div></div>
+  </div>
+  <div class="comp"><span class="in">Message</span><span class="rb"><svg><use href="#i-mic"/></svg></span><span class="rb"><svg><use href="#i-file"/></svg></span><span class="rb" style="background:#fff;color:#a12a6b"><svg><use href="#i-send"/></svg></span></div>
+</div>
+<figcaption><b>Chat</b>Voice note with on-device transcript, inline translation, a file riding Wi-Fi Aware, and a store-and-forward status instead of a single tick.</figcaption>
+</figure>
+
+<figure class="shot">
+<div class="phone p3">
+  <div class="sb"><span>9:41</span><span>Relay on</span></div>
+  <div class="top"><div class="rm"><span class="av" style="--a:#22b8ff;--b:#5a3df0;width:30px;height:30px">BR</span><div><b>Barangay Relief</b><small>ID 4f2a·91c7</small></div></div><span class="rb" style="margin-left:auto"><svg><use href="#i-lock"/></svg></span><span class="rb"><svg><use href="#i-share"/></svg></span></div>
+  <div class="chips"><span class="pill"><svg><use href="#i-tower"/></svg>LoRa bridge</span><span class="pill"><svg><use href="#i-mesh"/></svg>241 relayed</span></div>
+  <div class="host"><span class="av" style="--a:#ff7fd0;--b:#7c3aed">AS</span>Ana · host</div>
+  <div class="grid">
+    <div class="m"><span class="av" style="--a:#ff9a62;--b:#e93d98">BK</span><i>1</i>Ben</div>
+    <div class="m"><span class="av" style="--a:#34e3a8;--b:#2f5ff5">LM</span><i>1</i>Liza</div>
+    <div class="m"><span class="av" style="--a:#ffd34d;--b:#f2603d">RS</span><i>2</i>Rico</div>
+    <div class="m"><span class="av" style="--a:#7fe7ff;--b:#7c3aed">MJ</span><i>2</i>Mia</div>
+    <div class="m"><span class="av" style="--a:#ff7fd0;--b:#f2603d">TG</span><i>3</i>Tess</div>
+    <div class="m"><span class="av" style="--a:#5aa0ff;--b:#0c8f6c">DN</span><i>3</i>Dan</div>
+    <div class="m"><span class="av" style="--a:#d946ef;--b:#2f3ff5">PC</span><i>LoRa</i>Paolo</div>
+    <div class="m"><span class="av" style="--a:#8a78b8;--b:#3d2a7c">CD</span><i>away</i>Carlo</div>
+  </div>
+  <div class="log">
+    <span><b>Rico</b> joined through 2 hops</span>
+    <span><b>Paolo</b> reached the room <span class="c">over LoRa, 4.2 km</span></span>
+    <span><b>Ben</b> is carrying 4 messages for <b>Carlo</b></span>
+  </div>
+  <div class="comp"><span class="in">Type…</span><span class="rb"><svg><use href="#i-mic"/></svg></span><span class="rb"><svg><use href="#i-file"/></svg></span><span class="rb"><svg><use href="#i-tower"/></svg></span></div>
+</div>
+<figcaption><b>Mesh room</b>Group room. The badge on each member is hop distance; the feed shows who relays and who carries messages for absent members.</figcaption>
+</figure>
+
+<figure class="shot">
+<div class="phone p4">
+  <div class="sb"><span>9:41</span><span>Hotspot on</span></div>
+  <div class="top"><h4>Share Tucnet</h4><p>No internet needed. Your friend scans, downloads from your phone and installs.</p></div>
+  <div class="qr"><svg id="qr" viewBox="0 0 25 25" role="img" aria-label="Placeholder QR code"></svg></div>
+  <ol class="steps"><li>Scan to join this phone's Wi-Fi</li><li>Open 192.168.49.1:8080</li><li>Install the 38 MB APK</li></ol>
+  <div class="radio">
+    <div class="hd"><svg><use href="#i-tower"/></svg><b>T-Beam · Meshtastic</b><span class="pill">Linked</span></div>
+    <div class="kv"><div>915<small>MHz · PH</small></div><div>7.5<small>SNR dB</small></div><div>5<small>nodes</small></div><div>82%<small>battery</small></div></div>
+  </div>
+</div>
+<figcaption><b>Share &amp; radio</b>Offline APK hand-off by QR and local hotspot, plus the status card for a paired Meshtastic LoRa board. The QR is a placeholder.</figcaption>
+</figure>
+
+</div>
+</section>
+
+<section>
+  <span class="eyebrow">Architecture</span>
+  <h2>Five layers, one portable core</h2>
+  <p>Your repository is a Jami fork: a C++ daemon shared by a Kotlin Android client and a Swift iOS client. Jami already has account-free identity and encrypted calls and chats over the internet. The mesh is added beside that path as a new set of bearers, with the protocol logic written once in C++ so both platforms speak the identical wire format.</p>
+  <div class="stack">
+    <div class="layer"><b>UI<small>Kotlin · Swift</small></b><div class="chipsrow"><span class="chip">Nearby</span><span class="chip">Chats</span><span class="chip">Rooms</span><span class="chip">Radar</span><span class="chip">Vault</span><span class="chip">Share app</span></div></div>
+    <div class="layer"><b>App services<small>platform</small></b><div class="chipsrow"><span class="chip">Chat</span><span class="chip">Rooms</span><span class="chip">File transfer</span><span class="chip">AI pipeline</span><span class="chip">APK share</span></div></div>
+    <div class="layer"><b>Session / E2EE<small>libmesh, C++</small></b><div class="chipsrow"><span class="chip">On-device identity</span><span class="chip">X3DH</span><span class="chip">Double Ratchet</span><span class="chip">AES-256-GCM</span><span class="chip">Sender Keys for rooms</span></div></div>
+    <div class="layer core"><b>Mesh core<small>libmesh, C++</small></b><div class="chipsrow"><span class="chip">Packet codec</span><span class="chip">Router + dedup</span><span class="chip">24 h store</span><span class="chip">Fragmenter</span><span class="chip">Bearer selector</span><span class="chip">Receipts</span></div></div>
+    <div class="layer"><b>Bearers<small>platform radios</small></b><div class="chipsrow"><span class="chip">BLE (GATT / L2CAP)</span><span class="chip">Wi-Fi Aware</span><span class="chip">Wi-Fi Direct fallback</span><span class="chip">Meshtastic LoRa</span><span class="chip">Jami DHT when online</span></div></div>
+  </div>
+  <p class="note">A relay only ever sees: message ID, a recipient hint that rotates daily, hop limit, expiry and ciphertext. There is no sender field in the clear.</p>
+</section>
+
+<section>
+  <span class="eyebrow">Data flow</span>
+  <h2>A message to someone out of range</h2>
+  <ol class="flow">
+    <li><b>Encrypt.</b> Alice's phone encrypts for Carlo with the ratchet key for this one message.</li>
+    <li><b>Address.</b> The core adds a random ID, Carlo's hint, 7 hops and a 24 h expiry.</li>
+    <li><b>Pick a bearer.</b> Direct BLE, then Wi-Fi Aware, then relay, then LoRa. Carlo is not nearby, so relay.</li>
+    <li><b>Flood.</b> Sent to every neighbour over BLE. Each drops duplicates, stores the ciphertext and forwards.</li>
+    <li><b>Carry.</b> Ben, a stranger, walks away holding it. He cannot read it.</li>
+    <li><b>Detect.</b> Hours later Ben's scanner sees a BLE advert with Carlo's hint and connects.</li>
+    <li><b>Deliver.</b> Carlo decrypts and signs a receipt.</li>
+    <li><b>Clean up.</b> The receipt floods back; carriers delete their copies and Alice sees Delivered.</li>
+  </ol>
+  <p>Anything over about 64 KB negotiates a Wi-Fi Aware link over BLE first, then streams 256 KB hashed chunks that resume by index.</p>
+</section>
+
+<section>
+  <span class="eyebrow">Libraries per module</span>
+  <h2>What to build each part with</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Module</th><th>Android</th><th>iOS</th><th>Notes</th></tr>
+    <tr><td>BLE mesh</td><td><code>BluetoothLeScanner</code>, <code>BluetoothLeAdvertiser</code>, GATT server, L2CAP CoC; Nordic Android-BLE-Library</td><td>CoreBluetooth with state restoration, <code>CBL2CAPChannel</code></td><td>20–100 kB/s. Text, receipts, key bundles.</td></tr>
+    <tr><td>Wi-Fi Aware</td><td><code>WifiAwareManager</code> + <code>WifiAwareNetworkSpecifier</code>, then normal sockets</td><td><code>WiFiAware</code> framework, iOS 26+, needs a pairing prompt</td><td>Fallback to <code>WifiP2pManager</code> on phones without Aware.</td></tr>
+    <tr><td>Routing + DTN</td><td colspan="2">Own code in libmesh: flooding with hop limit, Bloom-filter dedup, SQLite store. Later epidemic sync, then PRoPHET or Spray-and-Wait.</td><td>50 MB quota, 24 h TTL, rate limits per neighbour.</td></tr>
+    <tr><td>LoRa</td><td>Meshtastic BLE service or USB with usb-serial-for-android; <code>meshtastic/protobufs</code></td><td>Meshtastic BLE service only</td><td>About 200 bytes per packet. Send as <code>PRIVATE_APP</code> to keep our encryption.</td></tr>
+    <tr><td>E2EE + identity</td><td colspan="2">libsodium for X25519 / Ed25519 / HKDF; AES-256-GCM from nettle (already in the daemon); noise-c for the per-hop link. Keys wrapped by Android Keystore / iOS Keychain.</td><td>Prekey bundles travel by QR, BLE handshake and signed mesh gossip. libsignal is an option but AGPL.</td></tr>
+    <tr><td>Speech-to-text</td><td>whisper.cpp, sherpa-onnx or Vosk</td><td>Speech framework in on-device mode, or whisper.cpp</td><td>40–150 MB models.</td></tr>
+    <tr><td>Translation</td><td>ML Kit Translation, or CTranslate2 with NLLB-200 / Bergamot for a Google-free build</td><td>Apple Translation framework</td><td>Model packs shared over the mesh as signed files.</td></tr>
+    <tr><td>Moderation</td><td>MediaPipe Text Classifier, LiteRT image classifier</td><td>Core ML</td><td>Runs on the reader's phone only. Relays cannot filter encrypted content.</td></tr>
+    <tr><td>App sharing</td><td><code>startLocalOnlyHotspot</code> + embedded Ktor/NanoHTTPD server + QR; or <code>ACTION_SEND</code> to Quick Share / Bluetooth</td><td>Not possible. Store link only.</td><td>Ship a universal APK; a browser cannot install split APKs.</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <span class="eyebrow">Limits</span>
+  <h2>Where the hardware and OS push back</h2>
+  <div class="limits">
+    <div><h3>Android kills background apps</h3><p>Doze and vendor battery managers (Xiaomi, Oppo, Vivo, Huawei) stop the mesh once the app is swiped away.</p><p>Foreground service with a persistent notification, PendingIntent BLE scans, an onboarding step for the battery exemption.</p></div>
+    <div><h3>Wi-Fi Aware is not everywhere</h3><p>Many budget phones lack it, and it often cannot run beside a hotspot or more than one or two data paths.</p><p>Check the feature at runtime, fall back to Wi-Fi Direct, one bulk transfer at a time.</p></div>
+    <div><h3>iPhones relay poorly in the background</h3><p>iOS hides the advertised service and slows scans when the app is not open. No fast link to Android before iOS 26.</p><p>BLE across platforms, state restoration, and say plainly in the UI that an iPhone relays best while open.</p></div>
+    <div><h3>BLE holds few links</h3><p>A phone manages roughly 4–7 connections, and constant scanning costs battery.</p><p>Connect, sync, disconnect. Low-power scanning by default and a visible relay-mode switch.</p></div>
+    <div><h3>X3DH assumes a server</h3><p>One-time prekeys cannot be handed out safely by gossip, so a first message can be replayed.</p><p>One-time keys only by QR or direct contact; dedup on message ID; ratchet immediately. Get an outside audit before release.</p></div>
+    <div><h3>LoRa is tiny and regulated</h3><p>About 200 bytes per packet, seconds of airtime, country-specific frequency and duty-cycle rules.</p><p>Text only, rate-limited, and the radio's own region setting stays in charge.</p></div>
+    <div><h3>Sideloading friction</h3><p>Play Protect warnings, the unknown-apps switch, and Google's incoming developer verification for sideloaded apps.</p><p>Register the signing identity, show the certificate fingerprint on the download page, keep an F-Droid build.</p></div>
+    <div><h3>Metadata still leaks</h3><p>BLE presence is visible to anyone nearby, and a relay next to the sender can guess who is talking.</p><p>Rotating hints, no sender in the header, encrypted hops. Describe the remaining exposure to users.</p></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Roadmap</span>
+  <h2>Seven phases, Android first</h2>
+  <p class="lead">Durations are rough estimates for two or three developers.</p>
+  <div class="road">
+    <div class="ph"><h3>0 · Spike <span>2 weeks</span></h3><p>Initialise the Jami submodules, build the Android client, test which target phones have Wi-Fi Aware and L2CAP, set up the new theme.</p><p class="test">two phones exchange raw bytes over BLE and over Aware.</p></div>
+    <div class="ph mvp"><h3>1 · MVP <span>6–8 weeks</span></h3><p>libmesh skeleton, on-device identity, add contact by QR, BLE discovery and link, 1:1 text with X3DH + Double Ratchet, Nearby and Chat screens.</p><p class="test">two phones in airplane mode hold an encrypted chat.</p></div>
+    <div class="ph"><h3>2 · Mesh and store-and-forward <span>6 weeks</span></h3><p>Flooding router, dedup, 24 h store, receipts, foreground service, battery tuning.</p><p class="test">A reaches C through B, and a message survives a 6-hour gap.</p></div>
+    <div class="ph"><h3>3 · High-speed transfer <span>6 weeks</span></h3><p>Wi-Fi Aware upgrade, chunked files, images, voice notes, Wi-Fi Direct fallback.</p><p class="test">a 100 MB file transfers directly and resumes after a break.</p></div>
+    <div class="ph"><h3>4 · Reach <span>4–6 weeks</span></h3><p>Offline APK sharing and the Meshtastic bridge, BLE first then USB.</p><p class="test">a fresh phone installs from a peer offline; text crosses 1 km through two radios.</p></div>
+    <div class="ph"><h3>5 · On-device AI <span>6 weeks</span></h3><p>Transcription, translation, local filtering, model packs shared over the mesh.</p><p class="test">a voice note is transcribed and translated in airplane mode on a mid-range phone.</p></div>
+    <div class="ph"><h3>6 · Scale <span>ongoing</span></h3><p>Encrypted rooms, smarter routing, iOS client, security audit, Jami Swarm sync over the mesh.</p><p class="test">audit findings are closed and a 20-phone field test passes.</p></div>
+  </div>
+  <p>The full specification, with the wire format and store rules, is in <code>docs/mesh/ARCHITECTURE.md</code> on the branch.</p>
+</section>
+</div>
+
+<script>
+(function(){
+  var w=document.getElementById('wave'),h=[6,12,18,9,15,21,11,7,16,20,13,8,17,22,10,14,6,12,19,9,15,7,11,5];
+  w.innerHTML=h.map(function(x){return '<i style="height:'+x+'px"></i>'}).join('')+'<span style="margin-left:6px;font-size:9.5px">0:14</span>';
+  var q=document.getElementById('qr'),s=7,o='';
+  function fin(x,y){return x>=0&&x<7&&y>=0&&y<7}
+  function inF(x,y){return fin(x,y)||fin(x-18,y)||fin(x,y-18)}
+  function fdraw(x,y){return '<rect x="'+x+'" y="'+y+'" width="7" height="7" fill="#1d0b47"/><rect x="'+(x+1)+'" y="'+(y+1)+'" width="5" height="5" fill="#fff"/><rect x="'+(x+2)+'" y="'+(y+2)+'" width="3" height="3" fill="#7c3aed"/>'}
+  for(var y=0;y<25;y++)for(var x=0;x<25;x++){s=(s*1103515245+12345)&0x7fffffff;
+    if(!inF(x,y)&&!(x<8&&y<8)&&!(x>16&&y<8)&&!(x<8&&y>16)&&(s>>16)%2)o+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="#1d0b47"/>';}
+  q.innerHTML=o+fdraw(0,0)+fdraw(18,0)+fdraw(0,18);
+})();
+</script>
